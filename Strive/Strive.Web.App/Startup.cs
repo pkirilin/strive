@@ -2,27 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Mvc.Razor;
-
-// app.UseFileServer
-//using System.IO;
-//using Microsoft.Extensions.FileProviders;
-
-// SetupLocalizationAction
-using Microsoft.Extensions.Localization;
-
-// ConfigureRequestLocalizationOptionsAction
-using Microsoft.AspNetCore.Localization;
-using System.Globalization;
 using Microsoft.AspNetCore.Authentication.Cookies;
-
-// UseRequestLocalization
 using Microsoft.Extensions.Options;
+
+using Strive.Web.Common.Providers;
 
 namespace Strive.Web.App
 {
@@ -30,13 +20,17 @@ namespace Strive.Web.App
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddLocalization(SetupLocalizationAction);
+            // Добавление локализации приложения
+            services.AddLocalization(StartupActionProvider.SetupLocalizationAction);
 
-            services.Configure<RequestLocalizationOptions>(ConfigureRequestLocalizationOptionsAction);
+            // Добавление параметров локализации
+            services.Configure<RequestLocalizationOptions>(StartupActionProvider.ConfigureRequestLocalizationOptionsAction);
 
+            // Добавление аутентификации на основе кук
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(ConfigureCookieAuthenticationOptionsAction);
+                .AddCookie(StartupActionProvider.ConfigureCookieAuthenticationOptionsAction);
 
+            // Добавление MVC
             services.AddMvc()
                 .AddViewLocalization()
                 .AddDataAnnotationsLocalization();
@@ -44,64 +38,21 @@ namespace Strive.Web.App
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            #region Files
-
             // Подключение файлов по умолчанию
             app.UseDefaultFiles();
 
             // Подключение статических файлов (для <link> и <script>)
             app.UseStaticFiles();
 
-            // Поддержка каталога node_modules для npm
-            //app.UseFileServer(new FileServerOptions()
-            //{
-            //    FileProvider = new PhysicalFileProvider(
-            //        Path.Combine(env.ContentRootPath, "node_modules")
-            //    ),
-            //    RequestPath = "/node_modules",
-            //    EnableDirectoryBrowsing = false
-            //});
-
-            #endregion
-
-            #region RequestLocalization
-
+            // Настройка параметров локализации, которые потом могут быть использованы в приложении
             app.UseRequestLocalization(app.ApplicationServices
                 .GetService<IOptions<RequestLocalizationOptions>>().Value);
 
-            #endregion
-
+            // Подключение аутентификации
             app.UseAuthentication();
 
-            app.UseMvc(ConfigureRoutesAction);
-        }
-
-        private void ConfigureRoutesAction(IRouteBuilder prouteBuilder)
-        {
-            prouteBuilder.MapRoute("default", "{controller=home}/{action=index}/{id?}");
-        }
-
-        private void SetupLocalizationAction(LocalizationOptions poptions)
-        {
-            poptions.ResourcesPath = "Resourses";
-        }
-
-        private void ConfigureRequestLocalizationOptionsAction(RequestLocalizationOptions poptions)
-        {
-            var supportedCultures = new List<CultureInfo>()
-            {
-                new CultureInfo("en"),
-                new CultureInfo("ru")
-            };
-
-            poptions.DefaultRequestCulture = new RequestCulture("en");
-            poptions.SupportedCultures = supportedCultures;
-            poptions.SupportedUICultures = supportedCultures;
-        }
-
-        private void ConfigureCookieAuthenticationOptionsAction(CookieAuthenticationOptions pcookieAuthenticationOptions)
-        {
-            pcookieAuthenticationOptions.LoginPath = new PathString("/Account/Login");
+            // Подключение MVC
+            app.UseMvc(StartupActionProvider.ConfigureRoutesAction);
         }
     }
 }

@@ -5,19 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Remove="Resourses\Login.en.resx" />
-    <EmbeddedResource Remove="Resourses\Login.ru.resx" />
+    <EmbeddedResource Remove="Resources\Login.en.resx" />
+    <EmbeddedResource Remove="Resources\Login.ru.resx" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Resourses\Views\Account\Login.en.resx" />
-    <None Include="Resourses\Views\Account\Login.ru.resx" />
+    <None Include="Resources\Views\Account\Login.en.resx" />
+    <None Include="Resources\Views\Account\Login.ru.resx" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Strive.Web.Common\Strive.Web.Common.csproj" />
   </ItemGroup>
 
 </Project>
