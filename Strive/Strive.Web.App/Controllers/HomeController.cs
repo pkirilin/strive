@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,7 @@ namespace Strive.Web.App.Controllers
         /// Вызов представления главной страницы приложения
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         public IActionResult Index()
         {
             ViewData["TitleSecondary"] = _localizer["TitleSecondary"];

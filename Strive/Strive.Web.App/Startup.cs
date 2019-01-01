@@ -19,6 +19,7 @@ using Microsoft.Extensions.Localization;
 // ConfigureRequestLocalizationOptionsAction
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 // UseRequestLocalization
 using Microsoft.Extensions.Options;
@@ -32,6 +33,9 @@ namespace Strive.Web.App
             services.AddLocalization(SetupLocalizationAction);
 
             services.Configure<RequestLocalizationOptions>(ConfigureRequestLocalizationOptionsAction);
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(ConfigureCookieAuthenticationOptionsAction);
 
             services.AddMvc()
                 .AddViewLocalization()
@@ -67,6 +71,8 @@ namespace Strive.Web.App
 
             #endregion
 
+            app.UseAuthentication();
+
             app.UseMvc(ConfigureRoutesAction);
         }
 
@@ -91,6 +97,11 @@ namespace Strive.Web.App
             poptions.DefaultRequestCulture = new RequestCulture("en");
             poptions.SupportedCultures = supportedCultures;
             poptions.SupportedUICultures = supportedCultures;
+        }
+
+        private void ConfigureCookieAuthenticationOptionsAction(CookieAuthenticationOptions pcookieAuthenticationOptions)
+        {
+            pcookieAuthenticationOptions.LoginPath = new PathString("/Account/Login");
         }
     }
 }
