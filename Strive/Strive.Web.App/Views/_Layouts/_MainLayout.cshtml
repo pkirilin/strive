@@ -3,12 +3,23 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.TitlePrimary - @ViewBag.TitleSecondary</title>
+    <title>@ViewData["TitlePrimary"] - @ViewData["TitleSecondary"]</title>
+
+    <link rel="stylesheet" href="~/css/styles.css" />
 </head>
 <body>
-    <h1>MainLayout</h1>
     <div>
         @RenderBody()
     </div>
+
+    <footer>
+        <div>
+            <p>&copy; Strive, @DateTime.Now.Year</p>
+        </div>
+
+        <div>
+            @await Html.PartialAsync("SelectLanguagePartial")
+        </div>
+    </footer>
 </body>
 </html>

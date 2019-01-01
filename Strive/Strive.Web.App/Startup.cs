@@ -7,8 +7,21 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.FileProviders;
-using System.IO;
+using Microsoft.AspNetCore.Mvc.Razor;
+
+// app.UseFileServer
+//using System.IO;
+//using Microsoft.Extensions.FileProviders;
+
+// SetupLocalizationAction
+using Microsoft.Extensions.Localization;
+
+// ConfigureRequestLocalizationOptionsAction
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
+
+// UseRequestLocalization
+using Microsoft.Extensions.Options;
 
 namespace Strive.Web.App
 {
@@ -16,7 +29,13 @@ namespace Strive.Web.App
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddLocalization(SetupLocalizationAction);
+
+            services.Configure<RequestLocalizationOptions>(ConfigureRequestLocalizationOptionsAction);
+
+            services.AddMvc()
+                .AddViewLocalization()
+                .AddDataAnnotationsLocalization();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -41,12 +60,37 @@ namespace Strive.Web.App
 
             #endregion
 
+            #region RequestLocalization
+
+            app.UseRequestLocalization(app.ApplicationServices
+                .GetService<IOptions<RequestLocalizationOptions>>().Value);
+
+            #endregion
+
             app.UseMvc(ConfigureRoutesAction);
         }
 
         private void ConfigureRoutesAction(IRouteBuilder prouteBuilder)
         {
-            prouteBuilder.MapRoute("default", "{controller=account}/{action=login}");
+            prouteBuilder.MapRoute("default", "{controller=home}/{action=index}/{id?}");
+        }
+
+        private void SetupLocalizationAction(LocalizationOptions poptions)
+        {
+            poptions.ResourcesPath = "Resourses";
+        }
+
+        private void ConfigureRequestLocalizationOptionsAction(RequestLocalizationOptions poptions)
+        {
+            var supportedCultures = new List<CultureInfo>()
+            {
+                new CultureInfo("en"),
+                new CultureInfo("ru")
+            };
+
+            poptions.DefaultRequestCulture = new RequestCulture("en");
+            poptions.SupportedCultures = supportedCultures;
+            poptions.SupportedUICultures = supportedCultures;
         }
     }
 }

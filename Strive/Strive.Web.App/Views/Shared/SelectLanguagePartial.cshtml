@@ -1,0 +1,42 @@
+﻿
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+
+@using Microsoft.Extensions.Options
+
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+    // Получение сервиса IRequestCultureFeature, чтобы знать текущую культуру
+    // и установить соответствующий выбор в списке select
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+
+    // Получение списка поддерживаемых в приложении культур
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem
+        {
+            Value = c.Name,
+
+            // Первый символ для всех культур ставится в верхний регистр (по умолчанию не для всех)
+            Text = c.NativeName[0].ToString().ToUpper() + c.NativeName.Substring(1)
+        })
+        .ToList();
+}
+
+<div>
+    <form id="selectLanguage"
+          method="post"
+          asp-controller="Home"
+          asp-action="SetLanguage"
+          asp-route-returnUrl="@Context.Request.Path">
+
+        <span>@Localizer["lblChooseLanguage"]:</span>
+
+        <select name="culture"
+                asp-for="@requestCulture.RequestCulture.UICulture.Name"
+                asp-items="cultureItems">
+        </select>
+
+        <button type="submit">@Localizer["btnSaveLanguage"]</button>
+    </form>
+</div>
