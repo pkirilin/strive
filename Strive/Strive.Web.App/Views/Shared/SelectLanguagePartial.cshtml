@@ -23,20 +23,22 @@
         .ToList();
 }
 
-<div>
-    <form id="selectLanguage"
-          method="post"
-          asp-controller="Home"
-          asp-action="SetLanguage"
-          asp-route-returnUrl="@Context.Request.Path">
-
-        <span>@Localizer["lblChooseLanguage"]:</span>
-
-        <select name="culture"
-                asp-for="@requestCulture.RequestCulture.UICulture.Name"
-                asp-items="cultureItems">
-        </select>
-
-        <button type="submit">@Localizer["btnSaveLanguage"]</button>
-    </form>
-</div>
+<form id="selectLanguage"
+      method="post"
+      asp-controller="Home"
+      asp-action="SetLanguage"
+      asp-route-returnUrl="@Context.Request.Path">
+    
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">@Localizer["lblChooseLanguage"]:</label>
+        <div class="col-sm-6">
+            <select class="form-control"
+                    name="culture"
+                    asp-for="@requestCulture.RequestCulture.UICulture.Name"
+                    asp-items="cultureItems"></select>
+        </div>
+        <div class="col-sm-3">
+            <input type="submit" value="@Localizer["btnSaveLanguage"]" class="btn btn-primary" />
+        </div>
+    </div>
+</form>

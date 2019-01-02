@@ -4,7 +4,6 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewData["TitlePrimary"] - @ViewData["TitleSecondary"]</title>
-
     <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/styles.css" />
 </head>
@@ -12,23 +11,20 @@
     <div class="container-fluid">
         @RenderBody()
     </div>
-    
     <div class="container-fluid">
         <hr />
-        
-        <footer class="row">
-            <div class="col-4 align-textblock-a">
-                @await Html.PartialAsync("SelectLanguagePartial")
-            </div>
-
-            <div class="col-4 align-textblock-a">
-                &copy; Strive, @DateTime.Now.Year
-            </div>
-
-            <div class="col-4 align-textblock-a">
-                <a href="#">@Localizer["Contacts"]</a>
+        <footer>
+            <div class="row">
+                <div class="col">
+                    @await Html.PartialAsync("SelectLanguagePartial")
+                </div>
+                <div class="col text-center mt-2">
+                    &copy; Strive, @DateTime.Now.Year
+                </div>
             </div>
         </footer>
     </div>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
