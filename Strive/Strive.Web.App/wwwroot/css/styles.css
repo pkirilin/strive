@@ -1,1 +1,16 @@
-﻿
+﻿.align-text-c {
+    text-align: center;
+}
+
+.align-block-a {
+    margin: auto
+}
+
+.align-textblock-a {
+    margin: auto;
+    text-align: center;
+}
+
+.debug {
+    border: 1px solid;
+}
