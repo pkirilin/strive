@@ -13,6 +13,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
 
 using Strive.Web.Common.Providers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+
+using System.Text.RegularExpressions;
 
 namespace Strive.Web.App
 {
@@ -29,6 +33,9 @@ namespace Strive.Web.App
             // Добавление аутентификации на основе кук
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(StartupActionProvider.ConfigureCookieAuthenticationOptionsAction);
+
+            // Добавление дополнительных настроек маршрутизации
+            services.AddRouting(StartupActionProvider.ConfigureRoutingOptionsAction);
 
             // Добавление MVC
             services.AddMvc()

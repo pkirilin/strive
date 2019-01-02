@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Localization;
 
+using Strive.Web.Common.Utils;
+
 namespace Strive.Web.Common.Providers
 {
     /// <summary>
@@ -23,6 +25,18 @@ namespace Strive.Web.Common.Providers
         public static void ConfigureRoutesAction(IRouteBuilder prouteBuilder)
         {
             prouteBuilder.MapRoute("default", "{controller=home}/{action=index}/{id?}");
+        }
+
+        /// <summary>
+        /// Действие дополнительных настроек маршрутизации
+        /// </summary>
+        public static void ConfigureRoutingOptionsAction(RouteOptions prouteOptions)
+        {
+            // Подключение средства преобразования camel-case путей в slug-пути
+            prouteOptions.ConstraintMap["slugify"] = typeof(SlugifyParameterTransformer);
+
+            // Понижение регистра всех путей
+            prouteOptions.LowercaseUrls = true;
         }
 
         /// <summary>
@@ -55,7 +69,7 @@ namespace Strive.Web.Common.Providers
         /// </summary>
         public static void ConfigureCookieAuthenticationOptionsAction(CookieAuthenticationOptions pcookieAuthenticationOptions)
         {
-            pcookieAuthenticationOptions.LoginPath = new PathString("/Account/Login");
+            pcookieAuthenticationOptions.LoginPath = new PathString("/account/login");
         }
     }
 }
