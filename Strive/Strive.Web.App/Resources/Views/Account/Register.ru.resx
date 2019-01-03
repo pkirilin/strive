@@ -117,10 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TitleSecondaryLogin" xml:space="preserve">
-    <value>Login</value>
+  <data name="Email" xml:space="preserve">
+    <value>Адрес электронной почты</value>
   </data>
-  <data name="TitleSecondaryRegister" xml:space="preserve">
-    <value>Register</value>
+  <data name="Header" xml:space="preserve">
+    <value>Регистрация новой учетной записи</value>
+  </data>
+  <data name="LoginLink" xml:space="preserve">
+    <value>Вход</value>
+  </data>
+  <data name="LoginSpan" xml:space="preserve">
+    <value>с использованием существующей учетной записи</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="PasswordConfirm" xml:space="preserve">
+    <value>Подтвердите пароль</value>
+  </data>
+  <data name="RegisterButton" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Имя пользователя</value>
   </data>
 </root>

@@ -18,7 +18,13 @@ namespace Strive.Web.App.Controllers
 
         public IActionResult Login()
         {
-            ViewData["TitleSecondary"] = _localizer["TitleSecondary"];
+            ViewData["TitleSecondary"] = _localizer["TitleSecondaryLogin"];
+            return View();
+        }
+
+        public IActionResult Register()
+        {
+            ViewData["TitleSecondary"] = _localizer["TitleSecondaryRegister"];
             return View();
         }
     }
