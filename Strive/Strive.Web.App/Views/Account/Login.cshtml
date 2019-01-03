@@ -1,1 +1,47 @@
-﻿<h2>@Localizer["Header"]</h2>
+﻿<h2 class="d-flex justify-content-center">@Localizer["Header"]</h2>
+
+<div class="row">
+    <div class="col">
+        <div class="m-lg-5 m-md-5 m-sm-3 m-1 p-lg-3 p-md-2 p-sm-1 p-1 ">
+            <form method="post"
+                  asp-controller="Account"
+                  asp-action="Login">
+                <div class="form-group">
+                    <label class="font-weight-bold">@Localizer["Username"]:</label>
+                    <input type="text" class="form-control col" />
+                </div>
+                <div class="form-group">
+                    <label class="font-weight-bold">@Localizer["Email"]:</label>
+                    <input type="text" class="form-control col" />
+                </div>
+                <div class="form-group">
+                    <label class="font-weight-bold">@Localizer["Password"]:</label>
+                    <input type="password" class="form-control col" />
+                </div>
+
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" />
+                    <label class="form-check-label">@Localizer["RememberMe"]</label>
+                </div>
+
+                <div class="form-group d-flex">
+                    <input type="submit"
+                           value="@Localizer["LoginButton"]"
+                           class="flex-fill btn btn-success mr-2" />
+                    <a class="flex-fill btn btn-success"
+                       asp-controller="Account"
+                       asp-action="Register">@Localizer["RegisterButton"]</a>
+                </div>
+
+                <div class="form-group d-flex justify-content-center">
+                    <a class="card-link"
+                       asp-controller="Account"
+                       asp-action="Restore">@Localizer["AccountRestore"]</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col">
+        @await Html.PartialAsync("~/Views/Account/Partial/Description.cshtml")
+    </div>
+</div>

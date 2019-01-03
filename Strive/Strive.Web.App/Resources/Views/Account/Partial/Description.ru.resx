@@ -117,28 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccountRestore" xml:space="preserve">
-    <value>Восстановление учетной записи</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="Header" xml:space="preserve">
-    <value>Вход в учетную запись</value>
-  </data>
-  <data name="LoginButton" xml:space="preserve">
-    <value>Вход</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>Пароль</value>
-  </data>
-  <data name="RegisterButton" xml:space="preserve">
-    <value>Регистрация</value>
-  </data>
-  <data name="RememberMe" xml:space="preserve">
-    <value>Запомнить меня</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>Имя пользователя</value>
+  <data name="DescriptionTextMain" xml:space="preserve">
+    <value>Strive - это система для планирования задач и управления ими. Присоединяйтесь!</value>
+    <comment>Описание Strive на странице login/register</comment>
   </data>
 </root>
