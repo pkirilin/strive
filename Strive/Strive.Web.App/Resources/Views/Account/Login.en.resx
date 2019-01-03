@@ -124,7 +124,7 @@
     <value>Email</value>
   </data>
   <data name="Header" xml:space="preserve">
-    <value>Login</value>
+    <value>Sign in to Strive</value>
   </data>
   <data name="LoginButton" xml:space="preserve">
     <value>Sign in</value>

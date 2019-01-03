@@ -121,10 +121,10 @@
     <value>Восстановление учетной записи</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>Адрес электронной почты</value>
   </data>
   <data name="Header" xml:space="preserve">
-    <value>Вход в учетную запись</value>
+    <value>Вход в учетную запись Strive</value>
   </data>
   <data name="LoginButton" xml:space="preserve">
     <value>Вход</value>
