@@ -1,22 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-
 using Strive.Web.Common.Providers;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-
-using System.Text.RegularExpressions;
 
 namespace Strive.Web.App
 {
