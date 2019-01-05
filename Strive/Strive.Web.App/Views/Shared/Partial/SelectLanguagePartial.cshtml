@@ -1,7 +1,5 @@
-﻿
-@using Microsoft.AspNetCore.Builder
+﻿@using Microsoft.AspNetCore.Builder
 @using Microsoft.AspNetCore.Localization
-
 @using Microsoft.Extensions.Options
 
 @inject IOptions<RequestLocalizationOptions> LocOptions
@@ -25,20 +23,19 @@
 
 <form id="selectLanguage"
       method="post"
+      class="form-inline"
       asp-controller="Home"
       asp-action="SetLanguage"
       asp-route-returnUrl="@Context.Request.Path">
-    
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label">@Localizer["lblChooseLanguage"]:</label>
-        <div class="col-sm-6">
-            <select class="form-control"
-                    name="culture"
-                    asp-for="@requestCulture.RequestCulture.UICulture.Name"
-                    asp-items="cultureItems"></select>
-        </div>
-        <div class="col-sm-3">
-            <input type="submit" value="@Localizer["btnSaveLanguage"]" class="btn btn-primary" />
-        </div>
-    </div>
+
+    <label class="mr-lg-2 mr-md-2 mr-sm-2">@Localizer["lblChooseLanguage"]:</label>
+
+    <select class="form-control mr-lg-2 mr-md-2 mr-sm-2 mb-lg-0 mb-md-0 mb-sm-0 mb-2"
+            name="culture"
+            asp-for="@requestCulture.RequestCulture.UICulture.Name"
+            asp-items="cultureItems"></select>
+
+    <input type="submit"
+           value="@Localizer["btnSaveLanguage"]"
+           class="btn btn-outline-primary" />
 </form>
