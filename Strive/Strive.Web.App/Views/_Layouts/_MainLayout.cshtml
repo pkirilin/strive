@@ -8,22 +8,14 @@
     <link rel="stylesheet" href="~/css/styles.css" />
 </head>
 <body>
+    @await Html.PartialAsync("~/Views/Shared/Partial/NavbarPartial.cshtml")
+
     <div class="container-fluid">
         @RenderBody()
     </div>
-    <div class="container-fluid">
-        <hr />
-        <footer>
-            <div class="row">
-                <div class="col">
-                    @await Html.PartialAsync("SelectLanguagePartial")
-                </div>
-                <div class="col text-center mt-2">
-                    &copy; Strive, @DateTime.Now.Year
-                </div>
-            </div>
-        </footer>
-    </div>
+
+    @await Html.PartialAsync("~/Views/Shared/Partial/FooterPartial.cshtml")
+
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js"></script>
 </body>
