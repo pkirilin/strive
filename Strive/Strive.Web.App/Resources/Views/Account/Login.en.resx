@@ -132,6 +132,15 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="Placeholder-Email" xml:space="preserve">
+    <value>Enter email</value>
+  </data>
+  <data name="Placeholder-Password" xml:space="preserve">
+    <value>Enter password</value>
+  </data>
+  <data name="Placeholder-Username" xml:space="preserve">
+    <value>Enter username</value>
+  </data>
   <data name="RegisterButton" xml:space="preserve">
     <value>Sign up</value>
   </data>
