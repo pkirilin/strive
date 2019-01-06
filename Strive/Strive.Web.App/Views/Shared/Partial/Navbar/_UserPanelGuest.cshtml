@@ -1,0 +1,23 @@
+﻿<ul class="navbar nav mr-auto">
+    <li class="nav-item dropdown">
+        <a id="navbarUserPanelGuestDropdown"
+           class="nav-link dropdown-toggle"
+           href="#"
+           role="button"
+           data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false">
+            @Localizer["UserPanelGuestDropdown"]
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="navbarUserPanelGuestDropdown">
+            <a class="dropdown-item"
+               asp-controller="Account"
+               asp-action="Login">@SharedLocalizer["Auth-LoginText"]</a>
+
+            <a class="dropdown-item"
+               asp-controller="Account"
+               asp-action="Register">@SharedLocalizer["Auth-RegisterText"]</a>
+        </div>
+    </li>
+</ul>

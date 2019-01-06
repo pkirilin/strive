@@ -9,6 +9,16 @@
 
     <div class="collapse navbar-collapse" id="navbarToggler">
         @await Html.PartialAsync("~/Views/Shared/Partial/Navbar/_SelectLanguage.cshtml")
-        @await Html.PartialAsync("~/Views/Shared/Partial/Navbar/_UserPanel.cshtml")
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            // Если пользователь вошел в систему, выводится пользовательская панель
+            @await Html.PartialAsync("~/Views/Shared/Partial/Navbar/_UserPanel.cshtml")
+        }
+        else
+        {
+            // Иначе - выводится гостевая панель
+            @await Html.PartialAsync("~/Views/Shared/Partial/Navbar/_UserPanelGuest.cshtml")
+        }
     </div>
 </nav>
