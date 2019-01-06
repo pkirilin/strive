@@ -8,10 +8,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarToggler">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
-        </ul>
-
-        @await Html.PartialAsync("~/Views/Shared/Partial/SelectLanguagePartial.cshtml")
+        @await Html.PartialAsync("~/Views/Shared/Partial/Navbar/_SelectLanguage.cshtml")
+        @await Html.PartialAsync("~/Views/Shared/Partial/Navbar/_UserPanel.cshtml")
     </div>
 </nav>

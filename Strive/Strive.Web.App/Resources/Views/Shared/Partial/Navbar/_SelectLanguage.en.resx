@@ -122,6 +122,5 @@
   </data>
   <data name="lblChooseLanguage" xml:space="preserve">
     <value>Language</value>
-    <comment>Choose language label before choose combobox</comment>
   </data>
 </root>

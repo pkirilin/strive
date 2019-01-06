@@ -122,6 +122,5 @@
   </data>
   <data name="lblChooseLanguage" xml:space="preserve">
     <value>Язык</value>
-    <comment>Метка выбора языка перед выпадающим списком доступных языков</comment>
   </data>
 </root>
