@@ -13,44 +13,44 @@
                       asp-controller="Account"
                       asp-action="Login">
                     <div class="form-group">
-                        <label class="font-weight-bold">@Localizer["Username"]</label>
+                        <label class="font-weight-bold">@SharedLocalizer["Account-Label-Username"]</label>
                         <input type="text"
-                               placeholder="@Localizer["Placeholder-Username"]"
+                               placeholder="@SharedLocalizer["Account-Placeholder-Username"]"
                                class="form-control col" />
                     </div>
 
                     <div class="form-group">
-                        <label class="font-weight-bold">@Localizer["Email"]</label>
+                        <label class="font-weight-bold">@SharedLocalizer["Account-Label-Email"]</label>
                         <input type="text"
-                               placeholder="@Localizer["Placeholder-Email"]"
+                               placeholder="@SharedLocalizer["Account-Placeholder-Email"]"
                                class="form-control col" />
                     </div>
 
                     <div class="form-group">
-                        <label class="font-weight-bold">@Localizer["Password"]</label>
+                        <label class="font-weight-bold">@SharedLocalizer["Account-Label-Password"]</label>
                         <input type="password"
-                               placeholder="@Localizer["Placeholder-Password"]"
+                               placeholder="@SharedLocalizer["Account-Placeholder-Password"]"
                                class="form-control col" />
                     </div>
 
                     <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" />
-                        <label class="form-check-label">@Localizer["RememberMe"]</label>
+                        <label class="form-check-label">@SharedLocalizer["Account-Label-RememberMe"]</label>
                     </div>
 
                     <div class="form-group d-flex">
                         <input type="submit"
-                               value="@Localizer["LoginButton"]"
+                               value="@SharedLocalizer["Account-Text-Login"]"
                                class="flex-fill btn btn-success mr-2" />
                         <a class="flex-fill btn btn-success"
                            asp-controller="Account"
-                           asp-action="Register">@Localizer["RegisterButton"]</a>
+                           asp-action="Register">@SharedLocalizer["Account-Text-Register"]</a>
                     </div>
 
                     <div class="form-group text-center">
                         <a class="card-link"
                            asp-controller="Account"
-                           asp-action="Restore">@Localizer["AccountRestore"]</a>
+                           asp-action="Restore">@SharedLocalizer["Account-Text-Restore"]</a>
                     </div>
                 </form>
             </div>

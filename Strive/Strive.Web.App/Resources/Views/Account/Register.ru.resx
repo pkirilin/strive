@@ -117,40 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Email" xml:space="preserve">
-    <value>Адрес электронной почты</value>
-  </data>
   <data name="Header" xml:space="preserve">
     <value>Регистрация новой учетной записи Strive</value>
   </data>
-  <data name="LoginLink" xml:space="preserve">
-    <value>Вход</value>
-  </data>
   <data name="LoginSpan" xml:space="preserve">
     <value>с использованием существующей учетной записи</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>Пароль</value>
-  </data>
-  <data name="PasswordConfirm" xml:space="preserve">
-    <value>Подтвердите пароль</value>
-  </data>
-  <data name="Placeholder-Email" xml:space="preserve">
-    <value>Введите адрес электронной почты</value>
-  </data>
-  <data name="Placeholder-Password" xml:space="preserve">
-    <value>Введите пароль</value>
-  </data>
-  <data name="Placeholder-PasswordConfirm" xml:space="preserve">
-    <value>Введите пароль еще раз</value>
-  </data>
-  <data name="Placeholder-Username" xml:space="preserve">
-    <value>Введите имя пользователя</value>
-  </data>
-  <data name="RegisterButton" xml:space="preserve">
-    <value>Регистрация</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>Имя пользователя</value>
   </data>
 </root>

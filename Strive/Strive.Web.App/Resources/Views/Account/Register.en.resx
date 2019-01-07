@@ -117,40 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Email" xml:space="preserve">
-    <value>Email</value>
-  </data>
   <data name="Header" xml:space="preserve">
     <value>Sign up to Strive</value>
   </data>
-  <data name="LoginLink" xml:space="preserve">
-    <value>Sign in</value>
-  </data>
   <data name="LoginSpan" xml:space="preserve">
     <value>using an existing account</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="PasswordConfirm" xml:space="preserve">
-    <value>Confirm password</value>
-  </data>
-  <data name="Placeholder-Email" xml:space="preserve">
-    <value>Enter email</value>
-  </data>
-  <data name="Placeholder-Password" xml:space="preserve">
-    <value>Enter password</value>
-  </data>
-  <data name="Placeholder-PasswordConfirm" xml:space="preserve">
-    <value>Enter password again</value>
-  </data>
-  <data name="Placeholder-Username" xml:space="preserve">
-    <value>Enter username</value>
-  </data>
-  <data name="RegisterButton" xml:space="preserve">
-    <value>Sign up</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>Username</value>
   </data>
 </root>
