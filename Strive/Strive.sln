@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strive.Web.App", "Strive.Web.App\Strive.Web.App.csproj", "{AFBC1B41-2115-4AA4-9D9B-6432E94E1885}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Web.Common", "Strive.Web.Common\Strive.Web.Common.csproj", "{FAD7EA0B-B916-46FA-8DDF-8D890B1BDCC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strive.Web.Common", "Strive.Web.Common\Strive.Web.Common.csproj", "{FAD7EA0B-B916-46FA-8DDF-8D890B1BDCC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Data", "Strive.Data\Strive.Data.csproj", "{2344289B-1E1D-4A9C-96AD-CC021254C8B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{FAD7EA0B-B916-46FA-8DDF-8D890B1BDCC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAD7EA0B-B916-46FA-8DDF-8D890B1BDCC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAD7EA0B-B916-46FA-8DDF-8D890B1BDCC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2344289B-1E1D-4A9C-96AD-CC021254C8B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2344289B-1E1D-4A9C-96AD-CC021254C8B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2344289B-1E1D-4A9C-96AD-CC021254C8B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2344289B-1E1D-4A9C-96AD-CC021254C8B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
