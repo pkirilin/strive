@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Strive.Data.Entities
+namespace Strive.Data.Models
 {
     /// <summary>
     /// Сущность "Данные пользователя". Описывает дополнительные данные о пользователе системы
