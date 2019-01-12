@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using Strive.Data.ViewModels.Account.Login;
+using Strive.Web.App.ViewModels.Account.Login;
 
 namespace Strive.Web.App.Controllers
 {

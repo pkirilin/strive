@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Strive.Data.ViewModels.Account.Login
+namespace Strive.Web.App.ViewModels.Account.Login
 {
     public class LoginViewModel : LoginRegisterViewModel
     {
