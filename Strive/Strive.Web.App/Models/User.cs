@@ -23,7 +23,7 @@ namespace Strive.Web.App.Models
         /// <summary>
         /// Дополнительные данные пользователя
         /// </summary>
-        public UserDetails Details { get; set; }
+        //public UserDetails Details { get; set; }
 
         #endregion
     }

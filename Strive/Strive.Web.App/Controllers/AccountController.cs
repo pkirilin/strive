@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Strive.Web.App.Models;
 using Strive.Web.App.ViewModels.Account.Login;
+using Strive.Web.App.ViewModels.Account.Register;
 
 namespace Strive.Web.App.Controllers
 {
@@ -12,24 +15,69 @@ namespace Strive.Web.App.Controllers
     {
         private readonly IStringLocalizer<AccountController> _localizer;
 
-        #region PrivateMethods
+        private readonly UserManager<User> _userManager;
+
+        private readonly SignInManager<User> _signInManager;
+
+        public AccountController(IStringLocalizer<AccountController> plocalizer,
+            UserManager<User> puserManager,
+            SignInManager<User> psignInManager)
+        {
+            _localizer = plocalizer;
+            _userManager = puserManager;
+            _signInManager = psignInManager;
+        }
+
+        #region Login private methods
 
         private void InitLoginViewData()
         {
             ViewData["TitleSecondary"] = _localizer["TitleSecondaryLogin"];
         }
 
+        #endregion
+
+        #region Register private methods
+
         private void InitRegisterViewData()
         {
             ViewData["TitleSecondary"] = _localizer["TitleSecondaryRegister"];
         }
 
-        #endregion
-
-        public AccountController(IStringLocalizer<AccountController> plocalizer)
+        private async Task<bool> TryCreateUserAsync(RegisterViewModel pmodel)
         {
-            _localizer = plocalizer;
+            // Создание пустых данных для нового пользователя
+            //UserDetails userDetails = new UserDetails();
+
+            // Создание нового пользователя
+            User user = new User()
+            {
+                UserName = pmodel.Username,
+                Email = pmodel.Email
+                //,
+                //Details = userDetails
+            };
+
+            // Добавление пользователя в БД и получение результата
+            IdentityResult result = await _userManager.CreateAsync(user, pmodel.Password);
+
+            // Проверка результата добавления пользователя
+            if (result.Succeeded == true)
+            {
+                // Установка куки для пользователя
+                await _signInManager.SignInAsync(user, false);
+                return true;
+            }
+            else
+            {
+                // Добавление к состоянию модели всех возникших ошибок
+                foreach (IdentityError error in result.Errors)
+                    ModelState.AddModelError(string.Empty, error.Description);
+                return false;
+            }
         }
+
+        #endregion
 
         [HttpGet]
         public IActionResult Login()
@@ -50,6 +98,18 @@ namespace Strive.Web.App.Controllers
         {
             InitRegisterViewData();
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel pmodel)
+        {
+            if (ModelState.IsValid == true)
+            {
+                bool isUserCreated = await TryCreateUserAsync(pmodel);
+                if (isUserCreated == true)
+                    return RedirectToAction("Index", "Home");
+            }
+            return View(pmodel);
         }
     }
 }

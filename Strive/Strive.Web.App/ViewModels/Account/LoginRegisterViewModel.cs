@@ -8,7 +8,8 @@ namespace Strive.Web.App.ViewModels.Account
     public class LoginRegisterViewModel
     {
         [Required]
-        [RegularExpression(@"^[A-Za-z][A-Za-z0-9]{2,63}@[a-z][a-z0-9]{2,246}\.[a-z]{2,4}")]
+        //[RegularExpression(@"^[A-Za-z][A-Za-z0-9]{2,63}@[a-z][a-z0-9]{2,246}\.[a-z]{2,4}")]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]
