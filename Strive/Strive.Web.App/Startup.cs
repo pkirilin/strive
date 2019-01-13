@@ -41,7 +41,7 @@ namespace Strive.Web.App
                     this.Configuration.GetConnectionString("DefaultConnection")));
 
             // Добавление Identity
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(StartupActionProvider.SetupIdentityOptionsAction)
                 .AddEntityFrameworkStores<StriveDbContext>();
 
             // Добавление MVC

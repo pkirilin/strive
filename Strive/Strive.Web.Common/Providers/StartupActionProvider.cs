@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Localization;
@@ -70,6 +71,20 @@ namespace Strive.Web.Common.Providers
         public static void ConfigureCookieAuthenticationOptionsAction(CookieAuthenticationOptions pcookieAuthenticationOptions)
         {
             pcookieAuthenticationOptions.LoginPath = new PathString("/account/login");
+        }
+
+        /// <summary>
+        /// Действие настройки параметров Identity
+        /// </summary>
+        public static void SetupIdentityOptionsAction(IdentityOptions pidentityOptions)
+        {
+            // debug options
+            pidentityOptions.Password.RequiredLength = 1;
+            pidentityOptions.Password.RequireNonAlphanumeric = false;
+            pidentityOptions.Password.RequireDigit = false;
+            pidentityOptions.Password.RequireUppercase = false;
+            pidentityOptions.Password.RequireLowercase = false;
+            // @todo настроить
         }
     }
 }
