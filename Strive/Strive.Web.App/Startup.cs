@@ -1,14 +1,25 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Strive.Web.App.Models;
 using Strive.Web.Common.Providers;
 
 namespace Strive.Web.App
 {
     public class Startup
     {
+        public Startup(IConfiguration pconfig)
+        {
+            this.Configuration = pconfig;
+        }
+
+        public IConfiguration Configuration { get; private set; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             // Добавление локализации приложения
@@ -23,6 +34,15 @@ namespace Strive.Web.App
 
             // Добавление дополнительных настроек маршрутизации
             services.AddRouting(StartupActionProvider.ConfigureRoutingOptionsAction);
+
+            // Добавление контекста данных для работы с БД
+            services.AddDbContext<StriveDbContext>(options =>
+                options.UseSqlServer(
+                    this.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Добавление Identity
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<StriveDbContext>();
 
             // Добавление MVC
             services.AddMvc()
