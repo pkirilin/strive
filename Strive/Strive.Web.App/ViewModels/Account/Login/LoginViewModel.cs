@@ -7,5 +7,7 @@ namespace Strive.Web.App.ViewModels.Account.Login
     public class LoginViewModel : LoginRegisterViewModel
     {
         public bool RememberMe { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 }
