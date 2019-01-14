@@ -8,6 +8,7 @@ using Microsoft.Extensions.Localization;
 using Strive.Web.App.Models;
 using Strive.Web.App.ViewModels.Account.Login;
 using Strive.Web.App.ViewModels.Account.Register;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace Strive.Web.App.Controllers
 {
@@ -35,6 +36,19 @@ namespace Strive.Web.App.Controllers
             ViewData["TitleSecondary"] = _localizer["TitleSecondaryLogin"];
         }
 
+        private async Task<bool> TrySignInAsync(LoginViewModel pmodel)
+        {
+            // Попытка залогинить пользователя и получение результата
+            SignInResult result = await _signInManager.PasswordSignInAsync(
+                pmodel.Email, pmodel.Password, pmodel.RememberMe, false);
+            return result.Succeeded;
+        }
+
+        private bool IsUrlExistsInApplication(string purl)
+        {
+            return !String.IsNullOrEmpty(purl) && Url.IsLocalUrl(purl);
+        }
+
         #endregion
 
         #region Register private methods
@@ -52,7 +66,7 @@ namespace Strive.Web.App.Controllers
             // Создание нового пользователя
             User user = new User()
             {
-                UserName = pmodel.Username,
+                UserName = pmodel.Email,
                 Email = pmodel.Email
                 //,
                 //Details = userDetails
@@ -87,10 +101,32 @@ namespace Strive.Web.App.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginViewModel pmodel)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel pmodel)
         {
             InitLoginViewData();
-            return View();
+
+            if (ModelState.IsValid == true)
+            {
+                // Попытка входа с указанными данными и получение результата
+                bool isAbleToSignIn = await TrySignInAsync(pmodel);
+
+                if (isAbleToSignIn == true)
+                {
+                    // Если удалось войти, идет проверка запрашиваемого Url
+                    if (IsUrlExistsInApplication(pmodel.ReturnUrl) == true)
+                        return Redirect(pmodel.ReturnUrl);
+                    else
+                        return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    // @todo добавить сообщение об ошибке
+                    string errorMessage = "test sign in error";
+                    ModelState.AddModelError("", errorMessage);
+                }
+            }
+            return View(pmodel);
         }
 
         [HttpGet]
