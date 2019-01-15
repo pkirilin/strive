@@ -31,19 +31,27 @@ namespace Strive.Web.App.Controllers
 
         #region Login private methods
 
+        /// <summary>
+        /// Инициализация контейнера ViewData для страниц, относящихся к Login
+        /// </summary>
         private void InitLoginViewData()
         {
             ViewData["TitleSecondary"] = _localizer["TitleSecondaryLogin"];
         }
 
+        /// <summary>
+        /// Попытка залогинить пользователя и получение результата
+        /// </summary>
         private async Task<bool> TrySignInAsync(LoginViewModel pmodel)
         {
-            // Попытка залогинить пользователя и получение результата
             SignInResult result = await _signInManager.PasswordSignInAsync(
                 pmodel.Email, pmodel.Password, pmodel.RememberMe, false);
             return result.Succeeded;
         }
 
+        /// <summary>
+        /// Проверка является ли ссылка ссылкой, относящейся к приложению 
+        /// </summary>
         private bool IsUrlExistsInApplication(string purl)
         {
             return !String.IsNullOrEmpty(purl) && Url.IsLocalUrl(purl);
@@ -53,11 +61,17 @@ namespace Strive.Web.App.Controllers
 
         #region Register private methods
 
+        /// <summary>
+        /// Инициализация контейнера ViewData для страниц, относящихся к Register
+        /// </summary>
         private void InitRegisterViewData()
         {
             ViewData["TitleSecondary"] = _localizer["TitleSecondaryRegister"];
         }
 
+        /// <summary>
+        /// Попытка создать нового пользователя и получение результата
+        /// </summary>
         private async Task<bool> TryCreateUserAsync(RegisterViewModel pmodel)
         {
             // Создание пустых данных для нового пользователя
@@ -93,6 +107,9 @@ namespace Strive.Web.App.Controllers
 
         #endregion
 
+        /// <summary>
+        /// Метод действия для показа пользователю страницы входа в учетную запись
+        /// </summary>
         [HttpGet]
         public IActionResult Login()
         {
@@ -100,6 +117,9 @@ namespace Strive.Web.App.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Метод действия для осуществления входа в учетную запись
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel pmodel)
@@ -129,6 +149,9 @@ namespace Strive.Web.App.Controllers
             return View(pmodel);
         }
 
+        /// <summary>
+        /// Метод действия для показа пользователю страницы регистрации учетной записи
+        /// </summary>
         [HttpGet]
         public IActionResult Register()
         {
@@ -136,6 +159,9 @@ namespace Strive.Web.App.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Метод действия для осуществления регистрации учетной записи
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel pmodel)
         {
