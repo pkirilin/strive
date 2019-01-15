@@ -148,6 +148,17 @@ namespace Strive.Web.App.Controllers
             }
             return View(pmodel);
         }
+        
+        /// <summary>
+        /// Метод действия для выхода из учетной записи
+        /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
 
         /// <summary>
         /// Метод действия для показа пользователю страницы регистрации учетной записи
