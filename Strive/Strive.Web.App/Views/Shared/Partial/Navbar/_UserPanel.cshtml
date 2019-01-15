@@ -36,12 +36,28 @@
            data-toggle="dropdown"
            aria-haspopup="true"
            aria-expanded="false">
-            Username
+            @User.Identity.Name
         </a>
+        
+        <form class="dropdown-menu"
+              aria-labelledby="navbarUsernameDropdown"
+              method="post"
+              asp-controller="Account"
+              asp-action="Logout">
+            <input type="submit"
+                   class="dropdown-item"
+                   value="@SharedLocalizer["Account-Text-Logout"]"/>
+        </form>
 
-        <div class="dropdown-menu" aria-labelledby="navbarUsernameDropdown">
+        @*<div class="dropdown-menu" aria-labelledby="navbarUsernameDropdown">
+            <a class="dropdown-item"
+               asp-controller="Account"
+               asp-action="Logout">@SharedLocalizer["Account-Text-Logout"]</a>
+        </div>*@
+
+        @*<div class="dropdown-menu" aria-labelledby="navbarUsernameDropdown">
             <a class="dropdown-item" href="#">Action1</a>
             <a class="dropdown-item" href="#">Action2</a>
-        </div>
+        </div>*@
     </li>
 </ul>

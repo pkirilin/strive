@@ -150,6 +150,9 @@
   <data name="Account-Text-Login" xml:space="preserve">
     <value>Sign in</value>
   </data>
+  <data name="Account-Text-Logout" xml:space="preserve">
+    <value>Sign out</value>
+  </data>
   <data name="Account-Text-Register" xml:space="preserve">
     <value>Sign up</value>
   </data>
