@@ -78,13 +78,18 @@ namespace Strive.Web.Common.Providers
         /// </summary>
         public static void SetupIdentityOptionsAction(IdentityOptions pidentityOptions)
         {
-            // debug options
+            // @todo реализовать свои IPasswordValidator, IUserValidator
+
+            // Настройки валидации пользователя
+            pidentityOptions.User.RequireUniqueEmail = true;
+
+            // Настройки валидации пароля
             pidentityOptions.Password.RequiredLength = 1;
             pidentityOptions.Password.RequireNonAlphanumeric = false;
             pidentityOptions.Password.RequireDigit = false;
             pidentityOptions.Password.RequireUppercase = false;
             pidentityOptions.Password.RequireLowercase = false;
-            // @todo настроить
+            
         }
     }
 }
