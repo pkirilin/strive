@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,8 +49,19 @@ namespace Strive.Web.App.Controllers
         /// </summary>
         private async Task<bool> TrySignInAsync(LoginViewModel pmodel)
         {
+            // Нахождение UserName пользователя по его Email, т.к. в форме указывается Email, а Identity требует указать UserName
+            
+            // @todo вынести в Repository
+            // ---------------------------------------------------
+            string targetUserName = await _db.Users
+                .Where(u => u.Email == pmodel.Email)
+                .Select(u => u.UserName)
+                .FirstOrDefaultAsync();
+            // Проверка получения данных не делается, т.к. позже будет добавлена валидация формы
+            // ---------------------------------------------------
+
             SignInResult result = await _signInManager.PasswordSignInAsync(
-                pmodel.Email, pmodel.Password, pmodel.RememberMe, false);
+                targetUserName, pmodel.Password, pmodel.RememberMe, false);
             return result.Succeeded;
         }
 
@@ -85,7 +96,7 @@ namespace Strive.Web.App.Controllers
             // Создание нового пользователя
             User user = new User()
             {
-                UserName = pmodel.Email,
+                UserName = pmodel.UserName,
                 Email = pmodel.Email
                 //,
                 //Details = userDetails

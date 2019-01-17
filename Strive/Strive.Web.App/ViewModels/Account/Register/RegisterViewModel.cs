@@ -15,7 +15,7 @@ namespace Strive.Web.App.ViewModels.Account.Register
         /// </summary>
         [Required]
         // @todo [Remote]
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         /// <summary>
         /// Строка для повторного ввода пароля и его подтверждения
