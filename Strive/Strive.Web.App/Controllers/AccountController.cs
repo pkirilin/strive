@@ -172,6 +172,15 @@ namespace Strive.Web.App.Controllers
         public IActionResult Register()
         {
             InitRegisterViewData();
+
+            // debug
+            //User u = _db.Users.FirstOrDefault();
+            //if (u != null)
+            //{
+            //    _db.Users.Remove(u);
+            //    _db.SaveChanges();
+            //}
+
             return View();
         }
 
