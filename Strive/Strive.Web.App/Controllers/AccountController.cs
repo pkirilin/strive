@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Strive.Web.App.Models;
 using Strive.Web.App.ViewModels.Account.Login;
@@ -14,16 +15,20 @@ namespace Strive.Web.App.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly StriveDbContext _db;
+
         private readonly IStringLocalizer<AccountController> _localizer;
 
         private readonly UserManager<User> _userManager;
 
         private readonly SignInManager<User> _signInManager;
 
-        public AccountController(IStringLocalizer<AccountController> plocalizer,
+        public AccountController(StriveDbContext pdb,
+            IStringLocalizer<AccountController> plocalizer,
             UserManager<User> puserManager,
             SignInManager<User> psignInManager)
         {
+            _db = pdb;
             _localizer = plocalizer;
             _userManager = puserManager;
             _signInManager = psignInManager;
