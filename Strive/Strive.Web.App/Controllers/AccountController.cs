@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using Strive.Communication.Emails;
+using Strive.Communication.Emails.EmailBuilders;
 using Strive.Web.App.Models;
 using Strive.Web.App.ViewModels.Account.Login;
 using Strive.Web.App.ViewModels.Account.Register;
@@ -13,6 +17,7 @@ using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace Strive.Web.App.Controllers
 {
+    // @todo refactor
     public class AccountController : Controller
     {
         private readonly StriveDbContext _db;
@@ -45,27 +50,6 @@ namespace Strive.Web.App.Controllers
         }
 
         /// <summary>
-        /// Попытка залогинить пользователя и получение результата
-        /// </summary>
-        private async Task<bool> TrySignInAsync(LoginViewModel pmodel)
-        {
-            // Нахождение UserName пользователя по его Email, т.к. в форме указывается Email, а Identity требует указать UserName
-            
-            // @todo вынести в Repository
-            // ---------------------------------------------------
-            string targetUserName = await _db.Users
-                .Where(u => u.Email == pmodel.Email)
-                .Select(u => u.UserName)
-                .FirstOrDefaultAsync();
-            // Проверка получения данных не делается, т.к. позже будет добавлена валидация формы
-            // ---------------------------------------------------
-
-            SignInResult result = await _signInManager.PasswordSignInAsync(
-                targetUserName, pmodel.Password, pmodel.RememberMe, false);
-            return result.Succeeded;
-        }
-
-        /// <summary>
         /// Проверка является ли ссылка ссылкой, относящейся к приложению 
         /// </summary>
         private bool IsUrlExistsInApplication(string purl)
@@ -83,6 +67,22 @@ namespace Strive.Web.App.Controllers
         private void InitRegisterViewData()
         {
             ViewData["TitleSecondary"] = _localizer["TitleSecondaryRegister"];
+        }
+
+        /// <summary>
+        /// Отправка пользователю email сообщения для подтверждения его регистрации
+        /// </summary>
+        private async void SendRegisterConfirmationMailAsync(User puser)
+        {
+            string confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(puser);
+            string confirmationLink = Url.Action(
+                "ConfirmEmail",
+                "Account",
+                new { puserID = puser.Id, ptoken = confirmationToken },
+                protocol: HttpContext.Request.Scheme);
+            var emailBuilder = new ConfirmRegistrationEmailBuilder(confirmationLink);
+            var emailSender = new EmailSender(emailBuilder);
+            await emailSender.SendEmailAsync(puser.Email);
         }
 
         /// <summary>
@@ -108,8 +108,10 @@ namespace Strive.Web.App.Controllers
             // Проверка результата добавления пользователя
             if (result.Succeeded == true)
             {
+                SendRegisterConfirmationMailAsync(user);
+                
                 // Установка куки для пользователя
-                await _signInManager.SignInAsync(user, false);
+                //await _signInManager.SignInAsync(user, false);
                 return true;
             }
             else
@@ -144,10 +146,24 @@ namespace Strive.Web.App.Controllers
 
             if (ModelState.IsValid == true)
             {
-                // Попытка входа с указанными данными и получение результата
-                bool isAbleToSignIn = await TrySignInAsync(pmodel);
+                // Проверка пользователя
+                User user = await _userManager.FindByEmailAsync(pmodel.Email);
+                if (user != null)
+                {
+                    // Проверка, подтвержден ли email
+                    if (await _userManager.IsEmailConfirmedAsync(user) == false)
+                    {
+                        // @todo locale
+                        ModelState.AddModelError(String.Empty, "email not confirmed");
+                        return View(pmodel);
+                    }
+                }
 
-                if (isAbleToSignIn == true)
+                // Попытка входа с указанными данными и получение результата
+                SignInResult result = await _signInManager.PasswordSignInAsync(
+                    user.UserName, pmodel.Password, pmodel.RememberMe, false);
+
+                if (result.Succeeded == true)
                 {
                     // Если удалось войти, идет проверка запрашиваемого Url
                     if (IsUrlExistsInApplication(pmodel.ReturnUrl) == true)
@@ -157,9 +173,8 @@ namespace Strive.Web.App.Controllers
                 }
                 else
                 {
-                    // @todo добавить сообщение об ошибке
-                    string errorMessage = "test sign in error";
-                    ModelState.AddModelError("", errorMessage);
+                    // @todo locale
+                    ModelState.AddModelError("", "sign in error: incorrect data");
                 }
             }
             return View(pmodel);
@@ -185,12 +200,12 @@ namespace Strive.Web.App.Controllers
             InitRegisterViewData();
 
             // debug
-            //User u = _db.Users.FirstOrDefault();
-            //if (u != null)
-            //{
-            //    _db.Users.Remove(u);
-            //    _db.SaveChanges();
-            //}
+            User u = _db.Users.FirstOrDefault();
+            if (u != null)
+            {
+                _db.Users.Remove(u);
+                _db.SaveChanges();
+            }
 
             return View();
         }
@@ -208,6 +223,29 @@ namespace Strive.Web.App.Controllers
                     return RedirectToAction("Index", "Home");
             }
             return View(pmodel);
+        }
+
+        /// <summary>
+        /// Метод действия для подтверждения адреса эл. почты при регистрации
+        /// </summary>
+        /// <param name="puserID">ID пользователя</param>
+        /// <param name="ptoken">Сгенерированный для пользователя код подтверждения</param>
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string puserID, string ptoken)
+        {
+            if (puserID == null || ptoken == null)
+                return NotFound();  // @todo exception page
+
+            User user = await _userManager.FindByIdAsync(puserID);
+            if(user == null)
+                return NotFound();  // @todo exception page
+
+            IdentityResult result = await _userManager.ConfirmEmailAsync(user, ptoken);
+            if (result.Succeeded == true)
+                return RedirectToAction("Index", "Home");
+            else
+                return NotFound();  // @todo exception page 
         }
     }
 }

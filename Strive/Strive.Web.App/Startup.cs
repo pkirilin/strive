@@ -42,7 +42,8 @@ namespace Strive.Web.App
 
             // Добавление Identity
             services.AddIdentity<User, IdentityRole>(StartupActionProvider.SetupIdentityOptionsAction)
-                .AddEntityFrameworkStores<StriveDbContext>();
+                .AddEntityFrameworkStores<StriveDbContext>()
+                .AddDefaultTokenProviders();
 
             // Добавление MVC
             services.AddMvc()

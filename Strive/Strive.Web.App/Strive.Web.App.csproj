@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Strive.Communication.Emails\Strive.Communication.Emails.csproj" />
     <ProjectReference Include="..\Strive.Web.Common\Strive.Web.Common.csproj" />
   </ItemGroup>
 
