@@ -17,7 +17,6 @@ using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace Strive.Web.App.Controllers
 {
-    // @todo refactor
     public class AccountController : Controller
     {
         private readonly StriveDbContext _db;
@@ -39,7 +38,7 @@ namespace Strive.Web.App.Controllers
             _signInManager = psignInManager;
         }
 
-        #region Login private methods
+        #region Private
 
         /// <summary>
         /// Инициализация контейнера ViewData для страниц, относящихся к Login
@@ -50,23 +49,20 @@ namespace Strive.Web.App.Controllers
         }
 
         /// <summary>
-        /// Проверка является ли ссылка ссылкой, относящейся к приложению 
-        /// </summary>
-        private bool IsUrlExistsInApplication(string purl)
-        {
-            return !String.IsNullOrEmpty(purl) && Url.IsLocalUrl(purl);
-        }
-
-        #endregion
-
-        #region Register private methods
-
-        /// <summary>
         /// Инициализация контейнера ViewData для страниц, относящихся к Register
         /// </summary>
         private void InitRegisterViewData()
         {
             ViewData["TitleSecondary"] = _localizer["TitleSecondaryRegister"];
+        }
+
+        // @todo общая функция, вынести в отдельную dll
+        /// <summary>
+        /// Проверка является ли ссылка ссылкой, относящейся к приложению 
+        /// </summary>
+        private bool IsUrlExistsInApplication(string purl)
+        {
+            return !String.IsNullOrEmpty(purl) && Url.IsLocalUrl(purl);
         }
 
         /// <summary>
@@ -109,9 +105,6 @@ namespace Strive.Web.App.Controllers
             if (result.Succeeded == true)
             {
                 SendRegisterConfirmationMailAsync(user);
-                
-                // Установка куки для пользователя
-                //await _signInManager.SignInAsync(user, false);
                 return true;
             }
             else
@@ -179,17 +172,6 @@ namespace Strive.Web.App.Controllers
             }
             return View(pmodel);
         }
-        
-        /// <summary>
-        /// Метод действия для выхода из учетной записи
-        /// </summary>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
-        }
 
         /// <summary>
         /// Метод действия для показа пользователю страницы регистрации учетной записи
@@ -238,7 +220,7 @@ namespace Strive.Web.App.Controllers
                 return NotFound();  // @todo exception page
 
             User user = await _userManager.FindByIdAsync(puserID);
-            if(user == null)
+            if (user == null)
                 return NotFound();  // @todo exception page
 
             IdentityResult result = await _userManager.ConfirmEmailAsync(user, ptoken);
@@ -246,6 +228,17 @@ namespace Strive.Web.App.Controllers
                 return RedirectToAction("Index", "Home");
             else
                 return NotFound();  // @todo exception page 
+        }
+
+        /// <summary>
+        /// Метод действия для выхода из учетной записи
+        /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
