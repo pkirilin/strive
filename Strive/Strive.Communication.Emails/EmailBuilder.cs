@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MimeKit;
+using MimeKit.Text;
 
 namespace Strive.Communication.Emails
 {
@@ -61,7 +62,7 @@ namespace Strive.Communication.Emails
         /// <param name="ptext">Добавляемый текст</param>
         protected void AddBodyTextPart(string ptext)
         {
-            _messageBodyMultipart.Add(new TextPart("plain")
+            _messageBodyMultipart.Add(new TextPart(TextFormat.Html)
             {
                 Text = ptext
             });
