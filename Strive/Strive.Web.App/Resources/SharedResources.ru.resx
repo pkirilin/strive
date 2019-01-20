@@ -147,6 +147,9 @@
   <data name="Account-Placeholder-Username" xml:space="preserve">
     <value>Введите имя пользователя</value>
   </data>
+  <data name="Account-Text-ForgotPassword" xml:space="preserve">
+    <value>Забыли пароль?</value>
+  </data>
   <data name="Account-Text-Login" xml:space="preserve">
     <value>Вход</value>
   </data>
@@ -155,8 +158,5 @@
   </data>
   <data name="Account-Text-Register" xml:space="preserve">
     <value>Регистрация</value>
-  </data>
-  <data name="Account-Text-Restore" xml:space="preserve">
-    <value>Восстановление учетной записи</value>
   </data>
 </root>
