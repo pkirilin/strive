@@ -45,7 +45,7 @@ namespace Strive.Web.App.Controllers
         /// </summary>
         private void InitLoginViewData()
         {
-            ViewData["TitleSecondary"] = _localizer["TitleSecondaryLogin"];
+            ViewData["TitleSecondary"] = _localizer["TitleSecondary-Login"];
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Strive.Web.App.Controllers
         /// </summary>
         private void InitRegisterViewData()
         {
-            ViewData["TitleSecondary"] = _localizer["TitleSecondaryRegister"];
+            ViewData["TitleSecondary"] = _localizer["TitleSecondary-Register"];
         }
 
         // @todo общая функция, вынести в отдельную dll
