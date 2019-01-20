@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -198,6 +198,8 @@ namespace Strive.Web.App.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel pmodel)
         {
+            InitRegisterViewData();
+
             if (ModelState.IsValid == true)
             {
                 bool isUserCreated = await TryCreateUserAsync(pmodel);
