@@ -11,6 +11,7 @@ using Microsoft.Extensions.Localization;
 using Strive.Communication.Emails;
 using Strive.Communication.Emails.EmailBuilders;
 using Strive.Web.App.Models;
+using Strive.Web.App.ViewModels.Account.ForgotPassword;
 using Strive.Web.App.ViewModels.Account.Login;
 using Strive.Web.App.ViewModels.Account.Register;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
@@ -56,6 +57,14 @@ namespace Strive.Web.App.Controllers
             ViewData["TitleSecondary"] = _localizer["TitleSecondary-Register"];
         }
 
+        /// <summary>
+        /// Инициализация контейнера ViewData для страниц, относящихся к ForgotPassword
+        /// </summary>
+        private void InitForgotPasswordViewData()
+        {
+            ViewData["TitleSecondary"] = _localizer["TitleSecondary-ForgotPassword"];
+        }
+
         // @todo общая функция, вынести в отдельную dll
         /// <summary>
         /// Проверка является ли ссылка ссылкой, относящейся к приложению 
@@ -77,6 +86,22 @@ namespace Strive.Web.App.Controllers
                 new { puserID = puser.Id, ptoken = confirmationToken },
                 protocol: HttpContext.Request.Scheme);
             var emailBuilder = new ConfirmRegistrationEmailBuilder(confirmationLink);
+            var emailSender = new EmailSender(emailBuilder);
+            await emailSender.SendEmailAsync(puser.Email);
+        }
+
+        /// <summary>
+        /// Отправка пользователю email сообщения для сброса его пароля
+        /// </summary>
+        private async void SendPasswordResetMailAsync(User puser)
+        {
+            string passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(puser);
+            string passwordResetLink = Url.Action(
+                "ResetPassword",
+                "Account",
+                new { userID = puser.Id, ptoken = passwordResetToken },
+                protocol: HttpContext.Request.Scheme);
+            var emailBuilder = new PasswordResetEmailBuilder(passwordResetLink);
             var emailSender = new EmailSender(emailBuilder);
             await emailSender.SendEmailAsync(puser.Email);
         }
@@ -206,6 +231,7 @@ namespace Strive.Web.App.Controllers
                 if (isUserCreated == true)
                     return RedirectToAction("Index", "Home");
             }
+            // @todo redirect на страницу с информацией о том, что был выслан Email
             return View(pmodel);
         }
 
@@ -241,6 +267,46 @@ namespace Strive.Web.App.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// Метод действия для показа пользователю страницы запроса на сброс пароля
+        /// </summary>
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword()
+        {
+            InitForgotPasswordViewData();
+            return View();
+        }
+
+        /// <summary>
+        /// Метод действия для обработки запроса на сброс пароля
+        /// </summary>
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel pmodel)
+        {
+            InitForgotPasswordViewData();
+
+            if (ModelState.IsValid == true)
+            {
+                // Нахождение пользователя с указанным Email в БД
+                User user = await _userManager.FindByEmailAsync(pmodel.Email);
+
+                // Код отправляется только для существующих пользователей с подтвержденным Email
+                if (user != null && await _userManager.IsEmailConfirmedAsync(user) == true)
+                {
+                    SendPasswordResetMailAsync(user);
+                    return View("~/Views/Account/ForgotPasswordConfirmation.cshtml", user.Email);
+                }  
+                else
+                    // @todo locale
+                    ModelState.AddModelError("", "forgot password: user not found or user's email is not confirmed");
+            }
+
+            return View(pmodel);
         }
     }
 }
