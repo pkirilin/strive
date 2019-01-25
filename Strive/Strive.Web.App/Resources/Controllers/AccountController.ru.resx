@@ -126,4 +126,7 @@
   <data name="TitleSecondary-Register" xml:space="preserve">
     <value>Регистрация</value>
   </data>
+  <data name="TitleSecondary-ResetPassword" xml:space="preserve">
+    <value>Сброс пароля</value>
+  </data>
 </root>

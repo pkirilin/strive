@@ -120,6 +120,12 @@
   <data name="Account-Label-Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="Account-Label-NewPassword" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="Account-Label-NewPasswordConfirm" xml:space="preserve">
+    <value>New password again</value>
+  </data>
   <data name="Account-Label-Password" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -137,6 +143,12 @@
   </data>
   <data name="Account-Placeholder-Email" xml:space="preserve">
     <value>Enter email</value>
+  </data>
+  <data name="Account-Placeholder-NewPassword" xml:space="preserve">
+    <value>Enter new password</value>
+  </data>
+  <data name="Account-Placeholder-NewPasswordConfirm" xml:space="preserve">
+    <value>Enter new password again</value>
   </data>
   <data name="Account-Placeholder-Password" xml:space="preserve">
     <value>Enter password</value>

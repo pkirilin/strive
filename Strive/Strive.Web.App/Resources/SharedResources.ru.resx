@@ -120,6 +120,12 @@
   <data name="Account-Label-Email" xml:space="preserve">
     <value>Адрес электронной почты</value>
   </data>
+  <data name="Account-Label-NewPassword" xml:space="preserve">
+    <value>Новый пароль</value>
+  </data>
+  <data name="Account-Label-NewPasswordConfirm" xml:space="preserve">
+    <value>Подтверждение нового пароля</value>
+  </data>
   <data name="Account-Label-Password" xml:space="preserve">
     <value>Пароль</value>
   </data>
@@ -137,6 +143,12 @@
   </data>
   <data name="Account-Placeholder-Email" xml:space="preserve">
     <value>Введите адрес электронной почты</value>
+  </data>
+  <data name="Account-Placeholder-NewPassword" xml:space="preserve">
+    <value>Введите новый пароль</value>
+  </data>
+  <data name="Account-Placeholder-NewPasswordConfirm" xml:space="preserve">
+    <value>Повторите новый пароль</value>
   </data>
   <data name="Account-Placeholder-Password" xml:space="preserve">
     <value>Введите пароль</value>
