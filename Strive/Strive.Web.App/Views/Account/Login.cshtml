@@ -18,45 +18,45 @@
                     <div class="form-group">
                         <label class="font-weight-bold"
                                asp-for="Email">@SharedLocalizer["Account-Label-Email"]</label>
-                        <input type="text"
-                               placeholder="@SharedLocalizer["Account-Placeholder-Email"]"
-                               class="form-control col"
-                               asp-for="Email"/>
-                    </div>
+                            <input type="text"
+                                   placeholder="@SharedLocalizer["Account-Placeholder-Email"]"
+                                   class="form-control col"
+                                   asp-for="Email" />
+                        </div>
 
-                    <div class="form-group">
-                        <label class="font-weight-bold"
-                               asp-for="Password">@SharedLocalizer["Account-Label-Password"]</label>
-                        <input type="password"
-                               placeholder="@SharedLocalizer["Account-Placeholder-Password"]"
-                               class="form-control col"
-                               asp-for="Password"/>
-                    </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold"
+                                   asp-for="Password">@SharedLocalizer["Account-Label-Password"]</label>
+                                <input type="password"
+                                       placeholder="@SharedLocalizer["Account-Placeholder-Password"]"
+                                       class="form-control col"
+                                       asp-for="Password" />
+                            </div>
 
-                    <div class="form-group form-check">
-                        <input type="checkbox"
-                               class="form-check-input"
-                               asp-for="RememberMe"/>
-                        <label class="form-check-label"
-                               asp-for="RememberMe">@SharedLocalizer["Account-Label-RememberMe"]</label>
-                    </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       asp-for="RememberMe" />
+                                <label class="form-check-label"
+                                       asp-for="RememberMe">@SharedLocalizer["Account-Label-RememberMe"]</label>
+                                </div>
 
-                    <div class="form-group d-flex">
-                        <input type="submit"
-                               value="@SharedLocalizer["Account-Text-Login"]"
-                               class="flex-fill btn btn-success mr-2" />
-                        <a class="flex-fill btn btn-success"
-                           asp-controller="Account"
-                           asp-action="Register">@SharedLocalizer["Account-Text-Register"]</a>
-                    </div>
+                                <div class="form-group d-flex">
+                                    <input type="submit"
+                                           value="@SharedLocalizer["Account-Text-Login"]"
+                                           class="flex-fill btn btn-success mr-2" />
+                                    <a class="flex-fill btn btn-success"
+                                       asp-controller="Account"
+                                       asp-action="Register">@SharedLocalizer["Account-Text-Register"]</a>
+                                </div>
 
-                    <div class="form-group text-center">
-                        <a class="card-link"
-                           asp-controller="Account"
-                           asp-action="ForgotPassword">@SharedLocalizer["Account-Text-ForgotPassword"]</a>
+                                <div class="form-group text-center">
+                                    <a class="card-link"
+                                       asp-controller="Account"
+                                       asp-action="ForgotPassword">@SharedLocalizer["Account-Text-ForgotPassword"]</a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
