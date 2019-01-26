@@ -8,10 +8,7 @@ using Microsoft.Extensions.Localization;
 using Strive.Communication.Emails;
 using Strive.Communication.Emails.EmailBuilders;
 using Strive.Web.App.Models;
-using Strive.Web.App.ViewModels.Account.ForgotPassword;
-using Strive.Web.App.ViewModels.Account.Login;
-using Strive.Web.App.ViewModels.Account.Register;
-using Strive.Web.App.ViewModels.Account.ResetPassword;
+using Strive.Web.App.ViewModels.Account;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace Strive.Web.App.Controllers

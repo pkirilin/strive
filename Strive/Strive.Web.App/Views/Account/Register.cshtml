@@ -1,4 +1,4 @@
-﻿@model Strive.Web.App.ViewModels.Account.Register.RegisterViewModel
+﻿@model Strive.Web.App.ViewModels.Account.RegisterViewModel
 
 <h2 class="text-center">@Localizer["Header"]</h2>
 
@@ -18,53 +18,53 @@
                     <div class="form-group">
                         <label class="font-weight-bold"
                                asp-for="UserName">@SharedLocalizer["Account-Label-Username"]*</label>
-                        <input type="text"
-                               placeholder="@SharedLocalizer["Account-Placeholder-Username"]"
-                               class="form-control col"
-                               asp-for="UserName"/>
-                    </div>
+                            <input type="text"
+                                   placeholder="@SharedLocalizer["Account-Placeholder-Username"]"
+                                   class="form-control col"
+                                   asp-for="UserName" />
+                        </div>
 
-                    <div class="form-group">
-                        <label class="font-weight-bold"
-                               asp-for="Email">@SharedLocalizer["Account-Label-Email"]*</label>
-                        <input type="text"
-                               placeholder="@SharedLocalizer["Account-Placeholder-Email"]"
-                               class="form-control col"
-                               asp-for="Email"/>
-                    </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold"
+                                   asp-for="Email">@SharedLocalizer["Account-Label-Email"]*</label>
+                                <input type="text"
+                                       placeholder="@SharedLocalizer["Account-Placeholder-Email"]"
+                                       class="form-control col"
+                                       asp-for="Email" />
+                            </div>
 
-                    <div class="form-group">
-                        <label class="font-weight-bold"
-                               asp-for="Password">@SharedLocalizer["Account-Label-Password"]*</label>
-                        <input type="password"
-                               placeholder="@SharedLocalizer["Account-Placeholder-Password"]"
-                               class="form-control col"
-                               asp-for="Password"/>
-                    </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold"
+                                       asp-for="Password">@SharedLocalizer["Account-Label-Password"]*</label>
+                                    <input type="password"
+                                           placeholder="@SharedLocalizer["Account-Placeholder-Password"]"
+                                           class="form-control col"
+                                           asp-for="Password" />
+                                </div>
 
-                    <div class="form-group">
-                        <label class="font-weight-bold"
-                               asp-for="PasswordConfirm">@SharedLocalizer["Account-Label-PasswordConfirm"]*</label>
-                        <input type="password"
-                               placeholder="@SharedLocalizer["Account-Placeholder-PasswordConfirm"]"
-                               class="form-control col"
-                               asp-for="PasswordConfirm"/>
-                    </div>
+                                <div class="form-group">
+                                    <label class="font-weight-bold"
+                                           asp-for="PasswordConfirm">@SharedLocalizer["Account-Label-PasswordConfirm"]*</label>
+                                        <input type="password"
+                                               placeholder="@SharedLocalizer["Account-Placeholder-PasswordConfirm"]"
+                                               class="form-control col"
+                                               asp-for="PasswordConfirm" />
+                                    </div>
 
-                    <div class="form-group d-flex">
-                        <input type="submit"
-                               value="@SharedLocalizer["Account-Text-Register"]"
-                               class="flex-fill btn btn-success" />
+                                    <div class="form-group d-flex">
+                                        <input type="submit"
+                                               value="@SharedLocalizer["Account-Text-Register"]"
+                                               class="flex-fill btn btn-success" />
+                                    </div>
+
+                                    <div class="form-group text-center">
+                                        <a class="card-link"
+                                           asp-controller="Account"
+                                           asp-action="Login">@SharedLocalizer["Account-Text-Login"]</a>
+                                        <span>@Localizer["LoginSpan"]</span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                
-                    <div class="form-group text-center">
-                        <a class="card-link"
-                           asp-controller="Account"
-                           asp-action="Login">@SharedLocalizer["Account-Text-Login"]</a>
-                        <span>@Localizer["LoginSpan"]</span>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+                </div>

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Strive.Web.App.ViewModels.Account.ForgotPassword
+namespace Strive.Web.App.ViewModels.Account
 {
     /// <summary>
     /// Модель представления для страницы запроса сброса пароля
