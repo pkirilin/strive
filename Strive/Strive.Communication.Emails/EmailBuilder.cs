@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MimeKit;
+﻿using MimeKit;
 using MimeKit.Text;
 
 namespace Strive.Communication.Emails
 {
-    /// <summary>
-    /// Реализует общий функционал, необходимый для построения email сообщений
-    /// </summary>
-    public class EmailBuilder : IEmailBuilder
+	/// <summary>
+	/// Реализует общий функционал, необходимый для построения email сообщений
+	/// </summary>
+	public class EmailBuilder : IEmailBuilder
     {
         protected readonly MimeMessage _message;
 

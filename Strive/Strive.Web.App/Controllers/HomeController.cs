@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
@@ -10,10 +7,10 @@ using Microsoft.Extensions.Localization;
 
 namespace Strive.Web.App.Controllers
 {
-    /// <summary>
-    /// Главный контроллер приложения
-    /// </summary>
-    public class HomeController : Controller
+	/// <summary>
+	/// Главный контроллер приложения
+	/// </summary>
+	public class HomeController : Controller
     {
         private readonly IStringLocalizer<HomeController> _localizer;
 

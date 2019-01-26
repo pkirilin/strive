@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 using Microsoft.AspNetCore.Routing;
 
 namespace Strive.Web.Common.Utils
 {
-    /// <summary>
-    /// Средство преобразования camel-case путей в slug-пути
-    /// </summary>
-    public class SlugifyParameterTransformer : IOutboundParameterTransformer
+	/// <summary>
+	/// Средство преобразования camel-case путей в slug-пути
+	/// </summary>
+	public class SlugifyParameterTransformer : IOutboundParameterTransformer
     {
         public string TransformOutbound(object value)
         {

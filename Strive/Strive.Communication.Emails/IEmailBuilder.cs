@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MimeKit;
+﻿using MimeKit;
 
 namespace Strive.Communication.Emails
 {
-    /// <summary>
-    /// Предоставляет интерфейс, необходимый для построения email сообщений
-    /// </summary>
-    public interface IEmailBuilder
+	/// <summary>
+	/// Предоставляет интерфейс, необходимый для построения email сообщений
+	/// </summary>
+	public interface IEmailBuilder
     {
         /// <summary>
         /// Построение части письма, отвечающей за отправителя

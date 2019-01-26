@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MimeKit;
 
 namespace Strive.Communication.Emails
 {
-    /// <summary>
-    /// Предоставляет функционал, необходимый для отправки email сообщений
-    /// </summary>
-    public class EmailSender
+	/// <summary>
+	/// Предоставляет функционал, необходимый для отправки email сообщений
+	/// </summary>
+	public class EmailSender
     {
         private readonly EmailCreator _emailCreator;
 

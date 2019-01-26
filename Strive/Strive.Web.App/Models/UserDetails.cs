@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Strive.Web.App.Models
+﻿namespace Strive.Web.App.Models
 {
-    /// <summary>
-    /// Сущность "Данные пользователя". Описывает дополнительные данные о пользователе системы
-    /// </summary>
-    public class UserDetails
+	/// <summary>
+	/// Сущность "Данные пользователя". Описывает дополнительные данные о пользователе системы
+	/// </summary>
+	public class UserDetails
     {
         #region DataProperties
 

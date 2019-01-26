@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Strive.Communication.Emails.EmailBuilders
+﻿namespace Strive.Communication.Emails.EmailBuilders
 {
-    /// <summary>
-    /// Реализует функционал, необходимый для построения email сообщений
-    /// сброса пароля учетных записей пользователей
-    /// </summary>
-    public class PasswordResetEmailBuilder : EmailBuilder
+	/// <summary>
+	/// Реализует функционал, необходимый для построения email сообщений
+	/// сброса пароля учетных записей пользователей
+	/// </summary>
+	public class PasswordResetEmailBuilder : EmailBuilder
     {
         private readonly string _passwordResetLink;
 

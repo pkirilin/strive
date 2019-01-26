@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Strive.Communication.Emails.EmailBuilders
+﻿namespace Strive.Communication.Emails.EmailBuilders
 {
-    /// <summary>
-    /// Реализует функционал, необходимый для построения email сообщений
-    /// подтверждения регистрации учетных записей пользователей
-    /// </summary>
-    public class ConfirmRegistrationEmailBuilder : EmailBuilder
+	/// <summary>
+	/// Реализует функционал, необходимый для построения email сообщений
+	/// подтверждения регистрации учетных записей пользователей
+	/// </summary>
+	public class ConfirmRegistrationEmailBuilder : EmailBuilder
     {
         private readonly string _emailConfirmationLink;
 

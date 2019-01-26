@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Strive.Web.App.Models
 {
-    /// <summary>
-    /// Сущность "Пользователь". Описывает основные данные пользователя системы
-    /// </summary>
-    public class User : IdentityUser
+	/// <summary>
+	/// Сущность "Пользователь". Описывает основные данные пользователя системы
+	/// </summary>
+	public class User : IdentityUser
     {
         #region DataProperties
 
