@@ -309,7 +309,7 @@ namespace Strive.Web.App.Controllers
 				if (user != null && await _userManager.IsEmailConfirmedAsync(user) == true)
 				{
 					SendPasswordResetMailAsync(user);
-					return View("~/Views/Account/ForgotPasswordConfirmation.cshtml", user.Email);
+					return View("ForgotPasswordConfirmation", user.Email);
 				}
 				else
 					// @todo locale
@@ -361,7 +361,7 @@ namespace Strive.Web.App.Controllers
 					// Если пользователь существует, и его email подтвержден, идет смена пароля
 					IdentityResult result = await _userManager.ResetPasswordAsync(user, pmodel.Token, pmodel.NewPassword);
 					if (result.Succeeded == true)
-						return View("~/Views/Account/ResetPasswordConfirmation.cshtml");
+						return View("ResetPasswordConfirmation");
 
 					// @todo вынести в отдельную функцию
 					foreach (var error in result.Errors)
