@@ -116,7 +116,7 @@ namespace Strive.Web.App.Controllers
 		/// <summary>
 		/// Попытка создать нового пользователя и получение результата
 		/// </summary>
-		private async Task<bool> TryCreateUserAsync(RegisterViewModel pmodel)
+		private async Task<User> TryCreateUserAsync(RegisterViewModel pmodel)
 		{
 			// Создание пустых данных для нового пользователя
 			//UserDetails userDetails = new UserDetails();
@@ -135,17 +135,13 @@ namespace Strive.Web.App.Controllers
 
 			// Проверка результата добавления пользователя
 			if (result.Succeeded == true)
-			{
-				SendRegisterConfirmationMailAsync(user);
-				return true;
-			}
-			else
-			{
-				// Добавление к состоянию модели всех возникших ошибок
-				foreach (IdentityError error in result.Errors)
-					ModelState.AddModelError(string.Empty, error.Description);
-				return false;
-			}
+				return user;
+
+			// Добавление к состоянию модели всех возникших ошибок
+			foreach (IdentityError error in result.Errors)
+				ModelState.AddModelError(string.Empty, error.Description);
+
+			return null;
 		}
 
 		#endregion
@@ -234,11 +230,18 @@ namespace Strive.Web.App.Controllers
 
 			if (ModelState.IsValid == true)
 			{
-				bool isUserCreated = await TryCreateUserAsync(pmodel);
-				if (isUserCreated == true)
-					return RedirectToAction("Index", "Home");
+				User user = await TryCreateUserAsync(pmodel);
+
+				if (user != null)
+				{
+					// Пользователь был успешно создан
+					SendRegisterConfirmationMailAsync(user);
+					return View("RegisterConfirmation", user.Email);
+				}
+
+				return RedirectToAction("Index", "Home");
 			}
-			// @todo redirect на страницу с информацией о том, что был выслан Email
+
 			return View(pmodel);
 		}
 
