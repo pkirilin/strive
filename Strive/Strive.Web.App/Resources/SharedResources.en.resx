@@ -171,4 +171,7 @@
   <data name="Account-Text-Register" xml:space="preserve">
     <value>Sign up</value>
   </data>
+  <data name="ErrorMessage-NotFound" xml:space="preserve">
+    <value>Page you requested is not found!</value>
+  </data>
 </root>

@@ -171,4 +171,7 @@
   <data name="Account-Text-Register" xml:space="preserve">
     <value>Регистрация</value>
   </data>
+  <data name="ErrorMessage-NotFound" xml:space="preserve">
+    <value>Указанная страница не найдена!</value>
+  </data>
 </root>

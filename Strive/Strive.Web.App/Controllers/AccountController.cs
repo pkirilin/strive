@@ -68,13 +68,33 @@ namespace Strive.Web.App.Controllers
 			ViewData["TitleSecondary"] = _localizer["TitleSecondary-ResetPassword"];
 		}
 
-		// @todo общая функция, вынести в отдельную dll
+		// @todo возможно, стоит создать базовый контроллер, и добавить метод туда
+		/// <summary>
+		/// 
+		/// </summary>
+		private void InitNotFoundErrorViewData()
+		{
+			ViewData["TitleSecondary"] = _localizer["TitleSecondary-PageNotFound"];
+		}
+
+		// @todo возможно, стоит создать базовый контроллер, и добавить метод туда
 		/// <summary>
 		/// Проверка является ли ссылка ссылкой, относящейся к приложению 
 		/// </summary>
 		private bool IsUrlExistsInApplication(string purl)
 		{
 			return !String.IsNullOrEmpty(purl) && Url.IsLocalUrl(purl);
+		}
+
+		// @todo возможно, стоит создать базовый контроллер, и добавить метод туда
+		/// <summary>
+		/// Метод, возвращающий ошибку для страницы, которая
+		/// не может быть найдена или обработана
+		/// </summary>
+		private IActionResult GetNotFoundError()
+		{
+			InitNotFoundErrorViewData();
+			return View("~/Views/Shared/PageNotFound.cshtml");
 		}
 
 		/// <summary>
@@ -174,8 +194,8 @@ namespace Strive.Web.App.Controllers
 					// Проверка, подтвержден ли email
 					if (await _userManager.IsEmailConfirmedAsync(user) == false)
 					{
-						// @todo locale
-						ModelState.AddModelError(String.Empty, "email not confirmed");
+						// @todo создать дополнительный ajax-метод для валидации на клиенте
+						ModelState.AddModelError(String.Empty, "Email confirmation error");
 						return View(pmodel);
 					}
 				}
@@ -194,8 +214,8 @@ namespace Strive.Web.App.Controllers
 				}
 				else
 				{
-					// @todo locale
-					ModelState.AddModelError("", "sign in error: incorrect data");
+					// @todo создать дополнительный ajax-метод для валидации на клиенте
+					ModelState.AddModelError("", "Sign in error: incorrect data");
 				}
 			}
 			return View(pmodel);
@@ -255,17 +275,18 @@ namespace Strive.Web.App.Controllers
 		public async Task<IActionResult> ConfirmEmail(string puserID, string ptoken)
 		{
 			if (puserID == null || ptoken == null)
-				return NotFound();  // @todo exception page
+				return GetNotFoundError();
 
 			User user = await _userManager.FindByIdAsync(puserID);
 			if (user == null)
-				return NotFound();  // @todo exception page
+				return GetNotFoundError();
 
 			IdentityResult result = await _userManager.ConfirmEmailAsync(user, ptoken);
 			if (result.Succeeded == true)
 				return RedirectToAction("Index", "Home");
 			else
-				return NotFound();  // @todo exception page 
+				// @todo создать дополнительный ajax-метод для валидации на клиенте
+				return NotFound();
 		}
 
 		/// <summary>
@@ -312,7 +333,7 @@ namespace Strive.Web.App.Controllers
 					return View("ForgotPasswordConfirmation", user.Email);
 				}
 				else
-					// @todo locale
+					// @todo создать дополнительный ajax-метод для валидации на клиенте
 					ModelState.AddModelError("", "forgot password: user not found or user's email is not confirmed");
 			}
 
@@ -329,7 +350,7 @@ namespace Strive.Web.App.Controllers
 			InitResetPasswordViewData();
 
 			if (pemail == null || ptoken == null)
-				return NotFound();  // @todo exception page
+				return GetNotFoundError();
 
 			ResetPasswordViewModel model = new ResetPasswordViewModel()
 			{

@@ -123,6 +123,9 @@
   <data name="TitleSecondary-Login" xml:space="preserve">
     <value>Вход</value>
   </data>
+  <data name="TitleSecondary-PageNotFound" xml:space="preserve">
+    <value>Страница не найдена</value>
+  </data>
   <data name="TitleSecondary-Register" xml:space="preserve">
     <value>Регистрация</value>
   </data>
