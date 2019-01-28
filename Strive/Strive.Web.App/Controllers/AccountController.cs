@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -127,6 +127,15 @@ namespace Strive.Web.App.Controllers
 				ModelState.AddModelError(string.Empty, error.Description);
 
 			return null;
+		}
+
+		/// <summary>
+		/// Проверка, существует ли пользователь и подтвержден ли его email
+		/// </summary>
+		/// <param name="puser">Пользователь, которого необходимо проверить</param>
+		private async Task<bool> IsUserNotNullAndEmailConfirmedAsync(User puser)
+		{
+			return puser != null && await _userManager.IsEmailConfirmedAsync(puser) == true;
 		}
 
 		#endregion
@@ -292,7 +301,7 @@ namespace Strive.Web.App.Controllers
 				User user = await _userManager.FindByEmailAsync(pmodel.Email);
 
 				// Код отправляется только для существующих пользователей с подтвержденным Email
-				if (user != null && await _userManager.IsEmailConfirmedAsync(user) == true)
+				if (await IsUserNotNullAndEmailConfirmedAsync(user) == true)
 				{
 					SendPasswordResetMailAsync(user);
 					return View("ForgotPasswordConfirmation", user.Email);
@@ -341,9 +350,8 @@ namespace Strive.Web.App.Controllers
 				// Нахождение пользователя с указанным Email в БД
 				User user = await _userManager.FindByEmailAsync(pmodel.Email);
 
-				if (user != null && await _userManager.IsEmailConfirmedAsync(user) == true)
+				if (await IsUserNotNullAndEmailConfirmedAsync(user) == true)
 				{
-					// @todo вынести if в отдельную функцию
 					// Если пользователь существует, и его email подтвержден, идет смена пароля
 					IdentityResult result = await _userManager.ResetPasswordAsync(user, pmodel.Token, pmodel.NewPassword);
 					if (result.Succeeded == true)
