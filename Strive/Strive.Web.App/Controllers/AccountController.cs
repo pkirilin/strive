@@ -99,6 +99,16 @@ namespace Strive.Web.App.Controllers
 		}
 
 		/// <summary>
+		/// Добавление к состоянию модели всех возникших ошибок Identity
+		/// </summary>
+		/// <param name="presult">Результат действия Identity</param>
+		private void AddIdentityErrorsToModelState(IdentityResult presult)
+		{
+			foreach (IdentityError error in presult.Errors)
+				ModelState.AddModelError(String.Empty, error.Description);
+		}
+
+		/// <summary>
 		/// Попытка создать нового пользователя и получение результата
 		/// </summary>
 		private async Task<User> TryCreateUserAsync(RegisterViewModel pmodel)
@@ -122,10 +132,7 @@ namespace Strive.Web.App.Controllers
 			if (result.Succeeded == true)
 				return user;
 
-			// Добавление к состоянию модели всех возникших ошибок
-			foreach (IdentityError error in result.Errors)
-				ModelState.AddModelError(string.Empty, error.Description);
-
+			AddIdentityErrorsToModelState(result);
 			return null;
 		}
 
@@ -357,9 +364,7 @@ namespace Strive.Web.App.Controllers
 					if (result.Succeeded == true)
 						return View("ResetPasswordConfirmation");
 
-					// @todo вынести в отдельную функцию
-					foreach (var error in result.Errors)
-						ModelState.AddModelError(String.Empty, error.Description);
+					AddIdentityErrorsToModelState(result);
 				}
 			}
 
