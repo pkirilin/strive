@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -13,12 +13,8 @@ using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace Strive.Web.App.Controllers
 {
-	public class AccountController : Controller
+	public class AccountController : StriveController
 	{
-		private readonly StriveDbContext _db;
-
-		private readonly IStringLocalizer<AccountController> _localizer;
-
 		private readonly UserManager<User> _userManager;
 
 		private readonly SignInManager<User> _signInManager;
@@ -26,10 +22,8 @@ namespace Strive.Web.App.Controllers
 		public AccountController(StriveDbContext pdb,
 			IStringLocalizer<AccountController> plocalizer,
 			UserManager<User> puserManager,
-			SignInManager<User> psignInManager)
+			SignInManager<User> psignInManager) : base(pdb, plocalizer)
 		{
-			_db = pdb;
-			_localizer = plocalizer;
 			_userManager = puserManager;
 			_signInManager = psignInManager;
 		}
@@ -66,35 +60,6 @@ namespace Strive.Web.App.Controllers
 		private void InitResetPasswordViewData()
 		{
 			ViewData["TitleSecondary"] = _localizer["TitleSecondary-ResetPassword"];
-		}
-
-		// @todo возможно, стоит создать базовый контроллер, и добавить метод туда
-		/// <summary>
-		/// 
-		/// </summary>
-		private void InitNotFoundErrorViewData()
-		{
-			ViewData["TitleSecondary"] = _localizer["TitleSecondary-PageNotFound"];
-		}
-
-		// @todo возможно, стоит создать базовый контроллер, и добавить метод туда
-		/// <summary>
-		/// Проверка является ли ссылка ссылкой, относящейся к приложению 
-		/// </summary>
-		private bool IsUrlExistsInApplication(string purl)
-		{
-			return !String.IsNullOrEmpty(purl) && Url.IsLocalUrl(purl);
-		}
-
-		// @todo возможно, стоит создать базовый контроллер, и добавить метод туда
-		/// <summary>
-		/// Метод, возвращающий ошибку для страницы, которая
-		/// не может быть найдена или обработана
-		/// </summary>
-		private IActionResult GetNotFoundError()
-		{
-			InitNotFoundErrorViewData();
-			return View("~/Views/Shared/PageNotFound.cshtml");
 		}
 
 		/// <summary>
