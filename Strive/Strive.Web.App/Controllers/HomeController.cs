@@ -10,39 +10,43 @@ namespace Strive.Web.App.Controllers
 	/// <summary>
 	/// Главный контроллер приложения
 	/// </summary>
+	[Route("home")]
 	public class HomeController : Controller
-    {
-        private readonly IStringLocalizer<HomeController> _localizer;
+	{
+		private readonly IStringLocalizer<HomeController> _localizer;
 
-        public HomeController(IStringLocalizer<HomeController> plocalizer)
-        {
-            _localizer = plocalizer;
-        }
+		public HomeController(IStringLocalizer<HomeController> plocalizer)
+		{
+			_localizer = plocalizer;
+		}
 
-        /// <summary>
-        /// Вызов представления главной страницы приложения
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        public IActionResult Index()
-        {
-            ViewData["TitleSecondary"] = _localizer["TitleSecondary"];
-            return View();
-        }
+		/// <summary>
+		/// Вызов представления главной страницы приложения
+		/// </summary>
+		/// <returns></returns>
+		[Authorize]
+		[HttpGet]
+		[Route("/")]
+		[Route("")]
+		public IActionResult Index()
+		{
+			ViewData["TitleSecondary"] = _localizer["TitleSecondary"];
+			return View();
+		}
 
-        /// <summary>
-        /// Действие, отвечающее за установку текущего языка приложения в cookie
-        /// </summary>
-        [HttpPost]
-        public IActionResult SetLanguage(string culture, string returnUrl)
-        {
-            Response.Cookies.Append(
-                CookieRequestCultureProvider.DefaultCookieName,
-                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
-            );
+		/// <summary>
+		/// Действие, отвечающее за установку текущего языка приложения в cookie
+		/// </summary>
+		[HttpPost]
+		public IActionResult SetLanguage(string culture, string returnUrl)
+		{
+			Response.Cookies.Append(
+				CookieRequestCultureProvider.DefaultCookieName,
+				CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+				new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+			);
 
-            return LocalRedirect(returnUrl);
-        }
-    }
+			return LocalRedirect(returnUrl);
+		}
+	}
 }
