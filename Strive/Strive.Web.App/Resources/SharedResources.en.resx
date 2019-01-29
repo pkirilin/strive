@@ -174,4 +174,7 @@
   <data name="ErrorMessage-NotFound" xml:space="preserve">
     <value>Page you requested is not found!</value>
   </data>
+  <data name="Validation-EmailConfirmationError" xml:space="preserve">
+    <value>Your email is not confirmed</value>
+  </data>
 </root>
