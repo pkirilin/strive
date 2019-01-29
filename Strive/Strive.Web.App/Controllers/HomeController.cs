@@ -11,11 +11,13 @@ namespace Strive.Web.App.Controllers
 	/// Главный контроллер приложения
 	/// </summary>
 	[Route("home")]
-	public class HomeController : Controller
+	public class HomeController : StriveController
 	{
-		private readonly IStringLocalizer<HomeController> _localizer;
+		protected readonly IStringLocalizer<HomeController> _localizer;
 
-		public HomeController(IStringLocalizer<HomeController> plocalizer)
+		public HomeController(StriveDbContext pdb,
+			IStringLocalizer<SharedResources> psharedLocalizer,
+			IStringLocalizer<HomeController> plocalizer) : base(pdb, psharedLocalizer)
 		{
 			_localizer = plocalizer;
 		}

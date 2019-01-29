@@ -11,13 +11,13 @@ namespace Strive.Web.App.Controllers
 	{
 		protected readonly StriveDbContext _db;
 
-		protected readonly IStringLocalizer<AccountController> _localizer;
+		protected readonly IStringLocalizer<SharedResources> _sharedLocalizer;
 
 		public StriveController(StriveDbContext pdb,
-			IStringLocalizer<AccountController> plocalizer)
+			IStringLocalizer<SharedResources> psharedLocalizer)
 		{
 			_db = pdb;
-			_localizer = plocalizer;
+			_sharedLocalizer = psharedLocalizer;
 		}
 
 		/// <summary>
@@ -33,7 +33,7 @@ namespace Strive.Web.App.Controllers
 		/// </summary>
 		protected void InitNotFoundErrorViewData()
 		{
-			ViewData["TitleSecondary"] = _localizer["TitleSecondary-PageNotFound"];
+			ViewData["TitleSecondary"] = _sharedLocalizer["TitleSecondary-PageNotFound"];
 		}
 
 		/// <summary>

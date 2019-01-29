@@ -15,15 +15,19 @@ namespace Strive.Web.App.Controllers
 {
 	public class AccountController : StriveController
 	{
+		private readonly IStringLocalizer<AccountController> _localizer;
+
 		private readonly UserManager<User> _userManager;
 
 		private readonly SignInManager<User> _signInManager;
 
 		public AccountController(StriveDbContext pdb,
+			IStringLocalizer<SharedResources> psharedLocalizer,
 			IStringLocalizer<AccountController> plocalizer,
 			UserManager<User> puserManager,
-			SignInManager<User> psignInManager) : base(pdb, plocalizer)
+			SignInManager<User> psignInManager) : base(pdb, psharedLocalizer)
 		{
+			_localizer = plocalizer;
 			_userManager = puserManager;
 			_signInManager = psignInManager;
 		}
