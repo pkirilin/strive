@@ -13,6 +13,7 @@ using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace Strive.Web.App.Controllers
 {
+	[Route("account")]
 	public class AccountController : StriveController
 	{
 		private readonly IStringLocalizer<AccountController> _localizer;
@@ -155,6 +156,7 @@ namespace Strive.Web.App.Controllers
 		/// Метод действия для показа пользователю страницы входа в учетную запись
 		/// </summary>
 		[HttpGet]
+		[Route("login")]
 		public IActionResult Login()
 		{
 			InitLoginViewData();
@@ -166,6 +168,7 @@ namespace Strive.Web.App.Controllers
 		/// </summary>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Route("login")]
 		public async Task<IActionResult> Login(LoginViewModel pmodel)
 		{
 			InitLoginViewData();
@@ -210,6 +213,7 @@ namespace Strive.Web.App.Controllers
 		/// Метод действия для показа пользователю страницы регистрации учетной записи
 		/// </summary>
 		[HttpGet]
+		[Route("register")]
 		public IActionResult Register()
 		{
 			InitRegisterViewData();
@@ -229,6 +233,7 @@ namespace Strive.Web.App.Controllers
 		/// Метод действия для осуществления регистрации учетной записи
 		/// </summary>
 		[HttpPost]
+		[Route("register")]
 		public async Task<IActionResult> Register(RegisterViewModel pmodel)
 		{
 			InitRegisterViewData();
@@ -257,6 +262,7 @@ namespace Strive.Web.App.Controllers
 		/// <param name="ptoken">Сгенерированный для пользователя код подтверждения</param>
 		[HttpGet]
 		[AllowAnonymous]
+		[Route("confirm_email")]
 		public async Task<IActionResult> ConfirmEmail(string puserID, string ptoken)
 		{
 			if (puserID == null || ptoken == null)
@@ -279,6 +285,7 @@ namespace Strive.Web.App.Controllers
 		/// </summary>
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[Route("logout")]
 		public async Task<IActionResult> Logout()
 		{
 			await _signInManager.SignOutAsync();
@@ -290,6 +297,7 @@ namespace Strive.Web.App.Controllers
 		/// </summary>
 		[HttpGet]
 		[AllowAnonymous]
+		[Route("forgot_password")]
 		public IActionResult ForgotPassword()
 		{
 			InitForgotPasswordViewData();
@@ -302,6 +310,7 @@ namespace Strive.Web.App.Controllers
 		[HttpPost]
 		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
+		[Route("forgot_password")]
 		public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel pmodel)
 		{
 			InitForgotPasswordViewData();
@@ -330,6 +339,7 @@ namespace Strive.Web.App.Controllers
 		/// </summary>
 		[HttpGet]
 		[AllowAnonymous]
+		[Route("reset_password")]
 		public IActionResult ResetPassword(string pemail = null, string ptoken = null)
 		{
 			InitResetPasswordViewData();
@@ -352,6 +362,7 @@ namespace Strive.Web.App.Controllers
 		[HttpPost]
 		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
+		[Route("reset_password")]
 		public async Task<IActionResult> ResetPassword(ResetPasswordViewModel pmodel)
 		{
 			InitResetPasswordViewData();
