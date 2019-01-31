@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 using Strive.Communication.Emails;
 using Strive.Communication.Emails.EmailBuilders;
 using Strive.Web.App.Models;
@@ -22,15 +23,19 @@ namespace Strive.Web.App.Controllers
 
 		private readonly SignInManager<User> _signInManager;
 
+		private readonly IOptions<EmailConfig> _emailConfigOptions;
+
 		public AccountController(StriveDbContext pdb,
 			IStringLocalizer<SharedResources> psharedLocalizer,
 			IStringLocalizer<AccountController> plocalizer,
 			UserManager<User> puserManager,
-			SignInManager<User> psignInManager) : base(pdb, psharedLocalizer)
+			SignInManager<User> psignInManager,
+			IOptions<EmailConfig> pemailConfigOptions) : base(pdb, psharedLocalizer)
 		{
 			_localizer = plocalizer;
 			_userManager = puserManager;
 			_signInManager = psignInManager;
+			_emailConfigOptions = pemailConfigOptions;
 		}
 
 		#region Private
@@ -78,7 +83,7 @@ namespace Strive.Web.App.Controllers
 				"Account",
 				new { puserID = puser.Id, ptoken = confirmationToken },
 				protocol: HttpContext.Request.Scheme);
-			var emailBuilder = new ConfirmRegistrationEmailBuilder(confirmationLink);
+			var emailBuilder = new ConfirmRegistrationEmailBuilder(_emailConfigOptions.Value, confirmationLink);
 			var emailSender = new EmailSender(emailBuilder);
 			await emailSender.SendEmailAsync(puser.Email);
 		}
@@ -98,7 +103,7 @@ namespace Strive.Web.App.Controllers
 					ptoken = passwordResetToken
 				},
 				protocol: HttpContext.Request.Scheme);
-			var emailBuilder = new PasswordResetEmailBuilder(passwordResetLink);
+			var emailBuilder = new PasswordResetEmailBuilder(_emailConfigOptions.Value, passwordResetLink);
 			var emailSender = new EmailSender(emailBuilder);
 			await emailSender.SendEmailAsync(puser.Email);
 		}

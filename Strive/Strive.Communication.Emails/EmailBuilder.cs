@@ -1,4 +1,5 @@
-﻿using MimeKit;
+﻿using System.Net.Http.Headers;
+using MimeKit;
 using MimeKit.Text;
 
 namespace Strive.Communication.Emails
@@ -7,70 +8,78 @@ namespace Strive.Communication.Emails
 	/// Реализует общий функционал, необходимый для построения email сообщений
 	/// </summary>
 	public class EmailBuilder : IEmailBuilder
-    {
-        protected readonly MimeMessage _message;
+	{
+		protected readonly MimeMessage _message;
 
-        protected readonly Multipart _messageBodyMultipart;
+		protected readonly Multipart _messageBodyMultipart;
 
-        public EmailBuilder()
-        {
-            _message = new MimeMessage();
-            _messageBodyMultipart = new Multipart("mixed");
-        }
+		protected readonly EmailConfig _emailConfig;
 
-        /// <summary>
-        /// Построение части письма, отвечающей за отправителя
-        /// </summary>
-        public virtual void SetFrom()
-        {
-            // @todo yandex -> ?
-            _message.From.Add(new MailboxAddress("Strive admin", "strive.tms@yandex.ru"));
-        }
+		public EmailConfig EmailConfig
+		{
+			get { return _emailConfig; }
+		}
 
-        /// <summary>
-        /// Построение части письма, отвечающей за получателя
-        /// </summary>
-        /// <param name="preceiverName">Имя получателя</param>
-        /// <param name="preceiverEmail">Адрес электронной почты получателя</param>
-        public virtual void SetTo(string preceiverName, string preceiverEmail)
-        {
-            _message.To.Add(new MailboxAddress(preceiverEmail));
-        }
+		public EmailBuilder(EmailConfig pemailConfig)
+		{
+			_message = new MimeMessage();
+			_messageBodyMultipart = new Multipart("mixed");
+			_emailConfig = pemailConfig;
+		}
 
-        /// <summary>
-        /// Построение темы письма
-        /// </summary>
-        public virtual void SetSubject()
-        {
-            _message.Subject = "";
-        }
+		/// <summary>
+		/// Построение части письма, отвечающей за отправителя
+		/// </summary>
+		public virtual void SetFrom()
+		{
+			// @todo yandex -> ?
+			_message.From.Add(new MailboxAddress("Strive admin", this.EmailConfig.UserName));
+		}
 
-        /// <summary>
-        /// Построение тела письма
-        /// </summary>
-        public virtual void SetBody()
-        {
-            _message.Body = _messageBodyMultipart;
-        }
+		/// <summary>
+		/// Построение части письма, отвечающей за получателя
+		/// </summary>
+		/// <param name="preceiverName">Имя получателя</param>
+		/// <param name="preceiverEmail">Адрес электронной почты получателя</param>
+		public virtual void SetTo(string preceiverName, string preceiverEmail)
+		{
+			_message.To.Add(new MailboxAddress(preceiverEmail));
+		}
 
-        /// <summary>
-        /// Добавление в тело письма блока текста
-        /// </summary>
-        /// <param name="ptext">Добавляемый текст</param>
-        protected void AddBodyTextPart(string ptext)
-        {
-            _messageBodyMultipart.Add(new TextPart(TextFormat.Html)
-            {
-                Text = ptext
-            });
-        }
+		/// <summary>
+		/// Построение темы письма
+		/// </summary>
+		public virtual void SetSubject()
+		{
+			_message.Subject = "";
+		}
 
-        /// <summary>
-        /// Создание письма
-        /// </summary>
-        public virtual MimeMessage Build()
-        {
-            return _message;
-        }
-    }
+		/// <summary>
+		/// Построение тела письма
+		/// </summary>
+		public virtual void SetBody()
+		{
+			_message.Body = _messageBodyMultipart;
+		}
+
+		/// <summary>
+		/// Добавление в тело письма блока текста
+		/// </summary>
+		/// <param name="ptext">Добавляемый текст</param>
+		protected void AddBodyTextPart(string ptext)
+		{
+			_messageBodyMultipart.Add(new TextPart(TextFormat.Html)
+			{
+				Text = ptext
+			});
+		}
+
+		/// <summary>
+		/// Создание письма
+		/// </summary>
+		public virtual MimeMessage Build()
+		{
+			return _message;
+		}
+	}
 }

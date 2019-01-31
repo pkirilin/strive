@@ -6,32 +6,37 @@ namespace Strive.Communication.Emails
 	/// Предоставляет интерфейс, необходимый для построения email сообщений
 	/// </summary>
 	public interface IEmailBuilder
-    {
-        /// <summary>
-        /// Построение части письма, отвечающей за отправителя
-        /// </summary>
-        void SetFrom();
+	{
+		/// <summary>
+		/// Объект, содержащий настройки для отправки email-сообщений
+		/// </summary>
+		EmailConfig EmailConfig { get; }
 
-        /// <summary>
-        /// Построение части письма, отвечающей за получателя
-        /// </summary>
-        /// <param name="receiverName">Имя получателя</param>
-        /// <param name="preceiverEmail">Адрес электронной почты получателя</param>
-        void SetTo(string preceiverName, string preceiverEmail);
+		/// <summary>
+		/// Построение части письма, отвечающей за отправителя
+		/// </summary>
+		void SetFrom();
 
-        /// <summary>
-        /// Построение темы письма
-        /// </summary>
-        void SetSubject();
+		/// <summary>
+		/// Построение части письма, отвечающей за получателя
+		/// </summary>
+		/// <param name="receiverName">Имя получателя</param>
+		/// <param name="preceiverEmail">Адрес электронной почты получателя</param>
+		void SetTo(string preceiverName, string preceiverEmail);
 
-        /// <summary>
-        /// Построение тела письма
-        /// </summary>
-        void SetBody();
+		/// <summary>
+		/// Построение темы письма
+		/// </summary>
+		void SetSubject();
 
-        /// <summary>
-        /// Создание письма
-        /// </summary>
-        MimeMessage Build();
-    }
+		/// <summary>
+		/// Построение тела письма
+		/// </summary>
+		void SetBody();
+
+		/// <summary>
+		/// Создание письма
+		/// </summary>
+		MimeMessage Build();
+	}
 }

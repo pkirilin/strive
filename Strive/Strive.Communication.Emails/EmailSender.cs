@@ -8,30 +8,32 @@ namespace Strive.Communication.Emails
 	/// Предоставляет функционал, необходимый для отправки email сообщений
 	/// </summary>
 	public class EmailSender
-    {
-        private readonly EmailCreator _emailCreator;
+	{
+		private readonly EmailCreator _emailCreator;
 
-        public EmailSender(IEmailBuilder pemailBuilder)
-        {
-            _emailCreator = new EmailCreator(pemailBuilder);
-        }
+		private readonly EmailConfig _emailConfig;
 
-        /// <summary>
-        /// Асинхронная отправка email сообщения
-        /// </summary>
-        public async Task SendEmailAsync(string preceiverEmail)
-        {
-            MimeMessage msg = _emailCreator.Create(preceiverEmail);
+		public EmailSender(IEmailBuilder pemailBuilder)
+		{
+			_emailCreator = new EmailCreator(pemailBuilder);
+			_emailConfig = pemailBuilder.EmailConfig;
+		}
 
-            using (var client = new SmtpClient())
-            {
-                // @todo придумать, как скрыть пароль
-                // @todo вынести параметры почты, логин и пароль в конфиг
-                await client.ConnectAsync("smtp.yandex.ru", 25, false);
-                await client.AuthenticateAsync("strive.tms@yandex.ru", "nFwTjq5K23sdYLx");
-                await client.SendAsync(msg);
-                await client.DisconnectAsync(true);
-            }
-        }
-    }
+		/// <summary>
+		/// Асинхронная отправка email сообщения
+		/// </summary>
+		public async Task SendEmailAsync(string preceiverEmail)
+		{
+			MimeMessage msg = _emailCreator.Create(preceiverEmail);
+
+			using (var client = new SmtpClient())
+			{
+				// @todo придумать, как скрыть пароль
+				await client.ConnectAsync(_emailConfig.Host, _emailConfig.Port, _emailConfig.UseSsl);
+				await client.AuthenticateAsync(_emailConfig.UserName, _emailConfig.Password);
+				await client.SendAsync(msg);
+				await client.DisconnectAsync(true);
+			}
+		}
+	}
 }

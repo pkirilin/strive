@@ -5,25 +5,26 @@
 	/// сброса пароля учетных записей пользователей
 	/// </summary>
 	public class PasswordResetEmailBuilder : EmailBuilder
-    {
-        private readonly string _passwordResetLink;
+	{
+		private readonly string _passwordResetLink;
 
-        public PasswordResetEmailBuilder(string ppasswordResetLink)
-        {
-            _passwordResetLink = ppasswordResetLink;
-        }
+		public PasswordResetEmailBuilder(EmailConfig pemailConfig,
+			string ppasswordResetLink) : base(pemailConfig)
+		{
+			_passwordResetLink = ppasswordResetLink;
+		}
 
-        public override void SetSubject()
-        {
-            // @todo locale
-            _message.Subject = "Strive reset password";
-        }
+		public override void SetSubject()
+		{
+			// @todo locale
+			_message.Subject = "Strive reset password";
+		}
 
-        public override void SetBody()
-        {
-            // @todo locale
-            AddBodyTextPart($"Strive reset password <a href=\"{_passwordResetLink}\">link</a>");
-            base.SetBody();
-        }
-    }
+		public override void SetBody()
+		{
+			// @todo locale
+			AddBodyTextPart($"Strive reset password <a href=\"{_passwordResetLink}\">link</a>");
+			base.SetBody();
+		}
+	}
 }

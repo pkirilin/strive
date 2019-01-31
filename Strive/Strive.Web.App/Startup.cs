@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Strive.Communication.Emails;
 using Strive.Web.App.Models;
 using Strive.Web.Common.Providers;
 
@@ -47,6 +48,10 @@ namespace Strive.Web.App
 
 			// Настройки параметров аутентификации на основе кук для Identity
 			services.ConfigureApplicationCookie(StartupActionProvider.ConfigureCookieAuthenticationOptionsAction);
+
+			// Подключение IOptions для передачи конфигурации JSON в виде объектов C#
+			services.AddOptions();
+			services.Configure<EmailConfig>(Configuration.GetSection("EmailConfig"));
 
 			// Добавление MVC
 			services.AddMvc()
