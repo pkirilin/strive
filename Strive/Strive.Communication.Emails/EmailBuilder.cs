@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Headers;
-using MimeKit;
+﻿using MimeKit;
 using MimeKit.Text;
 
 namespace Strive.Communication.Emails
