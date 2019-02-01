@@ -14,16 +14,20 @@ namespace Strive.Communication.Emails
 
 		protected readonly EmailConfig _emailConfig;
 
+		protected readonly EmailLocalizationParameters _localizationParameters;
+
 		public EmailConfig EmailConfig
 		{
 			get { return _emailConfig; }
 		}
 
-		public EmailBuilder(EmailConfig pemailConfig)
+		public EmailBuilder(EmailConfig pemailConfig,
+			EmailLocalizationParameters plocalizationParameters)
 		{
 			_message = new MimeMessage();
 			_messageBodyMultipart = new Multipart("mixed");
 			_emailConfig = pemailConfig;
+			_localizationParameters = plocalizationParameters;
 		}
 
 		/// <summary>
@@ -32,7 +36,7 @@ namespace Strive.Communication.Emails
 		public virtual void SetFrom()
 		{
 			// @todo yandex -> ?
-			_message.From.Add(new MailboxAddress("Strive admin", this.EmailConfig.UserName));
+			_message.From.Add(new MailboxAddress(_localizationParameters.From, this.EmailConfig.UserName));
 		}
 
 		/// <summary>
@@ -50,7 +54,7 @@ namespace Strive.Communication.Emails
 		/// </summary>
 		public virtual void SetSubject()
 		{
-			_message.Subject = "";
+			_message.Subject = _localizationParameters.Subject;
 		}
 
 		/// <summary>
@@ -59,6 +63,7 @@ namespace Strive.Communication.Emails
 		public virtual void SetBody()
 		{
 			_message.Body = _messageBodyMultipart;
+			AddBodyTextPart(_localizationParameters.Body);
 		}
 
 		/// <summary>

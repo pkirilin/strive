@@ -9,22 +9,21 @@
 		private readonly string _passwordResetLink;
 
 		public PasswordResetEmailBuilder(EmailConfig pemailConfig,
-			string ppasswordResetLink) : base(pemailConfig)
+			EmailLocalizationParameters plocalizationParameters,
+			string ppasswordResetLink) : base(pemailConfig, plocalizationParameters)
 		{
 			_passwordResetLink = ppasswordResetLink;
 		}
 
 		public override void SetSubject()
 		{
-			// @todo locale
-			_message.Subject = "Strive reset password";
+			base.SetSubject();
 		}
 
 		public override void SetBody()
 		{
-			// @todo locale
-			AddBodyTextPart($"Strive reset password <a href=\"{_passwordResetLink}\">link</a>");
 			base.SetBody();
+			AddBodyTextPart($":<br><a href=\"{_passwordResetLink}\">{_passwordResetLink}</a>");
 		}
 	}
 }

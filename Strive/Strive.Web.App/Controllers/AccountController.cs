@@ -83,7 +83,17 @@ namespace Strive.Web.App.Controllers
 				"Account",
 				new { puserID = puser.Id, ptoken = confirmationToken },
 				protocol: HttpContext.Request.Scheme);
-			var emailBuilder = new ConfirmRegistrationEmailBuilder(_emailConfigOptions.Value, confirmationLink);
+
+			// @todo убрать дублирование _localizer["Email-From"]
+			var emailLocalizationParameters = new EmailLocalizationParameters()
+			{
+				From = _localizer["Email-From"],
+				Subject = _localizer["Email-ConfirmRegistration-Subject"],
+				Body = _localizer["Email-ConfirmRegistration-Body"]
+			};
+
+			var emailBuilder = new ConfirmRegistrationEmailBuilder(
+				_emailConfigOptions.Value, emailLocalizationParameters, confirmationLink);
 			var emailSender = new EmailSender(emailBuilder);
 			await emailSender.SendEmailAsync(puser.Email);
 		}
@@ -103,7 +113,17 @@ namespace Strive.Web.App.Controllers
 					ptoken = passwordResetToken
 				},
 				protocol: HttpContext.Request.Scheme);
-			var emailBuilder = new PasswordResetEmailBuilder(_emailConfigOptions.Value, passwordResetLink);
+
+			// @todo убрать дублирование _localizer["Email-From"]
+			var emailLocalizationParameters = new EmailLocalizationParameters()
+			{
+				From = _localizer["Email-From"],
+				Subject = _localizer["Email-ResetPassword-Subject"],
+				Body = _localizer["Email-ResetPassword-Body"]
+			};
+
+			var emailBuilder = new PasswordResetEmailBuilder(
+				_emailConfigOptions.Value, emailLocalizationParameters, passwordResetLink);
 			var emailSender = new EmailSender(emailBuilder);
 			await emailSender.SendEmailAsync(puser.Email);
 		}

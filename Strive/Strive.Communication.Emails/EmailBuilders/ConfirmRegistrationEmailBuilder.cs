@@ -9,22 +9,21 @@
 		private readonly string _emailConfirmationLink;
 
 		public ConfirmRegistrationEmailBuilder(EmailConfig pemailConfig,
-			string pemailConfirmationLink) : base(pemailConfig)
+			EmailLocalizationParameters plocalizationParameters,
+			string pemailConfirmationLink) : base(pemailConfig, plocalizationParameters)
 		{
 			_emailConfirmationLink = pemailConfirmationLink;
 		}
 
 		public override void SetSubject()
 		{
-			// @todo locale
-			_message.Subject = "Strive register";
+			base.SetSubject();
 		}
 
 		public override void SetBody()
 		{
-			// @todo locale
-			AddBodyTextPart($"Strive register <a href=\"{_emailConfirmationLink}\">link</a>");
 			base.SetBody();
+			AddBodyTextPart($":<br><a href=\"{_emailConfirmationLink}\">{_emailConfirmationLink}</a>");
 		}
 	}
 }
