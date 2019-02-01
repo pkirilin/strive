@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Email-ConfirmRegistration-Body" xml:space="preserve">
+    <value>Follow the link below to finish your Strive account registration</value>
+  </data>
+  <data name="Email-ConfirmRegistration-Subject" xml:space="preserve">
+    <value>Strive account register confirmation</value>
+  </data>
+  <data name="Email-From" xml:space="preserve">
+    <value>Strive admin</value>
+  </data>
+  <data name="Email-ResetPassword-Body" xml:space="preserve">
+    <value>Follow the link below to reset your Strive account password</value>
+  </data>
+  <data name="Email-ResetPassword-Subject" xml:space="preserve">
+    <value>Strive account password reset</value>
+  </data>
   <data name="TitleSecondary-ForgotPassword" xml:space="preserve">
     <value>Forgot password?</value>
   </data>
