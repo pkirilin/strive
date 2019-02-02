@@ -7,7 +7,7 @@
 
   module.exports = {
     mode: "development",
-    entry: "./Scripts/index.js",
+    entry: { main: "./Scripts/index.js" },
     output: {
       filename: "app.js",
       path: path.resolve(__dirname, bundleFolder),
