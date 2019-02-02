@@ -73,6 +73,25 @@ namespace Strive.Web.App.Controllers
 		}
 
 		/// <summary>
+		/// Инициализация параметров локализации email-сообщений по умолчанию
+		/// </summary>
+		/// <param name="psubjectKey">Имя темы письма в ресурсах локализации</param>
+		/// <param name="pbodyKey">Имя тела письма в ресурсах локализации</param>
+		/// <param name="pfromKey">Имя темы письма в ресурсах локализации</param>
+		/// <returns>Объект параметров локализации</returns>
+		private EmailLocalizationParameters InitEmailLocalizationParameters(
+			string psubjectKey, string pbodyKey, string pfromKey = "Email-From")
+		{
+			var emailLocalizationParameters = new EmailLocalizationParameters()
+			{
+				From = _localizer[pfromKey],
+				Subject = _localizer[psubjectKey],
+				Body = _localizer[pbodyKey]
+			};
+			return emailLocalizationParameters;
+		}
+
+		/// <summary>
 		/// Отправка пользователю email сообщения для подтверждения его регистрации
 		/// </summary>
 		private async void SendRegisterConfirmationMailAsync(User puser)
@@ -84,13 +103,8 @@ namespace Strive.Web.App.Controllers
 				new { puserID = puser.Id, ptoken = confirmationToken },
 				protocol: HttpContext.Request.Scheme);
 
-			// @todo убрать дублирование _localizer["Email-From"]
-			var emailLocalizationParameters = new EmailLocalizationParameters()
-			{
-				From = _localizer["Email-From"],
-				Subject = _localizer["Email-ConfirmRegistration-Subject"],
-				Body = _localizer["Email-ConfirmRegistration-Body"]
-			};
+			var emailLocalizationParameters = InitEmailLocalizationParameters(
+				"Email-ConfirmRegistration-Subject", "Email-ConfirmRegistration-Body");
 
 			var emailBuilder = new ConfirmRegistrationEmailBuilder(
 				_emailConfigOptions.Value, emailLocalizationParameters, confirmationLink);
@@ -114,13 +128,8 @@ namespace Strive.Web.App.Controllers
 				},
 				protocol: HttpContext.Request.Scheme);
 
-			// @todo убрать дублирование _localizer["Email-From"]
-			var emailLocalizationParameters = new EmailLocalizationParameters()
-			{
-				From = _localizer["Email-From"],
-				Subject = _localizer["Email-ResetPassword-Subject"],
-				Body = _localizer["Email-ResetPassword-Body"]
-			};
+			var emailLocalizationParameters = InitEmailLocalizationParameters(
+				"Email-ResetPassword-Subject", "Email-ResetPassword-Body");
 
 			var emailBuilder = new PasswordResetEmailBuilder(
 				_emailConfigOptions.Value, emailLocalizationParameters, passwordResetLink);
