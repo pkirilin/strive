@@ -14,6 +14,9 @@ using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace Strive.Web.App.Controllers
 {
+	/// <summary>
+	/// Контроллер учетных записей
+	/// </summary>
 	[Route("account")]
 	public class AccountController : StriveController
 	{
@@ -25,7 +28,8 @@ namespace Strive.Web.App.Controllers
 
 		private readonly IOptions<EmailConfig> _emailConfigOptions;
 
-		public AccountController(StriveDbContext pdb,
+		public AccountController(
+			StriveDbContext pdb,
 			IStringLocalizer<SharedResources> psharedLocalizer,
 			IStringLocalizer<AccountController> plocalizer,
 			UserManager<User> puserManager,

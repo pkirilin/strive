@@ -13,7 +13,8 @@ namespace Strive.Web.App.Controllers
 
 		protected readonly IStringLocalizer<SharedResources> _sharedLocalizer;
 
-		public StriveController(StriveDbContext pdb,
+		public StriveController(
+			StriveDbContext pdb,
 			IStringLocalizer<SharedResources> psharedLocalizer)
 		{
 			_db = pdb;

@@ -15,7 +15,8 @@ namespace Strive.Web.App.Controllers
 	{
 		protected readonly IStringLocalizer<HomeController> _localizer;
 
-		public HomeController(StriveDbContext pdb,
+		public HomeController(
+			StriveDbContext pdb,
 			IStringLocalizer<SharedResources> psharedLocalizer,
 			IStringLocalizer<HomeController> plocalizer) : base(pdb, psharedLocalizer)
 		{
