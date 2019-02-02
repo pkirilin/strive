@@ -2,11 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <PreBuildEvent>npm run webpack-build</PreBuildEvent>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="package-lock.json" />
+  </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Remove="Resources\Login.en.resx" />
     <EmbeddedResource Remove="Resources\Login.ru.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove=".gitignore" />
   </ItemGroup>
 
   <ItemGroup>
