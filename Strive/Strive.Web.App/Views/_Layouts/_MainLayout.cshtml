@@ -10,7 +10,7 @@
 <body>
     @await Html.PartialAsync("~/Views/Shared/Partial/Navbar/_Navbar.cshtml")
 
-    <div class="container-fluid">
+    <div id="app" class="container-fluid">
         @RenderBody()
     </div>
 
@@ -18,5 +18,6 @@
 
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/build/app.js"></script>
 </body>
 </html>
