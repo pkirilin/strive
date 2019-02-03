@@ -7,6 +7,9 @@
     "webpack-build": "webpack"
   },
   "dependencies": {
+    "bootstrap": "^4.2.1",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.7",
     "vue": "^2.5.22",
     "webpack-dev-middleware": "^3.5.1"
   },
