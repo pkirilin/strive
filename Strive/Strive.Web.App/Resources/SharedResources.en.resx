@@ -165,6 +165,9 @@
   <data name="Account-Text-Login" xml:space="preserve">
     <value>Sign in</value>
   </data>
+  <data name="Account-Text-LoginDestination" xml:space="preserve">
+    <value>to your account</value>
+  </data>
   <data name="Account-Text-Logout" xml:space="preserve">
     <value>Sign out</value>
   </data>

@@ -144,6 +144,9 @@
   <data name="TitleSecondary-Register" xml:space="preserve">
     <value>Register</value>
   </data>
+  <data name="TitleSecondary-RegisterCompleted" xml:space="preserve">
+    <value>Registration completed</value>
+  </data>
   <data name="TitleSecondary-ResetPassword" xml:space="preserve">
     <value>Reset password</value>
   </data>

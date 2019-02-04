@@ -165,6 +165,9 @@
   <data name="Account-Text-Login" xml:space="preserve">
     <value>Вход</value>
   </data>
+  <data name="Account-Text-LoginDestination" xml:space="preserve">
+    <value>в учетную запись</value>
+  </data>
   <data name="Account-Text-Logout" xml:space="preserve">
     <value>Выход</value>
   </data>

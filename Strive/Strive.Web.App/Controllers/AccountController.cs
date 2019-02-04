@@ -77,6 +77,14 @@ namespace Strive.Web.App.Controllers
 		}
 
 		/// <summary>
+		/// Инициализация контейнера ViewData для страниц, относящихся к RegisterCompleted
+		/// </summary>
+		private void InitRegisterCompletedViewData()
+		{
+			ViewData["TitleSecondary"] = _localizer["TitleSecondary-RegisterCompleted"];
+		}
+
+		/// <summary>
 		/// Инициализация параметров локализации email-сообщений по умолчанию
 		/// </summary>
 		/// <param name="psubjectKey">Имя темы письма в ресурсах локализации</param>
@@ -312,7 +320,10 @@ namespace Strive.Web.App.Controllers
 
 			IdentityResult result = await _userManager.ConfirmEmailAsync(user, ptoken);
 			if (result.Succeeded == true)
-				return RedirectToAction("Index", "Home");
+			{
+				InitRegisterCompletedViewData();
+				return View("RegisterCompleted");
+			}
 			else
 				// @todo создать дополнительный ajax-метод для валидации на клиенте
 				return NotFound();
