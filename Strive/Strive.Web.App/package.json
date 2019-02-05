@@ -6,14 +6,12 @@
   "scripts": {
     "webpack-build": "webpack"
   },
-  "dependencies": {
+  "devDependencies": {
     "bootstrap": "^4.2.1",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.7",
     "vue": "^2.5.22",
-    "webpack-dev-middleware": "^3.5.1"
-  },
-  "devDependencies": {
+    "webpack-dev-middleware": "^3.5.1",
     "aspnet-webpack": "^3.0.0",
     "clean-webpack-plugin": "^0.1.16",
     "css-loader": "^2.1.0",

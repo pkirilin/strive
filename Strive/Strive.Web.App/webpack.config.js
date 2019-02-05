@@ -1,14 +1,14 @@
 "use strict";
 {
   const path = require("path");
-  const bundleFolder = "wwwroot/build/";
+  const bundleFolder = "wwwroot/scripts/";
   const CleanWebpackPlugin = require("clean-webpack-plugin");
   const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
   module.exports = [
-    // app
+    // application
     {
-      entry: { main: "./Scripts/index.js" },
+      entry: { app: "./Scripts/app.js" },
       mode: "development",
       output: {
         filename: "app.js",
@@ -29,27 +29,15 @@
       },
       plugins: [new CleanWebpackPlugin([bundleFolder]), new VueLoaderPlugin()]
     },
-    // jQuery
+    // jquery & bootstrap
     {
-      entry: { jquery: "./node_modules/jquery" },
+      entry: { jqueryBootstrapBundle: "./Scripts/jquery-bootstrap-bundle.js" },
       mode: "development",
       output: {
-        filename: "jquery.js",
+        filename: "jquery-bootstrap-bundle.js",
         path: path.resolve(__dirname, bundleFolder),
         publicPath: bundleFolder
-      },
-      plugins: [new CleanWebpackPlugin(bundleFolder)]
-    },
-    // bootstrap
-    {
-      entry: { bootstrap: "./node_modules/bootstrap" },
-      mode: "development",
-      output: {
-        filename: "boostrap.js",
-        path: path.resolve(__dirname, bundleFolder),
-        publicPath: bundleFolder
-      },
-      plugins: [new CleanWebpackPlugin(bundleFolder)]
+      }
     }
   ];
 }
