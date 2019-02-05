@@ -4,6 +4,7 @@
   const bundleFolder = "wwwroot/scripts/";
   const CleanWebpackPlugin = require("clean-webpack-plugin");
   const VueLoaderPlugin = require("vue-loader/lib/plugin");
+  const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
   module.exports = [
     // application
@@ -31,13 +32,25 @@
     },
     // jquery & bootstrap
     {
-      entry: { jqueryBootstrapBundle: "./Scripts/jquery-bootstrap-bundle.js" },
+      entry: {
+        jqueryBootstrapBundle: "./Scripts/jquery-bootstrap-bundle.js"
+      },
       mode: "development",
+      optimization: {
+        minimizer: [
+          new UglifyJsPlugin({
+            cache: true,
+            parallel: true,
+            sourceMap: true
+          })
+        ]
+      },
       output: {
-        filename: "jquery-bootstrap-bundle.js",
+        filename: "jquery-bootstrap-bundle.min.js",
         path: path.resolve(__dirname, bundleFolder),
         publicPath: bundleFolder
-      }
+      },
+      plugins: [new CleanWebpackPlugin([bundleFolder])]
     }
   ];
 }
