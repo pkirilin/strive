@@ -4,8 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewData["TitlePrimary"] - @ViewData["TitleSecondary"]</title>
-    <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="~/dist/jquery-bootstrap-bundle.min.css">
 </head>
 <body>
     @await Html.PartialAsync("~/Views/Shared/Partial/Navbar/_Navbar.cshtml")
@@ -16,8 +15,9 @@
 
     @await Html.PartialAsync("~/Views/Shared/Partial/Footer/_Footer.cshtml")
 
-    <script src="~/lib/jquery/jquery.min.js"></script>
-    <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js"></script>
-    <script src="~/build/app.js"></script>
+    <script src="~/dist/jquery-bootstrap-bundle.min.js"></script>
+    <script src="~/dist/app.js"></script>
+
+    @RenderSection("Scripts", false)
 </body>
 </html>
