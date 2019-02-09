@@ -27,5 +27,9 @@
     "webpack-hot-middleware": "^2.24.3"
   },
   "author": "Pavel Kirilin",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.3"
+  }
 }

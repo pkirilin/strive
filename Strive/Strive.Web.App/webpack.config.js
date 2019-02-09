@@ -10,12 +10,26 @@
   module.exports = [
     // application
     {
-      entry: { app: "./Scripts/app.js" },
+      entry: {
+        app: "./Scripts/app.ts"
+      },
       mode: "development",
       output: {
         filename: "app.js",
         path: path.resolve(__dirname, bundleFolder),
         publicPath: bundleFolder
+      },
+      module: {
+        rules: [
+          {
+            test: /\.tsx?$/,
+            loader: "ts-loader",
+            exclude: /node_modules/
+          }
+        ]
+      },
+      resolve: {
+        extensions: [".tsx", ".ts", ".js"]
       },
       plugins: [new CleanWebpackPlugin([bundleFolder])]
     },
