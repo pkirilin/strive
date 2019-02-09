@@ -3,7 +3,6 @@
   const path = require("path");
   const bundleFolder = "wwwroot/dist/";
   const CleanWebpackPlugin = require("clean-webpack-plugin");
-  const VueLoaderPlugin = require("vue-loader/lib/plugin");
   const MiniCssExtractPlugin = require("mini-css-extract-plugin");
   const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
   const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -18,19 +17,7 @@
         path: path.resolve(__dirname, bundleFolder),
         publicPath: bundleFolder
       },
-      module: {
-        rules: [
-          {
-            test: /\.vue$/,
-            loader: "vue-loader"
-          },
-          {
-            test: /\.css$/,
-            use: ["vue-style-loader", "css-loader"]
-          }
-        ]
-      },
-      plugins: [new CleanWebpackPlugin([bundleFolder]), new VueLoaderPlugin()]
+      plugins: [new CleanWebpackPlugin([bundleFolder])]
     },
     // jquery & bootstrap
     {
