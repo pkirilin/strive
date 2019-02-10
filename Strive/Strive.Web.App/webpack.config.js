@@ -11,11 +11,12 @@
     // application
     {
       entry: {
-        app: "./Scripts/app.ts"
+        app: "./Scripts/app.ts",
+        login: "./Scripts/views/account/login.ts"
       },
       mode: "development",
       output: {
-        filename: "app.js",
+        filename: "[name].js",
         path: path.resolve(__dirname, bundleFolder),
         publicPath: bundleFolder
       },
