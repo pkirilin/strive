@@ -2,22 +2,22 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewData["TitlePrimary"] - @ViewData["TitleSecondary"]</title>
-    <link rel="stylesheet" href="~/dist/jquery-bootstrap-bundle.min.css">
+	<meta name="viewport" content="width=device-width" />
+	<title>@ViewData["TitlePrimary"] - @ViewData["TitleSecondary"]</title>
+	<link rel="stylesheet" href="~/dist/jquery-bootstrap-bundle.min.css">
 </head>
 <body>
-    @await Html.PartialAsync("~/Views/Shared/Partial/Navbar/_Navbar.cshtml")
+	@await Html.PartialAsync("~/Views/Shared/Partial/Navbar/_Navbar.cshtml")
 
-    <div id="app" class="container-fluid">
-        @RenderBody()
-    </div>
+	<div id="app" class="container-fluid">
+		@RenderBody()
+	</div>
 
-    @await Html.PartialAsync("~/Views/Shared/Partial/Footer/_Footer.cshtml")
+	@await Html.PartialAsync("~/Views/Shared/Partial/Footer/_Footer.cshtml")
 
-    <script src="~/dist/jquery-bootstrap-bundle.min.js"></script>
-    <script src="~/dist/app.js"></script>
+	<script src="~/dist/jquery-bootstrap-bundle.min.js"></script>
+	<script src="~/dist/app.js"></script>
 
-    @RenderSection("Scripts", false)
+	@RenderSection("Scripts", false)
 </body>
 </html>
