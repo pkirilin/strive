@@ -12,6 +12,8 @@
     "clean-webpack-plugin": "^0.1.16",
     "css-loader": "^2.1.0",
     "jquery": "^3.3.1",
+    "jquery-validation": "^1.19.0",
+    "jquery-validation-unobtrusive": "^3.2.11",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
