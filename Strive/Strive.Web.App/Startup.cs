@@ -57,7 +57,11 @@ namespace Strive.Web.App
             // Добавление MVC
             services.AddMvc()
                 .AddViewLocalization()
-                .AddDataAnnotationsLocalization();
+                .AddDataAnnotationsLocalization(options =>
+	            {
+		            options.DataAnnotationLocalizerProvider = (type, factory) =>
+			            factory.Create(typeof(SharedResources));
+	            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
