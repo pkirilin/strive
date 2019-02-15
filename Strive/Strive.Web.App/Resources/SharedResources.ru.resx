@@ -180,4 +180,16 @@
   <data name="Validation-EmailConfirmationError" xml:space="preserve">
     <value>Адрес электронной почты не подтвержден</value>
   </data>
+  <data name="Validation-Error-EmailIncorrectFormat" xml:space="preserve">
+    <value>Неверный формат адреса электронной почты</value>
+  </data>
+  <data name="Validation-Error-EmailRequired" xml:space="preserve">
+    <value>Требуется указать адрес электронной почты</value>
+  </data>
+  <data name="Validation-Error-PasswordIncorrectFormat" xml:space="preserve">
+    <value>Пароль должен иметь длину от 4 до 20 символов</value>
+  </data>
+  <data name="Validation-Error-PasswordRequired" xml:space="preserve">
+    <value>Требуется указать пароль</value>
+  </data>
 </root>
