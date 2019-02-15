@@ -150,4 +150,10 @@
   <data name="TitleSecondary-ResetPassword" xml:space="preserve">
     <value>Reset password</value>
   </data>
+  <data name="Validation-Error-EmailNotConfirmed" xml:space="preserve">
+    <value>Email is not confirmed</value>
+  </data>
+  <data name="Validation-Error-LoginIncorrectData" xml:space="preserve">
+    <value>Sign in error: incorrect email or password</value>
+  </data>
 </root>

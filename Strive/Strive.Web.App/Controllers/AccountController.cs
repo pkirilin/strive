@@ -228,8 +228,7 @@ namespace Strive.Web.App.Controllers
 					// Проверка, подтвержден ли email
 					if (await _userManager.IsEmailConfirmedAsync(user) == false)
 					{
-						// @todo создать дополнительный ajax-метод для валидации на клиенте
-						ModelState.AddModelError(String.Empty, "Email confirmation error");
+						ModelState.AddModelError(String.Empty, _localizer["Validation-Error-EmailNotConfirmed"]);
 						return View(pmodel);
 					}
 				}
@@ -248,8 +247,7 @@ namespace Strive.Web.App.Controllers
 				}
 				else
 				{
-					// @todo создать дополнительный ajax-метод для валидации на клиенте
-					ModelState.AddModelError("", "Sign in error: incorrect data");
+					ModelState.AddModelError(String.Empty, _localizer["Validation-Error-LoginIncorrectData"]);
 				}
 			}
 			return View(pmodel);
