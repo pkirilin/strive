@@ -69,13 +69,6 @@ namespace Strive.Web.App
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
-                // Подключение компонента для Webpack, чтобы при обновлении файла
-                // происходило перестроение с помощью webpack
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {
-                    HotModuleReplacement = true
-                });
             }
 
             // Подключение файлов по умолчанию

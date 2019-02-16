@@ -2,14 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <PreBuildEvent>npm install</PreBuildEvent>
-    <PreBuildEvent>npm run webpack-build</PreBuildEvent>
-    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Remove="package-lock.json" />
-  </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Remove="Resources\Login.en.resx" />

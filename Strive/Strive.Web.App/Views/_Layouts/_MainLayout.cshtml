@@ -4,7 +4,9 @@
 <head>
 	<meta name="viewport" content="width=device-width" />
 	<title>@ViewData["TitlePrimary"] - @ViewData["TitleSecondary"]</title>
-	<link href="~/dist/jquery-bootstrap-bundle.min.css" rel="stylesheet" />
+	<link rel="shortcut icon" href="#" />
+	<link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="~/css/styles.css" rel="stylesheet" />
 	<link href="~/css/validation.css" rel="stylesheet" />
 </head>
 <body>
@@ -16,8 +18,10 @@
 
 	@await Html.PartialAsync("~/Views/Shared/Partial/Footer/_Footer.cshtml")
 
-	<script src="~/dist/jquery-bootstrap-bundle.min.js"></script>
-	<script src="~/dist/app.js"></script>
+	<script src="~/lib/jquery/jquery.min.js"></script>
+	<script src="~/lib/jquery/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery/jquery.validate.unobtrusive.min.js"></script>
+	<script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
 
 	@RenderSection("Scripts", false)
 </body>
