@@ -1,1 +1,6 @@
 @import "~bootstrap/scss/bootstrap";
+
+.validation-summary-errors ul {
+  margin: 0;
+  padding-left: 6px;
+}

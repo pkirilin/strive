@@ -16,52 +16,60 @@
 		<div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
 			<div class="p-lg-3 p-md-2 p-sm-1 p-1">
 				<form method="post"
-				      asp-controller="Account"
-				      asp-action="Login"
-				      asp-antiforgery="true">
+					  asp-controller="Account"
+					  asp-action="Login"
+					  asp-antiforgery="true">
+					<div asp-validation-summary="ModelOnly"
+					     class="alert alert-danger alert-dismissible fade show" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
 					<div class="form-group">
 						<label class="font-weight-bold"
-						       asp-for="Email"></label>
+							   asp-for="Email"></label>
 						<input type="text"
-						       placeholder="@SharedLocalizer["Account-Placeholder-Email"]"
-						       class="form-control col"
-						       asp-for="Email"/>
+							   placeholder="@SharedLocalizer["Account-Placeholder-Email"]"
+							   class="form-control col"
+							   asp-for="Email" />
 						<span asp-validation-for="Email"></span>
 					</div>
 
 					<div class="form-group">
 						<label class="font-weight-bold"
-						       asp-for="Password"></label>
+							   asp-for="Password"></label>
 						<input type="password"
-						       placeholder="@SharedLocalizer["Account-Placeholder-Password"]"
-						       class="form-control col"
-						       asp-for="Password"/>
+							   placeholder="@SharedLocalizer["Account-Placeholder-Password"]"
+							   class="form-control col"
+							   asp-for="Password" />
 						<span asp-validation-for="Password"></span>
 					</div>
 
 					<div class="form-group form-check">
 						<input type="checkbox"
-						       class="form-check-input"
-						       asp-for="RememberMe"/>
+							   class="form-check-input"
+							   asp-for="RememberMe" />
 						<label class="form-check-label"
-						       asp-for="RememberMe"></label>
+							   asp-for="RememberMe"></label>
 					</div>
 
 					<div class="form-group d-flex">
 						<input type="submit"
-						       value="@SharedLocalizer["Account-Text-Login"]"
-						       class="flex-fill btn btn-success mr-2"/>
+							   value="@SharedLocalizer["Account-Text-Login"]"
+							   class="flex-fill btn btn-success mr-2" />
 						<a class="flex-fill btn btn-success"
 						   asp-controller="Account"
 						   asp-action="Register">
-							@SharedLocalizer["Account-Text-Register"]</a>
+							@SharedLocalizer["Account-Text-Register"]
+						</a>
 					</div>
 
 					<div class="form-group text-center">
 						<a class="card-link"
 						   asp-controller="Account"
 						   asp-action="ForgotPassword">
-							@SharedLocalizer["Account-Text-ForgotPassword"]</a>
+							@SharedLocalizer["Account-Text-ForgotPassword"]
+						</a>
 					</div>
 				</form>
 			</div>
