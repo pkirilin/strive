@@ -177,9 +177,6 @@
   <data name="ErrorMessage-NotFound" xml:space="preserve">
     <value>Указанная страница не найдена!</value>
   </data>
-  <data name="Validation-EmailConfirmationError" xml:space="preserve">
-    <value>Адрес электронной почты не подтвержден</value>
-  </data>
   <data name="Validation-Error-EmailIncorrectFormat" xml:space="preserve">
     <value>Неверный формат адреса электронной почты</value>
   </data>

@@ -151,9 +151,9 @@
     <value>Сброс пароля</value>
   </data>
   <data name="Validation-Error-EmailNotConfirmed" xml:space="preserve">
-    <value>Адрес электронной почты не подтвержен</value>
+    <value>Адрес электронной почты не подтвержден</value>
   </data>
   <data name="Validation-Error-LoginIncorrectData" xml:space="preserve">
-    <value>Sign in error: incorrect email or password</value>
+    <value>Ошибка входа: неверный адрес электронной почты или пароль</value>
   </data>
 </root>
