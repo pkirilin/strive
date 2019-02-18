@@ -16,7 +16,7 @@
 				      asp-action="Login"
 				      asp-antiforgery="true">
 
-					@await Component.InvokeAsync("ValidationErrorsSummary")
+					@await Html.PartialAsync("~/Views/Shared/Partial/Forms/ValidationErrorsSummary.cshtml")
 
 					<div class="form-group">
 						<label class="font-weight-bold"
