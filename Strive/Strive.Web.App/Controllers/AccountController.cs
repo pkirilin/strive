@@ -432,5 +432,36 @@ namespace Strive.Web.App.Controllers
 
 			return View(pmodel);
 		}
+
+		// @todo вынести в Repository/UserManager Extensions
+		private bool IsUserNameValid(string puserName)
+		{
+			User userWithNewLogin = _db.Users
+				.Where(user => user.UserName == puserName)
+				.FirstOrDefault();
+			return userWithNewLogin == null;
+	}
+
+		private bool IsEmailValid(string pemail)
+		{
+			User userWithNewEmail = _db.Users
+				.Where(user => user.Email == pemail)
+				.FirstOrDefault();
+			return userWithNewEmail == null;
+}
+
+		public IActionResult CheckUserNameRemote(string userName)
+		{
+			if (IsUserNameValid(userName) == false)
+				return Json(false);
+			return Json(true);
+		}
+
+		public IActionResult CheckEmailRemote(string email)
+		{
+			if (IsEmailValid(email) == false)
+				return Json(false);
+			return Json(true);
+		}
 	}
 }

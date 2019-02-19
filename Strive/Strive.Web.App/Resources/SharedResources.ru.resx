@@ -180,13 +180,28 @@
   <data name="Validation-Error-EmailIncorrectFormat" xml:space="preserve">
     <value>Неверный формат адреса электронной почты</value>
   </data>
+  <data name="Validation-Error-EmailRemoteFailed" xml:space="preserve">
+    <value>Адрес электронной почты уже используется</value>
+  </data>
   <data name="Validation-Error-EmailRequired" xml:space="preserve">
     <value>Требуется указать адрес электронной почты</value>
+  </data>
+  <data name="Validation-Error-PasswordConfirmCompareFailed" xml:space="preserve">
+    <value>Пароли не совпадают</value>
+  </data>
+  <data name="Validation-Error-PasswordConfirmRequired" xml:space="preserve">
+    <value>Требуется указать пароль повторно</value>
   </data>
   <data name="Validation-Error-PasswordIncorrectFormat" xml:space="preserve">
     <value>Пароль должен иметь длину от 4 до 20 символов</value>
   </data>
   <data name="Validation-Error-PasswordRequired" xml:space="preserve">
     <value>Требуется указать пароль</value>
+  </data>
+  <data name="Validation-Error-UserNameRemoteFailed" xml:space="preserve">
+    <value>Имя пользователя уже существует</value>
+  </data>
+  <data name="Validation-Error-UserNameRequired" xml:space="preserve">
+    <value>Требуется указать имя пользователя</value>
   </data>
 </root>
