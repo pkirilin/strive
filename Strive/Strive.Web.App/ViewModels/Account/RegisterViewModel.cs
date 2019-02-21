@@ -14,7 +14,7 @@ namespace Strive.Web.App.ViewModels.Account
 		/// @todo доп. валидация на формат
 		[Display(Name = "Account-Label-Username")]
 		[Required(ErrorMessage = "Validation-Error-UserNameRequired")]
-		[Remote("CheckUserNameRemote", "Account", ErrorMessage = "Validation-Error-UserNameRemoteFailed")]
+		[Remote("check-user-name-remote", "account", ErrorMessage = "Validation-Error-UserNameRemoteFailed")]
 		public string UserName { get; set; }
 
 		/// <summary>
@@ -23,7 +23,7 @@ namespace Strive.Web.App.ViewModels.Account
 		[Display(Name = "Account-Label-Email")]
 		[Required(ErrorMessage = "Validation-Error-EmailRequired")]
 		[EmailAddress(ErrorMessage = "Validation-Error-EmailIncorrectFormat")]
-		[Remote("CheckEmailRemote", "Account", ErrorMessage = "Validation-Error-EmailRemoteFailed")]
+		[Remote("check-email-remote", "account", ErrorMessage = "Validation-Error-EmailRemoteFailed")]
 		public string Email { get; set; }
 
 		/// <summary>

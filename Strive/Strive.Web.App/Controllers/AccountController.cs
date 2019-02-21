@@ -160,6 +160,21 @@ namespace Strive.Web.App.Controllers
 		}
 
 		/// <summary>
+		/// Дополнительная валидация при регистрации пользователя
+		/// </summary>
+		/// <param name="pmodel">Модель представления регистрации</param>
+		private async Task RegisterValidateUserAsync(RegisterViewModel pmodel)
+		{
+			// Проверка существования введенного UserName
+			if(await IsUserNameExists(pmodel.UserName) == true)
+				ModelState.AddModelError("UserName", _sharedLocalizer["Validation-Error-UserNameRemoteFailed"]);
+
+			// Проверка существования введенного Email
+			if (await IsEmailExists(pmodel.Email) == true)
+				ModelState.AddModelError("Email", _sharedLocalizer["Validation-Error-EmailRemoteFailed"]);
+		}
+
+		/// <summary>
 		/// Попытка создать нового пользователя и получение результата
 		/// </summary>
 		private async Task<User> TryCreateUserAsync(RegisterViewModel pmodel)
@@ -194,6 +209,22 @@ namespace Strive.Web.App.Controllers
 		private async Task<bool> IsUserNotNullAndEmailConfirmedAsync(User puser)
 		{
 			return puser != null && await _userManager.IsEmailConfirmedAsync(puser) == true;
+		}
+
+		/// <summary>
+		/// Проверка существования имени пользователя в БД
+		/// </summary>
+		private async Task<bool> IsUserNameExists(string puserName)
+		{
+			return await _userManager.FindByNameAsync(puserName) != null;
+		}
+
+		/// <summary>
+		/// Проверка существования адреса электронной почты пользователя в БД
+		/// </summary>
+		private async Task<bool> IsEmailExists(string pemail)
+		{
+			return await _userManager.FindByEmailAsync(pemail) != null;
 		}
 
 		#endregion
@@ -284,16 +315,21 @@ namespace Strive.Web.App.Controllers
 
 			if (ModelState.IsValid == true)
 			{
-				User user = await TryCreateUserAsync(pmodel);
+				// Дополнительная валидация введенных полей
+				await RegisterValidateUserAsync(pmodel);
 
-				if (user != null)
+				// Проверка, не добавились ли ошибки после дополнительной валидации
+				if (ModelState.IsValid == true)
 				{
-					// Пользователь был успешно создан
-					SendRegisterConfirmationMailAsync(user);
-					return View("RegisterConfirmation", user.Email);
-				}
+					User user = await TryCreateUserAsync(pmodel);
 
-				return RedirectToAction("Index", "Home");
+					if (user != null)
+					{
+						// Пользователь был успешно создан
+						SendRegisterConfirmationMailAsync(user);
+						return View("RegisterConfirmation", user.Email);
+					}
+				}
 			}
 
 			return View(pmodel);
@@ -433,33 +469,28 @@ namespace Strive.Web.App.Controllers
 			return View(pmodel);
 		}
 
-		// @todo вынести в Repository/UserManager Extensions
-		private bool IsUserNameValid(string puserName)
+		/// <summary>
+		/// Проверка существования имени пользователя в БД
+		/// </summary>
+		/// <param name="userName">Имя пользователя для проверки</param>
+		[HttpGet]
+		[Route("check-user-name-remote")]
+		public async Task<IActionResult> CheckUserNameRemote(string userName)
 		{
-			User userWithNewLogin = _db.Users
-				.Where(user => user.UserName == puserName)
-				.FirstOrDefault();
-			return userWithNewLogin == null;
-	}
-
-		private bool IsEmailValid(string pemail)
-		{
-			User userWithNewEmail = _db.Users
-				.Where(user => user.Email == pemail)
-				.FirstOrDefault();
-			return userWithNewEmail == null;
-}
-
-		public IActionResult CheckUserNameRemote(string userName)
-		{
-			if (IsUserNameValid(userName) == false)
+			if (await _userManager.FindByNameAsync(userName) != null)
 				return Json(false);
 			return Json(true);
 		}
 
-		public IActionResult CheckEmailRemote(string email)
+		/// <summary>
+		/// Проверка существования Email в БД
+		/// </summary>
+		/// <param name="email">Email для проверки</param>
+		[HttpGet]
+		[Route("check-email-remote")]
+		public async Task<IActionResult> CheckEmailRemote(string email)
 		{
-			if (IsEmailValid(email) == false)
+			if (await _userManager.FindByEmailAsync(email) != null)
 				return Json(false);
 			return Json(true);
 		}
