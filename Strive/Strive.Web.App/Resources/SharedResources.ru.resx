@@ -159,6 +159,9 @@
   <data name="Account-Placeholder-Username" xml:space="preserve">
     <value>Введите имя пользователя</value>
   </data>
+  <data name="Account-Span-UsingExistingAccount" xml:space="preserve">
+    <value>с использованием существующей учетной записи</value>
+  </data>
   <data name="Account-Text-ForgotPassword" xml:space="preserve">
     <value>Забыли пароль?</value>
   </data>

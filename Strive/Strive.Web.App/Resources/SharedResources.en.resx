@@ -159,6 +159,9 @@
   <data name="Account-Placeholder-Username" xml:space="preserve">
     <value>Enter username</value>
   </data>
+  <data name="Account-Span-UsingExistingAccount" xml:space="preserve">
+    <value>using existing account</value>
+  </data>
   <data name="Account-Text-ForgotPassword" xml:space="preserve">
     <value>Forgot password?</value>
   </data>

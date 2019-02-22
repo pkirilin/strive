@@ -120,7 +120,4 @@
   <data name="Header" xml:space="preserve">
     <value>Регистрация новой учетной записи Strive</value>
   </data>
-  <data name="LoginSpan" xml:space="preserve">
-    <value>с использованием существующей учетной записи</value>
-  </data>
 </root>

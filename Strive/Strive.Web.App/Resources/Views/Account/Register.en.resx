@@ -120,7 +120,4 @@
   <data name="Header" xml:space="preserve">
     <value>Sign up to Strive</value>
   </data>
-  <data name="LoginSpan" xml:space="preserve">
-    <value>using an existing account</value>
-  </data>
 </root>
