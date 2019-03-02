@@ -1,7 +1,12 @@
 import React from "react";
+import { PrivateLayout } from "../_components";
 
 export class Home extends React.Component {
   render() {
-    return <div>Home</div>;
+    return (
+      <PrivateLayout>
+        <h2>Home</h2>
+      </PrivateLayout>
+    );
   }
 }
