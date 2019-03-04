@@ -4,6 +4,7 @@ import { history } from "../_helpers";
 import { Home } from "../Home";
 import { Account } from "../Account";
 //import { PrivateRoute } from "../_components";
+import { NotFoundPage } from "../ErrorPages";
 
 export class App extends React.Component {
   render() {
@@ -14,6 +15,7 @@ export class App extends React.Component {
             {/* <PrivateRoute exact path="/" component={Home} /> */}
             <Route exact path="/" component={Home} />
             <Route path="/account" component={Account} />
+            <Route component={NotFoundPage} />
           </Switch>
         </Router>
       </div>
