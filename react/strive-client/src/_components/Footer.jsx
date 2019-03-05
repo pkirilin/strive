@@ -10,7 +10,7 @@ export class Footer extends React.Component {
   }
 
   shouldComponentUpdate() {
-    let currentYear = new Date.getFullYear();
+    let currentYear = new Date().getFullYear();
     if (currentYear !== this.state.year) {
       this.setState({
         year: currentYear

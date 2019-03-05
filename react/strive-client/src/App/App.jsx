@@ -14,6 +14,7 @@ export class App extends React.Component {
           <Switch>
             {/* <PrivateRoute exact path="/" component={Home} /> */}
             <Route exact path="/" component={Home} />
+            <Route path="/home" component={Home} />
             <Route path="/account" component={Account} />
             <Route component={NotFoundPage} />
           </Switch>
