@@ -4,3 +4,6 @@ export { PublicLayout } from "./PublicLayout";
 export { Footer } from "./Footer";
 export { MainNavbar } from "./MainNavbar";
 export { MainTitle } from "./MainTitle";
+export { CenteredFormLayout } from "./CenteredFormLayout";
+export { MarginedLayout } from "./MarginedLayout";
+export { LabeledInput } from "./LabeledInput";

@@ -1,13 +1,14 @@
 import React from "react";
+import { Container } from "reactstrap";
 import { Footer } from "./Footer";
 
 export class PublicLayout extends React.Component {
   render() {
     return (
-      <div>
+      <Container fluid>
         {this.props.children}
         <Footer />
-      </div>
+      </Container>
     );
   }
 }
