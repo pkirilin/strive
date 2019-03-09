@@ -6,12 +6,29 @@ export class LabeledInput extends React.Component {
     return (
       <div>
         <Label className="font-weight-bold">{this.props.label}</Label>
-        <Input
-          type={this.props.type}
-          placeholder={this.props.placeholder}
-          value={this.props.value}
-          onChange={this.props.onValueChange}
-        />
+
+        {!this.props.readonly && (
+          <Input
+            type={this.props.type}
+            placeholder={this.props.placeholder}
+            value={this.props.value}
+            onChange={this.props.onValueChange}
+          />
+        )}
+
+        {this.props.readonly && (
+          <input
+            type={this.props.type}
+            placeholder={this.props.placeholder}
+            value={this.props.value}
+            readOnly
+            className="form-control-plaintext"
+          />
+        )}
+
+        {this.props.help && (
+          <small className="form-text text-muted">{this.props.help}</small>
+        )}
       </div>
     );
   }

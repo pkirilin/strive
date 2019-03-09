@@ -61,6 +61,10 @@ export class LoginForm extends React.Component {
         </FormGroup>
 
         <FormGroup className="text-center">
+          <Link to="/account/forgot-password">Forgot password?</Link>
+        </FormGroup>
+
+        <FormGroup className="text-center">
           <Link to="/account/register">Create account</Link>
         </FormGroup>
       </Form>
