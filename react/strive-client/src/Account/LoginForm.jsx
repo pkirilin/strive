@@ -2,14 +2,27 @@ import React from "react";
 import { Form, FormGroup, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import { LabeledInput } from "../_components/LabeledInput";
+import { validationStates, validationRules } from "../_constants/validation";
 
 export class LoginForm extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      email: "",
-      password: ""
+      email: {
+        value: "",
+        validationState: {
+          status: validationStates.default,
+          message: ""
+        }
+      },
+      password: {
+        value: "",
+        validationState: {
+          status: validationStates.default,
+          message: ""
+        }
+      }
     };
 
     this.onEmailChange = this.onEmailChange.bind(this);
@@ -18,14 +31,25 @@ export class LoginForm extends React.Component {
   }
 
   onEmailChange(event) {
+    let value = event.target.value;
+
     this.setState({
-      email: event.target.value
+      email: {
+        value: value,
+        validationState: validationRules.required(
+          value,
+          "Email is required",
+          "Email is ok"
+        )
+      }
     });
   }
 
   onPasswordChange(event) {
     this.setState({
-      password: event.target.value
+      password: {
+        value: event.target.value
+      }
     });
   }
 
@@ -41,8 +65,9 @@ export class LoginForm extends React.Component {
             type="text"
             label="Email"
             placeholder="Enter email"
-            value={this.state.email}
+            value={this.state.email.value}
             onValueChange={this.onEmailChange}
+            validationState={this.state.email.validationState}
           />
         </FormGroup>
 
@@ -51,8 +76,9 @@ export class LoginForm extends React.Component {
             type="password"
             label="Password"
             placeholder="Enter password"
-            value={this.state.password}
+            value={this.state.password.value}
             onValueChange={this.onPasswordChange}
+            validationState={this.state.password.validationState}
           />
         </FormGroup>
 
