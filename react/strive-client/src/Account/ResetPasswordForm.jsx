@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, FormGroup, Input } from "reactstrap";
-import { LabeledInput } from "../_components/LabeledInput";
+import { InputField } from "../_components/InputField";
 
 export class ResetPasswordForm extends React.Component {
   constructor(props) {
@@ -38,11 +38,11 @@ export class ResetPasswordForm extends React.Component {
     return (
       <Form onSubmit={this.onSubmit}>
         <FormGroup>
-          <LabeledInput type="text" label="Email" value="test" readonly />
+          <InputField type="text" label="Email" value="test" readonly />
         </FormGroup>
 
         <FormGroup>
-          <LabeledInput
+          <InputField
             type="password"
             label="New password"
             placeholder="Enter new password"
@@ -52,7 +52,7 @@ export class ResetPasswordForm extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <LabeledInput
+          <InputField
             type="password"
             label="New password confirm"
             placeholder="Enter new password again"

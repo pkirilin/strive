@@ -6,4 +6,4 @@ export { MainNavbar } from "./MainNavbar";
 export { MainTitle } from "./MainTitle";
 export { CenteredFormLayout } from "./CenteredFormLayout";
 export { MarginedLayout } from "./MarginedLayout";
-export { LabeledInput } from "./LabeledInput";
+export { InputField } from "./InputField";

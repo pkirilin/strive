@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, FormGroup, Input } from "reactstrap";
-import { LabeledInput } from "../_components/LabeledInput";
+import { InputField } from "../_components/InputField";
 
 export class ForgotPasswordForm extends React.Component {
   constructor(props) {
@@ -28,7 +28,7 @@ export class ForgotPasswordForm extends React.Component {
     return (
       <Form onSubmit={this.onSubmit}>
         <FormGroup>
-          <LabeledInput
+          <InputField
             type="text"
             label="Email"
             placeholder="Enter email"

@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, FormGroup, Input } from "reactstrap";
 import { Link } from "react-router-dom";
-import { LabeledInput } from "../_components/LabeledInput";
+import { InputField } from "../_components/InputField";
 
 export class RegisterForm extends React.Component {
   constructor(props) {
@@ -53,7 +53,7 @@ export class RegisterForm extends React.Component {
     return (
       <Form method="post" onSubmit={this.onSubmit}>
         <FormGroup>
-          <LabeledInput
+          <InputField
             type="text"
             label="Username"
             placeholder="Enter username"
@@ -63,7 +63,7 @@ export class RegisterForm extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <LabeledInput
+          <InputField
             type="text"
             label="Email"
             placeholder="Enter email"
@@ -73,7 +73,7 @@ export class RegisterForm extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <LabeledInput
+          <InputField
             type="password"
             label="Password"
             placeholder="Enter password"
@@ -83,7 +83,7 @@ export class RegisterForm extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <LabeledInput
+          <InputField
             type="password"
             label="Password confirm"
             placeholder="Enter password again"

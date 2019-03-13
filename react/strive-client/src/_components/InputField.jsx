@@ -2,7 +2,7 @@ import React from "react";
 import { Label } from "reactstrap";
 import { validationStates } from "../_constants/validation";
 
-export class LabeledInput extends React.Component {
+export class InputField extends React.Component {
   static defaultProps = {
     validationState: {
       status: validationStates.default
@@ -47,11 +47,11 @@ export class LabeledInput extends React.Component {
 
         <input {...inputProps} />
 
-        {this.props.help && (
-          <small className="form-text text-muted">{this.props.help}</small>
-        )}
         {this.props.validationState.message && (
           <span {...messageProps}>{this.props.validationState.message}</span>
+        )}
+        {this.props.validationState.status === validationStates.default && (
+          <small className="form-text text-muted">{this.props.help}</small>
         )}
       </div>
     );
