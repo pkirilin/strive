@@ -36,19 +36,20 @@ export class LoginForm extends React.Component {
     this.setState({
       email: {
         value: value,
-        validationState: validationRules.required(
-          value,
-          "Email is required",
-          "Email is ok"
-        )
+        validationState: validationRules.multiple([
+          validationRules.required(value, "Email is required"),
+          validationRules.lengthRange(value, 3, 10, "Email length [3, 10]")
+        ])
       }
     });
   }
 
   onPasswordChange(event) {
+    let value = event.target.value;
+
     this.setState({
       password: {
-        value: event.target.value
+        value: value
       }
     });
   }
