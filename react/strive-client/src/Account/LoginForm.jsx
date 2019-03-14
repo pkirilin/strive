@@ -2,7 +2,7 @@ import React from "react";
 import { Form, FormGroup, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import { InputField } from "../_components/InputField";
-import { validationStates, validationRules } from "../_constants/validation";
+import { validationStatuses, validationRules } from "../_constants/validation";
 
 export class LoginForm extends React.Component {
   constructor(props) {
@@ -12,14 +12,14 @@ export class LoginForm extends React.Component {
       email: {
         value: "",
         validationState: {
-          status: validationStates.default,
+          status: validationStatuses.default,
           message: ""
         }
       },
       password: {
         value: "",
         validationState: {
-          status: validationStates.default,
+          status: validationStatuses.default,
           message: ""
         }
       }

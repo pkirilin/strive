@@ -1,11 +1,11 @@
 import React from "react";
 import { Label } from "reactstrap";
-import { validationStates } from "../_constants/validation";
+import { validationStatuses } from "../_constants/validation";
 
 export class InputField extends React.Component {
   static defaultProps = {
     validationState: {
-      status: validationStates.default
+      status: validationStatuses.default
     }
   };
 
@@ -17,11 +17,11 @@ export class InputField extends React.Component {
     let messageClasses = [];
 
     switch (this.props.validationState.status) {
-      case validationStates.valid:
+      case validationStatuses.valid:
         inputClasses.push("is-valid");
         messageClasses.push("valid-feedback");
         break;
-      case validationStates.invalid:
+      case validationStatuses.invalid:
         inputClasses.push("is-invalid");
         messageClasses.push("invalid-feedback");
         break;
@@ -50,7 +50,7 @@ export class InputField extends React.Component {
         {this.props.validationState.message && (
           <span {...messageProps}>{this.props.validationState.message}</span>
         )}
-        {this.props.validationState.status === validationStates.default && (
+        {this.props.validationState.status === validationStatuses.default && (
           <small className="form-text text-muted">{this.props.help}</small>
         )}
       </div>
