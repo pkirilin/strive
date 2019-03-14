@@ -3,6 +3,7 @@ import { Form, FormGroup, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import { InputField } from "../_components/InputField";
 import { validationStatuses, validationRules } from "../_constants/validation";
+import { validationResources } from "../_resources";
 
 export class LoginForm extends React.Component {
   constructor(props) {
@@ -31,14 +32,20 @@ export class LoginForm extends React.Component {
   }
 
   onEmailChange(event) {
-    let value = event.target.value;
-
     this.setState({
       email: {
-        value: value,
+        value: event.target.value,
         validationState: validationRules.multiple([
-          validationRules.required(value, "Email is required"),
-          validationRules.lengthRange(value, 3, 10, "Email length [3, 10]")
+          validationRules.required(
+            event.target.value,
+            validationResources.invalid.email.required.message
+          ),
+          validationRules.lengthRange(
+            event.target.value,
+            validationResources.invalid.email.lengthRange.min,
+            validationResources.invalid.email.lengthRange.max,
+            validationResources.invalid.email.lengthRange.message
+          )
         ])
       }
     });
