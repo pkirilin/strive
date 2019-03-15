@@ -9,9 +9,12 @@ export const validationResources = {
         message: "Email is required"
       },
       lengthRange: {
-        min: 3,
-        max: 50,
-        message: "Email length must be from 3 to 50"
+        min: 4,
+        max: 255,
+        message: "Email length must be from 4 to 255"
+      },
+      email: {
+        message: "Email format is incorrect"
       }
     }
   }

@@ -11,6 +11,12 @@ export const validationStatuses = {
   invalid: "invalid"
 };
 
+/** Regex validation constants */
+export const validationRegexes = {
+  /** RFC 5322 general email regex */
+  EMAIL: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+};
+
 /**
  * Validation rules functions collected in single object
  */
@@ -20,6 +26,12 @@ export const validationRules = {
 
   /** Validation rule function for checking field's value length ranges */
   lengthRange,
+
+  /** Validation rule function for checking whether field match target regular expression or not */
+  regularExpression,
+
+  /** Validation rule function for checking email address */
+  email,
 
   /** Validation rule function for checking multiple validation rules applied to field */
   multiple
@@ -60,6 +72,34 @@ function lengthRange(
     status: validationStatuses.invalid,
     message: invalidMessage
   };
+}
+
+function regularExpression(
+  value,
+  expression,
+  invalidMessage = "Value doesn't match target regular expression",
+  validMessage = ""
+) {
+  if (value.match(expression) === null) {
+    return {
+      status: validationStatuses.invalid,
+      message: invalidMessage
+    };
+  }
+
+  return {
+    status: validationStatuses.valid,
+    message: validMessage
+  };
+}
+
+function email(value, invalidMessage = "", validMessage = "") {
+  return regularExpression(
+    value,
+    validationRegexes.EMAIL,
+    invalidMessage,
+    validMessage
+  );
 }
 
 function multiple(rules) {
