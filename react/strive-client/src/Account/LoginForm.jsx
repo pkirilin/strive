@@ -40,11 +40,15 @@ export class LoginForm extends React.Component {
             event.target.value,
             validationResources.invalid.email.required.message
           ),
-          validationRules.lengthRange(
+          validationRules.lengthMin(
             event.target.value,
-            validationResources.invalid.email.lengthRange.min,
-            validationResources.invalid.email.lengthRange.max,
-            validationResources.invalid.email.lengthRange.message
+            validationResources.invalid.email.lengthMin.min,
+            validationResources.invalid.email.lengthMin.message
+          ),
+          validationRules.lengthMax(
+            event.target.value,
+            validationResources.invalid.email.lengthMax.max,
+            validationResources.invalid.email.lengthMax.message
           ),
           validationRules.email(
             event.target.value,

@@ -24,8 +24,11 @@ export const validationRules = {
   /** Validation rule function for checking empty fields */
   required,
 
-  /** Validation rule function for checking field's value length ranges */
-  lengthRange,
+  /** Validation rule function for checking field's value min length */
+  lengthMin,
+
+  /** Validation rule function for checking field's value max length */
+  lengthMax,
 
   /** Validation rule function for checking whether field match target regular expression or not */
   regularExpression,
@@ -54,23 +57,31 @@ function required(
   };
 }
 
-function lengthRange(
-  value,
-  minLength = 0,
-  maxLength = 50,
-  invalidMessage = "",
-  validMessage = ""
-) {
-  if (value.length >= minLength && value.length <= maxLength) {
+function lengthMin(value, min = 0, invalidMessage = "", validMessage = "") {
+  if (value.length < min) {
     return {
-      status: validationStatuses.valid,
-      message: validMessage
+      status: validationStatuses.invalid,
+      message: invalidMessage
     };
   }
 
   return {
-    status: validationStatuses.invalid,
-    message: invalidMessage
+    status: validationStatuses.valid,
+    message: validMessage
+  };
+}
+
+function lengthMax(value, max = 255, invalidMessage = "", validMessage = "") {
+  if (value.length > max) {
+    return {
+      status: validationStatuses.invalid,
+      message: invalidMessage
+    };
+  }
+
+  return {
+    status: validationStatuses.valid,
+    message: validMessage
   };
 }
 
