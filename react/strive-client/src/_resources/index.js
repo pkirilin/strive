@@ -1,1 +1,1 @@
-export { validationResources } from "./validation.resources";
+export { validationResources } from "./validation";

@@ -1,5 +1,4 @@
-import { validationStatuses, validationRegexes } from "../_constants";
-import { validationResources } from "../_resources";
+import { validationStatuses, validationRegexes } from "../../_constants";
 
 /**
  * Validation rules functions collected in single object
@@ -24,16 +23,7 @@ export const validationRules = {
   multiple
 };
 
-/** Additional validation functions */
-export const validationHelpers = {
-  /** Focuses first invalid input field inside form with target selector */
-  focusFirstInvalidField
-};
-
-export const validationRulesSetters = {
-  validateEmail
-};
-
+/** Validation rule function for checking empty fields */
 function required(
   value,
   invalidMessage = "Value is required",
@@ -51,6 +41,7 @@ function required(
   };
 }
 
+/** Validation rule function for checking field's value min length */
 function lengthMin(value, min = 0, invalidMessage = "", validMessage = "") {
   if (value.length < min) {
     return {
@@ -65,6 +56,7 @@ function lengthMin(value, min = 0, invalidMessage = "", validMessage = "") {
   };
 }
 
+/** Validation rule function for checking field's value max length */
 function lengthMax(value, max = 255, invalidMessage = "", validMessage = "") {
   if (value.length > max) {
     return {
@@ -79,6 +71,7 @@ function lengthMax(value, max = 255, invalidMessage = "", validMessage = "") {
   };
 }
 
+/** Validation rule function for checking whether field match target regular expression or not */
 function regularExpression(
   value,
   expression,
@@ -98,6 +91,7 @@ function regularExpression(
   };
 }
 
+/** Validation rule function for checking email address */
 function email(value, invalidMessage = "", validMessage = "") {
   return regularExpression(
     value,
@@ -107,6 +101,7 @@ function email(value, invalidMessage = "", validMessage = "") {
   );
 }
 
+/** Validation rule function for checking multiple validation rules applied to field */
 function multiple(rules) {
   for (let i = 0; i < rules.length; i++) {
     if (rules[i].status === validationStatuses.invalid) {
@@ -114,34 +109,4 @@ function multiple(rules) {
     }
   }
   return rules[rules.length - 1];
-}
-
-function focusFirstInvalidField(formSelector) {
-  let invalidElem = document.querySelector(`${formSelector} .is-invalid`);
-  if (invalidElem !== null) {
-    invalidElem.focus();
-  }
-}
-
-function validateEmail(emailValue) {
-  return validationRules.multiple([
-    validationRules.required(
-      emailValue,
-      validationResources.invalid.email.required.message
-    ),
-    validationRules.lengthMin(
-      emailValue,
-      validationResources.invalid.email.lengthMin.min,
-      validationResources.invalid.email.lengthMin.message
-    ),
-    validationRules.lengthMax(
-      emailValue,
-      validationResources.invalid.email.lengthMax.max,
-      validationResources.invalid.email.lengthMax.message
-    ),
-    validationRules.email(
-      emailValue,
-      validationResources.invalid.email.email.message
-    )
-  ]);
 }
