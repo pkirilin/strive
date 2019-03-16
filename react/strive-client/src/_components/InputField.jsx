@@ -37,6 +37,10 @@ export class InputField extends React.Component {
       onChange: this.props.onValueChange
     };
 
+    if (this.props.id) {
+      inputProps["id"] = this.props.id;
+    }
+
     let messageProps = {
       className: messageClasses.join(" ")
     };
