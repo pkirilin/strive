@@ -2,8 +2,11 @@ import React from "react";
 import { Form, FormGroup, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import { InputField } from "../_components/InputField";
-import { validationStatuses, validationRules } from "../_constants/validation";
-import { validationResources } from "../_resources";
+import { validationStatuses } from "../_constants/validation";
+import {
+  validationHelpers,
+  validationRulesSetters
+} from "../_helpers/validation";
 
 export class LoginForm extends React.Component {
   constructor(props) {
@@ -35,26 +38,9 @@ export class LoginForm extends React.Component {
     this.setState({
       email: {
         value: event.target.value,
-        validationState: validationRules.multiple([
-          validationRules.required(
-            event.target.value,
-            validationResources.invalid.email.required.message
-          ),
-          validationRules.lengthMin(
-            event.target.value,
-            validationResources.invalid.email.lengthMin.min,
-            validationResources.invalid.email.lengthMin.message
-          ),
-          validationRules.lengthMax(
-            event.target.value,
-            validationResources.invalid.email.lengthMax.max,
-            validationResources.invalid.email.lengthMax.message
-          ),
-          validationRules.email(
-            event.target.value,
-            validationResources.invalid.email.email.message
-          )
-        ])
+        validationState: validationRulesSetters.validateEmail(
+          event.target.value
+        )
       }
     });
   }
@@ -71,11 +57,25 @@ export class LoginForm extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
+
+    this.setState(
+      {
+        email: {
+          ...this.state.email,
+          validationState: validationRulesSetters.validateEmail(
+            this.state.email.value
+          )
+        }
+      },
+      () => {
+        validationHelpers.focusFirstInvalidField("#loginForm");
+      }
+    );
   }
 
   render() {
     return (
-      <Form method="post" onSubmit={this.onSubmit}>
+      <Form id="loginForm" method="post" onSubmit={this.onSubmit}>
         <FormGroup>
           <InputField
             type="text"
