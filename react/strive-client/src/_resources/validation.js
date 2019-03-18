@@ -19,6 +19,11 @@ export const validationResources = {
       email: {
         message: "Email format is incorrect"
       }
+    },
+    password: {
+      required: {
+        message: "Password is required"
+      }
     }
   }
 };

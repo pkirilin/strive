@@ -32,6 +32,10 @@ export class LoginForm extends React.Component {
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+
+    this.onSubmitValidationCompleted = this.onSubmitValidationCompleted.bind(
+      this
+    );
   }
 
   onEmailChange(event) {
@@ -46,13 +50,20 @@ export class LoginForm extends React.Component {
   }
 
   onPasswordChange(event) {
-    let value = event.target.value;
-
     this.setState({
       password: {
-        value: value
+        value: event.target.value,
+        validationState: validationRulesSetters.validatePassword(
+          event.target.value
+        )
       }
     });
+  }
+
+  onSubmitValidationCompleted() {
+    if (validationHelpers.focusFirstInvalidField("#loginForm") === false) {
+      // form valid
+    }
   }
 
   onSubmit(event) {
@@ -65,11 +76,15 @@ export class LoginForm extends React.Component {
           validationState: validationRulesSetters.validateEmail(
             this.state.email.value
           )
+        },
+        password: {
+          ...this.state.password,
+          validationState: validationRulesSetters.validatePassword(
+            this.state.password.value
+          )
         }
       },
-      () => {
-        validationHelpers.focusFirstInvalidField("#loginForm");
-      }
+      this.onSubmitValidationCompleted
     );
   }
 
