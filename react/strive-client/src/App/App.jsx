@@ -5,8 +5,13 @@ import { Home } from "../Home";
 import { Account } from "../Account";
 import { PrivateRoute } from "../_components";
 import { NotFoundPage } from "../ErrorPages";
+import { BRAND_NAME } from "../_constants";
 
 export class App extends React.Component {
+  componentWillMount() {
+    document.title = BRAND_NAME;
+  }
+
   render() {
     return (
       <div>

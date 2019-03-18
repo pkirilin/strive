@@ -1,8 +1,14 @@
 import React from "react";
 import { PublicLayout } from "../_components";
 import { MainTitle } from "../_components";
+import { BRAND_NAME } from "../_constants";
+import { titleResources } from "../_resources";
 
 export class NotFoundPage extends React.Component {
+  componentWillMount() {
+    document.title = `${BRAND_NAME} - ${titleResources.notFound}`;
+  }
+
   render() {
     return (
       <div>
