@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, FormGroup, Input } from "reactstrap";
 import { Link } from "react-router-dom";
-import { InputField } from "../_components/InputField";
+import { InputField, InputCheckbox } from "../_components";
 import { validationStatuses } from "../_constants/validation";
 import {
   validationHelpers,
@@ -26,11 +26,15 @@ export class LoginForm extends React.Component {
           status: validationStatuses.default,
           message: ""
         }
+      },
+      rememberMe: {
+        value: false
       }
     };
 
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
+    this.onRememberMeCheckedChange = this.onRememberMeCheckedChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.onSubmitValidationCompleted = this.onSubmitValidationCompleted.bind(
@@ -41,6 +45,7 @@ export class LoginForm extends React.Component {
   onEmailChange(event) {
     this.setState({
       email: {
+        ...this.state.email,
         value: event.target.value,
         validationState: validationRulesSetters.validateEmail(
           event.target.value
@@ -52,10 +57,20 @@ export class LoginForm extends React.Component {
   onPasswordChange(event) {
     this.setState({
       password: {
+        ...this.state.password,
         value: event.target.value,
         validationState: validationRulesSetters.validatePassword(
           event.target.value
         )
+      }
+    });
+  }
+
+  onRememberMeCheckedChange(event) {
+    this.setState({
+      rememberMe: {
+        ...this.state.rememberMe,
+        value: event.target.checked
       }
     });
   }
@@ -112,6 +127,13 @@ export class LoginForm extends React.Component {
             validationState={this.state.password.validationState}
           />
         </FormGroup>
+
+        <InputCheckbox
+          id="rememberMe"
+          label="Remember me"
+          value={this.state.rememberMe.value}
+          onCheckedChange={this.onRememberMeCheckedChange}
+        />
 
         <FormGroup>
           <Input type="submit" className="btn btn-success" value="Sign in" />
