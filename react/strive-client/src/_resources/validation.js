@@ -20,9 +20,22 @@ export const validationResources = {
         message: "Email format is incorrect"
       }
     },
+    username: {
+      required: {
+        message: "Username is required"
+      }
+    },
     password: {
       required: {
         message: "Password is required"
+      }
+    },
+    passwordConfirm: {
+      required: {
+        message: "Password confirmation is required"
+      },
+      compare: {
+        message: "Passwords are mismatch"
       }
     }
   }

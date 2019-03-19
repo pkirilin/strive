@@ -1,9 +1,13 @@
 import { validationStatuses, validationRegexes } from "../../_constants";
+import { commonHelpers } from "../common";
 
 /**
  * Validation rules functions collected in single object
  */
 export const validationRules = {
+  /** No validation rule */
+  novalidate,
+
   /** Validation rule function for checking empty fields */
   required,
 
@@ -19,17 +23,23 @@ export const validationRules = {
   /** Validation rule function for checking email address */
   email,
 
+  /** Validation rule function for checking whether origin value is the same as compare value */
+  compare,
+
   /** Validation rule function for checking multiple validation rules applied to field */
   multiple
 };
 
+/** No validation rule */
+function novalidate() {
+  return {
+    status: validationStatuses.default
+  };
+}
+
 /** Validation rule function for checking empty fields */
-function required(
-  value,
-  invalidMessage = "Value is required",
-  validMessage = ""
-) {
-  if (value === "") {
+function required(value, invalidMessage = "", validMessage = "") {
+  if (commonHelpers.isUndefinedOrEmpty(value)) {
     return {
       status: validationStatuses.invalid,
       message: invalidMessage
@@ -101,7 +111,32 @@ function email(value, invalidMessage = "", validMessage = "") {
   );
 }
 
-/** Validation rule function for checking multiple validation rules applied to field */
+/** Validation rule function for checking whether origin value is the same as compare value */
+function compare(
+  originValue,
+  compareValue,
+  invalidMessage = "",
+  validMessage = ""
+) {
+  if (originValue === compareValue) {
+    return {
+      status: validationStatuses.valid,
+      message: validMessage
+    };
+  }
+
+  return {
+    status: validationStatuses.invalid,
+    message: invalidMessage
+  };
+}
+
+/*
+ * Validation rule function for checking multiple validation rules applied to field
+ *
+ * Rules are applied until the first invalid one.
+ * The priorities are based on the rules' definition order.
+ */
 function multiple(rules) {
   for (let i = 0; i < rules.length; i++) {
     if (rules[i].status === validationStatuses.invalid) {
