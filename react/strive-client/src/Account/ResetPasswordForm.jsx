@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, FormGroup, Input } from "reactstrap";
-import { InputField } from "../_components/InputField";
-import { validationStatuses } from "../_constants/validation";
+import { InputField } from "../_components";
+import { validationStatuses } from "../_constants";
 import {
   validationHelpers,
   validationRulesSetters
@@ -29,14 +29,13 @@ export class ResetPasswordForm extends React.Component {
     };
 
     this.state = {
-      email: {
-        value: "email"
-      },
       newPassword: {
-        ...initObj
+        ...initObj,
+        onValueChange: this.onNewPasswordChange
       },
       newPasswordConfirm: {
-        ...initObj
+        ...initObj,
+        onValueChange: this.onNewPasswordConfirmChange
       }
     };
   }
@@ -110,7 +109,7 @@ export class ResetPasswordForm extends React.Component {
           <InputField
             type="text"
             label="Email"
-            value={this.state.email.value}
+            value={this.props.emailValue}
             readonly
           />
         </FormGroup>
@@ -120,9 +119,7 @@ export class ResetPasswordForm extends React.Component {
             type="password"
             label="New password"
             placeholder="Enter new password"
-            value={this.state.newPassword.value}
-            onValueChange={this.onNewPasswordChange}
-            validationState={this.state.newPassword.validationState}
+            {...this.state.newPassword}
           />
         </FormGroup>
 
@@ -131,9 +128,7 @@ export class ResetPasswordForm extends React.Component {
             type="password"
             label="New password confirm"
             placeholder="Enter new password again"
-            value={this.state.newPasswordConfirm.value}
-            onValueChange={this.onNewPasswordConfirmChange}
-            validationState={this.state.newPasswordConfirm.validationState}
+            {...this.state.newPasswordConfirm}
           />
         </FormGroup>
 

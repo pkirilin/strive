@@ -3,7 +3,7 @@ import { Form, FormGroup, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import { InputField } from "../_components";
 import { validationStatuses } from "../_constants";
-import { validationRulesSetters } from "../_helpers/validation/rulesSetters";
+import { validationRulesSetters } from "../_helpers/validation";
 import { validationHelpers } from "../_helpers/validation";
 
 export class RegisterForm extends React.Component {

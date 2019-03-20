@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, FormGroup, Input } from "reactstrap";
-import { InputField } from "../_components/InputField";
+import { InputField } from "../_components";
 import { validationStatuses } from "../_constants";
 import {
   validationHelpers,

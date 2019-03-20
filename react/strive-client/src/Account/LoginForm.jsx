@@ -2,7 +2,7 @@ import React from "react";
 import { Form, FormGroup, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import { InputField, InputCheckbox } from "../_components";
-import { validationStatuses } from "../_constants/validation";
+import { validationStatuses } from "../_constants";
 import {
   validationHelpers,
   validationRulesSetters
@@ -12,26 +12,6 @@ export class LoginForm extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      email: {
-        value: "",
-        validationState: {
-          status: validationStatuses.default,
-          message: ""
-        }
-      },
-      password: {
-        value: "",
-        validationState: {
-          status: validationStatuses.default,
-          message: ""
-        }
-      },
-      rememberMe: {
-        value: false
-      }
-    };
-
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onRememberMeCheckedChange = this.onRememberMeCheckedChange.bind(this);
@@ -40,6 +20,29 @@ export class LoginForm extends React.Component {
     this.onSubmitValidationCompleted = this.onSubmitValidationCompleted.bind(
       this
     );
+
+    let initFieldObj = {
+      value: "",
+      validationState: {
+        status: validationStatuses.default,
+        message: ""
+      }
+    };
+
+    this.state = {
+      email: {
+        ...initFieldObj,
+        onValueChange: this.onEmailChange
+      },
+      password: {
+        ...initFieldObj,
+        onValueChange: this.onPasswordChange
+      },
+      rememberMe: {
+        value: false,
+        onCheckedChange: this.onRememberMeCheckedChange
+      }
+    };
   }
 
   onEmailChange(event) {
@@ -111,9 +114,7 @@ export class LoginForm extends React.Component {
             type="text"
             label="Email"
             placeholder="Enter email"
-            value={this.state.email.value}
-            onValueChange={this.onEmailChange}
-            validationState={this.state.email.validationState}
+            {...this.state.email}
           />
         </FormGroup>
 
@@ -122,17 +123,14 @@ export class LoginForm extends React.Component {
             type="password"
             label="Password"
             placeholder="Enter password"
-            value={this.state.password.value}
-            onValueChange={this.onPasswordChange}
-            validationState={this.state.password.validationState}
+            {...this.state.password}
           />
         </FormGroup>
 
         <InputCheckbox
           id="rememberMe"
           label="Remember me"
-          value={this.state.rememberMe.value}
-          onCheckedChange={this.onRememberMeCheckedChange}
+          {...this.state.rememberMe}
         />
 
         <FormGroup>
