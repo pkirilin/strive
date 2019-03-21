@@ -7,6 +7,7 @@ import {
   validationHelpers,
   validationRulesSetters
 } from "../_helpers/validation";
+import { getResourcesForCurrentCulture } from "../_helpers";
 
 export class LoginForm extends React.Component {
   constructor(props) {
@@ -107,13 +108,15 @@ export class LoginForm extends React.Component {
   }
 
   render() {
+    let resx = getResourcesForCurrentCulture();
+
     return (
       <Form id="loginForm" method="post" onSubmit={this.onSubmit}>
         <FormGroup>
           <InputField
             type="text"
-            label="Email"
-            placeholder="Enter email"
+            label={resx.labelResources.email}
+            placeholder={resx.placeholderResources.email}
             {...this.state.email}
           />
         </FormGroup>
@@ -121,28 +124,34 @@ export class LoginForm extends React.Component {
         <FormGroup>
           <InputField
             type="password"
-            label="Password"
-            placeholder="Enter password"
+            label={resx.labelResources.password}
+            placeholder={resx.placeholderResources.password}
             {...this.state.password}
           />
         </FormGroup>
 
         <InputCheckbox
           id="rememberMe"
-          label="Remember me"
+          label={resx.labelResources.rememberMe}
           {...this.state.rememberMe}
         />
 
         <FormGroup>
-          <Input type="submit" className="btn btn-success" value="Sign in" />
+          <Input
+            type="submit"
+            className="btn btn-success"
+            value={resx.inputValuesResources.signIn}
+          />
         </FormGroup>
 
         <FormGroup className="text-center">
-          <Link to="/account/forgot-password">Forgot password?</Link>
+          <Link to="/account/forgot-password">
+            {resx.linkResources.forgotPassword}
+          </Link>
         </FormGroup>
 
         <FormGroup className="text-center">
-          <Link to="/account/register">Create account</Link>
+          <Link to="/account/register">{resx.linkResources.createAccount}</Link>
         </FormGroup>
       </Form>
     );
