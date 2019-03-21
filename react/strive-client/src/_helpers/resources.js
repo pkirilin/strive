@@ -1,4 +1,5 @@
 import {
+  titleResources,
   labelResources,
   placeholderResources,
   linkResources,
@@ -11,6 +12,7 @@ export const getResourcesForCurrentCulture = () => {
   let curCulture = "en";
 
   return {
+    titleResources: titleResources[curCulture],
     labelResources: labelResources[curCulture],
     placeholderResources: placeholderResources[curCulture],
     linkResources: linkResources[curCulture],
