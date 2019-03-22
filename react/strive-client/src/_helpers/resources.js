@@ -3,7 +3,8 @@ import {
   labelResources,
   placeholderResources,
   linkResources,
-  inputValuesResources
+  inputValuesResources,
+  helpResources
 } from "../_resources";
 
 /** Gets current culture and returns resources for this culture */
@@ -16,6 +17,7 @@ export const getResourcesForCurrentCulture = () => {
     labelResources: labelResources[curCulture],
     placeholderResources: placeholderResources[curCulture],
     linkResources: linkResources[curCulture],
-    inputValuesResources: inputValuesResources[curCulture]
+    inputValuesResources: inputValuesResources[curCulture],
+    helpResources: helpResources[curCulture]
   };
 };

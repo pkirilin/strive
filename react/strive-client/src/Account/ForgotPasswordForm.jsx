@@ -6,6 +6,7 @@ import {
   validationHelpers,
   validationRulesSetters
 } from "../_helpers/validation";
+import { getResourcesForCurrentCulture } from "../_helpers";
 
 export class ForgotPasswordForm extends React.Component {
   constructor(props) {
@@ -26,7 +27,11 @@ export class ForgotPasswordForm extends React.Component {
     };
 
     this.state = {
-      email: { ...initObj }
+      resources: getResourcesForCurrentCulture(),
+      email: {
+        ...initObj,
+        onValueChange: this.onEmailChange
+      }
     };
   }
 
@@ -68,16 +73,18 @@ export class ForgotPasswordForm extends React.Component {
         <FormGroup>
           <InputField
             type="text"
-            label="Email"
-            placeholder="Enter email"
-            value={this.state.email.value}
-            onValueChange={this.onEmailChange}
-            validationState={this.state.email.validationState}
-            help="Enter your email. You will receive a link to reset your password"
+            label={this.state.resources.labelResources.email}
+            placeholder={this.state.resources.placeholderResources.email}
+            help={this.state.resources.helpResources.forgotPasswordEmail}
+            {...this.state.email}
           />
         </FormGroup>
 
-        <Input type="submit" className="btn btn-success" value="Send" />
+        <Input
+          type="submit"
+          className="btn btn-success"
+          value={this.state.resources.inputValuesResources.send}
+        />
       </Form>
     );
   }

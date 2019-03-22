@@ -31,6 +31,7 @@ export class LoginForm extends React.Component {
     };
 
     this.state = {
+      resources: getResourcesForCurrentCulture(),
       email: {
         ...initFieldObj,
         onValueChange: this.onEmailChange
@@ -108,15 +109,13 @@ export class LoginForm extends React.Component {
   }
 
   render() {
-    let resx = getResourcesForCurrentCulture();
-
     return (
       <Form id="loginForm" method="post" onSubmit={this.onSubmit}>
         <FormGroup>
           <InputField
             type="text"
-            label={resx.labelResources.email}
-            placeholder={resx.placeholderResources.email}
+            label={this.state.resources.labelResources.email}
+            placeholder={this.state.resources.placeholderResources.email}
             {...this.state.email}
           />
         </FormGroup>
@@ -124,15 +123,15 @@ export class LoginForm extends React.Component {
         <FormGroup>
           <InputField
             type="password"
-            label={resx.labelResources.password}
-            placeholder={resx.placeholderResources.password}
+            label={this.state.resources.labelResources.password}
+            placeholder={this.state.resources.placeholderResources.password}
             {...this.state.password}
           />
         </FormGroup>
 
         <InputCheckbox
           id="rememberMe"
-          label={resx.labelResources.rememberMe}
+          label={this.state.resources.labelResources.rememberMe}
           {...this.state.rememberMe}
         />
 
@@ -140,18 +139,20 @@ export class LoginForm extends React.Component {
           <Input
             type="submit"
             className="btn btn-success"
-            value={resx.inputValuesResources.signIn}
+            value={this.state.resources.inputValuesResources.signIn}
           />
         </FormGroup>
 
         <FormGroup className="text-center">
           <Link to="/account/forgot-password">
-            {resx.linkResources.forgotPassword}
+            {this.state.resources.linkResources.forgotPassword}
           </Link>
         </FormGroup>
 
         <FormGroup className="text-center">
-          <Link to="/account/register">{resx.linkResources.createAccount}</Link>
+          <Link to="/account/register">
+            {this.state.resources.linkResources.createAccount}
+          </Link>
         </FormGroup>
       </Form>
     );

@@ -5,6 +5,7 @@ import { InputField } from "../_components";
 import { validationStatuses } from "../_constants";
 import { validationRulesSetters } from "../_helpers/validation";
 import { validationHelpers } from "../_helpers/validation";
+import { getResourcesForCurrentCulture } from "../_helpers";
 
 export class RegisterForm extends React.Component {
   constructor(props) {
@@ -28,6 +29,7 @@ export class RegisterForm extends React.Component {
     };
 
     this.state = {
+      resources: getResourcesForCurrentCulture(),
       username: {
         ...initFieldObj,
         onValueChange: this.onUsernameChange
@@ -150,8 +152,8 @@ export class RegisterForm extends React.Component {
         <FormGroup>
           <InputField
             type="text"
-            label="Username"
-            placeholder="Enter username"
+            label={this.state.resources.labelResources.username}
+            placeholder={this.state.resources.placeholderResources.username}
             {...this.state.username}
           />
         </FormGroup>
@@ -159,8 +161,8 @@ export class RegisterForm extends React.Component {
         <FormGroup>
           <InputField
             type="text"
-            label="Email"
-            placeholder="Enter email"
+            label={this.state.resources.labelResources.email}
+            placeholder={this.state.resources.placeholderResources.email}
             {...this.state.email}
           />
         </FormGroup>
@@ -168,8 +170,8 @@ export class RegisterForm extends React.Component {
         <FormGroup>
           <InputField
             type="password"
-            label="Password"
-            placeholder="Enter password"
+            label={this.state.resources.labelResources.password}
+            placeholder={this.state.resources.placeholderResources.password}
             {...this.state.password}
           />
         </FormGroup>
@@ -177,18 +179,26 @@ export class RegisterForm extends React.Component {
         <FormGroup>
           <InputField
             type="password"
-            label="Password confirm"
-            placeholder="Enter password again"
+            label={this.state.resources.labelResources.passwordConfirm}
+            placeholder={
+              this.state.resources.placeholderResources.passwordConfirm
+            }
             {...this.state.passwordConfirm}
           />
         </FormGroup>
 
         <FormGroup>
-          <Input type="submit" className="btn btn-success" value="Sign up" />
+          <Input
+            type="submit"
+            className="btn btn-success"
+            value={this.state.resources.inputValuesResources.signIn}
+          />
         </FormGroup>
 
         <FormGroup className="text-center">
-          <Link to="/account/login">Sign in using an existing account</Link>
+          <Link to="/account/login">
+            {this.state.resources.linkResources.signInAccount}
+          </Link>
         </FormGroup>
       </Form>
     );

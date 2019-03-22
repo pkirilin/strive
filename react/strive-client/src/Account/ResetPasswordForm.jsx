@@ -6,6 +6,7 @@ import {
   validationHelpers,
   validationRulesSetters
 } from "../_helpers/validation";
+import { getResourcesForCurrentCulture } from "../_helpers";
 
 export class ResetPasswordForm extends React.Component {
   constructor(props) {
@@ -29,6 +30,7 @@ export class ResetPasswordForm extends React.Component {
     };
 
     this.state = {
+      resources: getResourcesForCurrentCulture(),
       newPassword: {
         ...initObj,
         onValueChange: this.onNewPasswordChange
@@ -108,7 +110,7 @@ export class ResetPasswordForm extends React.Component {
         <FormGroup>
           <InputField
             type="text"
-            label="Email"
+            label={this.state.resources.labelResources.email}
             value={this.props.emailValue}
             readonly
           />
@@ -117,8 +119,8 @@ export class ResetPasswordForm extends React.Component {
         <FormGroup>
           <InputField
             type="password"
-            label="New password"
-            placeholder="Enter new password"
+            label={this.state.resources.labelResources.newPassword}
+            placeholder={this.state.resources.placeholderResources.newPassword}
             {...this.state.newPassword}
           />
         </FormGroup>
@@ -126,13 +128,19 @@ export class ResetPasswordForm extends React.Component {
         <FormGroup>
           <InputField
             type="password"
-            label="New password confirm"
-            placeholder="Enter new password again"
+            label={this.state.resources.labelResources.newPasswordConfirm}
+            placeholder={
+              this.state.resources.placeholderResources.newPasswordConfirm
+            }
             {...this.state.newPasswordConfirm}
           />
         </FormGroup>
 
-        <Input type="submit" className="btn btn-success" value="Send" />
+        <Input
+          type="submit"
+          className="btn btn-success"
+          value={this.state.resources.inputValuesResources.send}
+        />
       </Form>
     );
   }

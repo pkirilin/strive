@@ -2,6 +2,10 @@
 export const placeholderResources = {
   en: {
     email: "Enter email",
-    password: "Enter password"
+    username: "Enter username",
+    password: "Enter password",
+    passwordConfirm: "Enter password again",
+    newPassword: "Enter new password",
+    newPasswordConfirm: "Enter new password again"
   }
 };
