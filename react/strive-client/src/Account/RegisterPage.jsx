@@ -14,9 +14,7 @@ export class RegisterPage extends React.Component {
   }
 
   componentWillMount() {
-    document.title = `${BRAND_NAME} - ${
-      this.state.resources.titleResources.register
-    }`;
+    document.title = `${BRAND_NAME} - ${this.state.resources.title.register}`;
   }
 
   render() {

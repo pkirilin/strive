@@ -14,9 +14,7 @@ export class LoginPage extends React.Component {
   }
 
   componentWillMount() {
-    document.title = `${BRAND_NAME} - ${
-      this.state.resources.titleResources.login
-    }`;
+    document.title = `${BRAND_NAME} - ${this.state.resources.title.login}`;
   }
 
   render() {

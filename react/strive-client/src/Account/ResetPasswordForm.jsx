@@ -110,7 +110,7 @@ export class ResetPasswordForm extends React.Component {
         <FormGroup>
           <InputField
             type="text"
-            label={this.state.resources.labelResources.email}
+            label={this.state.resources.label.email}
             value={this.props.emailValue}
             readonly
           />
@@ -119,8 +119,8 @@ export class ResetPasswordForm extends React.Component {
         <FormGroup>
           <InputField
             type="password"
-            label={this.state.resources.labelResources.newPassword}
-            placeholder={this.state.resources.placeholderResources.newPassword}
+            label={this.state.resources.label.newPassword}
+            placeholder={this.state.resources.placeholder.newPassword}
             {...this.state.newPassword}
           />
         </FormGroup>
@@ -128,10 +128,8 @@ export class ResetPasswordForm extends React.Component {
         <FormGroup>
           <InputField
             type="password"
-            label={this.state.resources.labelResources.newPasswordConfirm}
-            placeholder={
-              this.state.resources.placeholderResources.newPasswordConfirm
-            }
+            label={this.state.resources.label.newPasswordConfirm}
+            placeholder={this.state.resources.placeholder.newPasswordConfirm}
             {...this.state.newPasswordConfirm}
           />
         </FormGroup>
@@ -139,7 +137,7 @@ export class ResetPasswordForm extends React.Component {
         <Input
           type="submit"
           className="btn btn-success"
-          value={this.state.resources.inputValuesResources.send}
+          value={this.state.resources.inputValues.send}
         />
       </Form>
     );

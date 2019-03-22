@@ -15,7 +15,7 @@ export class ForgotPasswordPage extends React.Component {
 
   componentWillMount() {
     document.title = `${BRAND_NAME} - ${
-      this.state.resources.titleResources.forgotPassword
+      this.state.resources.title.forgotPassword
     }`;
   }
 

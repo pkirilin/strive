@@ -15,7 +15,7 @@ export class ResetPasswordPage extends React.Component {
 
   componentWillMount() {
     document.title = `${BRAND_NAME} - ${
-      this.state.resources.titleResources.resetPassword
+      this.state.resources.title.resetPassword
     }`;
   }
 

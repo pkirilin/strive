@@ -13,11 +13,11 @@ export const getResourcesForCurrentCulture = () => {
   let curCulture = "en";
 
   return {
-    titleResources: titleResources[curCulture],
-    labelResources: labelResources[curCulture],
-    placeholderResources: placeholderResources[curCulture],
-    linkResources: linkResources[curCulture],
-    inputValuesResources: inputValuesResources[curCulture],
-    helpResources: helpResources[curCulture]
+    title: titleResources[curCulture],
+    label: labelResources[curCulture],
+    placeholder: placeholderResources[curCulture],
+    link: linkResources[curCulture],
+    inputValues: inputValuesResources[curCulture],
+    help: helpResources[curCulture]
   };
 };

@@ -73,9 +73,9 @@ export class ForgotPasswordForm extends React.Component {
         <FormGroup>
           <InputField
             type="text"
-            label={this.state.resources.labelResources.email}
-            placeholder={this.state.resources.placeholderResources.email}
-            help={this.state.resources.helpResources.forgotPasswordEmail}
+            label={this.state.resources.label.email}
+            placeholder={this.state.resources.placeholder.email}
+            help={this.state.resources.help.forgotPasswordEmail}
             {...this.state.email}
           />
         </FormGroup>
@@ -83,7 +83,7 @@ export class ForgotPasswordForm extends React.Component {
         <Input
           type="submit"
           className="btn btn-success"
-          value={this.state.resources.inputValuesResources.send}
+          value={this.state.resources.inputValues.send}
         />
       </Form>
     );

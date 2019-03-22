@@ -114,8 +114,8 @@ export class LoginForm extends React.Component {
         <FormGroup>
           <InputField
             type="text"
-            label={this.state.resources.labelResources.email}
-            placeholder={this.state.resources.placeholderResources.email}
+            label={this.state.resources.label.email}
+            placeholder={this.state.resources.placeholder.email}
             {...this.state.email}
           />
         </FormGroup>
@@ -123,15 +123,15 @@ export class LoginForm extends React.Component {
         <FormGroup>
           <InputField
             type="password"
-            label={this.state.resources.labelResources.password}
-            placeholder={this.state.resources.placeholderResources.password}
+            label={this.state.resources.label.password}
+            placeholder={this.state.resources.placeholder.password}
             {...this.state.password}
           />
         </FormGroup>
 
         <InputCheckbox
           id="rememberMe"
-          label={this.state.resources.labelResources.rememberMe}
+          label={this.state.resources.label.rememberMe}
           {...this.state.rememberMe}
         />
 
@@ -139,19 +139,19 @@ export class LoginForm extends React.Component {
           <Input
             type="submit"
             className="btn btn-success"
-            value={this.state.resources.inputValuesResources.signIn}
+            value={this.state.resources.inputValues.signIn}
           />
         </FormGroup>
 
         <FormGroup className="text-center">
           <Link to="/account/forgot-password">
-            {this.state.resources.linkResources.forgotPassword}
+            {this.state.resources.link.forgotPassword}
           </Link>
         </FormGroup>
 
         <FormGroup className="text-center">
           <Link to="/account/register">
-            {this.state.resources.linkResources.createAccount}
+            {this.state.resources.link.createAccount}
           </Link>
         </FormGroup>
       </Form>

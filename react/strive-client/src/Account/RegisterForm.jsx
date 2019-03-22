@@ -152,8 +152,8 @@ export class RegisterForm extends React.Component {
         <FormGroup>
           <InputField
             type="text"
-            label={this.state.resources.labelResources.username}
-            placeholder={this.state.resources.placeholderResources.username}
+            label={this.state.resources.label.username}
+            placeholder={this.state.resources.placeholder.username}
             {...this.state.username}
           />
         </FormGroup>
@@ -161,8 +161,8 @@ export class RegisterForm extends React.Component {
         <FormGroup>
           <InputField
             type="text"
-            label={this.state.resources.labelResources.email}
-            placeholder={this.state.resources.placeholderResources.email}
+            label={this.state.resources.label.email}
+            placeholder={this.state.resources.placeholder.email}
             {...this.state.email}
           />
         </FormGroup>
@@ -170,8 +170,8 @@ export class RegisterForm extends React.Component {
         <FormGroup>
           <InputField
             type="password"
-            label={this.state.resources.labelResources.password}
-            placeholder={this.state.resources.placeholderResources.password}
+            label={this.state.resources.label.password}
+            placeholder={this.state.resources.placeholder.password}
             {...this.state.password}
           />
         </FormGroup>
@@ -179,10 +179,8 @@ export class RegisterForm extends React.Component {
         <FormGroup>
           <InputField
             type="password"
-            label={this.state.resources.labelResources.passwordConfirm}
-            placeholder={
-              this.state.resources.placeholderResources.passwordConfirm
-            }
+            label={this.state.resources.label.passwordConfirm}
+            placeholder={this.state.resources.placeholder.passwordConfirm}
             {...this.state.passwordConfirm}
           />
         </FormGroup>
@@ -191,13 +189,13 @@ export class RegisterForm extends React.Component {
           <Input
             type="submit"
             className="btn btn-success"
-            value={this.state.resources.inputValuesResources.signIn}
+            value={this.state.resources.inputValues.signIn}
           />
         </FormGroup>
 
         <FormGroup className="text-center">
           <Link to="/account/login">
-            {this.state.resources.linkResources.signInAccount}
+            {this.state.resources.link.signInAccount}
           </Link>
         </FormGroup>
       </Form>
