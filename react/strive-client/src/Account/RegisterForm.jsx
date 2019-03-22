@@ -55,7 +55,8 @@ export class RegisterForm extends React.Component {
         ...this.state.username,
         value: event.target.value,
         validationState: validationRulesSetters.validateUsername(
-          event.target.value
+          event.target.value,
+          this.state.resources
         )
       }
     });
@@ -67,7 +68,8 @@ export class RegisterForm extends React.Component {
         ...this.state.email,
         value: event.target.value,
         validationState: validationRulesSetters.validateEmail(
-          event.target.value
+          event.target.value,
+          this.state.resources
         )
       }
     });
@@ -79,14 +81,16 @@ export class RegisterForm extends React.Component {
         ...this.state.password,
         value: event.target.value,
         validationState: validationRulesSetters.validatePassword(
-          event.target.value
+          event.target.value,
+          this.state.resources
         )
       },
       passwordConfirm: {
         ...this.state.passwordConfirm,
         validationState: validationRulesSetters.validatePasswordConfirm(
           this.state.passwordConfirm.value,
-          event.target.value
+          event.target.value,
+          this.state.resources
         )
       }
     });
@@ -99,7 +103,8 @@ export class RegisterForm extends React.Component {
         value: event.target.value,
         validationState: validationRulesSetters.validatePasswordConfirm(
           event.target.value,
-          this.state.password.value
+          this.state.password.value,
+          this.state.resources
         )
       }
     });
@@ -119,26 +124,30 @@ export class RegisterForm extends React.Component {
         username: {
           ...this.state.username,
           validationState: validationRulesSetters.validateUsername(
-            this.state.username.value
+            this.state.username.value,
+            this.state.resources
           )
         },
         email: {
           ...this.state.email,
           validationState: validationRulesSetters.validateEmail(
-            this.state.email.value
+            this.state.email.value,
+            this.state.resources
           )
         },
         password: {
           ...this.state.password,
           validationState: validationRulesSetters.validatePassword(
-            this.state.password.value
+            this.state.password.value,
+            this.state.resources
           )
         },
         passwordConfirm: {
           ...this.state.passwordConfirm,
           validationState: validationRulesSetters.validatePasswordConfirm(
             this.state.passwordConfirm.value,
-            this.state.password.value
+            this.state.password.value,
+            this.state.resources
           )
         }
       },

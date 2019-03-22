@@ -4,7 +4,8 @@ import {
   placeholderResources,
   linkResources,
   inputValuesResources,
-  helpResources
+  helpResources,
+  validationResources
 } from "../_resources";
 
 /** Gets current culture and returns resources for this culture */
@@ -18,6 +19,7 @@ export const getResourcesForCurrentCulture = () => {
     placeholder: placeholderResources[curCulture],
     link: linkResources[curCulture],
     inputValues: inputValuesResources[curCulture],
-    help: helpResources[curCulture]
+    help: helpResources[curCulture],
+    validation: validationResources[curCulture]
   };
 };

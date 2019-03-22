@@ -1,5 +1,4 @@
 import { validationRules } from "./rules";
-import { validationResources } from "../../_resources";
 
 /*
  * Contains functions for setting validation rules.
@@ -35,25 +34,25 @@ function resetAll() {
 /*
  *  Sets all nessesary validation rules for checking email
  */
-function validateEmail(emailValue) {
+function validateEmail(emailValue, resources) {
   return validationRules.multiple([
     validationRules.required(
       emailValue,
-      validationResources.invalid.email.required.message
+      resources.validation.invalid.email.required.message
     ),
     validationRules.lengthMin(
       emailValue,
-      validationResources.invalid.email.lengthMin.min,
-      validationResources.invalid.email.lengthMin.message
+      resources.validation.invalid.email.lengthMin.min,
+      resources.validation.invalid.email.lengthMin.message
     ),
     validationRules.lengthMax(
       emailValue,
-      validationResources.invalid.email.lengthMax.max,
-      validationResources.invalid.email.lengthMax.message
+      resources.validation.invalid.email.lengthMax.max,
+      resources.validation.invalid.email.lengthMax.message
     ),
     validationRules.email(
       emailValue,
-      validationResources.invalid.email.email.message
+      resources.validation.invalid.email.email.message
     )
   ]);
 }
@@ -61,12 +60,12 @@ function validateEmail(emailValue) {
 /*
  * Sets all nessesary validation rules for checking password
  */
-function validatePassword(passwordValue) {
+function validatePassword(passwordValue, resources) {
   // TODO: Add more validation rules
   return validationRules.multiple([
     validationRules.required(
       passwordValue,
-      validationResources.invalid.password.required.message
+      resources.validation.invalid.password.required.message
     )
   ]);
 }
@@ -74,17 +73,21 @@ function validatePassword(passwordValue) {
 /*
  * Sets all nessesary validation rules for checking password and compare it to target value
  */
-function validatePasswordConfirm(passwordConfirmValue, compareValue) {
+function validatePasswordConfirm(
+  passwordConfirmValue,
+  compareValue,
+  resources
+) {
   // TODO: Add more validation rules
   return validationRules.multiple([
     validationRules.required(
       passwordConfirmValue,
-      validationResources.invalid.passwordConfirm.required.message
+      resources.validation.invalid.passwordConfirm.required.message
     ),
     validationRules.compare(
       passwordConfirmValue,
       compareValue,
-      validationResources.invalid.passwordConfirm.compare.message
+      resources.validation.invalid.passwordConfirm.compare.message
     )
   ]);
 }
@@ -92,11 +95,11 @@ function validatePasswordConfirm(passwordConfirmValue, compareValue) {
 /*
  * Sets all nessesary validation rules for checking username/login
  */
-function validateUsername(usernameValue) {
+function validateUsername(usernameValue, resources) {
   return validationRules.multiple([
     validationRules.required(
       usernameValue,
-      validationResources.invalid.username.required.message
+      resources.validation.invalid.username.required.message
     )
   ]);
 }

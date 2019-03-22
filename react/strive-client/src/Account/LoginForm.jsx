@@ -53,7 +53,8 @@ export class LoginForm extends React.Component {
         ...this.state.email,
         value: event.target.value,
         validationState: validationRulesSetters.validateEmail(
-          event.target.value
+          event.target.value,
+          this.state.resources
         )
       }
     });
@@ -65,7 +66,8 @@ export class LoginForm extends React.Component {
         ...this.state.password,
         value: event.target.value,
         validationState: validationRulesSetters.validatePassword(
-          event.target.value
+          event.target.value,
+          this.state.resources
         )
       }
     });
@@ -94,13 +96,15 @@ export class LoginForm extends React.Component {
         email: {
           ...this.state.email,
           validationState: validationRulesSetters.validateEmail(
-            this.state.email.value
+            this.state.email.value,
+            this.state.resources
           )
         },
         password: {
           ...this.state.password,
           validationState: validationRulesSetters.validatePassword(
-            this.state.password.value
+            this.state.password.value,
+            this.state.resources
           )
         }
       },

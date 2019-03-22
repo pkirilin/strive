@@ -48,14 +48,16 @@ export class ResetPasswordForm extends React.Component {
         ...this.state.newPassword,
         value: event.target.value,
         validationState: validationRulesSetters.validatePassword(
-          event.target.value
+          event.target.value,
+          this.state.resources
         )
       },
       newPasswordConfirm: {
         ...this.state.newPasswordConfirm,
         validationState: validationRulesSetters.validatePasswordConfirm(
           this.state.newPasswordConfirm.value,
-          event.target.value
+          event.target.value,
+          this.state.resources
         )
       }
     });
@@ -68,7 +70,8 @@ export class ResetPasswordForm extends React.Component {
         value: event.target.value,
         validationState: validationRulesSetters.validatePasswordConfirm(
           event.target.value,
-          this.state.newPassword.value
+          this.state.newPassword.value,
+          this.state.resources
         )
       }
     });
@@ -90,13 +93,16 @@ export class ResetPasswordForm extends React.Component {
         newPassword: {
           ...this.state.newPassword,
           validationState: validationRulesSetters.validatePassword(
-            this.state.newPassword.value
+            this.state.newPassword.value,
+            this.state.resources
           )
         },
         newPasswordConfirm: {
           ...this.state.newPasswordConfirm,
           validationState: validationRulesSetters.validatePasswordConfirm(
-            this.state.newPasswordConfirm.value
+            this.state.newPasswordConfirm.value,
+            this.state.newPassword.value,
+            this.state.resources
           )
         }
       },
