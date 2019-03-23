@@ -1,11 +1,11 @@
 import React from "react";
 import { Router, Switch, Route } from "react-router";
 import { history } from "../_helpers";
+import { PrivateRoute } from "../_components";
+import { BRAND_NAME } from "../_constants";
 import { Home } from "../Home";
 import { Account } from "../Account";
-import { PrivateRoute } from "../_components";
 import { NotFoundPage } from "../ErrorPages";
-import { BRAND_NAME } from "../_constants";
 
 export class App extends React.Component {
   componentWillMount() {

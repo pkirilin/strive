@@ -1,10 +1,13 @@
 import React from "react";
 import { Switch, Redirect, Route } from "react-router";
 import { PublicLayout } from "../_components";
-import { LoginPage, RegisterPage } from "./";
-import { ForgotPasswordPage } from "./ForgotPasswordPage";
+import {
+  LoginPage,
+  RegisterPage,
+  ForgotPasswordPage,
+  ResetPasswordPage
+} from "./";
 import { NotFoundPage } from "../ErrorPages";
-import { ResetPasswordPage } from "./ResetPasswordPage";
 
 export class Account extends React.Component {
   render() {
