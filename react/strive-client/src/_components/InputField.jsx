@@ -41,6 +41,10 @@ export class InputField extends React.Component {
       inputProps["id"] = this.props.id;
     }
 
+    if (this.props.readonly) {
+      inputProps["readOnly"] = true;
+    }
+
     let messageProps = {
       className: messageClasses.join(" ")
     };
