@@ -31,6 +31,9 @@ export class ResetPasswordForm extends React.Component {
 
     this.state = {
       resources: getResourcesForCurrentCulture(),
+      email: {
+        value: "test@test.com"
+      },
       newPassword: {
         ...initObj,
         onValueChange: this.onNewPasswordChange
@@ -117,8 +120,8 @@ export class ResetPasswordForm extends React.Component {
           <InputField
             type="text"
             label={this.state.resources.label.email}
-            value={this.props.emailValue}
             readonly
+            {...this.state.email}
           />
         </FormGroup>
 

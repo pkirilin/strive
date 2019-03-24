@@ -4,8 +4,9 @@ export const titleResources = {
     home: "Home",
     notFound: "Not found",
     login: "Sign in",
-    register: "Sign up",
+    register: "Register",
     forgotPassword: "Forgot password?",
-    resetPassword: "Reset password"
+    resetPassword: "Reset password",
+    signUp: "Sign up"
   }
 };

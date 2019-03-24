@@ -1,6 +1,5 @@
 import React from "react";
 import { Form, FormGroup, Input } from "reactstrap";
-import { Link } from "react-router-dom";
 import { InputField } from "../_components";
 import { validationStatuses } from "../_constants";
 import { validationRulesSetters } from "../_helpers/validation";
@@ -12,7 +11,6 @@ export class RegisterForm extends React.Component {
     super(props);
 
     this.onUsernameChange = this.onUsernameChange.bind(this);
-    this.onEmailChange = this.onEmailChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onPasswordConfirmChange = this.onPasswordConfirmChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -30,13 +28,12 @@ export class RegisterForm extends React.Component {
 
     this.state = {
       resources: getResourcesForCurrentCulture(),
+      email: {
+        value: "test@test.com"
+      },
       username: {
         ...initFieldObj,
         onValueChange: this.onUsernameChange
-      },
-      email: {
-        ...initFieldObj,
-        onValueChange: this.onEmailChange
       },
       password: {
         ...initFieldObj,
@@ -55,19 +52,6 @@ export class RegisterForm extends React.Component {
         ...this.state.username,
         value: event.target.value,
         validationState: validationRulesSetters.validateUsername(
-          event.target.value,
-          this.state.resources
-        )
-      }
-    });
-  }
-
-  onEmailChange(event) {
-    this.setState({
-      email: {
-        ...this.state.email,
-        value: event.target.value,
-        validationState: validationRulesSetters.validateEmail(
           event.target.value,
           this.state.resources
         )
@@ -128,13 +112,6 @@ export class RegisterForm extends React.Component {
             this.state.resources
           )
         },
-        email: {
-          ...this.state.email,
-          validationState: validationRulesSetters.validateEmail(
-            this.state.email.value,
-            this.state.resources
-          )
-        },
         password: {
           ...this.state.password,
           validationState: validationRulesSetters.validatePassword(
@@ -161,18 +138,18 @@ export class RegisterForm extends React.Component {
         <FormGroup>
           <InputField
             type="text"
-            label={this.state.resources.label.username}
-            placeholder={this.state.resources.placeholder.username}
-            {...this.state.username}
+            label={this.state.resources.label.email}
+            readonly
+            {...this.state.email}
           />
         </FormGroup>
 
         <FormGroup>
           <InputField
             type="text"
-            label={this.state.resources.label.email}
-            placeholder={this.state.resources.placeholder.email}
-            {...this.state.email}
+            label={this.state.resources.label.username}
+            placeholder={this.state.resources.placeholder.username}
+            {...this.state.username}
           />
         </FormGroup>
 
@@ -198,14 +175,8 @@ export class RegisterForm extends React.Component {
           <Input
             type="submit"
             className="btn btn-success"
-            value={this.state.resources.inputValues.signIn}
+            value={this.state.resources.inputValues.createAccount}
           />
-        </FormGroup>
-
-        <FormGroup className="text-center">
-          <Link to="/account/login">
-            {this.state.resources.link.signInAccount}
-          </Link>
         </FormGroup>
       </Form>
     );

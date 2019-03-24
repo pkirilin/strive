@@ -2,6 +2,8 @@
 export const inputValuesResources = {
   en: {
     signIn: "Sign in",
-    send: "Send"
+    signUp: "Sign up",
+    send: "Send",
+    createAccount: "Create account"
   }
 };

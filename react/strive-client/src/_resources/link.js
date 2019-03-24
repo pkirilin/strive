@@ -2,7 +2,7 @@
 export const linkResources = {
   en: {
     forgotPassword: "Forgot password?",
-    createAccount: "Create account",
+    signUp: "Sign up",
     signInAccount: "Sign in using an existing account"
   }
 };

@@ -1,10 +1,10 @@
 import React from "react";
 import { BRAND_NAME } from "../_constants";
 import { CenteredFormLayout, MainTitle, MarginedLayout } from "../_components";
-import { RegisterForm } from "./RegisterForm";
 import { getResourcesForCurrentCulture } from "../_helpers";
+import { SignUpForm } from "./SignUpForm";
 
-export class RegisterPage extends React.Component {
+export class SignUpPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -14,16 +14,16 @@ export class RegisterPage extends React.Component {
   }
 
   componentWillMount() {
-    document.title = `${BRAND_NAME} - ${this.state.resources.title.register}`;
+    document.title = `${BRAND_NAME} - ${this.state.resources.title.signUp}`;
   }
 
   render() {
     return (
       <div>
-        <MainTitle text={`${BRAND_NAME} - Register`} />
+        <MainTitle text={`Sign up to ${BRAND_NAME}`} />
         <MarginedLayout>
           <CenteredFormLayout>
-            <RegisterForm />
+            <SignUpForm />
           </CenteredFormLayout>
         </MarginedLayout>
       </div>

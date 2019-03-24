@@ -5,7 +5,8 @@ import {
   LoginPage,
   RegisterPage,
   ForgotPasswordPage,
-  ResetPasswordPage
+  ResetPasswordPage,
+  SignUpPage
 } from "./";
 import { NotFoundPage } from "../ErrorPages";
 
@@ -21,6 +22,7 @@ export class Account extends React.Component {
             component={ForgotPasswordPage}
           />
           <Route path="/account/reset-password" component={ResetPasswordPage} />
+          <Route path="/account/signup" component={SignUpPage} />
           <Redirect exact from="/account" to="/account/login" />
           <Route component={NotFoundPage} />
         </Switch>
