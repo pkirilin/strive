@@ -17,8 +17,8 @@
     },
     "Strive.API": {
       "commandName": "Project",
-      "launchBrowser": true,
-      "applicationUrl": "http://localhost:5000",
+      "launchBrowser": false,
+      "applicationUrl": "http://localhost:10002",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

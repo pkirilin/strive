@@ -17,7 +17,7 @@ namespace Strive.API
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddCors(options => options.AddPolicy("AllowClientApp", builder => 
-				builder.WithOrigins(this.Configuration.GetSection("ClientAppConfig")["Host"])
+				builder.WithOrigins(this.Configuration.GetSection("clientAppConfig")["host"])
 					.AllowAnyHeader()
 					.AllowAnyMethod()
 					.AllowCredentials()));
