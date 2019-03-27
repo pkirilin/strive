@@ -1,10 +1,14 @@
 ﻿using System.Text;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Strive.Data;
+using Strive.Data.Services;
 
 namespace Strive.API
 {
@@ -44,7 +48,16 @@ namespace Strive.API
 					};
 				});
 
+			services.AddAutoMapper();
+
+			services.AddDbContext<StriveDbContext>(options =>
+			{
+				options.UseInMemoryDatabase("Strive");
+			});
+
 			services.AddMvc();
+
+			services.AddScoped<IUserService, UserService>();
 		}
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
