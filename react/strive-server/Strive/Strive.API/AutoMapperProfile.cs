@@ -2,7 +2,7 @@
 using Strive.Data.Dtos;
 using Strive.Data.Entities;
 
-namespace Strive.Helpers.Settings
+namespace Strive.API
 {
 	public class AutoMapperProfile : Profile
 	{

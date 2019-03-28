@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Strive.Data.Entities;
 
 namespace Strive.Data
 {
@@ -7,5 +8,7 @@ namespace Strive.Data
 		public StriveDbContext(DbContextOptions<StriveDbContext> options) : base(options)
 		{
 		}
+
+		public DbSet<User> Users { get; set; }
 	}
 }

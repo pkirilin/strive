@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Strive.Data;
 using Strive.Data.Services;
+using Strive.Helpers.Settings;
 
 namespace Strive.API
 {
@@ -55,9 +56,12 @@ namespace Strive.API
 				options.UseInMemoryDatabase("Strive");
 			});
 
+			// Configure strongly typed settings objects
+			services.Configure<AppSettings>(Configuration.GetSection("secret"));
+
 			services.AddMvc();
 
-			services.AddScoped<IUserService, UserService>();
+			services.AddScoped<IAccountService, AccountService>();
 		}
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
