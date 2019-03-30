@@ -36,5 +36,25 @@ namespace Strive.Data.Services
 			// Authentication successful
 			return user;
 		}
+
+		/// <summary>
+		/// Creates new user
+		/// </summary>
+		/// <param name="user">User object converted from request data</param>
+		public User Create(User user, string password)
+		{
+			byte[] passwordHash;
+			byte[] passwordSalt;
+
+			SecurityHelpers.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+			user.PasswordSalt = passwordSalt;
+			user.PasswordHash = passwordHash;
+
+			_dbContext.Users.Add(user);
+			_dbContext.SaveChanges();
+
+			return user;
+		}
 	}
 }

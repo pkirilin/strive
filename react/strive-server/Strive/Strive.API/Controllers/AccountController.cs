@@ -10,6 +10,7 @@ using Strive.Helpers.Settings;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System;
+using AutoMapper;
 
 namespace Strive.API.Controllers
 {
@@ -19,11 +20,17 @@ namespace Strive.API.Controllers
 	{
 		private readonly IAccountService _accountService;
 
+		private readonly IMapper _mapper;
+
 		private readonly AppSettings _appSettings;
 
-		public AccountController(IAccountService accountService, IOptions<AppSettings> appSettings)
+		public AccountController(
+			IAccountService accountService, 
+			IMapper mapper,
+			IOptions<AppSettings> appSettings)
 		{
 			_accountService = accountService;
+			_mapper = mapper;
 			_appSettings = appSettings.Value;
 		}
 
@@ -63,6 +70,25 @@ namespace Strive.API.Controllers
 				Username = user.Username,
 				Token = tokenString
 			});
+		}
+
+		[AllowAnonymous]
+		[HttpPost("register")]
+		public IActionResult Register([FromBody]UserRegisterRequestDto userRegisterRequestData)
+		{
+			// Converting DTO to entity
+			User user = _mapper.Map<User>(userRegisterRequestData);
+
+			try
+			{
+				
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+
+			return Ok();
 		}
 	}
 }
