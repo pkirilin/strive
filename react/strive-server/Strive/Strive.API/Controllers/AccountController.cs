@@ -35,7 +35,7 @@ namespace Strive.API.Controllers
 		}
 
 		/// <summary>
-		/// User authentication action method
+		/// Authenticates user, if authentication successful generates JWT-token
 		/// </summary>
 		/// <param name="userLoginRequestData">Data received from login form</param>
 		[AllowAnonymous]
@@ -72,10 +72,26 @@ namespace Strive.API.Controllers
 			});
 		}
 
+		/// <summary>
+		/// Validates data received from register form, if validation successful creates new user
+		/// </summary>
+		/// <param name="userRegisterRequestData">Data received from register form</param>
+		/// <returns></returns>
 		[AllowAnonymous]
 		[HttpPost("register")]
 		public IActionResult Register([FromBody]UserRegisterRequestDto userRegisterRequestData)
 		{
+			// Validates data from form
+			if (ModelState.IsValid)
+			{
+				if (_accountService.IsEmailExists(userRegisterRequestData.Email))
+					ModelState.AddModelError("emailRemote", "Such email is already exists");
+
+				if (_accountService.IsUsernameExists(userRegisterRequestData.Username))
+					ModelState.AddModelError("usernameRemote", "Such username is already in use");
+			}
+
+			// Validates all data including business logic
 			if (ModelState.IsValid)
 			{
 				User user = _mapper.Map<User>(userRegisterRequestData);
@@ -91,8 +107,7 @@ namespace Strive.API.Controllers
 				}
 			}
 
-			// Collect ModelState errors
-			return BadRequest();
+			return BadRequest(ModelState);
 		}
 	}
 }

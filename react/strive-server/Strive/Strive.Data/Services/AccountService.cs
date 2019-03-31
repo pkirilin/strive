@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Strive.Data.Entities;
 using Strive.Helpers;
 
@@ -55,6 +56,44 @@ namespace Strive.Data.Services
 			_dbContext.SaveChanges();
 
 			return user;
+		}
+
+		/// <summary>
+		/// Checks if user with specified email already exists
+		/// </summary>
+		/// <param name="email">Email from request</param>
+		public bool IsEmailExists(string email)
+		{
+			try
+			{
+				if (_dbContext.Users.SingleOrDefault(user => user.Email == email) == null)
+					return false;
+				return true;
+			}
+			catch (InvalidOperationException)
+			{
+				// Found more than one record
+				return true;
+			}
+		}
+
+		/// <summary>
+		/// Checks if user with specified username already exists
+		/// </summary>
+		/// <param name="username">Username from request</param>
+		public bool IsUsernameExists(string username)
+		{
+			try
+			{
+				if (_dbContext.Users.SingleOrDefault(user => user.Username == username) == null)
+					return false;
+				return true;
+			}
+			catch (InvalidOperationException)
+			{
+				// Found more than one record
+				return true;
+			}
 		}
 	}
 }
