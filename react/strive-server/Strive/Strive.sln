@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strive.Helpers", "Strive.He
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strive.Data", "Strive.Data\Strive.Data.csproj", "{2C3B4B91-858A-46B3-8D6C-C89FAE317197}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Exceptions", "Strive.Exceptions\Strive.Exceptions.csproj", "{722EBA4E-B1A3-46A4-A78B-F795714137A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strive.Exceptions", "Strive.Exceptions\Strive.Exceptions.csproj", "{722EBA4E-B1A3-46A4-A78B-F795714137A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Tests", "Strive.Tests\Strive.Tests.csproj", "{8F2DB442-1716-4F96-936A-F7FBBE73CAF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{722EBA4E-B1A3-46A4-A78B-F795714137A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{722EBA4E-B1A3-46A4-A78B-F795714137A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{722EBA4E-B1A3-46A4-A78B-F795714137A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F2DB442-1716-4F96-936A-F7FBBE73CAF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F2DB442-1716-4F96-936A-F7FBBE73CAF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F2DB442-1716-4F96-936A-F7FBBE73CAF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F2DB442-1716-4F96-936A-F7FBBE73CAF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
