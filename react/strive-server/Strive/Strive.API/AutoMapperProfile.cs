@@ -8,7 +8,7 @@ namespace Strive.API
 	{
 		public AutoMapperProfile()
 		{
-			CreateMap<UserLoginRequestDto, User>();
+			CreateMap<UserRegisterRequestDto, User>();
 		}
 	}
 }

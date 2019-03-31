@@ -3,7 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -24,13 +24,25 @@ namespace Strive.API
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			// Configuring strongly typed settings objects
+			var appSettingsSection = Configuration.GetSection("appSettings");
+			var databaseConfigSection = Configuration.GetSection("databaseConfig");
+			//var clientAppConfigSection = Configuration.GetSection("clientAppConfig");
+
+			services.Configure<AppSettings>(appSettingsSection);
+			services.Configure<DatabaseSettings>(databaseConfigSection);
+
+			var appSettings = appSettingsSection.Get<AppSettings>();
+			var databaseConfig = appSettingsSection.Get<DatabaseSettings>();
+
 			services.AddCors(options => options.AddPolicy("AllowClientApp", builder =>
-				builder.WithOrigins(this.Configuration.GetSection("clientAppConfig")["host"])
+				builder.WithOrigins("http://localhost:10001")
 					.AllowAnyHeader()
 					.AllowAnyMethod()
 					.AllowCredentials()));
 
 			// Configure JWT authentication
+			var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 			services.AddAuthentication(options =>
 				{
 					options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -43,7 +55,7 @@ namespace Strive.API
 					options.TokenValidationParameters = new TokenValidationParameters
 					{
 						ValidateIssuerSigningKey = true,
-						IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("secret")),
+						IssuerSigningKey = new SymmetricSecurityKey(key),
 						ValidateIssuer = false,
 						ValidateAudience = false
 					};
@@ -51,15 +63,10 @@ namespace Strive.API
 
 			services.AddAutoMapper();
 
-			services.AddDbContext<StriveDbContext>(options =>
-			{
-				options.UseInMemoryDatabase("Strive");
-			});
+			services.AddDbContext<StriveDbContext>();
 
-			// Configure strongly typed settings objects
-			services.Configure<AppSettings>(Configuration.GetSection("secret"));
-
-			services.AddMvc();
+			services.AddMvc()
+				.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 			services.AddScoped<IAccountService, AccountService>();
 		}

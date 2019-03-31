@@ -49,7 +49,7 @@ namespace Strive.API.Controllers
 				return Unauthorized();
 
 			var tokenHandler = new JwtSecurityTokenHandler();
-			byte[] key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+			var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
 
 			var tokenDescriptor = new SecurityTokenDescriptor
 			{
@@ -76,19 +76,23 @@ namespace Strive.API.Controllers
 		[HttpPost("register")]
 		public IActionResult Register([FromBody]UserRegisterRequestDto userRegisterRequestData)
 		{
-			// Converting DTO to entity
-			User user = _mapper.Map<User>(userRegisterRequestData);
-
-			try
+			if (ModelState.IsValid)
 			{
-				
-			}
-			catch (Exception e)
-			{
-				return BadRequest(e.Message);
+				User user = _mapper.Map<User>(userRegisterRequestData);
+
+				try
+				{
+					_accountService.Create(user, userRegisterRequestData.Password);
+					return Ok();
+				}
+				catch (Exception e)
+				{
+					return BadRequest(e.Message);
+				}
 			}
 
-			return Ok();
+			// Collect ModelState errors
+			return BadRequest();
 		}
 	}
 }
