@@ -76,7 +76,6 @@ namespace Strive.API.Controllers
 		/// Validates data received from register form, if validation successful creates new user
 		/// </summary>
 		/// <param name="userRegisterRequestData">Data received from register form</param>
-		/// <returns></returns>
 		[AllowAnonymous]
 		[HttpPost("register")]
 		public IActionResult Register([FromBody]UserRegisterRequestDto userRegisterRequestData)

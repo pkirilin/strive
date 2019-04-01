@@ -1,23 +1,20 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Moq;
 using Strive.API;
 using Strive.API.Controllers;
-using Strive.Data.Dtos;
 using Strive.Data.Services;
 using Strive.Helpers.Settings;
-using Xunit;
 
 namespace Strive.Tests.API.Account
 {
 	public class AccountControllerTests
 	{
-		private readonly Mock<IMapper> _mapperMock;
+		protected readonly Mock<IMapper> _mapperMock;
 
-		private readonly Mock<IOptions<AppSettings>> _appSettingsMock;
+		protected readonly Mock<IOptions<AppSettings>> _appSettingsMock;
 
-		private readonly Mock<IAccountService> _accountServiceMock;
+		protected readonly Mock<IAccountService> _accountServiceMock;
 
 		public AccountControllerTests()
 		{
@@ -47,23 +44,6 @@ namespace Strive.Tests.API.Account
 					_mapperMock.Object, 
 					_appSettingsMock.Object);
 			}
-		}
-
-		[Fact]
-		public void TestClassPrepared()
-		{
-			var registerRequest = new UserRegisterRequestDto()
-			{
-				Email = "test@gmail.com",
-				Username = "username",
-				Password = "password",
-				PasswordConfirm = "password"
-			};
-
-			AccountController controller = this.AccountControllerInstance;
-			IActionResult result = controller.Register(registerRequest);
-
-			Assert.IsType<OkResult>(result);
 		}
 	}
 }
