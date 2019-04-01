@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Strive.Data.Entities;
+using Strive.Data.EntityConfigurations;
 using Strive.Helpers.Settings;
 
 namespace Strive.Data
@@ -21,6 +22,11 @@ namespace Strive.Data
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			optionsBuilder.UseNpgsql(_dbSettings.ConnectionString);
+		}
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.ApplyConfiguration(new UserConfiguration());
 		}
 
 		public DbSet<User> Users { get; set; }
