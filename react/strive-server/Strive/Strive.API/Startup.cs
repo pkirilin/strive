@@ -27,17 +27,16 @@ namespace Strive.API
 		{
 			// Configuring strongly typed settings objects
 			var appSettingsSection = Configuration.GetSection("appSettings");
-			var databaseConfigSection = Configuration.GetSection("databaseConfig");
-			//var clientAppConfigSection = Configuration.GetSection("clientAppConfig");
+			var clientAppConfigSection = Configuration.GetSection("clientAppConfig");
 
 			services.Configure<AppSettings>(appSettingsSection);
-			services.Configure<DatabaseSettings>(databaseConfigSection);
+			services.Configure<ClientAppSettings>(clientAppConfigSection);
 
 			var appSettings = appSettingsSection.Get<AppSettings>();
-			var databaseConfig = appSettingsSection.Get<DatabaseSettings>();
+			var clientAppConfig = clientAppConfigSection.Get<ClientAppSettings>();
 
 			services.AddCors(options => options.AddPolicy("AllowClientApp", builder =>
-				builder.WithOrigins("http://localhost:10001")
+				builder.WithOrigins(clientAppConfig.Host)
 					.AllowAnyHeader()
 					.AllowAnyMethod()
 					.AllowCredentials()));
