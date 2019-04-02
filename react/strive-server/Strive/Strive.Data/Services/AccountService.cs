@@ -1,6 +1,8 @@
 ﻿using Strive.Data.Entities;
 using Strive.Data.Repositories;
+using Strive.Exceptions;
 using Strive.Helpers;
+using System;
 
 namespace Strive.Data.Services
 {
@@ -20,18 +22,18 @@ namespace Strive.Data.Services
 		public User Authenticate(string username, string password)
 		{
 			// Checking if username or password is filled
-			if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-				return null;
+			if (String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password))
+				throw new ArgumentException("Authentication failed: username and/or password is empty");
 
 			User user = _userRepo.GetByUsername(username);
 
 			// Checking if user exists in db
 			if (user == null)
-				return null;
+				throw new StriveDatabaseException("Authentication failed: user not found");
 
 			// Checking if password is correct
 			if (!SecurityHelpers.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-				return null;
+				throw new StriveSecurityException("Authentication failed: incorrect password");
 
 			// Authentication successful
 			return user;

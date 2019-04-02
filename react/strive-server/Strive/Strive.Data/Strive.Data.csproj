@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Strive.Exceptions\Strive.Exceptions.csproj" />
     <ProjectReference Include="..\Strive.Helpers\Strive.Helpers.csproj" />
   </ItemGroup>
 

@@ -42,11 +42,16 @@ namespace Strive.API.Controllers
 		[HttpPost("authenticate")]
 		public IActionResult Authenticate([FromBody]UserLoginRequestDto userLoginRequestData)
 		{
-			User user = _accountService.Authenticate(
-				userLoginRequestData.Username, userLoginRequestData.Password);
+			User user;
 
-			if (user == null)
+			try
+			{
+				user = _accountService.Authenticate(userLoginRequestData.Username, userLoginRequestData.Password);
+			}
+			catch (Exception)
+			{
 				return Unauthorized();
+			}
 
 			var tokenHandler = new JwtSecurityTokenHandler();
 			var key = Encoding.ASCII.GetBytes(_appSettings.Secret);

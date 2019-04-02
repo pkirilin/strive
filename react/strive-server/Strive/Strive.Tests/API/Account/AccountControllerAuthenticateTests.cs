@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Strive.Data.Dtos;
 using Strive.Data.Entities;
@@ -19,7 +20,7 @@ namespace Strive.Tests.API.Account
 
 			_accountServiceMock
 				.Setup(service => service.Authenticate(It.IsNotNull<string>(), It.IsNotNull<string>()))
-				.Returns(() => null);
+				.Throws<Exception>();
 
 			IActionResult result = this.AccountControllerInstance.Authenticate(loginRequest);
 
