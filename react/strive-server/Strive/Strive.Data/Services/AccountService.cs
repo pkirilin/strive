@@ -1,17 +1,16 @@
-﻿using System;
-using System.Linq;
-using Strive.Data.Entities;
+﻿using Strive.Data.Entities;
+using Strive.Data.Repositories;
 using Strive.Helpers;
 
 namespace Strive.Data.Services
 {
 	public class AccountService : IAccountService
 	{
-		private readonly StriveDbContext _dbContext;
+		private readonly IUserRepository _userRepo;
 
-		public AccountService(StriveDbContext dbContext)
+		public AccountService(IUserRepository userRepo)
 		{
-			_dbContext = dbContext;
+			_userRepo = userRepo;
 		}
 
 		/// <summary>
@@ -24,7 +23,7 @@ namespace Strive.Data.Services
 			if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
 				return null;
 
-			User user = _dbContext.Users.SingleOrDefault(u => u.Username == username);
+			User user = _userRepo.GetByUsername(username);
 
 			// Checking if user exists in db
 			if (user == null)
@@ -52,48 +51,23 @@ namespace Strive.Data.Services
 			user.PasswordSalt = passwordSalt;
 			user.PasswordHash = passwordHash;
 
-			_dbContext.Users.Add(user);
-			_dbContext.SaveChanges();
+			_userRepo.Add(user);
 
 			return user;
 		}
 
-		/// <summary>
-		/// Checks if user with specified email already exists
-		/// </summary>
-		/// <param name="email">Email from request</param>
 		public bool IsEmailExists(string email)
 		{
-			try
-			{
-				if (_dbContext.Users.SingleOrDefault(user => user.Email == email) == null)
-					return false;
-				return true;
-			}
-			catch (InvalidOperationException)
-			{
-				// Found more than one record
-				return true;
-			}
+			if (_userRepo.GetByEmail(email) == null)
+				return false;
+			return true;
 		}
 
-		/// <summary>
-		/// Checks if user with specified username already exists
-		/// </summary>
-		/// <param name="username">Username from request</param>
 		public bool IsUsernameExists(string username)
 		{
-			try
-			{
-				if (_dbContext.Users.SingleOrDefault(user => user.Username == username) == null)
-					return false;
-				return true;
-			}
-			catch (InvalidOperationException)
-			{
-				// Found more than one record
-				return true;
-			}
+			if (_userRepo.GetByUsername(username) == null)
+				return false;
+			return true;
 		}
 	}
 }

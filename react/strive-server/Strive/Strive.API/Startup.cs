@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Strive.Data;
+using Strive.Data.Repositories;
 using Strive.Data.Services;
 using Strive.Helpers.Settings;
 
@@ -69,6 +70,7 @@ namespace Strive.API
 				.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 			services.AddScoped<IAccountService, AccountService>();
+			services.AddScoped<IUserRepository, UserRepository>();
 		}
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
