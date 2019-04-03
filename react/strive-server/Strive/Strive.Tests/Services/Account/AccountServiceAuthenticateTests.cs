@@ -1,5 +1,7 @@
 ﻿using System;
+using Strive.Data.Entities;
 using Strive.Data.Services;
+using Strive.Exceptions;
 using Xunit;
 
 namespace Strive.Tests.Services.Account
@@ -15,6 +17,49 @@ namespace Strive.Tests.Services.Account
 			Assert.Throws<ArgumentException>(() => accountService.Authenticate(null, "password"));
 			Assert.Throws<ArgumentException>(() => accountService.Authenticate("username", ""));
 			Assert.Throws<ArgumentException>(() => accountService.Authenticate("username", null));
+		}
+
+		[Fact]
+		public void AuthenticationFailsOnNotExistingUser()
+		{
+			string username = "username";
+			_userRepositoryMock.Setup(repo => repo.GetByUsername(username))
+				.Returns(null as User);
+			AccountService accountService = this.AccountServiceInstance;
+
+			Assert.Throws<StriveDatabaseException>(() => accountService.Authenticate(username, "password"));
+		}
+
+		[Fact]
+		public void AuthenticationFailsOnIncorrectPassword()
+		{
+			string username = "username";
+			string password = "password";
+			_userRepositoryMock.Setup(repo => repo.GetByUsername(username))
+				.Returns(new User()
+				{
+					PasswordSalt = new byte[128],
+					PasswordHash = new byte[64]
+				});
+			AccountService accountService = this.AccountServiceInstance;
+
+			Assert.Throws<StriveSecurityException>(() => accountService.Authenticate(username, password));
+		}
+
+		[Fact]
+		public void AuthenticationFailsOnNotVerifiedPassword()
+		{
+			string username = "username";
+			string password = "password";
+			_userRepositoryMock.Setup(repo => repo.GetByUsername(username))
+				.Returns(new User()
+				{
+					PasswordSalt = new byte[1],
+					PasswordHash = new byte[1]
+				});
+			AccountService accountService = this.AccountServiceInstance;
+
+			Assert.Throws<StriveSecurityException>(() => accountService.Authenticate(username, password));
 		}
 	}
 }
