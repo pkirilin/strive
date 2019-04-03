@@ -32,7 +32,17 @@ namespace Strive.Data.Services
 				throw new StriveDatabaseException("Authentication failed: user not found");
 
 			// Checking if password is correct
-			if (!SecurityHelpers.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+			bool isPasswordCorrect;
+			try
+			{
+				isPasswordCorrect = SecurityHelpers.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt);
+			}
+			catch (Exception)
+			{
+				throw new StriveSecurityException("Authentication failed: wrong data passed for verifying password hash");
+			}
+			
+			if (isPasswordCorrect == false)
 				throw new StriveSecurityException("Authentication failed: incorrect password");
 
 			// Authentication successful
