@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Strive.Data.Entities;
+using Strive.Exceptions;
 
 namespace Strive.Data.Repositories
 {
@@ -20,7 +21,7 @@ namespace Strive.Data.Repositories
 			}
 			catch (Exception)
 			{
-				return null;
+				throw;
 			}
 		}
 

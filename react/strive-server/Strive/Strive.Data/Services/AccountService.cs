@@ -58,12 +58,25 @@ namespace Strive.Data.Services
 			byte[] passwordHash;
 			byte[] passwordSalt;
 
-			SecurityHelpers.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+			try
+			{
+				SecurityHelpers.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+				user.PasswordSalt = passwordSalt;
+				user.PasswordHash = passwordHash;
+			}
+			catch (ArgumentException e)
+			{
+				throw new StriveSecurityException(e.Message);
+			}
 
-			user.PasswordSalt = passwordSalt;
-			user.PasswordHash = passwordHash;
-
-			_userRepo.Add(user);
+			try
+			{
+				_userRepo.Add(user);
+			}
+			catch (Exception e)
+			{
+				throw new StriveDatabaseException($"Failed to add user. Error message: {e.Message}");
+			}
 
 			return user;
 		}
