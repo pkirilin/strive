@@ -1,12 +1,21 @@
 import React from "react";
 import { Form, FormGroup, Input } from "reactstrap";
-import { InputField } from "../_components";
+import { InputField, Loading } from "../_components";
 import { validationStatuses } from "../_constants";
 import { validationRulesSetters } from "../_helpers/validation";
 import { validationHelpers } from "../_helpers/validation";
 import { getResourcesForCurrentCulture } from "../_helpers";
+import { connect } from "react-redux";
+import { accountActions } from "../_actions";
 
-export class RegisterForm extends React.Component {
+const mapStateToProps = state => {
+  const { registering } = state.accountReducer;
+  return {
+    registering
+  };
+};
+
+class RegisterForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -96,7 +105,15 @@ export class RegisterForm extends React.Component {
 
   onSubmitValidationCompleted() {
     if (validationHelpers.focusFirstInvalidField("#registerForm") === false) {
-      // form valid
+      // Registration data is valid
+      this.props.dispatch(
+        accountActions.register({
+          email: this.state.email.value,
+          username: this.state.username.value,
+          password: this.state.password.value,
+          passwordConfirm: this.state.passwordConfirm.value
+        })
+      );
     }
   }
 
@@ -133,8 +150,10 @@ export class RegisterForm extends React.Component {
   }
 
   render() {
+    const { registering } = this.props;
     return (
       <Form id="registerForm" method="post" onSubmit={this.onSubmit}>
+        {registering && <Loading />}
         <FormGroup>
           <InputField
             type="text"
@@ -182,3 +201,6 @@ export class RegisterForm extends React.Component {
     );
   }
 }
+
+const connectedRegisterForm = connect(mapStateToProps)(RegisterForm);
+export { connectedRegisterForm as RegisterForm };
