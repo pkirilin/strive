@@ -28,9 +28,11 @@ namespace Strive.API
 			// Configuring strongly typed settings objects
 			var appSettingsSection = Configuration.GetSection("appSettings");
 			var clientAppConfigSection = Configuration.GetSection("clientAppConfig");
+			var databaseConfigSection = Configuration.GetSection("databaseConfig");
 
 			services.Configure<AppSettings>(appSettingsSection);
 			services.Configure<ClientAppSettings>(clientAppConfigSection);
+			services.Configure<DatabaseSettings>(databaseConfigSection);
 
 			var appSettings = appSettingsSection.Get<AppSettings>();
 			var clientAppConfig = clientAppConfigSection.Get<ClientAppSettings>();

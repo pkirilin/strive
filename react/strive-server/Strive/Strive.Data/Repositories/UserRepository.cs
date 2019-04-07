@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Strive.Data.Entities;
-using Strive.Exceptions;
 
 namespace Strive.Data.Repositories
 {
