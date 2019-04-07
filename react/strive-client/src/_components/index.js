@@ -8,3 +8,4 @@ export { CenteredFormLayout } from "./CenteredFormLayout";
 export { MarginedLayout } from "./MarginedLayout";
 export { InputField } from "./InputField";
 export { InputCheckbox } from "./InputCheckbox";
+export { Loading } from "./Loading";
