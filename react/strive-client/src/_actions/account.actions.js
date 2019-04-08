@@ -1,6 +1,7 @@
 import { accountConstants } from "../_constants";
 import { accountService } from "../_services";
 //import { history } from "../_helpers";
+import { alertActions } from "../_actions";
 
 export const accountActions = {
   register
@@ -18,6 +19,7 @@ function register(user) {
       },
       errorResponse => {
         dispatch(regError(errorResponse));
+        dispatch(alertActions.error("Testing alertActions.error"));
       }
     );
   };
