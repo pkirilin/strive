@@ -5,7 +5,8 @@ import {
   linkResources,
   inputValuesResources,
   helpResources,
-  validationResources
+  validationResources,
+  alertResources
 } from "../_resources";
 
 /** Gets current culture and returns resources for this culture */
@@ -20,6 +21,7 @@ export const getResourcesForCurrentCulture = () => {
     link: linkResources[curCulture],
     inputValues: inputValuesResources[curCulture],
     help: helpResources[curCulture],
-    validation: validationResources[curCulture]
+    validation: validationResources[curCulture],
+    alert: alertResources[curCulture]
   };
 };
