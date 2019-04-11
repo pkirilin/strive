@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { accountActions, alertActions } from "../_actions";
 
 const mapStateToProps = state => {
-  const { registering } = state.accountReducer;
+  const { registering } = state.accountReducer.registerReducer;
   return {
     registering
   };

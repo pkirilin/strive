@@ -1,6 +1,6 @@
-import { registerConstants } from "../_constants";
+import { registerConstants } from "../../_constants";
 
-export const accountReducer = (state = {}, action) => {
+export const registerReducer = (state = {}, action) => {
   switch (action.type) {
     case registerConstants.REGISTER_REQUEST:
       return { registering: true };
