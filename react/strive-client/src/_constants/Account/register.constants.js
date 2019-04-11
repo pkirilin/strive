@@ -1,4 +1,4 @@
-export const accountConstants = {
+export const registerConstants = {
   REGISTER_REQUEST: "ACCOUNT_REGISTER_REQUEST",
   REGISTER_SUCCESS: "ACCOUNT_REGISTER_SUCCESS",
   REGISTER_ERROR: "ACCOUNT_REGISTER_ERROR"

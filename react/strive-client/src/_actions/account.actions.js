@@ -1,4 +1,4 @@
-import { accountConstants } from "../_constants";
+import { registerConstants } from "../_constants";
 import { accountService } from "../_services";
 //import { history } from "../_helpers";
 import { alertActions } from "../_actions";
@@ -40,19 +40,19 @@ function register(user) {
 
   function regRequest(user) {
     return {
-      type: accountConstants.REGISTER_REQUEST,
+      type: registerConstants.REGISTER_REQUEST,
       user
     };
   }
   function regSuccess(user) {
     return {
-      type: accountConstants.REGISTER_SUCCESS,
+      type: registerConstants.REGISTER_SUCCESS,
       user
     };
   }
   function regError(error) {
     return {
-      type: accountConstants.REGISTER_ERROR,
+      type: registerConstants.REGISTER_ERROR,
       error
     };
   }
