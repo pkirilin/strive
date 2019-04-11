@@ -9,9 +9,13 @@ import { connect } from "react-redux";
 import { accountActions, alertActions } from "../_actions";
 
 const mapStateToProps = state => {
-  const { registering } = state.accountReducer.registerReducer;
+  const {
+    registering,
+    badRequestResponseJson
+  } = state.accountReducer.registerReducer;
   return {
-    registering
+    registering,
+    badRequestResponseJson
   };
 };
 
@@ -25,6 +29,13 @@ class RegisterForm extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.onSubmitValidationCompleted = this.onSubmitValidationCompleted.bind(
+      this
+    );
+
+    this.trackEmailBadRequestResponse = this.trackEmailBadRequestResponse.bind(
+      this
+    );
+    this.trackUsernameBadRequestResponse = this.trackUsernameBadRequestResponse.bind(
       this
     );
 
@@ -53,6 +64,52 @@ class RegisterForm extends React.Component {
         onValueChange: this.onPasswordConfirmChange
       }
     };
+  }
+
+  trackEmailBadRequestResponse() {
+    if (
+      this.props.badRequestResponseJson &&
+      this.props.badRequestResponseJson.emailRemote
+    ) {
+      this.setState({
+        ...this.state,
+        email: {
+          ...this.state.email,
+          validationState: {
+            status: validationStatuses.invalid,
+            message: this.props.badRequestResponseJson.emailRemote.join(". ")
+          }
+        }
+      });
+    }
+  }
+
+  trackUsernameBadRequestResponse() {
+    if (
+      this.props.badRequestResponseJson &&
+      this.props.badRequestResponseJson.usernameRemote
+    ) {
+      this.setState({
+        ...this.state,
+        username: {
+          ...this.state.username,
+          validationState: {
+            status: validationStatuses.invalid,
+            message: this.props.badRequestResponseJson.usernameRemote.join(". ")
+          }
+        }
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    // Tracks if any bad request (validation error) received from API
+    if (
+      prevProps.badRequestResponseJson !== this.props.badRequestResponseJson
+    ) {
+      this.trackUsernameBadRequestResponse();
+      this.trackUsernameBadRequestResponse();
+    }
   }
 
   onUsernameChange(event) {

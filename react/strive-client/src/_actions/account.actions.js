@@ -13,29 +13,32 @@ export const accountActions = {
 function register(user) {
   return dispatch => {
     dispatch(regRequest(user));
-    accountService.register(user).then(
-      userResponse => {
-        switch (userResponse.status) {
-          case httpStatuses.ok:
-            //dispatch(regSuccess(userResponse));
-            break;
-          case httpStatuses.badRequest:
-            dispatch(regError("register bad request"));
-            dispatch(alertActions.error("register bad request"));
-            break;
-          default:
-            //dispatch(alertActions.clear());
-            break;
+    accountService
+      .register(user)
+      .then(
+        userResponse => {
+          switch (userResponse.status) {
+            case httpStatuses.ok:
+              dispatch(regSuccess(userResponse));
+              //history.push("/login");
+              break;
+            case httpStatuses.badRequest:
+              return userResponse.json();
+            default:
+              dispatch(alertActions.clear());
+              break;
+          }
+        },
+        errorResponse => {
+          dispatch(regError(errorResponse));
+          dispatch(
+            alertActions.error(resources.alert.accountRegisterFailedToFetch)
+          );
         }
-        //history.push("/login");
-      },
-      errorResponse => {
-        dispatch(regError(errorResponse));
-        dispatch(
-          alertActions.error(resources.alert.accountRegisterFailedToFetch)
-        );
-      }
-    );
+      )
+      .then(badRequestJsonData => {
+        dispatch(regBadRequest(badRequestJsonData));
+      });
   };
 
   function regRequest(user) {
@@ -54,6 +57,12 @@ function register(user) {
     return {
       type: registerConstants.REGISTER_ERROR,
       error
+    };
+  }
+  function regBadRequest(badRequestResponseJson) {
+    return {
+      type: registerConstants.REGISTER_BADREQUEST,
+      badRequestResponseJson
     };
   }
 }
