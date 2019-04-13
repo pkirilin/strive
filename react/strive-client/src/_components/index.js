@@ -9,4 +9,4 @@ export { MarginedLayout } from "./MarginedLayout";
 export { InputField } from "./InputField";
 export { InputCheckbox } from "./InputCheckbox";
 export { Loading } from "./Loading";
-export { Alert } from "./Alert";
+export { ApplicationAlert } from "./ApplicationAlert";

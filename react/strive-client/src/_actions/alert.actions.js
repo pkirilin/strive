@@ -13,7 +13,7 @@ function success(message) {
   };
 }
 
-function error(message) {
+function error(message, visible = true) {
   return {
     type: alertConstants.ERROR,
     message

@@ -4,12 +4,12 @@ export const alertReducer = (state = {}, action) => {
   switch (action.type) {
     case alertConstants.SUCCESS:
       return {
-        cssClass: "alert-success",
+        type: "success",
         message: action.message
       };
     case alertConstants.ERROR:
       return {
-        cssClass: "alert-danger",
+        type: "danger",
         message: action.message
       };
     case alertConstants.CLEAR:

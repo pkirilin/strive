@@ -1,7 +1,7 @@
 import React from "react";
 import { Router, Switch, Route } from "react-router";
 import { history } from "../_helpers";
-import { PrivateRoute, Alert } from "../_components";
+import { PrivateRoute, ApplicationAlert } from "../_components";
 import { BRAND_NAME } from "../_constants";
 import { Home } from "../Home";
 import { Account } from "../Account";
@@ -15,7 +15,7 @@ export class App extends React.Component {
   render() {
     return (
       <div>
-        <Alert />
+        <ApplicationAlert />
         <Router history={history}>
           <Switch>
             {/* for debug only */}
