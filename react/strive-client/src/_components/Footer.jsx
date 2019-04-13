@@ -15,7 +15,9 @@ export class Footer extends React.Component {
       this.setState({
         year: currentYear
       });
+      return true;
     }
+    return false;
   }
 
   render() {
