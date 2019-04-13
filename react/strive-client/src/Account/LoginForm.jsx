@@ -154,7 +154,7 @@ export class LoginForm extends React.Component {
         </FormGroup>
 
         <FormGroup className="text-center">
-          <Link to="/account/signup">{this.state.resources.link.signUp}</Link>
+          <Link to="/account/register">{this.state.resources.link.signUp}</Link>
         </FormGroup>
       </Form>
     );

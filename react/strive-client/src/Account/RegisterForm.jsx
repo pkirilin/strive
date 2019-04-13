@@ -23,6 +23,7 @@ class RegisterForm extends React.Component {
   constructor(props) {
     super(props);
 
+    this.onEmailChange = this.onEmailChange.bind(this);
     this.onUsernameChange = this.onUsernameChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onPasswordConfirmChange = this.onPasswordConfirmChange.bind(this);
@@ -49,7 +50,8 @@ class RegisterForm extends React.Component {
     this.state = {
       resources: getResourcesForCurrentCulture(),
       email: {
-        value: "test@test.com"
+        ...initFieldObj,
+        onValueChange: this.onEmailChange
       },
       username: {
         ...initFieldObj,
@@ -107,9 +109,24 @@ class RegisterForm extends React.Component {
     if (
       prevProps.badRequestResponseJson !== this.props.badRequestResponseJson
     ) {
+      this.trackEmailBadRequestResponse();
       this.trackUsernameBadRequestResponse();
-      this.trackUsernameBadRequestResponse();
+      return true;
     }
+    return false;
+  }
+
+  onEmailChange(event) {
+    this.setState({
+      email: {
+        ...this.state.email,
+        value: event.target.value,
+        validationState: validationRulesSetters.validateEmail(
+          event.target.value,
+          this.state.resources
+        )
+      }
+    });
   }
 
   onUsernameChange(event) {
@@ -180,6 +197,13 @@ class RegisterForm extends React.Component {
 
     this.setState(
       {
+        email: {
+          ...this.state.email,
+          validationState: validationRulesSetters.validateEmail(
+            this.state.email.value,
+            this.state.resources
+          )
+        },
         username: {
           ...this.state.username,
           validationState: validationRulesSetters.validateUsername(
@@ -216,7 +240,7 @@ class RegisterForm extends React.Component {
           <InputField
             type="text"
             label={this.state.resources.label.email}
-            readonly
+            placeholder={this.state.resources.placeholder.email}
             {...this.state.email}
           />
         </FormGroup>
