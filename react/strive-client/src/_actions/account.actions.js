@@ -53,7 +53,10 @@ function register(user) {
       .then(
         // Server returned register validation error(s)
         badRequestJsonData => {
-          dispatch(regBadRequest(badRequestJsonData));
+          if (badRequestJsonData !== undefined) {
+            // If there's something returned from server
+            dispatch(regBadRequest(badRequestJsonData));
+          }
         }
       );
   };
