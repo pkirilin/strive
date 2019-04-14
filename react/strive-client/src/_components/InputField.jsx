@@ -1,6 +1,6 @@
 import React from "react";
 import { Label } from "reactstrap";
-import { validationStatuses } from "../_constants/validation";
+import { validationStatuses } from "../_constants";
 
 export class InputField extends React.Component {
   static defaultProps = {
