@@ -1,15 +1,20 @@
-import { config } from "../_helpers";
+import { config, httpHeaders } from "../_helpers";
 
+/** Encapsulates all backend api calls for performing operations on account controller */
 export const accountService = {
+  /** Performs api call to register method of account controller */
   register
 };
 
+/**
+ * Performs api call to register method of account controller
+ * @param {object} user User register DTO
+ * @returns Fetch response promise
+ */
 function register(user) {
   const requestOptions = {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: httpHeaders.contentTypeJson,
     body: JSON.stringify(user)
   };
   return fetch(`${config.apiUrl}/account/register`, requestOptions);
