@@ -1,15 +1,22 @@
 import React from "react";
 import { Form, FormGroup, Input } from "reactstrap";
 import { Link } from "react-router-dom";
-import { InputField, InputCheckbox } from "../_components";
+import { InputField, InputCheckbox, Loading } from "../_components";
 import { validationStatuses } from "../_constants";
 import {
   validationHelpers,
   validationRulesSetters
 } from "../_helpers/validation";
 import { getResourcesForCurrentCulture } from "../_helpers";
+import { connect } from "react-redux";
+import { accountActions } from "../_actions";
 
-export class LoginForm extends React.Component {
+const mapStateToProps = state => {
+  const { loggingIn } = state.accountReducer.loginReducer;
+  return { loggingIn };
+};
+
+class LoginForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -34,11 +41,13 @@ export class LoginForm extends React.Component {
       resources: getResourcesForCurrentCulture(),
       email: {
         ...initFieldObj,
-        onValueChange: this.onEmailChange
+        onValueChange: this.onEmailChange,
+        value: "test@test.com"
       },
       password: {
         ...initFieldObj,
-        onValueChange: this.onPasswordChange
+        onValueChange: this.onPasswordChange,
+        value: "1"
       },
       rememberMe: {
         value: false,
@@ -84,7 +93,13 @@ export class LoginForm extends React.Component {
 
   onSubmitValidationCompleted() {
     if (validationHelpers.focusFirstInvalidField("#loginForm") === false) {
-      // form valid
+      // Login data is valid
+      this.props.dispatch(
+        accountActions.login({
+          email: this.state.email.value,
+          password: this.state.password.value
+        })
+      );
     }
   }
 
@@ -113,8 +128,11 @@ export class LoginForm extends React.Component {
   }
 
   render() {
+    const { loggingIn } = this.props;
+
     return (
       <Form id="loginForm" method="post" onSubmit={this.onSubmit}>
+        {loggingIn && <Loading />}
         <FormGroup>
           <InputField
             type="text"
@@ -160,3 +178,6 @@ export class LoginForm extends React.Component {
     );
   }
 }
+
+const connectedLoginForm = connect(mapStateToProps)(LoginForm);
+export { connectedLoginForm as LoginForm };

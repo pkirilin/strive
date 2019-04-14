@@ -1,4 +1,4 @@
-import { registerConstants } from "../_constants";
+import { registerConstants, loginConstants } from "../_constants";
 import { accountService } from "../_services";
 import {
   getResourcesForCurrentCulture,
@@ -12,7 +12,8 @@ const resources = getResourcesForCurrentCulture();
 /** Contains Redux action creators for actions related to account */
 export const accountActions = {
   /** Redux action creator, performs account registration */
-  register
+  register,
+  login
 };
 
 /**
@@ -102,6 +103,55 @@ function register(user) {
     return {
       type: registerConstants.REGISTER_BADREQUEST,
       badRequestResponseJson
+    };
+  }
+}
+
+/**
+ * Redux action creator, performs authentication
+ * @param {object} userLoginData User login request DTO
+ */
+function login(userLoginData) {
+  return dispatch => {
+    dispatch(request(userLoginData));
+    accountService.login(userLoginData).then(
+      userResponse => {
+        dispatch(success(userResponse));
+        history.push("/");
+      },
+      errorResponse => {
+        dispatch(error(errorResponse));
+        dispatch(alertActions.error(resources.alert.accountLoginFailedToFetch));
+      }
+    );
+  };
+
+  /**
+   * Login request action creator
+   * @param {object} user User login request DTO
+   */
+  function request(user) {
+    return {
+      type: loginConstants.LOGIN_REQUEST,
+      user
+    };
+  }
+
+  function success(user) {
+    return {
+      type: loginConstants.LOGIN_SUCCESS,
+      user
+    };
+  }
+
+  /**
+   * Login error action creator
+   * @param {string} error Error message
+   */
+  function error(error) {
+    return {
+      type: loginConstants.LOGIN_ERROR,
+      error
     };
   }
 }
