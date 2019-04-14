@@ -17,6 +17,8 @@ class ApplicationAlert extends React.Component {
 
     this.onDismiss = this.onDismiss.bind(this);
 
+    this.dismissTimer = null;
+
     // Clear alert on location change
     history.listen(() => {
       this.onDismiss();
@@ -25,11 +27,18 @@ class ApplicationAlert extends React.Component {
 
   componentWillUpdate(nextProps) {
     if (Object.keys(nextProps.alertReducer).length > 0) {
-      // If alertReducer's state object is empty, comp received clear action
-      // Alert will be dismissed automatically in some time
-      setTimeout(() => {
+      // If alertReducer's state object is empty, component received clear action
+      // Alert will be dismissed automatically in several seconds
+      this.dismissTimer = setTimeout(() => {
         this.onDismiss();
       }, config.alerts.autoDismissTimeout);
+    } else {
+      // Reset dismiss timer to prevent situation, when component received an alert,
+      // timer started, then component receives an alert again and it dismisses on old alert's timer
+      if (this.dismissTimer !== null) {
+        clearTimeout(this.dismissTimer);
+        this.dismissTimer = null;
+      }
     }
   }
 
