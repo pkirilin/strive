@@ -1,8 +1,7 @@
 import React from "react";
-import { BRAND_NAME } from "../_constants";
 import { CenteredFormLayout, MainTitle, MarginedLayout } from "../_components";
 import { RegisterForm } from "./RegisterForm";
-import { getResourcesForCurrentCulture } from "../_helpers";
+import { getResourcesForCurrentCulture, config } from "../_helpers";
 
 export class RegisterPage extends React.Component {
   constructor(props) {
@@ -14,13 +13,15 @@ export class RegisterPage extends React.Component {
   }
 
   componentWillMount() {
-    document.title = `${BRAND_NAME} - ${this.state.resources.title.register}`;
+    document.title = `${config.brandName} - ${
+      this.state.resources.title.register
+    }`;
   }
 
   render() {
     return (
       <div>
-        <MainTitle text={`${BRAND_NAME} - Register`} />
+        <MainTitle text={`${config.brandName} - Register`} />
         <MarginedLayout>
           <CenteredFormLayout>
             <RegisterForm />

@@ -1,8 +1,7 @@
 import React from "react";
 import { CenteredFormLayout, MainTitle, MarginedLayout } from "../_components";
 import { ResetPasswordForm } from "./ResetPasswordForm";
-import { BRAND_NAME } from "../_constants";
-import { getResourcesForCurrentCulture } from "../_helpers";
+import { getResourcesForCurrentCulture, config } from "../_helpers";
 
 export class ResetPasswordPage extends React.Component {
   constructor(props) {
@@ -14,7 +13,7 @@ export class ResetPasswordPage extends React.Component {
   }
 
   componentWillMount() {
-    document.title = `${BRAND_NAME} - ${
+    document.title = `${config.brandName} - ${
       this.state.resources.title.resetPassword
     }`;
   }

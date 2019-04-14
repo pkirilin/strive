@@ -1,15 +1,14 @@
 import React from "react";
 import { Router, Switch, Route } from "react-router";
-import { history } from "../_helpers";
+import { history, config } from "../_helpers";
 import { PrivateRoute, ApplicationAlert } from "../_components";
-import { BRAND_NAME } from "../_constants";
 import { Home } from "../Home";
 import { Account } from "../Account";
 import { NotFoundPage } from "../ErrorPages";
 
 export class App extends React.Component {
   componentWillMount() {
-    document.title = BRAND_NAME;
+    document.title = config.brandName;
   }
 
   render() {

@@ -1,8 +1,7 @@
 import React from "react";
-import { BRAND_NAME } from "../_constants";
 import { CenteredFormLayout, MainTitle, MarginedLayout } from "../_components";
 import { LoginForm } from "./LoginForm";
-import { getResourcesForCurrentCulture } from "../_helpers";
+import { getResourcesForCurrentCulture, config } from "../_helpers";
 
 export class LoginPage extends React.Component {
   constructor(props) {
@@ -14,13 +13,15 @@ export class LoginPage extends React.Component {
   }
 
   componentWillMount() {
-    document.title = `${BRAND_NAME} - ${this.state.resources.title.login}`;
+    document.title = `${config.brandName} - ${
+      this.state.resources.title.login
+    }`;
   }
 
   render() {
     return (
       <div>
-        <MainTitle text={`Sign in to ${BRAND_NAME}`} />
+        <MainTitle text={`Sign in to ${config.brandName}`} />
         <MarginedLayout>
           <CenteredFormLayout>
             <LoginForm />

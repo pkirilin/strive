@@ -1,7 +1,6 @@
 import React from "react";
-import { BRAND_NAME } from "../_constants";
 import { CenteredFormLayout, MainTitle, MarginedLayout } from "../_components";
-import { getResourcesForCurrentCulture } from "../_helpers";
+import { getResourcesForCurrentCulture, config } from "../_helpers";
 import { SignUpForm } from "./SignUpForm";
 
 export class SignUpPage extends React.Component {
@@ -14,13 +13,15 @@ export class SignUpPage extends React.Component {
   }
 
   componentWillMount() {
-    document.title = `${BRAND_NAME} - ${this.state.resources.title.signUp}`;
+    document.title = `${config.brandName} - ${
+      this.state.resources.title.signUp
+    }`;
   }
 
   render() {
     return (
       <div>
-        <MainTitle text={`Sign up to ${BRAND_NAME}`} />
+        <MainTitle text={`Sign up to ${config.brandName}`} />
         <MarginedLayout>
           <CenteredFormLayout>
             <SignUpForm />

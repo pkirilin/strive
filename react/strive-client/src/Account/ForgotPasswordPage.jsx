@@ -1,8 +1,7 @@
 import React from "react";
 import { CenteredFormLayout, MainTitle, MarginedLayout } from "../_components";
 import { ForgotPasswordForm } from "./ForgotPasswordForm";
-import { BRAND_NAME } from "../_constants";
-import { getResourcesForCurrentCulture } from "../_helpers";
+import { getResourcesForCurrentCulture, config } from "../_helpers";
 
 export class ForgotPasswordPage extends React.Component {
   constructor(props) {
@@ -14,7 +13,7 @@ export class ForgotPasswordPage extends React.Component {
   }
 
   componentWillMount() {
-    document.title = `${BRAND_NAME} - ${
+    document.title = `${config.brandName} - ${
       this.state.resources.title.forgotPassword
     }`;
   }

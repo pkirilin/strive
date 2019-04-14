@@ -1,8 +1,6 @@
 import React from "react";
-import { PublicLayout } from "../_components";
-import { MainTitle } from "../_components";
-import { BRAND_NAME } from "../_constants";
-import { getResourcesForCurrentCulture } from "../_helpers";
+import { PublicLayout, MainTitle } from "../_components";
+import { getResourcesForCurrentCulture, config } from "../_helpers";
 
 export class NotFoundPage extends React.Component {
   constructor(props) {
@@ -14,7 +12,7 @@ export class NotFoundPage extends React.Component {
   }
 
   componentWillMount() {
-    document.title = `${BRAND_NAME} - ${
+    document.title = `${config.brandName} - ${
       this.state.resources.titleResources.notFound
     }`;
   }
