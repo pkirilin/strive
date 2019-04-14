@@ -1,3 +1,4 @@
+/** Redux actions related to register */
 export const registerConstants = {
   REGISTER_REQUEST: "ACCOUNT_REGISTER_REQUEST",
   REGISTER_SUCCESS: "ACCOUNT_REGISTER_SUCCESS",
