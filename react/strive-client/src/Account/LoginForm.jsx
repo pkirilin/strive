@@ -9,7 +9,7 @@ import {
 } from "../_helpers/validation";
 import { getResourcesForCurrentCulture } from "../_helpers";
 import { connect } from "react-redux";
-import { accountActions } from "../_actions";
+import { accountActions, alertActions } from "../_actions";
 
 const mapStateToProps = state => {
   const { loggingIn } = state.accountReducer.loginReducer;
@@ -105,6 +105,7 @@ class LoginForm extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
+    this.props.dispatch(alertActions.clear());
 
     this.setState(
       {

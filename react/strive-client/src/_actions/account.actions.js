@@ -13,6 +13,7 @@ const resources = getResourcesForCurrentCulture();
 export const accountActions = {
   /** Redux action creator, performs account registration */
   register,
+  /** Redux action creator, performs authentication */
   login
 };
 
@@ -115,10 +116,24 @@ function login(userLoginData) {
   return dispatch => {
     dispatch(request(userLoginData));
     accountService.login(userLoginData).then(
+      // Server is available
       userResponse => {
-        dispatch(success(userResponse));
-        history.push("/");
+        switch (userResponse.status) {
+          case httpStatuses.ok:
+            dispatch(success(userResponse));
+            history.push("/");
+            break;
+          case httpStatuses.unauthorized:
+            dispatch(error(resources.alert.accountLoginUnauthorized));
+            dispatch(
+              alertActions.error(resources.alert.accountLoginUnauthorized)
+            );
+            break;
+          default:
+            break;
+        }
       },
+      // Server is not available
       errorResponse => {
         dispatch(error(errorResponse));
         dispatch(alertActions.error(resources.alert.accountLoginFailedToFetch));
