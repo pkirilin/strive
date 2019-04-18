@@ -14,7 +14,7 @@ namespace Strive.Tests.API.Account
 		{
 			var loginRequest = new UserLoginRequestDto()
 			{
-				Username = "username",
+				Email = "username",
 				Password = "password"
 			};
 
@@ -32,12 +32,12 @@ namespace Strive.Tests.API.Account
 		{
 			var loginRequest = new UserLoginRequestDto()
 			{
-				Username = "username",
+				Email = "username",
 				Password = "password"
 			};
 
 			_accountServiceMock
-				.Setup(service => service.Authenticate(loginRequest.Username, loginRequest.Password))
+				.Setup(service => service.Authenticate(loginRequest.Email, loginRequest.Password))
 				.Returns(() => new User());
 
 			IActionResult result = this.AccountControllerInstance.Authenticate(loginRequest);

@@ -33,9 +33,9 @@ namespace Strive.Tests.Services.Account
 		[Fact]
 		public void AuthenticationFailsOnIncorrectPassword()
 		{
-			string username = "username";
+			string email = "email@email.com";
 			string password = "password";
-			_userRepositoryMock.Setup(repo => repo.GetByUsername(username))
+			_userRepositoryMock.Setup(repo => repo.GetByEmail(email))
 				.Returns(new User()
 				{
 					PasswordSalt = new byte[128],
@@ -43,15 +43,15 @@ namespace Strive.Tests.Services.Account
 				});
 			AccountService accountService = this.AccountServiceInstance;
 
-			Assert.Throws<StriveSecurityException>(() => accountService.Authenticate(username, password));
+			Assert.Throws<StriveSecurityException>(() => accountService.Authenticate(email, password));
 		}
 
 		[Fact]
 		public void AuthenticationFailsOnNotVerifiedPassword()
 		{
-			string username = "username";
+			string email = "email@email.com";
 			string password = "password";
-			_userRepositoryMock.Setup(repo => repo.GetByUsername(username))
+			_userRepositoryMock.Setup(repo => repo.GetByEmail(email))
 				.Returns(new User()
 				{
 					PasswordSalt = new byte[1],
@@ -59,7 +59,7 @@ namespace Strive.Tests.Services.Account
 				});
 			AccountService accountService = this.AccountServiceInstance;
 
-			Assert.Throws<StriveSecurityException>(() => accountService.Authenticate(username, password));
+			Assert.Throws<StriveSecurityException>(() => accountService.Authenticate(email, password));
 		}
 	}
 }

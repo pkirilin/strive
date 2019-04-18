@@ -46,7 +46,7 @@ namespace Strive.API.Controllers
 
 			try
 			{
-				user = _accountService.Authenticate(userLoginRequestData.Username, userLoginRequestData.Password);
+				user = _accountService.Authenticate(userLoginRequestData.Email, userLoginRequestData.Password);
 			}
 			catch (Exception)
 			{

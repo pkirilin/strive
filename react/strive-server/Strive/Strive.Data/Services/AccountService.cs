@@ -19,13 +19,13 @@ namespace Strive.Data.Services
 		/// Authenticates user by username and password
 		/// </summary>
 		/// <returns>Authenticated user if authentication successful, if not returns null</returns>
-		public User Authenticate(string username, string password)
+		public User Authenticate(string email, string password)
 		{
 			// Checking if username or password is filled
-			if (String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password))
+			if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))
 				throw new ArgumentException("Authentication failed: username and/or password is empty");
 
-			User user = _userRepo.GetByUsername(username);
+			User user = _userRepo.GetByEmail(email);
 
 			// Checking if user exists in db
 			if (user == null)
