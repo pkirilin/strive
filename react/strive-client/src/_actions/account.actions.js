@@ -14,7 +14,9 @@ export const accountActions = {
   /** Redux action creator, performs account registration */
   register,
   /** Redux action creator, performs authentication */
-  login
+  login,
+  /** Redux action creator, performs logout */
+  logout
 };
 
 /**
@@ -40,6 +42,7 @@ function register(user) {
             case httpStatuses.badRequest:
               return userResponse.json();
             default:
+              dispatch(regError(""));
               dispatch(alertActions.clear());
               break;
           }
@@ -119,7 +122,8 @@ function login(userLoginData) {
       // Server is available
       userResponse => {
         switch (userResponse.status) {
-          case httpStatuses.ok:
+          case undefined:
+            // undefined means that API returned an Ok with plain object, is has no status
             dispatch(success(userResponse));
             history.push("/");
             break;
@@ -130,6 +134,8 @@ function login(userLoginData) {
             );
             break;
           default:
+            dispatch(error(""));
+            dispatch(alertActions.clear());
             break;
         }
       },
@@ -152,6 +158,10 @@ function login(userLoginData) {
     };
   }
 
+  /**
+   * Login success action creator
+   * @param {object} user User login request DTO
+   */
   function success(user) {
     return {
       type: loginConstants.LOGIN_SUCCESS,
@@ -169,4 +179,15 @@ function login(userLoginData) {
       error
     };
   }
+}
+
+/**
+ * Redux action creator, performs logout
+ */
+function logout() {
+  accountService.logout();
+  history.push("/");
+  return {
+    type: loginConstants.LOGOUT
+  };
 }
