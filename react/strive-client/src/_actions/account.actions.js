@@ -25,52 +25,50 @@ export const accountActions = {
  */
 function register(user) {
   return dispatch => {
-    dispatch(regRequest(user));
-    accountService
-      .register(user)
-      .then(
-        // Server is available
-        userResponse => {
-          switch (userResponse.status) {
-            case httpStatuses.ok:
-              dispatch(regSuccess(userResponse));
-              history.push("/account/login");
-              dispatch(
-                alertActions.success(resources.alert.account.register.success)
-              );
-              break;
-            case httpStatuses.badRequest:
-              return userResponse.json();
-            default:
-              dispatch(regError(""));
-              dispatch(alertActions.clear());
-              break;
-          }
-        },
-        // Server is not available
-        errorResponse => {
-          dispatch(regError(errorResponse));
-          dispatch(
-            alertActions.error(resources.alert.account.register.failedToFetch)
-          );
+    dispatch(request(user));
+    accountService.register(user).then(
+      // Server is available
+      userResponse => {
+        switch (userResponse.status) {
+          case httpStatuses.ok:
+            dispatch(success(userResponse));
+            history.push("/account/login");
+            dispatch(
+              alertActions.success(resources.alert.account.register.success)
+            );
+            break;
+          case httpStatuses.badRequest:
+            userResponse.json().then(
+              // Server returned register validation error(s)
+              badRequestJsonData => {
+                if (badRequestJsonData !== undefined) {
+                  // If there's something returned from server
+                  dispatch(regBadRequest(badRequestJsonData));
+                }
+              }
+            );
+            break;
+          default:
+            dispatch(error(""));
+            dispatch(alertActions.clear());
+            break;
         }
-      )
-      .then(
-        // Server returned register validation error(s)
-        badRequestJsonData => {
-          if (badRequestJsonData !== undefined) {
-            // If there's something returned from server
-            dispatch(regBadRequest(badRequestJsonData));
-          }
-        }
-      );
+      },
+      // Server is not available
+      errorResponse => {
+        dispatch(error(errorResponse));
+        dispatch(
+          alertActions.error(resources.alert.account.register.failedToFetch)
+        );
+      }
+    );
   };
 
   /**
    * Register request action creator
    * @param {object} user User register DTO
    */
-  function regRequest(user) {
+  function request(user) {
     return {
       type: registerConstants.REGISTER_REQUEST,
       user
@@ -81,7 +79,7 @@ function register(user) {
    * Register success action creator
    * @param {object} user User register DTO
    */
-  function regSuccess(user) {
+  function success(user) {
     return {
       type: registerConstants.REGISTER_SUCCESS,
       user
@@ -92,7 +90,7 @@ function register(user) {
    * Register error action creator
    * @param {string} error Error message
    */
-  function regError(error) {
+  function error(error) {
     return {
       type: registerConstants.REGISTER_ERROR,
       error

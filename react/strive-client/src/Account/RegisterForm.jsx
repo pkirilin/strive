@@ -7,6 +7,7 @@ import { validationHelpers } from "../_helpers/validation";
 import { getResourcesForCurrentCulture } from "../_helpers";
 import { connect } from "react-redux";
 import { accountActions, alertActions } from "../_actions";
+import { Link } from "react-router-dom";
 
 const mapStateToProps = state => {
   const {
@@ -278,6 +279,12 @@ class RegisterForm extends React.Component {
             className="btn btn-success"
             value={this.state.resources.inputValues.createAccount}
           />
+        </FormGroup>
+
+        <FormGroup className="text-center">
+          <Link to="/account/login">
+            {this.state.resources.inputValues.signIn}
+          </Link>
         </FormGroup>
       </Form>
     );
