@@ -35,15 +35,7 @@ function login(user) {
     headers: httpHeaders.contentTypeJson,
     body: JSON.stringify(user)
   };
-  return fetch(`${config.apiUrl}/account/authenticate`, requestOptions)
-    .then(handleResponse, handleError)
-    .then(user => {
-      if (user && user.token) {
-        // Token found in the response, login successful
-        localStorage.setItem("user", JSON.stringify(user));
-      }
-      return user;
-    });
+  return fetch(`${config.apiUrl}/account/authenticate`, requestOptions);
 }
 
 /**
@@ -51,25 +43,4 @@ function login(user) {
  */
 function logout() {
   localStorage.removeItem("user");
-}
-
-function handleResponse(response) {
-  return new Promise((resolve, reject) => {
-    if (response.ok) {
-      // Return json if it was returned in the response
-      var contentType = response.headers.get("content-type");
-      if (contentType && contentType.includes("application/json")) {
-        response.json().then(json => resolve(json));
-      } else {
-        resolve();
-      }
-    } else {
-      // Return error message from response body
-      response.text().then(text => reject(text));
-    }
-  });
-}
-
-function handleError(error) {
-  return Promise.reject(error && error.message);
 }

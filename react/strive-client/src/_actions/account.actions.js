@@ -36,7 +36,7 @@ function register(user) {
               dispatch(regSuccess(userResponse));
               history.push("/account/login");
               dispatch(
-                alertActions.success(resources.alert.accountRegisterSuccess)
+                alertActions.success(resources.alert.account.register.success)
               );
               break;
             case httpStatuses.badRequest:
@@ -51,7 +51,7 @@ function register(user) {
         errorResponse => {
           dispatch(regError(errorResponse));
           dispatch(
-            alertActions.error(resources.alert.accountRegisterFailedToFetch)
+            alertActions.error(resources.alert.account.register.failedToFetch)
           );
         }
       )
@@ -122,15 +122,35 @@ function login(userLoginData) {
       // Server is available
       userResponse => {
         switch (userResponse.status) {
-          case undefined:
-            // undefined means that API returned an Ok with plain object, is has no status
-            dispatch(success(userResponse));
-            history.push("/");
+          case httpStatuses.ok:
+            userResponse.json().then(authenticatedUserJson => {
+              let contentType = userResponse.headers.get("content-type");
+              if (
+                contentType &&
+                contentType.includes("application/json") &&
+                authenticatedUserJson &&
+                authenticatedUserJson.token
+              ) {
+                // Token found in the response, login successful
+                localStorage.setItem(
+                  "user",
+                  JSON.stringify(authenticatedUserJson)
+                );
+                dispatch(success(authenticatedUserJson));
+                history.push("/");
+              } else {
+                // Token not found, authentication failed
+                dispatch(error(resources.alert.account.login.unauthorized));
+                dispatch(
+                  alertActions.error(resources.alert.account.login.unauthorized)
+                );
+              }
+            });
             break;
           case httpStatuses.unauthorized:
-            dispatch(error(resources.alert.accountLoginUnauthorized));
+            dispatch(error(resources.alert.account.login.unauthorized));
             dispatch(
-              alertActions.error(resources.alert.accountLoginUnauthorized)
+              alertActions.error(resources.alert.account.login.unauthorized)
             );
             break;
           default:
@@ -142,7 +162,9 @@ function login(userLoginData) {
       // Server is not available
       errorResponse => {
         dispatch(error(errorResponse));
-        dispatch(alertActions.error(resources.alert.accountLoginFailedToFetch));
+        dispatch(
+          alertActions.error(resources.alert.account.login.failedToFetch)
+        );
       }
     );
   };
