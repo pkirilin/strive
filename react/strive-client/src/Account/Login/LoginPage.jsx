@@ -1,9 +1,13 @@
 import React from "react";
-import { CenteredFormLayout, MainTitle, MarginedLayout } from "../_components";
-import { RegisterForm } from "./RegisterForm";
-import { getResourcesForCurrentCulture, config } from "../_helpers";
+import {
+  CenteredFormLayout,
+  MainTitle,
+  MarginedLayout
+} from "../../_components";
+import { LoginForm } from "./LoginForm";
+import { getResourcesForCurrentCulture, config } from "../../_helpers";
 
-export class RegisterPage extends React.Component {
+export class LoginPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -14,17 +18,17 @@ export class RegisterPage extends React.Component {
 
   componentWillMount() {
     document.title = `${config.brandName} - ${
-      this.state.resources.title.register
+      this.state.resources.title.login
     }`;
   }
 
   render() {
     return (
       <div>
-        <MainTitle text={`${config.brandName} - Register`} />
+        <MainTitle text={`Sign in to ${config.brandName}`} />
         <MarginedLayout>
           <CenteredFormLayout>
-            <RegisterForm />
+            <LoginForm />
           </CenteredFormLayout>
         </MarginedLayout>
       </div>

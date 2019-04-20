@@ -2,14 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Form, FormGroup, Input } from "reactstrap";
-import { InputField, Loading } from "../_components";
-import { validationStatuses } from "../_constants";
-import { getResourcesForCurrentCulture } from "../_helpers";
+import { InputField, Loading } from "../../_components";
+import { validationStatuses } from "../../_constants";
+import { getResourcesForCurrentCulture } from "../../_helpers";
 import {
   validationRulesSetters,
   validationHelpers
-} from "../_helpers/validation";
-import { accountActions, alertActions } from "../_actions";
+} from "../../_helpers/validation";
+import { accountActions, alertActions } from "../../_actions";
 
 const mapStateToProps = state => {
   const {

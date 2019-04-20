@@ -1,9 +1,13 @@
 import React from "react";
-import { CenteredFormLayout, MainTitle, MarginedLayout } from "../_components";
-import { ResetPasswordForm } from "./ResetPasswordForm";
-import { getResourcesForCurrentCulture, config } from "../_helpers";
+import {
+  CenteredFormLayout,
+  MainTitle,
+  MarginedLayout
+} from "../../_components";
+import { RegisterForm } from "./RegisterForm";
+import { getResourcesForCurrentCulture, config } from "../../_helpers";
 
-export class ResetPasswordPage extends React.Component {
+export class RegisterPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -14,17 +18,17 @@ export class ResetPasswordPage extends React.Component {
 
   componentWillMount() {
     document.title = `${config.brandName} - ${
-      this.state.resources.title.resetPassword
+      this.state.resources.title.register
     }`;
   }
 
   render() {
     return (
       <div>
-        <MainTitle text="Password change" />
+        <MainTitle text={`${config.brandName} - Register`} />
         <MarginedLayout>
           <CenteredFormLayout>
-            <ResetPasswordForm />
+            <RegisterForm />
           </CenteredFormLayout>
         </MarginedLayout>
       </div>

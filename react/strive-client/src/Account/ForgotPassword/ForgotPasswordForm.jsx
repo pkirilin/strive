@@ -1,15 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Form, FormGroup, Input } from "reactstrap";
-import { InputField } from "../_components";
-import { validationStatuses } from "../_constants";
+import { InputField } from "../../_components";
+import { validationStatuses } from "../../_constants";
 import {
   validationHelpers,
   validationRulesSetters
-} from "../_helpers/validation";
-import { getResourcesForCurrentCulture } from "../_helpers";
+} from "../../_helpers/validation";
+import { getResourcesForCurrentCulture } from "../../_helpers";
 
-export class SignUpForm extends React.Component {
+export class ForgotPasswordForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -20,18 +19,17 @@ export class SignUpForm extends React.Component {
       this
     );
 
-    let initFieldObj = {
+    let initObj = {
       value: "",
       validationState: {
-        status: validationStatuses.default,
-        message: ""
+        status: validationStatuses.default
       }
     };
 
     this.state = {
       resources: getResourcesForCurrentCulture(),
       email: {
-        ...initFieldObj,
+        ...initObj,
         onValueChange: this.onEmailChange
       }
     };
@@ -51,9 +49,7 @@ export class SignUpForm extends React.Component {
   }
 
   onSubmitValidationCompleted() {
-    if (validationHelpers.focusFirstInvalidField("#signUpForm") === false) {
-      // form valid
-    }
+    validationHelpers.focusFirstInvalidField("#forgotPasswordForm");
   }
 
   onSubmit(event) {
@@ -75,30 +71,22 @@ export class SignUpForm extends React.Component {
 
   render() {
     return (
-      <Form id="signUpForm" method="post" onSubmit={this.onSubmit}>
+      <Form id="forgotPasswordForm" onSubmit={this.onSubmit}>
         <FormGroup>
           <InputField
             type="text"
             label={this.state.resources.label.email}
             placeholder={this.state.resources.placeholder.email}
-            help={this.state.resources.help.signUpEmail}
+            help={this.state.resources.help.forgotPasswordEmail}
             {...this.state.email}
           />
         </FormGroup>
 
-        <FormGroup>
-          <Input
-            type="submit"
-            className="btn btn-success"
-            value={this.state.resources.inputValues.signUp}
-          />
-        </FormGroup>
-
-        <FormGroup className="text-center">
-          <Link to="/account/login">
-            {this.state.resources.link.signInAccount}
-          </Link>
-        </FormGroup>
+        <Input
+          type="submit"
+          className="btn btn-success"
+          value={this.state.resources.inputValues.send}
+        />
       </Form>
     );
   }

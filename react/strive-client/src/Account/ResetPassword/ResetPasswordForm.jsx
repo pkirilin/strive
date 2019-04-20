@@ -1,12 +1,12 @@
 import React from "react";
 import { Form, FormGroup, Input } from "reactstrap";
-import { InputField } from "../_components";
-import { validationStatuses } from "../_constants";
+import { InputField } from "../../_components";
+import { validationStatuses } from "../../_constants";
 import {
   validationHelpers,
   validationRulesSetters
-} from "../_helpers/validation";
-import { getResourcesForCurrentCulture } from "../_helpers";
+} from "../../_helpers/validation";
+import { getResourcesForCurrentCulture } from "../../_helpers";
 
 export class ResetPasswordForm extends React.Component {
   constructor(props) {

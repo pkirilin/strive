@@ -1,6 +1,6 @@
 export { Account } from "./Account";
-export { LoginPage } from "./LoginPage";
-export { RegisterPage } from "./RegisterPage";
-export { ForgotPasswordPage } from "./ForgotPasswordPage";
-export { ResetPasswordPage } from "./ResetPasswordPage";
-export { SignUpPage } from "./SignUpPage";
+export { LoginPage } from "./Login";
+export { RegisterPage } from "./Register";
+export { ForgotPasswordPage } from "./ForgotPassword";
+export { ResetPasswordPage } from "./ResetPassword";
+export { SignUpPage } from "./SignUp";
