@@ -1,14 +1,14 @@
 import React from "react";
-import { Form, FormGroup, Input } from "reactstrap";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { Form, FormGroup, Input } from "reactstrap";
 import { InputField, InputCheckbox, Loading } from "../_components";
 import { validationStatuses } from "../_constants";
+import { getResourcesForCurrentCulture } from "../_helpers";
 import {
   validationHelpers,
   validationRulesSetters
 } from "../_helpers/validation";
-import { getResourcesForCurrentCulture } from "../_helpers";
-import { connect } from "react-redux";
 import { accountActions, alertActions } from "../_actions";
 
 const mapStateToProps = state => {
@@ -182,3 +182,4 @@ class LoginForm extends React.Component {
 
 const connectedLoginForm = connect(mapStateToProps)(LoginForm);
 export { connectedLoginForm as LoginForm };
+export { LoginForm as LoginFormUnconnected };

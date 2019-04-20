@@ -1,13 +1,15 @@
 import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { Form, FormGroup, Input } from "reactstrap";
 import { InputField, Loading } from "../_components";
 import { validationStatuses } from "../_constants";
-import { validationRulesSetters } from "../_helpers/validation";
-import { validationHelpers } from "../_helpers/validation";
 import { getResourcesForCurrentCulture } from "../_helpers";
-import { connect } from "react-redux";
+import {
+  validationRulesSetters,
+  validationHelpers
+} from "../_helpers/validation";
 import { accountActions, alertActions } from "../_actions";
-import { Link } from "react-router-dom";
 
 const mapStateToProps = state => {
   const {
@@ -293,3 +295,4 @@ class RegisterForm extends React.Component {
 
 const connectedRegisterForm = connect(mapStateToProps)(RegisterForm);
 export { connectedRegisterForm as RegisterForm };
+export { RegisterForm as RegisterFormUnconnected };
