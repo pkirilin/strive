@@ -26,7 +26,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const userFromStorage = Cookies.getJSON("user");
+    const userFromStorage = Cookies.getJSON(config.cookies.user.keyName);
     return (
       <PrivateLayout>
         <MainTitle text="Home" />

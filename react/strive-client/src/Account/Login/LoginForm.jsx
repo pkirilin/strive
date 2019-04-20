@@ -97,7 +97,8 @@ class LoginForm extends React.Component {
       this.props.dispatch(
         accountActions.login({
           email: this.state.email.value,
-          password: this.state.password.value
+          password: this.state.password.value,
+          rememberMe: this.state.rememberMe.value
         })
       );
     }

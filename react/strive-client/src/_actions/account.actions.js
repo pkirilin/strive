@@ -7,6 +7,7 @@ import {
 } from "../_helpers";
 import { alertActions } from "../_actions";
 import Cookies from "js-cookie";
+import { config } from "../_helpers";
 
 const resources = getResourcesForCurrentCulture();
 
@@ -124,6 +125,7 @@ function login(userLoginData) {
           case httpStatuses.ok:
             userResponse.json().then(authenticatedUserJson => {
               let contentType = userResponse.headers.get("content-type");
+              // Checking whether token found in the response
               if (
                 contentType &&
                 contentType.includes("application/json") &&
@@ -131,7 +133,25 @@ function login(userLoginData) {
                 authenticatedUserJson.token
               ) {
                 // Token found in the response, login successful
-                Cookies.set("user", authenticatedUserJson);
+                if (
+                  userLoginData.rememberMe &&
+                  userLoginData.rememberMe === true
+                ) {
+                  // If user has set remember me checkbox, cookie will be saved for future
+                  Cookies.set(
+                    config.cookies.user.keyName,
+                    authenticatedUserJson,
+                    {
+                      expires: config.cookies.user.expires
+                    }
+                  );
+                } else {
+                  // Remember me checkbox is not set, user cookie will be removed when the user closes the browser
+                  Cookies.set(
+                    config.cookies.user.keyName,
+                    authenticatedUserJson
+                  );
+                }
                 dispatch(success(authenticatedUserJson));
                 history.push("/");
               } else {

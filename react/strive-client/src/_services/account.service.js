@@ -43,5 +43,5 @@ function login(user) {
  * Logs user out, clears cookie with user info
  */
 function logout() {
-  Cookies.remove("user");
+  Cookies.remove(config.cookies.user.keyName);
 }
