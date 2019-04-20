@@ -1,10 +1,7 @@
 import { loginConstants } from "../../_constants";
+import Cookies from "js-cookie";
 
-// Using webStorage for storing personal info and auth tokens is quite a controversial decision
-// TODO: Think about using cookie instead of webStorage here
-// Seems like React gives an opportunity to use webStorage safely
-// https://stackoverflow.com/questions/44133536/is-it-safe-to-store-a-jwt-in-localstorage-with-reactjs
-let user = JSON.parse(localStorage.getItem("user"));
+let user = Cookies.getJSON("user");
 const initialState = user ? { loggedIn: true, user } : {};
 
 export const loginReducer = (state = initialState, action) => {

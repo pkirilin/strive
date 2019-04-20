@@ -6,6 +6,7 @@ import {
   history
 } from "../_helpers";
 import { alertActions } from "../_actions";
+import Cookies from "js-cookie";
 
 const resources = getResourcesForCurrentCulture();
 
@@ -130,10 +131,7 @@ function login(userLoginData) {
                 authenticatedUserJson.token
               ) {
                 // Token found in the response, login successful
-                localStorage.setItem(
-                  "user",
-                  JSON.stringify(authenticatedUserJson)
-                );
+                Cookies.set("user", authenticatedUserJson);
                 dispatch(success(authenticatedUserJson));
                 history.push("/");
               } else {

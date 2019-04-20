@@ -4,6 +4,7 @@ import { PrivateLayout, MainTitle } from "../_components";
 import { getResourcesForCurrentCulture, config } from "../_helpers";
 import { Button } from "reactstrap";
 import { accountActions } from "../_actions";
+import Cookies from "js-cookie";
 
 class Home extends React.Component {
   constructor(props) {
@@ -21,12 +22,11 @@ class Home extends React.Component {
   }
 
   onLogoutClick() {
-    // Testing logout function
     this.props.dispatch(accountActions.logout());
   }
 
   render() {
-    const userFromStorage = JSON.parse(localStorage.getItem("user"));
+    const userFromStorage = Cookies.getJSON("user");
     return (
       <PrivateLayout>
         <MainTitle text="Home" />

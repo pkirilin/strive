@@ -1,4 +1,5 @@
 import { config, httpHeaders } from "../_helpers";
+import Cookies from "js-cookie";
 
 /** Encapsulates all backend api calls for performing operations on account controller */
 export const accountService = {
@@ -39,8 +40,8 @@ function login(user) {
 }
 
 /**
- * Logs user out, clears client-side storage
+ * Logs user out, clears cookie with user info
  */
 function logout() {
-  localStorage.removeItem("user");
+  Cookies.remove("user");
 }
