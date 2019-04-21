@@ -1,14 +1,26 @@
 import React from "react";
-import { Navbar, NavbarBrand, NavbarToggler, Collapse } from "reactstrap";
+import { connect } from "react-redux";
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarToggler,
+  Collapse,
+  Button
+} from "reactstrap";
+import { getResourcesForCurrentCulture } from "../_helpers";
+import { accountActions } from "../_actions";
 
-export class MainNavbar extends React.Component {
+class MainNavbar extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      resources: getResourcesForCurrentCulture(),
       isOpen: false
     };
+
     this.toggle = this.toggle.bind(this);
+    this.onLogoutClick = this.onLogoutClick.bind(this);
   }
 
   toggle() {
@@ -17,15 +29,28 @@ export class MainNavbar extends React.Component {
     });
   }
 
+  onLogoutClick() {
+    this.props.dispatch(accountActions.logout());
+  }
+
   render() {
     return (
       <div>
-        <Navbar color="light" light expand="md">
+        <Navbar color="light" light expand="sm">
           <NavbarBrand href="/">Strive</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar />
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <div className="d-flex flex-fill justify-content-sm-end">
+              <Button onClick={this.onLogoutClick}>
+                {this.state.resources.inputValues.logout}
+              </Button>
+            </div>
+          </Collapse>
         </Navbar>
       </div>
     );
   }
 }
+
+const connectedMainNavbar = connect()(MainNavbar);
+export { connectedMainNavbar as MainNavbar };

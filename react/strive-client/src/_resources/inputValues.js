@@ -4,6 +4,7 @@ export const inputValuesResources = {
     signIn: "Sign in",
     signUp: "Sign up",
     send: "Send",
-    createAccount: "Create account"
+    createAccount: "Create account",
+    logout: "Logout"
   }
 };
