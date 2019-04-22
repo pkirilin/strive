@@ -7,6 +7,9 @@ export const titleResources = {
     register: "Register",
     forgotPassword: "Forgot password?",
     resetPassword: "Reset password",
-    signUp: "Sign up"
+    signUp: "Sign up",
+    projects: {
+      overview: "Projects"
+    }
   }
 };

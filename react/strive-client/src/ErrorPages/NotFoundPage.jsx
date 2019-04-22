@@ -13,7 +13,7 @@ export class NotFoundPage extends React.Component {
 
   componentWillMount() {
     document.title = `${config.brandName} - ${
-      this.state.resources.titleResources.notFound
+      this.state.resources.title.notFound
     }`;
   }
 
