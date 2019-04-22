@@ -9,7 +9,8 @@ export const titleResources = {
     resetPassword: "Reset password",
     signUp: "Sign up",
     projects: {
-      overview: "Projects"
+      overview: "Projects",
+      create: "New project"
     }
   }
 };

@@ -1,6 +1,9 @@
 import React from "react";
 import { PrivateLayout } from "../../_components";
 import { config, getResourcesForCurrentCulture } from "../../_helpers";
+import { ProjectsPageHeadline } from "./ProjectsPageHeadline";
+import { ProjectsFilter } from "./ProjectsFilter";
+import { ProjectList } from "./ProjectList";
 
 export class ProjectsPage extends React.Component {
   constructor(props) {
@@ -16,7 +19,16 @@ export class ProjectsPage extends React.Component {
       this.state.resources.title.projects.overview
     }`;
   }
+
   render() {
-    return <PrivateLayout>Projects page</PrivateLayout>;
+    return (
+      <PrivateLayout>
+        <div className="p-3">
+          <ProjectsPageHeadline />
+          <ProjectsFilter />
+          <ProjectList />
+        </div>
+      </PrivateLayout>
+    );
   }
 }
