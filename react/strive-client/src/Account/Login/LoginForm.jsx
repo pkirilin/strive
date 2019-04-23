@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Form, FormGroup, Input } from "reactstrap";
-import { Loading, TextBox, Checkbox } from "../../_components";
+import { Loading, TextBox, CheckBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 import { getResourcesForCurrentCulture } from "../../_helpers";
 import {
@@ -152,7 +152,7 @@ class LoginForm extends React.Component {
           />
         </FormGroup>
 
-        <Checkbox
+        <CheckBox
           {...this.state.rememberMe}
           id="rememberMe"
           label={this.state.resources.label.rememberMe}

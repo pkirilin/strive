@@ -1,6 +1,6 @@
 import React from "react";
 
-export class Checkbox extends React.Component {
+export class CheckBox extends React.Component {
   static defaultProps = {
     checked: false
   };
