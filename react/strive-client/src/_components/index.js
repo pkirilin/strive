@@ -9,4 +9,6 @@ export { InputField } from "./InputField";
 export { InputCheckbox } from "./InputCheckbox";
 export { Loading } from "./Loading";
 export { ApplicationAlert } from "./ApplicationAlert";
+
 export { PageTitle, SectionTitle } from "./Titles";
+export { TextBox, TextArea } from "./FormControls";
