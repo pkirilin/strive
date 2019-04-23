@@ -11,4 +11,4 @@ export { Loading } from "./Loading";
 export { ApplicationAlert } from "./ApplicationAlert";
 
 export { PageTitle, SectionTitle } from "./Titles";
-export { TextBox, TextArea } from "./FormControls";
+export { TextBox, TextArea, Checkbox } from "./FormControls";
