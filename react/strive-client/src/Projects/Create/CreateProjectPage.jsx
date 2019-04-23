@@ -1,6 +1,7 @@
 import React from "react";
-import { PrivateLayout } from "../../_components";
+import { PrivateLayout, MainTitle } from "../../_components";
 import { config, getResourcesForCurrentCulture } from "../../_helpers";
+import { CreateProjectForm } from "./CreateProjectForm";
 
 export class CreateProjectPage extends React.Component {
   constructor(props) {
@@ -18,6 +19,11 @@ export class CreateProjectPage extends React.Component {
   }
 
   render() {
-    return <PrivateLayout>CreateProjectPage</PrivateLayout>;
+    return (
+      <PrivateLayout>
+        <MainTitle text="Create project" />
+        <CreateProjectForm />
+      </PrivateLayout>
+    );
   }
 }
