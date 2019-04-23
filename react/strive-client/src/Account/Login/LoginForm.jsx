@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Form, FormGroup, Input } from "reactstrap";
-import { InputField, InputCheckbox, Loading } from "../../_components";
+import { Loading, TextBox, Checkbox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 import { getResourcesForCurrentCulture } from "../../_helpers";
 import {
@@ -41,17 +41,17 @@ class LoginForm extends React.Component {
       resources: getResourcesForCurrentCulture(),
       email: {
         ...initFieldObj,
-        onValueChange: this.onEmailChange,
+        onChange: this.onEmailChange,
         value: "test@test.com"
       },
       password: {
         ...initFieldObj,
-        onValueChange: this.onPasswordChange,
+        onChange: this.onPasswordChange,
         value: "1"
       },
       rememberMe: {
-        value: false,
-        onCheckedChange: this.onRememberMeCheckedChange
+        checked: false,
+        onChange: this.onRememberMeCheckedChange
       }
     };
   }
@@ -61,7 +61,7 @@ class LoginForm extends React.Component {
       email: {
         ...this.state.email,
         value: event.target.value,
-        validationState: validationRulesSetters.validateEmail(
+        validationState: validationRulesSetters.validasteEmail(
           event.target.value,
           this.state.resources
         )
@@ -86,7 +86,7 @@ class LoginForm extends React.Component {
     this.setState({
       rememberMe: {
         ...this.state.rememberMe,
-        value: event.target.checked
+        checked: event.target.checked
       }
     });
   }
@@ -136,27 +136,26 @@ class LoginForm extends React.Component {
       <Form id="loginForm" method="post" onSubmit={this.onSubmit}>
         {loggingIn && <Loading />}
         <FormGroup>
-          <InputField
-            type="text"
+          <TextBox
+            {...this.state.email}
             label={this.state.resources.label.email}
             placeholder={this.state.resources.placeholder.email}
-            {...this.state.email}
           />
         </FormGroup>
 
         <FormGroup>
-          <InputField
+          <TextBox
+            {...this.state.password}
             type="password"
             label={this.state.resources.label.password}
             placeholder={this.state.resources.placeholder.password}
-            {...this.state.password}
           />
         </FormGroup>
 
-        <InputCheckbox
+        <Checkbox
+          {...this.state.rememberMe}
           id="rememberMe"
           label={this.state.resources.label.rememberMe}
-          {...this.state.rememberMe}
         />
 
         <FormGroup>
