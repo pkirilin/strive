@@ -29,8 +29,11 @@ export class TextBox extends React.Component {
         break;
     }
 
+    // inputPropsForRender will contain all props except validationState
+    let { validationState, ...inputPropsForRender } = this.props;
+
     let inputProps = {
-      ...this.props,
+      ...inputPropsForRender,
       className: inputClasses.join(" ")
     };
 
