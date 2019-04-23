@@ -1,5 +1,5 @@
 import React from "react";
-import { PrivateLayout, MainTitle } from "../_components";
+import { PrivateLayout, PageTitle } from "../_components";
 import { getResourcesForCurrentCulture, config } from "../_helpers";
 import Cookies from "js-cookie";
 
@@ -20,7 +20,7 @@ export class Home extends React.Component {
     const userFromStorage = Cookies.getJSON(config.cookies.user.keyName);
     return (
       <PrivateLayout>
-        <MainTitle text="Home" />
+        <PageTitle>Home</PageTitle>
         <div className="text-center m-3">
           Signed in as {userFromStorage.username}
         </div>

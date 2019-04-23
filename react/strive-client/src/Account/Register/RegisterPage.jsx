@@ -1,7 +1,7 @@
 import React from "react";
 import {
   CenteredFormLayout,
-  MainTitle,
+  PageTitle,
   MarginedLayout
 } from "../../_components";
 import { RegisterForm } from "./RegisterForm";
@@ -25,7 +25,7 @@ export class RegisterPage extends React.Component {
   render() {
     return (
       <div>
-        <MainTitle text={`${config.brandName} - Register`} />
+        <PageTitle>{`${config.brandName} - Register`}</PageTitle>
         <MarginedLayout>
           <CenteredFormLayout>
             <RegisterForm />

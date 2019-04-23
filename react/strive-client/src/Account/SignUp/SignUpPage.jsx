@@ -1,7 +1,7 @@
 import React from "react";
 import {
   CenteredFormLayout,
-  MainTitle,
+  PageTitle,
   MarginedLayout
 } from "../../_components";
 import { getResourcesForCurrentCulture, config } from "../../_helpers";
@@ -25,7 +25,7 @@ export class SignUpPage extends React.Component {
   render() {
     return (
       <div>
-        <MainTitle text={`Sign up to ${config.brandName}`} />
+        <PageTitle>{`Sign up to ${config.brandName}`}</PageTitle>
         <MarginedLayout>
           <CenteredFormLayout>
             <SignUpForm />

@@ -1,7 +1,7 @@
 import React from "react";
 import {
   CenteredFormLayout,
-  MainTitle,
+  PageTitle,
   MarginedLayout
 } from "../../_components";
 import { LoginForm } from "./LoginForm";
@@ -25,7 +25,7 @@ export class LoginPage extends React.Component {
   render() {
     return (
       <div>
-        <MainTitle text={`Sign in to ${config.brandName}`} />
+        <PageTitle>{`Sign in to ${config.brandName}`}</PageTitle>
         <MarginedLayout>
           <CenteredFormLayout>
             <LoginForm />

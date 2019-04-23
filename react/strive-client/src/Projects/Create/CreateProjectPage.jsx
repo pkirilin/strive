@@ -1,5 +1,5 @@
 import React from "react";
-import { PrivateLayout, MainTitle } from "../../_components";
+import { PrivateLayout, PageTitle } from "../../_components";
 import { config, getResourcesForCurrentCulture } from "../../_helpers";
 import { CreateProjectForm } from "./CreateProjectForm";
 
@@ -21,7 +21,7 @@ export class CreateProjectPage extends React.Component {
   render() {
     return (
       <PrivateLayout>
-        <MainTitle text="Create project" />
+        <PageTitle>Create project</PageTitle>
         <CreateProjectForm />
       </PrivateLayout>
     );

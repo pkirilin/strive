@@ -1,7 +1,7 @@
 import React from "react";
 import {
   CenteredFormLayout,
-  MainTitle,
+  PageTitle,
   MarginedLayout
 } from "../../_components";
 import { ResetPasswordForm } from "./ResetPasswordForm";
@@ -25,7 +25,7 @@ export class ResetPasswordPage extends React.Component {
   render() {
     return (
       <div>
-        <MainTitle text="Password change" />
+        <PageTitle>Password change</PageTitle>
         <MarginedLayout>
           <CenteredFormLayout>
             <ResetPasswordForm />
