@@ -1,6 +1,6 @@
 import React from "react";
 
-export class Footer extends React.Component {
+export class ApplicationFooter extends React.Component {
   constructor(props) {
     super(props);
 

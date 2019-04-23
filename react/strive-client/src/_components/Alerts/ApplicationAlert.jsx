@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Alert } from "reactstrap";
-import { history, config } from "../_helpers";
-import { alertActions } from "../_actions";
+import { history, config } from "../../_helpers";
+import { alertActions } from "../../_actions";
 
 const mapStateToProps = state => {
   const { alertReducer } = state;

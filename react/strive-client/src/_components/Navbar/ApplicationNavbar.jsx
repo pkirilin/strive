@@ -7,10 +7,10 @@ import {
   Collapse,
   Button
 } from "reactstrap";
-import { getResourcesForCurrentCulture } from "../_helpers";
-import { accountActions } from "../_actions";
+import { accountActions } from "../../_actions";
+import { getResourcesForCurrentCulture } from "../../_helpers";
 
-class MainNavbar extends React.Component {
+class ApplicationNavbar extends React.Component {
   constructor(props) {
     super(props);
 
@@ -52,5 +52,5 @@ class MainNavbar extends React.Component {
   }
 }
 
-const connectedMainNavbar = connect()(MainNavbar);
-export { connectedMainNavbar as MainNavbar };
+const connectedNavbar = connect()(ApplicationNavbar);
+export { connectedNavbar as ApplicationNavbar };

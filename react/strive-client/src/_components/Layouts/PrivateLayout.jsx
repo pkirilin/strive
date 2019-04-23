@@ -1,14 +1,14 @@
 import React from "react";
-import { Footer } from "./Footer";
-import { MainNavbar } from "./MainNavbar";
+import { ApplicationFooter } from "../Footer";
+import { ApplicationNavbar } from "../Navbar";
 
 export class PrivateLayout extends React.Component {
   render() {
     return (
       <div>
-        <MainNavbar />
+        <ApplicationNavbar />
         {this.props.children}
-        <Footer />
+        <ApplicationFooter />
       </div>
     );
   }

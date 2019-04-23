@@ -1,0 +1,1 @@
+export { ApplicationFooter } from "./ApplicationFooter";
