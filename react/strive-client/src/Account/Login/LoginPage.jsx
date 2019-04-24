@@ -5,27 +5,24 @@ import {
   MarginedLayout
 } from "../../_components";
 import { LoginForm } from "./LoginForm";
-import { getResourcesForCurrentCulture, config } from "../../_helpers";
+import { config, getResources } from "../../_helpers";
 
 export class LoginPage extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      resources: getResourcesForCurrentCulture()
-    };
+    this.resources = getResources();
   }
 
   componentWillMount() {
-    document.title = `${config.brandName} - ${
-      this.state.resources.title.login
-    }`;
+    let { documentTitles } = this.resources.account;
+    document.title = `${config.brandName} - ${documentTitles.login}`;
   }
 
   render() {
+    let { titles } = this.resources.account.login;
     return (
       <div>
-        <PageTitle>{`Sign in to ${config.brandName}`}</PageTitle>
+        <PageTitle>{titles.pageHeader}</PageTitle>
         <MarginedLayout>
           <CenteredFormLayout>
             <LoginForm />
