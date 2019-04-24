@@ -25,7 +25,7 @@ export class LoginPage extends React.Component {
         <PageTitle>{titles.pageHeader}</PageTitle>
         <MarginedLayout>
           <CenteredFormLayout>
-            <LoginForm />
+            <LoginForm resources={this.resources} />
           </CenteredFormLayout>
         </MarginedLayout>
       </div>

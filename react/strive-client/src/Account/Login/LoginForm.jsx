@@ -19,6 +19,7 @@ const mapStateToProps = state => {
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
+    this.resources = this.props.resources;
 
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
@@ -131,15 +132,15 @@ class LoginForm extends React.Component {
 
   render() {
     const { loggingIn } = this.props;
-
+    let { buttons, labels, links, placeholders } = this.resources.account.login;
     return (
       <Form id="loginForm" method="post" onSubmit={this.onSubmit}>
         {loggingIn && <Loading />}
         <FormGroup>
           <TextBox
             {...this.state.email}
-            label={this.state.resources.label.email}
-            placeholder={this.state.resources.placeholder.email}
+            label={labels.email}
+            placeholder={placeholders.email}
           />
         </FormGroup>
 
@@ -147,33 +148,31 @@ class LoginForm extends React.Component {
           <TextBox
             {...this.state.password}
             type="password"
-            label={this.state.resources.label.password}
-            placeholder={this.state.resources.placeholder.password}
+            label={labels.password}
+            placeholder={placeholders.password}
           />
         </FormGroup>
 
         <CheckBox
           {...this.state.rememberMe}
           id="rememberMe"
-          label={this.state.resources.label.rememberMe}
+          label={labels.rememberMe}
         />
 
         <FormGroup>
           <Input
             type="submit"
             className="btn btn-success"
-            value={this.state.resources.inputValues.signIn}
+            value={buttons.signIn}
           />
         </FormGroup>
 
         <FormGroup className="text-center">
-          <Link to="/account/forgot-password">
-            {this.state.resources.link.forgotPassword}
-          </Link>
+          <Link to="/account/forgot-password">{links.forgotPassword}</Link>
         </FormGroup>
 
         <FormGroup className="text-center">
-          <Link to="/account/register">{this.state.resources.link.signUp}</Link>
+          <Link to="/account/register">{links.signUp}</Link>
         </FormGroup>
       </Form>
     );
