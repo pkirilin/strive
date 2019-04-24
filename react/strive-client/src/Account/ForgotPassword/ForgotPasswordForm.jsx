@@ -11,6 +11,7 @@ import { getResourcesForCurrentCulture } from "../../_helpers";
 export class ForgotPasswordForm extends React.Component {
   constructor(props) {
     super(props);
+    this.resources = this.props.resources;
 
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -70,23 +71,25 @@ export class ForgotPasswordForm extends React.Component {
   }
 
   render() {
+    let {
+      buttons,
+      helps,
+      labels,
+      placeholders
+    } = this.resources.account.forgotPassword;
     return (
       <Form id="forgotPasswordForm" onSubmit={this.onSubmit}>
         <FormGroup>
           <TextBox
             {...this.state.email}
             type="text"
-            label={this.state.resources.label.email}
-            placeholder={this.state.resources.placeholder.email}
-            help={this.state.resources.help.forgotPasswordEmail}
+            label={labels.email}
+            placeholder={placeholders.email}
+            help={helps.email}
           />
         </FormGroup>
 
-        <Input
-          type="submit"
-          className="btn btn-success"
-          value={this.state.resources.inputValues.send}
-        />
+        <Input type="submit" className="btn btn-success" value={buttons.send} />
       </Form>
     );
   }

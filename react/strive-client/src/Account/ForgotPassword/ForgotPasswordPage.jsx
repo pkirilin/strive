@@ -5,11 +5,16 @@ import {
   MarginedLayout
 } from "../../_components";
 import { ForgotPasswordForm } from "./ForgotPasswordForm";
-import { getResourcesForCurrentCulture, config } from "../../_helpers";
+import {
+  getResourcesForCurrentCulture,
+  config,
+  getResources
+} from "../../_helpers";
 
 export class ForgotPasswordPage extends React.Component {
   constructor(props) {
     super(props);
+    this.resources = getResources();
 
     this.state = {
       resources: getResourcesForCurrentCulture()
@@ -17,18 +22,18 @@ export class ForgotPasswordPage extends React.Component {
   }
 
   componentWillMount() {
-    document.title = `${config.brandName} - ${
-      this.state.resources.title.forgotPassword
-    }`;
+    let { documentTitles } = this.resources.account;
+    document.title = `${config.brandName} - ${documentTitles.forgotPassword}`;
   }
 
   render() {
+    let { titles } = this.resources.account.forgotPassword;
     return (
       <div>
-        <PageTitle>Reset your password</PageTitle>
+        <PageTitle>{titles.pageHeader}</PageTitle>
         <MarginedLayout>
           <CenteredFormLayout>
-            <ForgotPasswordForm />
+            <ForgotPasswordForm resources={this.resources} />
           </CenteredFormLayout>
         </MarginedLayout>
       </div>

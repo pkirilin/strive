@@ -1,5 +1,8 @@
-import { accountDocumentTitleResources } from "../_resources/Account";
-import { getAccountLoginResources } from "../_resources/Account";
+import {
+  accountDocumentTitleResources,
+  getAccountLoginResources,
+  getAccountForgotPasswordResources
+} from "../_resources/Account";
 
 /** Gets current culture and returns resources for this culture */
 export function getResources() {
@@ -11,7 +14,7 @@ export function getResources() {
       documentTitles: accountDocumentTitleResources,
       login: getAccountLoginResources(culture),
       register: "",
-      forgotPassword: ""
+      forgotPassword: getAccountForgotPasswordResources(culture)
     }
   };
 }
