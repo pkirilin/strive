@@ -17,15 +17,13 @@ export class SignUpPage extends React.Component {
   }
 
   componentWillMount() {
-    document.title = `${config.brandName} - ${
-      this.state.resources.title.signUp
-    }`;
+    document.title = `${config.brandName} - Sign up`;
   }
 
   render() {
     return (
       <div>
-        <PageTitle>{`Sign up to ${config.brandName}`}</PageTitle>
+        <PageTitle>Sign up to Strive</PageTitle>
         <MarginedLayout>
           <CenteredFormLayout>
             <SignUpForm />
