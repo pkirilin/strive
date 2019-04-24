@@ -1,4 +1,4 @@
-export const accountForgotPasswordTitleResources = {
+export const titleResources = {
   en: {
     pageHeader: "Forgot password?"
   }

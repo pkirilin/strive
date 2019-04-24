@@ -6,7 +6,7 @@ import { linkResources } from "./link.resources";
 import { placeholderResources } from "./placeholder.resources";
 import { titleResources } from "./title.resources";
 
-export function getAccountLoginResources(culture) {
+export function getAccountForgotPasswordResources(culture) {
   return {
     alerts: alertResources[culture],
     buttons: buttonResources[culture],

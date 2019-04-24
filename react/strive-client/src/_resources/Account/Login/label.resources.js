@@ -1,6 +1,6 @@
 import { sharedLabelResources } from "../../Shared";
 
-export const accountLoginLabelResources = {
+export const labelResources = {
   en: {
     email: sharedLabelResources["en"].email,
     password: sharedLabelResources["en"].password,

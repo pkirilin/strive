@@ -1,6 +1,6 @@
 import { sharedPlaceholderResources } from "../../Shared";
 
-export const accountForgotPasswordPlaceholderResources = {
+export const placeholderResources = {
   en: {
     email: sharedPlaceholderResources["en"].email
   }

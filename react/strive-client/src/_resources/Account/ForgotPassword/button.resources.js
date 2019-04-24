@@ -1,6 +1,6 @@
 import { sharedButtonResources } from "../../Shared";
 
-export const accountForgotPasswordButtonResources = {
+export const buttonResources = {
   en: {
     send: sharedButtonResources["en"].send
   }
