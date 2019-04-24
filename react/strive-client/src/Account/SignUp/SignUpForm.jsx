@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Form, FormGroup, Input } from "reactstrap";
-import { InputField } from "../../_components";
+import { TextBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 import {
   validationHelpers,
@@ -32,7 +32,7 @@ export class SignUpForm extends React.Component {
       resources: getResourcesForCurrentCulture(),
       email: {
         ...initFieldObj,
-        onValueChange: this.onEmailChange
+        onChange: this.onEmailChange
       }
     };
   }
@@ -77,12 +77,12 @@ export class SignUpForm extends React.Component {
     return (
       <Form id="signUpForm" method="post" onSubmit={this.onSubmit}>
         <FormGroup>
-          <InputField
+          <TextBox
+            {...this.state.email}
             type="text"
             label={this.state.resources.label.email}
             placeholder={this.state.resources.placeholder.email}
             help={this.state.resources.help.signUpEmail}
-            {...this.state.email}
           />
         </FormGroup>
 

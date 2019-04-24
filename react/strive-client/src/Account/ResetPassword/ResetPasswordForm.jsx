@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, FormGroup, Input } from "reactstrap";
-import { InputField } from "../../_components";
+import { TextBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 import {
   validationHelpers,
@@ -36,11 +36,11 @@ export class ResetPasswordForm extends React.Component {
       },
       newPassword: {
         ...initObj,
-        onValueChange: this.onNewPasswordChange
+        onChange: this.onNewPasswordChange
       },
       newPasswordConfirm: {
         ...initObj,
-        onValueChange: this.onNewPasswordConfirmChange
+        onChange: this.onNewPasswordConfirmChange
       }
     };
   }
@@ -117,29 +117,29 @@ export class ResetPasswordForm extends React.Component {
     return (
       <Form id="resetPasswordForm" onSubmit={this.onSubmit}>
         <FormGroup>
-          <InputField
+          <TextBox
+            {...this.state.email}
             type="text"
             label={this.state.resources.label.email}
             readonly
-            {...this.state.email}
           />
         </FormGroup>
 
         <FormGroup>
-          <InputField
+          <TextBox
+            {...this.state.newPassword}
             type="password"
             label={this.state.resources.label.newPassword}
             placeholder={this.state.resources.placeholder.newPassword}
-            {...this.state.newPassword}
           />
         </FormGroup>
 
         <FormGroup>
-          <InputField
+          <TextBox
+            {...this.state.newPasswordConfirm}
             type="password"
             label={this.state.resources.label.newPasswordConfirm}
             placeholder={this.state.resources.placeholder.newPasswordConfirm}
-            {...this.state.newPasswordConfirm}
           />
         </FormGroup>
 

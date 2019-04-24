@@ -61,7 +61,7 @@ class LoginForm extends React.Component {
       email: {
         ...this.state.email,
         value: event.target.value,
-        validationState: validationRulesSetters.validasteEmail(
+        validationState: validationRulesSetters.validateEmail(
           event.target.value,
           this.state.resources
         )

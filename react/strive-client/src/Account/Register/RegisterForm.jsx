@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Form, FormGroup, Input } from "reactstrap";
-import { InputField, Loading } from "../../_components";
+import { Loading, TextBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 import { getResourcesForCurrentCulture } from "../../_helpers";
 import {
@@ -54,19 +54,19 @@ class RegisterForm extends React.Component {
       resources: getResourcesForCurrentCulture(),
       email: {
         ...initFieldObj,
-        onValueChange: this.onEmailChange
+        onChange: this.onEmailChange
       },
       username: {
         ...initFieldObj,
-        onValueChange: this.onUsernameChange
+        onChange: this.onUsernameChange
       },
       password: {
         ...initFieldObj,
-        onValueChange: this.onPasswordChange
+        onChange: this.onPasswordChange
       },
       passwordConfirm: {
         ...initFieldObj,
-        onValueChange: this.onPasswordConfirmChange
+        onChange: this.onPasswordConfirmChange
       }
     };
   }
@@ -240,38 +240,38 @@ class RegisterForm extends React.Component {
       <Form id="registerForm" method="post" onSubmit={this.onSubmit}>
         {registering && <Loading />}
         <FormGroup>
-          <InputField
+          <TextBox
+            {...this.state.email}
             type="text"
             label={this.state.resources.label.email}
             placeholder={this.state.resources.placeholder.email}
-            {...this.state.email}
           />
         </FormGroup>
 
         <FormGroup>
-          <InputField
+          <TextBox
+            {...this.state.username}
             type="text"
             label={this.state.resources.label.username}
             placeholder={this.state.resources.placeholder.username}
-            {...this.state.username}
           />
         </FormGroup>
 
         <FormGroup>
-          <InputField
+          <TextBox
+            {...this.state.password}
             type="password"
             label={this.state.resources.label.password}
             placeholder={this.state.resources.placeholder.password}
-            {...this.state.password}
           />
         </FormGroup>
 
         <FormGroup>
-          <InputField
+          <TextBox
+            {...this.state.passwordConfirm}
             type="password"
             label={this.state.resources.label.passwordConfirm}
             placeholder={this.state.resources.placeholder.passwordConfirm}
-            {...this.state.passwordConfirm}
           />
         </FormGroup>
 

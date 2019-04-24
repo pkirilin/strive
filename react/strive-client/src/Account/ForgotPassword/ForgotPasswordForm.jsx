@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, FormGroup, Input } from "reactstrap";
-import { InputField } from "../../_components";
+import { TextBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 import {
   validationHelpers,
@@ -30,7 +30,7 @@ export class ForgotPasswordForm extends React.Component {
       resources: getResourcesForCurrentCulture(),
       email: {
         ...initObj,
-        onValueChange: this.onEmailChange
+        onChange: this.onEmailChange
       }
     };
   }
@@ -73,12 +73,12 @@ export class ForgotPasswordForm extends React.Component {
     return (
       <Form id="forgotPasswordForm" onSubmit={this.onSubmit}>
         <FormGroup>
-          <InputField
+          <TextBox
+            {...this.state.email}
             type="text"
             label={this.state.resources.label.email}
             placeholder={this.state.resources.placeholder.email}
             help={this.state.resources.help.forgotPasswordEmail}
-            {...this.state.email}
           />
         </FormGroup>
 
