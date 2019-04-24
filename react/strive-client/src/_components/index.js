@@ -1,6 +1,3 @@
-export { InputField } from "./InputField";
-export { InputCheckbox } from "./InputCheckbox";
-
 export { PageTitle, SectionTitle } from "./Titles";
 export { TextBox, TextArea, CheckBox } from "./FormControls";
 export {
