@@ -1,6 +1,6 @@
 import { sharedPlaceholderResources } from "../../Shared";
 
-export const accountRegisterPlaceholderResources = {
+export const placeholderResources = {
   en: {
     email: sharedPlaceholderResources["en"].email,
     username: sharedPlaceholderResources["en"].username,

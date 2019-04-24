@@ -25,6 +25,7 @@ const mapStateToProps = state => {
 class RegisterForm extends React.Component {
   constructor(props) {
     super(props);
+    this.resources = this.props.resources;
 
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onUsernameChange = this.onUsernameChange.bind(this);
@@ -236,6 +237,12 @@ class RegisterForm extends React.Component {
 
   render() {
     const { registering } = this.props;
+    let {
+      buttons,
+      labels,
+      links,
+      placeholders
+    } = this.resources.account.register;
     return (
       <Form id="registerForm" method="post" onSubmit={this.onSubmit}>
         {registering && <Loading />}
@@ -243,8 +250,8 @@ class RegisterForm extends React.Component {
           <TextBox
             {...this.state.email}
             type="text"
-            label={this.state.resources.label.email}
-            placeholder={this.state.resources.placeholder.email}
+            label={labels.email}
+            placeholder={placeholders.email}
           />
         </FormGroup>
 
@@ -252,8 +259,8 @@ class RegisterForm extends React.Component {
           <TextBox
             {...this.state.username}
             type="text"
-            label={this.state.resources.label.username}
-            placeholder={this.state.resources.placeholder.username}
+            label={labels.username}
+            placeholder={placeholders.username}
           />
         </FormGroup>
 
@@ -261,8 +268,8 @@ class RegisterForm extends React.Component {
           <TextBox
             {...this.state.password}
             type="password"
-            label={this.state.resources.label.password}
-            placeholder={this.state.resources.placeholder.password}
+            label={labels.password}
+            placeholder={placeholders.password}
           />
         </FormGroup>
 
@@ -270,8 +277,8 @@ class RegisterForm extends React.Component {
           <TextBox
             {...this.state.passwordConfirm}
             type="password"
-            label={this.state.resources.label.passwordConfirm}
-            placeholder={this.state.resources.placeholder.passwordConfirm}
+            label={labels.passwordConfirm}
+            placeholder={placeholders.passwordConfirm}
           />
         </FormGroup>
 
@@ -279,14 +286,12 @@ class RegisterForm extends React.Component {
           <Input
             type="submit"
             className="btn btn-success"
-            value={this.state.resources.inputValues.createAccount}
+            value={buttons.createAccount}
           />
         </FormGroup>
 
         <FormGroup className="text-center">
-          <Link to="/account/login">
-            {this.state.resources.inputValues.signIn}
-          </Link>
+          <Link to="/account/login">{links.signIn}</Link>
         </FormGroup>
       </Form>
     );

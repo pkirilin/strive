@@ -5,11 +5,16 @@ import {
   MarginedLayout
 } from "../../_components";
 import { RegisterForm } from "./RegisterForm";
-import { getResourcesForCurrentCulture, config } from "../../_helpers";
+import {
+  getResourcesForCurrentCulture,
+  config,
+  getResources
+} from "../../_helpers";
 
 export class RegisterPage extends React.Component {
   constructor(props) {
     super(props);
+    this.resources = getResources();
 
     this.state = {
       resources: getResourcesForCurrentCulture()
@@ -17,18 +22,18 @@ export class RegisterPage extends React.Component {
   }
 
   componentWillMount() {
-    document.title = `${config.brandName} - ${
-      this.state.resources.title.register
-    }`;
+    let { documentTitles } = this.resources.account;
+    document.title = `${config.brandName} - ${documentTitles.register}`;
   }
 
   render() {
+    let { titles } = this.resources.account.register;
     return (
       <div>
-        <PageTitle>{`${config.brandName} - Register`}</PageTitle>
+        <PageTitle>{titles.pageHeader}</PageTitle>
         <MarginedLayout>
           <CenteredFormLayout>
-            <RegisterForm />
+            <RegisterForm resources={this.resources} />
           </CenteredFormLayout>
         </MarginedLayout>
       </div>

@@ -1,4 +1,4 @@
-export const accountRegisterButtonResources = {
+export const buttonResources = {
   en: {
     createAccount: "Create account"
   }

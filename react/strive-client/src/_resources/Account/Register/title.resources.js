@@ -1,3 +1,3 @@
-export const accountRegisterTitleResources = {
-  pageHeader: "Strive register"
+export const titleResources = {
+  en: { pageHeader: "Strive register" }
 };

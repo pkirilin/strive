@@ -1,6 +1,7 @@
 import {
   accountDocumentTitleResources,
   getAccountLoginResources,
+  getAccountRegisterResources,
   getAccountForgotPasswordResources
 } from "../_resources/Account";
 
@@ -13,7 +14,7 @@ export function getResources() {
     account: {
       documentTitles: accountDocumentTitleResources,
       login: getAccountLoginResources(culture),
-      register: "",
+      register: getAccountRegisterResources(culture),
       forgotPassword: getAccountForgotPasswordResources(culture)
     }
   };

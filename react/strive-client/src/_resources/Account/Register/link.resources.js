@@ -1,4 +1,4 @@
-export const accountRegisterLinkResources = {
+export const linkResources = {
   en: {
     signIn: "Sign in"
   }
