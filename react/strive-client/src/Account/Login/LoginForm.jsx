@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Form, FormGroup, Input } from "reactstrap";
 import { Loading, TextBox, CheckBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
-import { getResourcesForCurrentCulture } from "../../_helpers";
 import {
   validationHelpers,
   validationRulesSetters
@@ -39,7 +38,6 @@ class LoginForm extends React.Component {
     };
 
     this.state = {
-      resources: getResourcesForCurrentCulture(),
       email: {
         ...initFieldObj,
         onChange: this.onEmailChange,
@@ -64,7 +62,7 @@ class LoginForm extends React.Component {
         value: event.target.value,
         validationState: validationRulesSetters.validateEmail(
           event.target.value,
-          this.state.resources
+          this.resources.account.login
         )
       }
     });
@@ -77,7 +75,7 @@ class LoginForm extends React.Component {
         value: event.target.value,
         validationState: validationRulesSetters.validatePassword(
           event.target.value,
-          this.state.resources
+          this.resources.account.login
         )
       }
     });
@@ -115,14 +113,14 @@ class LoginForm extends React.Component {
           ...this.state.email,
           validationState: validationRulesSetters.validateEmail(
             this.state.email.value,
-            this.state.resources
+            this.resources.account.login
           )
         },
         password: {
           ...this.state.password,
           validationState: validationRulesSetters.validatePassword(
             this.state.password.value,
-            this.state.resources
+            this.resources.account.login
           )
         }
       },
