@@ -97,7 +97,7 @@ class LoginForm extends React.Component {
         accountActions.login({
           email: this.state.email.value,
           password: this.state.password.value,
-          rememberMe: this.state.rememberMe.value
+          rememberMe: this.state.rememberMe.checked
         })
       );
     }
