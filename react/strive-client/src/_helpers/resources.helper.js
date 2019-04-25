@@ -1,5 +1,9 @@
 import { getAppNavbarResources } from "../_resources/_app";
 import {
+  errorPagesDocumentTitleResources,
+  getErrorPagesNotFoundResources
+} from "../_resources/ErrorPages";
+import {
   accountDocumentTitleResources,
   getAccountLoginResources,
   getAccountRegisterResources,
@@ -14,6 +18,10 @@ export function getResources() {
   return {
     app: {
       navbar: getAppNavbarResources(culture)
+    },
+    errorPages: {
+      documentTitles: errorPagesDocumentTitleResources[culture],
+      notFound: getErrorPagesNotFoundResources(culture)
     },
     account: {
       documentTitles: accountDocumentTitleResources[culture],
