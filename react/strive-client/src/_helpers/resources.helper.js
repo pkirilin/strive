@@ -12,7 +12,7 @@ export function getResources() {
 
   return {
     account: {
-      documentTitles: accountDocumentTitleResources,
+      documentTitles: accountDocumentTitleResources[culture],
       login: getAccountLoginResources(culture),
       register: getAccountRegisterResources(culture),
       forgotPassword: getAccountForgotPasswordResources(culture)
