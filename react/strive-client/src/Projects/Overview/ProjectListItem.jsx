@@ -1,5 +1,5 @@
 import React from "react";
-import { ListGroupItem, Fade, Button } from "reactstrap";
+import { ListGroupItem, Row, Col, Fade, Button } from "reactstrap";
 
 export class ProjectListItem extends React.Component {
   constructor(props) {
@@ -27,15 +27,23 @@ export class ProjectListItem extends React.Component {
         onMouseEnter={this.toggleProjectButtons}
         onMouseLeave={this.toggleProjectButtons}
       >
-        <div className="d-flex align-items-center">
-          <div className="justify-content-start">{this.props.data.name}</div>
-          <Fade in={this.state.showButtons} className="flex-fill">
-            <div className="d-flex justify-content-end">
-              <Button className="mr-2">Edit</Button>
-              <Button>Delete</Button>
-            </div>
-          </Fade>
-        </div>
+        <Row className="d-flex align-items-center">
+          <Col sm="8">{this.props.data.name}</Col>
+          <div className="d-flex flex-fill justify-content-end">
+            <Col xs="auto">
+              <Fade in={this.state.showButtons}>
+                <Row>
+                  <Col className="d-flex justify-content-center pt-2 pb-2">
+                    <Button className="col-12">Edit</Button>
+                  </Col>
+                  <Col className="d-flex justify-content-center pt-2 pb-2">
+                    <Button className="col-12">Delete</Button>
+                  </Col>
+                </Row>
+              </Fade>
+            </Col>
+          </div>
+        </Row>
       </ListGroupItem>
     );
   }

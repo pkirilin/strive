@@ -1,5 +1,5 @@
 import React from "react";
-import { PrivateLayout, PageTitle } from "../../_components";
+import { PrivateLayout, PageTitle, MarginedLayout } from "../../_components";
 import { config } from "../../_helpers";
 import { ProjectsPageHeadline } from "./ProjectsPageHeadline";
 import { ProjectsFilter } from "./ProjectsFilter";
@@ -19,11 +19,11 @@ export class ProjectsPage extends React.Component {
     return (
       <PrivateLayout>
         <PageTitle>Projects overview</PageTitle>
-        <div className="p-3">
+        <MarginedLayout>
           <ProjectsPageHeadline />
           <ProjectsFilter />
           <ProjectList />
-        </div>
+        </MarginedLayout>
       </PrivateLayout>
     );
   }

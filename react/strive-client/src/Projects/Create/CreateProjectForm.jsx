@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, FormGroup, Button } from "reactstrap";
+import { Form, FormGroup, Button, Row, Col } from "reactstrap";
 import { TextBox, TextArea } from "../../_components";
 import { history } from "../../_helpers";
 
@@ -16,24 +16,45 @@ export class CreateProjectForm extends React.Component {
             <TextBox
               type="text"
               label="Title"
-              placeholder="Project title"
-              help="Project title help"
+              placeholder="Enter project's title"
             />
           </FormGroup>
 
           <FormGroup>
             <TextArea
               label="Description"
-              placeholder="Project description"
-              help="Project description help"
+              placeholder="Enter project's description"
             />
           </FormGroup>
 
-          <FormGroup className="d-flex justify-content-between">
-            <Button className="col-3">Create</Button>
-            <Button className="col-3" onClick={this.cancel}>
-              Cancel
-            </Button>
+          <FormGroup className="">
+            {/* Alignment right */}
+            <Row>
+              <Col sm={{ size: 6, offset: 6 }} xs={{ size: 12, offset: 0 }}>
+                <Row>
+                  <Col className="pt-2 pb-2">
+                    <Button className="col">Create</Button>
+                  </Col>
+                  <Col className="pt-2 pb-2">
+                    <Button className="col" onClick={this.cancel}>
+                      Cancel
+                    </Button>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+
+            {/* Alignment between */}
+            {/* <Row>
+              <Col className="pt-2 pb-2">
+                <Button className="col-sm-4 col-12">Create</Button>
+              </Col>
+              <Col className="pt-2 pb-2 d-flex justify-content-end">
+                <Button className="col-sm-4 col-12" onClick={this.cancel}>
+                  Cancel
+                </Button>
+              </Col>
+            </Row> */}
           </FormGroup>
         </Form>
       </div>

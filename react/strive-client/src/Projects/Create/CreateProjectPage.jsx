@@ -1,5 +1,5 @@
 import React from "react";
-import { PrivateLayout, PageTitle } from "../../_components";
+import { PrivateLayout, PageTitle, MarginedLayout } from "../../_components";
 import { config } from "../../_helpers";
 import { CreateProjectForm } from "./CreateProjectForm";
 
@@ -17,7 +17,9 @@ export class CreateProjectPage extends React.Component {
     return (
       <PrivateLayout>
         <PageTitle>Create project</PageTitle>
-        <CreateProjectForm />
+        <MarginedLayout>
+          <CreateProjectForm />
+        </MarginedLayout>
       </PrivateLayout>
     );
   }
