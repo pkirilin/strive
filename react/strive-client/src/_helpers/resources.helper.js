@@ -1,3 +1,4 @@
+import { getAppNavbarResources } from "../_resources/_app";
 import {
   accountDocumentTitleResources,
   getAccountLoginResources,
@@ -11,6 +12,9 @@ export function getResources() {
   let culture = "en";
 
   return {
+    app: {
+      navbar: getAppNavbarResources(culture)
+    },
     account: {
       documentTitles: accountDocumentTitleResources[culture],
       login: getAccountLoginResources(culture),

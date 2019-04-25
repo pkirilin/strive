@@ -1,5 +1,6 @@
 export const sharedButtonResources = {
   en: {
-    send: "Send"
+    send: "Send",
+    logout: "Logout"
   }
 };
