@@ -5,20 +5,12 @@ import {
   MarginedLayout
 } from "../../_components";
 import { ForgotPasswordForm } from "./ForgotPasswordForm";
-import {
-  getResourcesForCurrentCulture,
-  config,
-  getResources
-} from "../../_helpers";
+import { config, getResources } from "../../_helpers";
 
 export class ForgotPasswordPage extends React.Component {
   constructor(props) {
     super(props);
     this.resources = getResources();
-
-    this.state = {
-      resources: getResourcesForCurrentCulture()
-    };
   }
 
   componentWillMount() {

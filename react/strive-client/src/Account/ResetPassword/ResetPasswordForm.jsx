@@ -6,7 +6,7 @@ import { validationStatuses } from "../../_constants";
 //   validationHelpers,
 //   validationRulesSetters
 // } from "../../_helpers/validation";
-import { getResourcesForCurrentCulture } from "../../_helpers";
+// import { getResourcesForCurrentCulture } from "../../_helpers";
 
 export class ResetPasswordForm extends React.Component {
   constructor(props) {
@@ -30,7 +30,7 @@ export class ResetPasswordForm extends React.Component {
     };
 
     this.state = {
-      resources: getResourcesForCurrentCulture(),
+      // resources: getResourcesForCurrentCulture(),
       email: {
         value: "test@test.com"
       },

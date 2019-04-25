@@ -7,7 +7,7 @@ import { validationStatuses } from "../../_constants";
 //   validationHelpers,
 //   validationRulesSetters
 // } from "../../_helpers/validation";
-import { getResourcesForCurrentCulture } from "../../_helpers";
+//import { getResourcesForCurrentCulture } from "../../_helpers";
 
 export class SignUpForm extends React.Component {
   constructor(props) {
@@ -29,7 +29,7 @@ export class SignUpForm extends React.Component {
     };
 
     this.state = {
-      resources: getResourcesForCurrentCulture(),
+      // resources: getResourcesForCurrentCulture(),
       email: {
         ...initFieldObj,
         onChange: this.onEmailChange

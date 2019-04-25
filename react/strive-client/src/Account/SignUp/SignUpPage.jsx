@@ -4,18 +4,10 @@ import {
   PageTitle,
   MarginedLayout
 } from "../../_components";
-import { getResourcesForCurrentCulture, config } from "../../_helpers";
+import { config } from "../../_helpers";
 import { SignUpForm } from "./SignUpForm";
 
 export class SignUpPage extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      resources: getResourcesForCurrentCulture()
-    };
-  }
-
   componentWillMount() {
     document.title = `${config.brandName} - Sign up`;
   }
