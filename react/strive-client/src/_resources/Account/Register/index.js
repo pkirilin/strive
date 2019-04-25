@@ -5,6 +5,7 @@ import { labelResources } from "./label.resources";
 import { linkResources } from "./link.resources";
 import { placeholderResources } from "./placeholder.resources";
 import { titleResources } from "./title.resources";
+import { validationResources } from "./validation.resources";
 
 export function getAccountRegisterResources(culture) {
   return {
@@ -14,6 +15,7 @@ export function getAccountRegisterResources(culture) {
     labels: labelResources[culture],
     links: linkResources[culture],
     placeholders: placeholderResources[culture],
-    titles: titleResources[culture]
+    titles: titleResources[culture],
+    validation: validationResources[culture]
   };
 }

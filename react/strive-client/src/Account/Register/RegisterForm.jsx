@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Form, FormGroup, Input } from "reactstrap";
 import { Loading, TextBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
-import { getResourcesForCurrentCulture } from "../../_helpers";
 import {
   validationRulesSetters,
   validationHelpers
@@ -52,7 +51,6 @@ class RegisterForm extends React.Component {
     };
 
     this.state = {
-      resources: getResourcesForCurrentCulture(),
       email: {
         ...initFieldObj,
         onChange: this.onEmailChange
@@ -127,7 +125,7 @@ class RegisterForm extends React.Component {
         value: event.target.value,
         validationState: validationRulesSetters.validateEmail(
           event.target.value,
-          this.state.resources
+          this.resources.account.register
         )
       }
     });
@@ -140,7 +138,7 @@ class RegisterForm extends React.Component {
         value: event.target.value,
         validationState: validationRulesSetters.validateUsername(
           event.target.value,
-          this.state.resources
+          this.resources.account.register
         )
       }
     });
@@ -153,7 +151,7 @@ class RegisterForm extends React.Component {
         value: event.target.value,
         validationState: validationRulesSetters.validatePassword(
           event.target.value,
-          this.state.resources
+          this.resources.account.register
         )
       },
       passwordConfirm: {
@@ -161,7 +159,7 @@ class RegisterForm extends React.Component {
         validationState: validationRulesSetters.validatePasswordConfirm(
           this.state.passwordConfirm.value,
           event.target.value,
-          this.state.resources
+          this.resources.account.register
         )
       }
     });
@@ -175,7 +173,7 @@ class RegisterForm extends React.Component {
         validationState: validationRulesSetters.validatePasswordConfirm(
           event.target.value,
           this.state.password.value,
-          this.state.resources
+          this.resources.account.register
         )
       }
     });
@@ -205,21 +203,21 @@ class RegisterForm extends React.Component {
           ...this.state.email,
           validationState: validationRulesSetters.validateEmail(
             this.state.email.value,
-            this.state.resources
+            this.resources.account.register
           )
         },
         username: {
           ...this.state.username,
           validationState: validationRulesSetters.validateUsername(
             this.state.username.value,
-            this.state.resources
+            this.resources.account.register
           )
         },
         password: {
           ...this.state.password,
           validationState: validationRulesSetters.validatePassword(
             this.state.password.value,
-            this.state.resources
+            this.resources.account.register
           )
         },
         passwordConfirm: {
@@ -227,7 +225,7 @@ class RegisterForm extends React.Component {
           validationState: validationRulesSetters.validatePasswordConfirm(
             this.state.passwordConfirm.value,
             this.state.password.value,
-            this.state.resources
+            this.resources.account.register
           )
         }
       },
