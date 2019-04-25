@@ -1,23 +1,18 @@
 import React from "react";
 import { PrivateLayout, PageTitle } from "../../_components";
-import { config, getResourcesForCurrentCulture } from "../../_helpers";
+import { config } from "../../_helpers";
 import { ProjectsPageHeadline } from "./ProjectsPageHeadline";
 import { ProjectsFilter } from "./ProjectsFilter";
 import { ProjectList } from "./ProjectList";
 
 export class ProjectsPage extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      resources: getResourcesForCurrentCulture()
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.resources = {};
+  // }
 
   componentWillMount() {
-    document.title = `${config.brandName} - ${
-      this.state.resources.title.projects.overview
-    }`;
+    document.title = `${config.brandName} - Projects`;
   }
 
   render() {
