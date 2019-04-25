@@ -1,15 +1,11 @@
 import { registerConstants, loginConstants } from "../_constants";
 import { accountService } from "../_services";
-import {
-  getResourcesForCurrentCulture,
-  httpStatuses,
-  history
-} from "../_helpers";
+import { httpStatuses, history, getResources } from "../_helpers";
 import { alertActions } from "../_actions";
 import Cookies from "js-cookie";
 import { config } from "../_helpers";
 
-const resources = getResourcesForCurrentCulture();
+const resources = getResources();
 
 /** Contains Redux action creators for actions related to account */
 export const accountActions = {
@@ -26,6 +22,7 @@ export const accountActions = {
  * @param {object} user User register DTO
  */
 function register(user) {
+  let { alerts } = resources.account.register;
   return dispatch => {
     dispatch(request(user));
     accountService.register(user).then(
@@ -35,9 +32,7 @@ function register(user) {
           case httpStatuses.ok:
             dispatch(success(userResponse));
             history.push("/account/login");
-            dispatch(
-              alertActions.success(resources.alert.account.register.success)
-            );
+            dispatch(alertActions.success(alerts.success));
             break;
           case httpStatuses.badRequest:
             userResponse.json().then(
@@ -59,9 +54,7 @@ function register(user) {
       // Server is not available
       errorResponse => {
         dispatch(error(errorResponse));
-        dispatch(
-          alertActions.error(resources.alert.account.register.failedToFetch)
-        );
+        dispatch(alertActions.error(alerts.failedToFetch));
       }
     );
   };
@@ -116,6 +109,7 @@ function register(user) {
  * @param {object} userLoginData User login request DTO
  */
 function login(userLoginData) {
+  let { alerts } = resources.account.login;
   return dispatch => {
     dispatch(request(userLoginData));
     accountService.login(userLoginData).then(
@@ -156,18 +150,14 @@ function login(userLoginData) {
                 history.push("/");
               } else {
                 // Token not found, authentication failed
-                dispatch(error(resources.alert.account.login.unauthorized));
-                dispatch(
-                  alertActions.error(resources.alert.account.login.unauthorized)
-                );
+                dispatch(error(alerts.unauthorized));
+                dispatch(alertActions.error(alerts.unauthorized));
               }
             });
             break;
           case httpStatuses.unauthorized:
-            dispatch(error(resources.alert.account.login.unauthorized));
-            dispatch(
-              alertActions.error(resources.alert.account.login.unauthorized)
-            );
+            dispatch(error(alerts.unauthorized));
+            dispatch(alertActions.error(alerts.unauthorized));
             break;
           default:
             dispatch(error(""));
@@ -178,9 +168,7 @@ function login(userLoginData) {
       // Server is not available
       errorResponse => {
         dispatch(error(errorResponse));
-        dispatch(
-          alertActions.error(resources.alert.account.login.failedToFetch)
-        );
+        dispatch(alertActions.error(alerts.failedToFetch));
       }
     );
   };
