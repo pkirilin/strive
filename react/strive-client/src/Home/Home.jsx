@@ -1,19 +1,20 @@
 import React from "react";
 import { PrivateLayout, PageTitle } from "../_components";
-import { getResourcesForCurrentCulture, config } from "../_helpers";
+import {
+  config
+  //, getResources
+} from "../_helpers";
 import Cookies from "js-cookie";
 
 export class Home extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      resources: getResourcesForCurrentCulture()
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.resources = getResources();
+  // }
 
   componentWillMount() {
-    document.title = `${config.brandName} - ${this.state.resources.title.home}`;
+    //let { documentTitles } = this.resources.home._default;
+    document.title = `${config.brandName} - Home`;
   }
 
   render() {

@@ -9,6 +9,10 @@ import {
   getAccountRegisterResources,
   getAccountForgotPasswordResources
 } from "../_resources/Account";
+import {
+  homeDocumentTitleResources,
+  getHomeDefaultResources
+} from "../_resources/Home";
 
 /** Gets current culture and returns resources for this culture */
 export function getResources() {
@@ -28,6 +32,10 @@ export function getResources() {
       login: getAccountLoginResources(culture),
       register: getAccountRegisterResources(culture),
       forgotPassword: getAccountForgotPasswordResources(culture)
+    },
+    home: {
+      documentTitles: homeDocumentTitleResources[culture],
+      _default: getHomeDefaultResources(culture)
     }
   };
 }
