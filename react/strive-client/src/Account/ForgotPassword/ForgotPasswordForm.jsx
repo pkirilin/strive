@@ -6,7 +6,6 @@ import {
   validationHelpers,
   validationRulesSetters
 } from "../../_helpers/validation";
-import { getResourcesForCurrentCulture } from "../../_helpers";
 
 export class ForgotPasswordForm extends React.Component {
   constructor(props) {
@@ -28,7 +27,6 @@ export class ForgotPasswordForm extends React.Component {
     };
 
     this.state = {
-      resources: getResourcesForCurrentCulture(),
       email: {
         ...initObj,
         onChange: this.onEmailChange
@@ -43,7 +41,7 @@ export class ForgotPasswordForm extends React.Component {
         value: event.target.value,
         validationState: validationRulesSetters.validateEmail(
           event.target.value,
-          this.state.resources
+          this.resources.account.forgotPassword
         )
       }
     });
@@ -62,7 +60,7 @@ export class ForgotPasswordForm extends React.Component {
           ...this.state.email,
           validationState: validationRulesSetters.validateEmail(
             this.state.email.value,
-            this.state.resources
+            this.resources.account.forgotPassword
           )
         }
       },
