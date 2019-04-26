@@ -1,5 +1,6 @@
 /** Frequently used common methods */
-export const commonHelpers = {
+export const utils = {
+  /** Checks if value undefined or empty string */
   isUndefinedOrEmpty
 };
 

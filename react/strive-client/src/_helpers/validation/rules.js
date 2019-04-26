@@ -1,5 +1,5 @@
 import { validationStatuses, validationRegexes } from "../../_constants";
-import { commonHelpers } from "../common";
+import { utils } from "../utils.helper";
 
 /**
  * Validation rules functions collected in single object
@@ -39,7 +39,7 @@ function novalidate() {
 
 /** Validation rule function for checking empty fields */
 function required(value, invalidMessage = "", validMessage = "") {
-  if (commonHelpers.isUndefinedOrEmpty(value)) {
+  if (utils.isUndefinedOrEmpty(value)) {
     return {
       status: validationStatuses.invalid,
       message: invalidMessage
