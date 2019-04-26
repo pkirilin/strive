@@ -1,5 +1,5 @@
 import React from "react";
-import { Label } from "reactstrap";
+import { Label, Input } from "reactstrap";
 import { validationStatuses } from "../../_constants";
 
 export class TextBox extends React.Component {
@@ -37,14 +37,6 @@ export class TextBox extends React.Component {
       className: inputClasses.join(" ")
     };
 
-    if (this.props.id) {
-      inputProps["id"] = this.props.id;
-    }
-
-    if (this.props.readonly) {
-      inputProps["readOnly"] = true;
-    }
-
     let messageProps = {
       className: messageClasses.join(" ")
     };
@@ -55,7 +47,7 @@ export class TextBox extends React.Component {
           <Label className="font-weight-bold">{this.props.label}</Label>
         )}
 
-        <input {...inputProps} />
+        <Input {...inputProps} />
 
         {this.props.validationState.message && (
           <span {...messageProps}>{this.props.validationState.message}</span>
