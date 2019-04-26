@@ -1,2 +1,2 @@
-export { httpHeaders } from "./headers";
-export { httpStatuses } from "./statuses";
+export { httpHeaders } from "./httpHeaders.helper";
+export { httpStatuses } from "./httpStatuses.helper";
