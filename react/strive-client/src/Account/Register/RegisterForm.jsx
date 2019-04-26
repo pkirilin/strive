@@ -6,7 +6,7 @@ import { Loading, TextBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 import {
   validationRulesSetters,
-  validationHelpers
+  validationUtils
 } from "../../_helpers/validation";
 import { accountActions, alertActions } from "../../_actions";
 
@@ -180,7 +180,7 @@ class RegisterForm extends React.Component {
   }
 
   onSubmitValidationCompleted() {
-    if (validationHelpers.focusFirstInvalidField("#registerForm") === false) {
+    if (validationUtils.focusFirstInvalidField("#registerForm") === false) {
       // Registration data is valid
       this.props.dispatch(
         accountActions.register({

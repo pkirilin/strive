@@ -3,7 +3,7 @@ import { Form, FormGroup, Input } from "reactstrap";
 import { TextBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 import {
-  validationHelpers,
+  validationUtils,
   validationRulesSetters
 } from "../../_helpers/validation";
 
@@ -48,7 +48,7 @@ export class ForgotPasswordForm extends React.Component {
   }
 
   onSubmitValidationCompleted() {
-    validationHelpers.focusFirstInvalidField("#forgotPasswordForm");
+    validationUtils.focusFirstInvalidField("#forgotPasswordForm");
   }
 
   onSubmit(event) {

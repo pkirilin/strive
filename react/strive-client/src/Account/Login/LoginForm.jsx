@@ -5,7 +5,7 @@ import { Form, FormGroup, Input } from "reactstrap";
 import { Loading, TextBox, CheckBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 import {
-  validationHelpers,
+  validationUtils,
   validationRulesSetters
 } from "../../_helpers/validation";
 import { accountActions, alertActions } from "../../_actions";
@@ -91,7 +91,7 @@ class LoginForm extends React.Component {
   }
 
   onSubmitValidationCompleted() {
-    if (validationHelpers.focusFirstInvalidField("#loginForm") === false) {
+    if (validationUtils.focusFirstInvalidField("#loginForm") === false) {
       // Login data is valid
       this.props.dispatch(
         accountActions.login({

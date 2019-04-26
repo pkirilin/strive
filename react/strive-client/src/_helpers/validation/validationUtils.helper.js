@@ -1,5 +1,5 @@
 /** Additional validation functions */
-export const validationHelpers = {
+export const validationUtils = {
   /** Focuses first invalid input field inside form with target selector */
   focusFirstInvalidField
 };

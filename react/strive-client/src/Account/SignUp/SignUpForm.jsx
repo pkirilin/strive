@@ -4,7 +4,7 @@ import React from "react";
 // import { TextBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 // import {
-//   validationHelpers,
+//   validationUtils,
 //   validationRulesSetters
 // } from "../../_helpers/validation";
 //import { getResourcesForCurrentCulture } from "../../_helpers";
@@ -51,7 +51,7 @@ export class SignUpForm extends React.Component {
   }
 
   onSubmitValidationCompleted() {
-    // if (validationHelpers.focusFirstInvalidField("#signUpForm") === false) {
+    // if (validationUtils.focusFirstInvalidField("#signUpForm") === false) {
     //   // form valid
     // }
   }

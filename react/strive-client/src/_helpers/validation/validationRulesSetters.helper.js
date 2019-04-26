@@ -1,4 +1,4 @@
-import { validationRules } from "./rules";
+import { validationRules } from "./validationRules.helper";
 
 /*
  * Contains functions for setting validation rules.
@@ -17,10 +17,7 @@ export const validationRulesSetters = {
   /** Sets all nessesary validation rules for checking password */
   validatePassword,
 
-  /*
-   * Sets all nessesary validation rules for checking password
-   * and compare it to target value
-   */
+  /** Sets all nessesary validation rules for checking password and comparing it to target value */
   validatePasswordConfirm
 };
 

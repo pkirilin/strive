@@ -3,7 +3,7 @@ import React from "react";
 // import { TextBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 // import {
-//   validationHelpers,
+//   validationUtils,
 //   validationRulesSetters
 // } from "../../_helpers/validation";
 // import { getResourcesForCurrentCulture } from "../../_helpers";
@@ -82,7 +82,7 @@ export class ResetPasswordForm extends React.Component {
 
   onSubmitValidationCompleted() {
     // if (
-    //   validationHelpers.focusFirstInvalidField("#resetPasswordForm") === false
+    //   validationUtils.focusFirstInvalidField("#resetPasswordForm") === false
     // ) {
     //   // form valid
     // }
