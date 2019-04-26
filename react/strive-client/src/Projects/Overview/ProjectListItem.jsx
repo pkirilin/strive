@@ -9,12 +9,19 @@ export class ProjectListItem extends React.Component {
       showButtons: false
     };
 
-    this.toggleProjectButtons = this.toggleProjectButtons.bind(this);
+    this.showProjectButtons = this.showProjectButtons.bind(this);
+    this.hideProjectButtons = this.hideProjectButtons.bind(this);
   }
 
-  toggleProjectButtons() {
+  showProjectButtons() {
     this.setState({
-      showButtons: !this.state.showButtons
+      showButtons: true
+    });
+  }
+
+  hideProjectButtons() {
+    this.setState({
+      showButtons: false
     });
   }
 
@@ -24,8 +31,8 @@ export class ProjectListItem extends React.Component {
         tag="a"
         href="#"
         action
-        onMouseEnter={this.toggleProjectButtons}
-        onMouseLeave={this.toggleProjectButtons}
+        onMouseEnter={this.showProjectButtons}
+        onMouseLeave={this.hideProjectButtons}
       >
         <Row className="d-flex align-items-center">
           <Col sm="8">{this.props.data.name}</Col>
