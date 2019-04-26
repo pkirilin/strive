@@ -4,10 +4,10 @@ import { config } from "../../_helpers";
 import { CreateProjectForm } from "./CreateProjectForm";
 
 export class CreateProjectPage extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.resources = {};
-  // }
+  constructor(props) {
+    super(props);
+    this.resources = {};
+  }
 
   componentWillMount() {
     document.title = `${config.brandName} - Create project`;
@@ -18,7 +18,7 @@ export class CreateProjectPage extends React.Component {
       <PrivateLayout>
         <PageTitle>Create project</PageTitle>
         <MarginedLayout>
-          <CreateProjectForm />
+          <CreateProjectForm resources={this.resources} />
         </MarginedLayout>
       </PrivateLayout>
     );

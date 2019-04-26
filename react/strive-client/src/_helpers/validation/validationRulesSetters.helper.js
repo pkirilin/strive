@@ -18,7 +18,13 @@ export const validationRulesSetters = {
   validatePassword,
 
   /** Sets all nessesary validation rules for checking password and comparing it to target value */
-  validatePasswordConfirm
+  validatePasswordConfirm,
+
+  /** Sets all nessesary validation rules for checking project name's correct value */
+  validateProjectName,
+
+  /** Sets all nessesary validation rules for checking project description's correct value */
+  validateProjectDescription
 };
 
 /*
@@ -97,6 +103,30 @@ function validateUsername(usernameValue, resources) {
     validationRules.required(
       usernameValue,
       resources.validation.invalid.username.required.message
+    )
+  ]);
+}
+
+/**
+ * Sets all nessesary validation rules for checking project name's correct value
+ */
+function validateProjectName(projectNameValue, resources) {
+  return validationRules.multiple([
+    validationRules.required(projectNameValue, "Project name is required"),
+    validationRules.lengthMin(projectNameValue, 3, "Project name is too short"),
+    validationRules.lengthMax(projectNameValue, 255, "Project name is too long")
+  ]);
+}
+
+/**
+ * Sets all nessesary validation rules for checking project description's correct value
+ */
+function validateProjectDescription(projectDescriptionValue, resources) {
+  return validationRules.multiple([
+    validationRules.lengthMax(
+      projectDescriptionValue,
+      511,
+      "Project description is too long"
     )
   ]);
 }
