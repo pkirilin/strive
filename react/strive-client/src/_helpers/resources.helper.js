@@ -13,6 +13,10 @@ import {
   homeDocumentTitleResources,
   getHomeDefaultResources
 } from "../_resources/Home";
+import {
+  projectsDocumentTitleResources,
+  getProjectsCreateDefaultResources
+} from "../_resources/Projects";
 
 /** Gets current culture and returns resources for this culture */
 export function getResources() {
@@ -36,6 +40,10 @@ export function getResources() {
     home: {
       documentTitles: homeDocumentTitleResources[culture],
       _default: getHomeDefaultResources(culture)
+    },
+    projects: {
+      documentTitles: projectsDocumentTitleResources[culture],
+      create: getProjectsCreateDefaultResources(culture)
     }
   };
 }

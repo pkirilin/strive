@@ -1,22 +1,24 @@
 import React from "react";
 import { PrivateLayout, PageTitle, MarginedLayout } from "../../_components";
-import { config } from "../../_helpers";
+import { config, getResources } from "../../_helpers";
 import { CreateProjectForm } from "./CreateProjectForm";
 
 export class CreateProjectPage extends React.Component {
   constructor(props) {
     super(props);
-    this.resources = {};
+    this.resources = getResources();
   }
 
   componentWillMount() {
-    document.title = `${config.brandName} - Create project`;
+    let { documentTitles } = this.resources.projects;
+    document.title = `${config.brandName} - ${documentTitles.create}`;
   }
 
   render() {
+    let { titles } = this.resources.projects.create;
     return (
       <PrivateLayout>
-        <PageTitle>Create project</PageTitle>
+        <PageTitle>{titles.pageHeader}</PageTitle>
         <MarginedLayout>
           <CreateProjectForm resources={this.resources} />
         </MarginedLayout>

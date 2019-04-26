@@ -93,22 +93,23 @@ export class CreateProjectForm extends React.Component {
   }
 
   render() {
+    let { buttons, labels, placeholders } = this.resources.projects.create;
     return (
       <Form id="createProjectForm" className="col-12">
         <FormGroup>
           <TextBox
             {...this.state.projectName}
             type="text"
-            label="Name"
-            placeholder="Enter project's name"
+            label={labels.projectName}
+            placeholder={placeholders.projectName}
           />
         </FormGroup>
 
         <FormGroup>
           <TextArea
             {...this.state.projectDescription}
-            label="Description"
-            placeholder="Enter project's description"
+            label={labels.projectDescription}
+            placeholder={placeholders.projectDescription}
           />
         </FormGroup>
 
@@ -119,12 +120,12 @@ export class CreateProjectForm extends React.Component {
               <Row>
                 <Col className="pt-2 pb-2">
                   <Button className="col" onClick={this.onCreate}>
-                    Create
+                    {buttons.create}
                   </Button>
                 </Col>
                 <Col className="pt-2 pb-2">
                   <Button className="col" onClick={this.onCancel}>
-                    Cancel
+                    {buttons.cancel}
                   </Button>
                 </Col>
               </Row>
