@@ -4,6 +4,7 @@ import { ListGroupItem, Row, Col, Fade, Button } from "reactstrap";
 export class ProjectListItem extends React.Component {
   constructor(props) {
     super(props);
+    this.resources = this.props.resources;
 
     this.state = {
       showButtons: false
@@ -26,6 +27,7 @@ export class ProjectListItem extends React.Component {
   }
 
   render() {
+    let { buttons } = this.resources.projects.overview;
     return (
       <ListGroupItem
         tag="a"
@@ -41,10 +43,10 @@ export class ProjectListItem extends React.Component {
               <Fade in={this.state.showButtons}>
                 <Row>
                   <Col className="d-flex justify-content-center pt-2 pb-2">
-                    <Button className="col-12">Edit</Button>
+                    <Button className="col-12">{buttons.editProject}</Button>
                   </Col>
                   <Col className="d-flex justify-content-center pt-2 pb-2">
-                    <Button className="col-12">Delete</Button>
+                    <Button className="col-12">{buttons.deleteProject}</Button>
                   </Col>
                 </Row>
               </Fade>

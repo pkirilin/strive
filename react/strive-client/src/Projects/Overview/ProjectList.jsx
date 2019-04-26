@@ -13,6 +13,7 @@ const mapStateToProps = state => {
 class ProjectList extends React.Component {
   constructor(props) {
     super(props);
+    this.resources = this.props.resources;
 
     this.props.dispatch(projectsActions.getAll());
   }
@@ -21,7 +22,11 @@ class ProjectList extends React.Component {
     return (
       <ListGroup>
         {this.props.projects.map(project => (
-          <ProjectListItem key={project.key} data={project} />
+          <ProjectListItem
+            key={project.key}
+            data={project}
+            resources={this.resources}
+          />
         ))}
       </ListGroup>
     );

@@ -1,28 +1,30 @@
 import React from "react";
 import { PrivateLayout, PageTitle, MarginedLayout } from "../../_components";
-import { config } from "../../_helpers";
+import { config, getResources } from "../../_helpers";
 import { ProjectsPageHeadline } from "./ProjectsPageHeadline";
 import { ProjectsFilter } from "./ProjectsFilter";
 import { ProjectList } from "./ProjectList";
 
 export class ProjectsPage extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.resources = {};
-  // }
+  constructor(props) {
+    super(props);
+    this.resources = getResources();
+  }
 
   componentWillMount() {
-    document.title = `${config.brandName} - Projects`;
+    let { documentTitles } = this.resources.projects;
+    document.title = `${config.brandName} - ${documentTitles.overview}`;
   }
 
   render() {
+    let { titles } = this.resources.projects.create;
     return (
       <PrivateLayout>
-        <PageTitle>Projects overview</PageTitle>
+        <PageTitle>{titles.pageHeader}</PageTitle>
         <MarginedLayout>
-          <ProjectsPageHeadline />
-          <ProjectsFilter />
-          <ProjectList />
+          <ProjectsPageHeadline resources={this.resources} />
+          <ProjectsFilter resources={this.resources} />
+          <ProjectList resources={this.resources} />
         </MarginedLayout>
       </PrivateLayout>
     );

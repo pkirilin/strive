@@ -15,6 +15,7 @@ import {
 } from "../_resources/Home";
 import {
   projectsDocumentTitleResources,
+  getProjectsOverviewDefaultResources,
   getProjectsCreateDefaultResources
 } from "../_resources/Projects";
 
@@ -43,6 +44,7 @@ export function getResources() {
     },
     projects: {
       documentTitles: projectsDocumentTitleResources[culture],
+      overview: getProjectsOverviewDefaultResources(culture),
       create: getProjectsCreateDefaultResources(culture)
     }
   };

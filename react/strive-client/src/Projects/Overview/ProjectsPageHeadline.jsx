@@ -14,6 +14,7 @@ const mapStateToProps = state => {
 class ProjectsPageHeadline extends React.Component {
   constructor(props) {
     super(props);
+    this.resources = this.props.resources;
 
     this.createProject = this.createProject.bind(this);
   }
@@ -23,13 +24,14 @@ class ProjectsPageHeadline extends React.Component {
   }
 
   render() {
+    let { buttons, titles } = this.resources.projects.overview;
     return (
       <Row className="p-3 d-flex align-items-center">
         <Col className="text-sm-left text-center">
-          <SectionTitle>Projects list</SectionTitle>
+          <SectionTitle>{titles.projectsListTitle}</SectionTitle>
         </Col>
         <Col className="pt-2 pb-2 d-flex justify-content-sm-end justify-content-center">
-          <Button onClick={this.createProject}>Create project</Button>
+          <Button onClick={this.createProject}>{buttons.createProject}</Button>
         </Col>
       </Row>
     );
