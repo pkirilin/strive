@@ -11,7 +11,7 @@ const mapStateToProps = state => {
   };
 };
 
-class ProjectsPageHeadline extends React.Component {
+class ProjectsOverviewHeadline extends React.Component {
   constructor(props) {
     super(props);
     this.resources = this.props.resources;
@@ -39,6 +39,6 @@ class ProjectsPageHeadline extends React.Component {
 }
 
 const connectedProjectsPageHeadline = connect(mapStateToProps)(
-  ProjectsPageHeadline
+  ProjectsOverviewHeadline
 );
-export { connectedProjectsPageHeadline as ProjectsPageHeadline };
+export { connectedProjectsPageHeadline as ProjectsOverviewHeadline };

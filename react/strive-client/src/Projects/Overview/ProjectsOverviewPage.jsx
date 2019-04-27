@@ -1,11 +1,11 @@
 import React from "react";
 import { PrivateLayout, PageTitle, MarginedLayout } from "../../_components";
 import { config, getResources } from "../../_helpers";
-import { ProjectsPageHeadline } from "./ProjectsPageHeadline";
+import { ProjectsOverviewHeadline } from "./ProjectsOverviewHeadline";
 import { ProjectsFilter } from "./ProjectsFilter";
 import { ProjectList } from "./ProjectList";
 
-export class ProjectsPage extends React.Component {
+export class ProjectsOverviewPage extends React.Component {
   constructor(props) {
     super(props);
     this.resources = getResources();
@@ -22,7 +22,7 @@ export class ProjectsPage extends React.Component {
       <PrivateLayout>
         <PageTitle>{titles.pageHeader}</PageTitle>
         <MarginedLayout>
-          <ProjectsPageHeadline resources={this.resources} />
+          <ProjectsOverviewHeadline resources={this.resources} />
           <ProjectsFilter resources={this.resources} />
           <ProjectList resources={this.resources} />
         </MarginedLayout>
