@@ -1,4 +1,6 @@
-export { PageTitle, SectionTitle } from "./Titles";
+export { ApplicationAlert } from "./Alerts";
+export { Loading } from "./Effects";
+export { ApplicationFooter } from "./Footer";
 export { TextBox, TextArea, CheckBox } from "./FormControls";
 export {
   PublicLayout,
@@ -6,8 +8,7 @@ export {
   CenteredFormLayout,
   MarginedLayout
 } from "./Layouts";
-export { PrivateRoute } from "./Routes";
+export { ConfirmationModal } from "./Modals";
 export { ApplicationNavbar } from "./Navbar";
-export { ApplicationFooter } from "./Footer";
-export { Loading } from "./Effects";
-export { ApplicationAlert } from "./Alerts";
+export { PrivateRoute } from "./Routes";
+export { PageTitle, SectionTitle } from "./Titles";

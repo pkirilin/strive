@@ -4,7 +4,9 @@ import { alertConstants } from "../_constants";
 export const alertActions = {
   /** Redux action creator, returns alert success action */
   success,
+  /** Redux action creator, returns alert error action */
   error,
+  /** Redux action creator, returns alert clear action */
   clear
 };
 
