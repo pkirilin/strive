@@ -1,13 +1,7 @@
 import React from "react";
 import { Switch, Redirect, Route } from "react-router";
 import { PublicLayout } from "../_components";
-import {
-  LoginPage,
-  RegisterPage,
-  ForgotPasswordPage
-  // ResetPasswordPage,
-  // SignUpPage
-} from "./";
+import { LoginPage, RegisterPage, ForgotPasswordPage } from "./";
 import { NotFoundPage } from "../ErrorPages";
 
 export class Account extends React.Component {
@@ -15,15 +9,14 @@ export class Account extends React.Component {
     return (
       <PublicLayout>
         <Switch>
-          <Route path="/account/login" component={LoginPage} />
-          <Route path="/account/register" component={RegisterPage} />
+          <Redirect exact from="/account" to="/account/login" />
+          <Route exact path="/account/login" component={LoginPage} />
+          <Route exact path="/account/register" component={RegisterPage} />
           <Route
+            exact
             path="/account/forgot-password"
             component={ForgotPasswordPage}
           />
-          {/* <Route path="/account/reset-password" component={ResetPasswordPage} />
-          <Route path="/account/signup" component={SignUpPage} /> */}
-          <Redirect exact from="/account" to="/account/login" />
           <Route component={NotFoundPage} />
         </Switch>
       </PublicLayout>
