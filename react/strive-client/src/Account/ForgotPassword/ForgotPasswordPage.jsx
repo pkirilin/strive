@@ -2,7 +2,8 @@ import React from "react";
 import {
   CenteredFormLayout,
   PageTitle,
-  MarginedLayout
+  MarginedLayout,
+  PublicLayout
 } from "../../_components";
 import { ForgotPasswordForm } from "./ForgotPasswordForm";
 import { config, getResources } from "../../_helpers";
@@ -21,14 +22,14 @@ export class ForgotPasswordPage extends React.Component {
   render() {
     let { titles } = this.resources.account.forgotPassword;
     return (
-      <div>
+      <PublicLayout>
         <PageTitle>{titles.pageHeader}</PageTitle>
         <MarginedLayout>
           <CenteredFormLayout>
             <ForgotPasswordForm resources={this.resources} />
           </CenteredFormLayout>
         </MarginedLayout>
-      </div>
+      </PublicLayout>
     );
   }
 }

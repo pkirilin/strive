@@ -2,7 +2,8 @@ import React from "react";
 import {
   CenteredFormLayout,
   PageTitle,
-  MarginedLayout
+  MarginedLayout,
+  PublicLayout
 } from "../../_components";
 import { LoginForm } from "./LoginForm";
 import { config, getResources } from "../../_helpers";
@@ -21,14 +22,14 @@ export class LoginPage extends React.Component {
   render() {
     let { titles } = this.resources.account.login;
     return (
-      <div>
+      <PublicLayout>
         <PageTitle>{titles.pageHeader}</PageTitle>
         <MarginedLayout>
           <CenteredFormLayout>
             <LoginForm resources={this.resources} />
           </CenteredFormLayout>
         </MarginedLayout>
-      </div>
+      </PublicLayout>
     );
   }
 }

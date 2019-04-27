@@ -18,9 +18,9 @@ export class App extends React.Component {
         <ApplicationAlert />
         <Router history={history}>
           <Switch>
-            <PrivateRoute exact path="/" component={Projects} />
             {/* <PrivateRoute exact path="/" component={Home} />
             <PrivateRoute exact path="/home" component={Home} /> */}
+            <PrivateRoute exact path="/" component={Projects} />
             <PrivateRoute path="/projects" component={Projects} />
             <Route path="/account" component={Account} />
             <Route component={NotFoundPage} />
