@@ -1,9 +1,10 @@
 import React from "react";
 import { shallow } from "enzyme";
 import { RegisterFormUnconnected } from "./RegisterForm";
+import { getResources } from "../../_helpers";
 
-describe("RegisterForm component", () => {
+describe("RegisterForm React component", () => {
   it("Renders without crashing", () => {
-    shallow(<RegisterFormUnconnected />);
+    shallow(<RegisterFormUnconnected resources={getResources()} />);
   });
 });
