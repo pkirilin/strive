@@ -1,5 +1,5 @@
 import React from "react";
-import { PrivateLayout, PageTitle } from "../_components";
+import { PrivateLayout, PageTitle, DocumentTitleSetter } from "../_components";
 import {
   config
   //, getResources
@@ -12,20 +12,17 @@ export class Home extends React.Component {
   //   this.resources = getResources();
   // }
 
-  componentWillMount() {
-    //let { documentTitles } = this.resources.home._default;
-    document.title = `${config.brandName} - Home`;
-  }
-
   render() {
     const userFromStorage = Cookies.getJSON(config.cookies.user.keyName);
     return (
-      <PrivateLayout>
-        <PageTitle>Home</PageTitle>
-        <div className="text-center m-3">
-          Signed in as {userFromStorage.username}
-        </div>
-      </PrivateLayout>
+      <DocumentTitleSetter values={["Home"]}>
+        <PrivateLayout>
+          <PageTitle>Home</PageTitle>
+          <div className="text-center m-3">
+            Signed in as {userFromStorage.username}
+          </div>
+        </PrivateLayout>
+      </DocumentTitleSetter>
     );
   }
 }

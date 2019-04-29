@@ -11,4 +11,4 @@ export {
 export { ConfirmationModal } from "./Modals";
 export { ApplicationNavbar } from "./Navbar";
 export { PrivateRoute } from "./Routes";
-export { PageTitle, SectionTitle } from "./Titles";
+export { DocumentTitleSetter, PageTitle, SectionTitle } from "./Titles";
