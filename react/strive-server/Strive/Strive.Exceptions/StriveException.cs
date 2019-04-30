@@ -7,6 +7,10 @@ namespace Strive.Exceptions
 	/// </summary>
 	public class StriveException : Exception
 	{
+		public StriveException() : base("StriveException")
+		{
+		}
+
 		public StriveException(string message) : base(message)
 		{
 		}
