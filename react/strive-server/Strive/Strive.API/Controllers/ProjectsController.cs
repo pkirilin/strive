@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Strive.Data.Entities;
 using Strive.Data.Services;
+using Strive.Exceptions;
 
 namespace Strive.API.Controllers
 {
@@ -20,7 +23,18 @@ namespace Strive.API.Controllers
 		[HttpGet("get-list")]
 		public IActionResult GetProjectList(int userId)
 		{
-			throw new NotImplementedException();
+			List<Project> projects;
+
+			try
+			{
+				projects = _projectService.GetProjects(userId);
+			}
+			catch (StriveDatabaseException e)
+			{
+				return BadRequest(e.Message);
+			}
+
+			return Ok(projects);
 		}
 
 		[HttpPost("create")]

@@ -72,6 +72,8 @@ namespace Strive.API
 
 			services.AddScoped<IAccountService, AccountService>();
 			services.AddScoped<IUserRepository, UserRepository>();
+			services.AddScoped<IProjectService, ProjectService>();
+			services.AddScoped<IProjectRepository, ProjectRepository>();
 		}
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)

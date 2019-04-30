@@ -22,24 +22,5 @@ namespace Strive.Tests.Services.Projects
 				return new ProjectService(_projectRepositoryMock.Object);
 			}
 		}
-
-		protected List<Project> GetTestProjects(int userId = 1)
-		{
-			return new List<Project>()
-			{
-				new Project()
-				{
-					Name = "Test 1 name",
-					Description = "Test 1 description",
-					UserId = userId
-				},
-				new Project()
-				{
-					Name = "Test 2 name",
-					Description = "Test 2 description",
-					UserId = userId
-				}
-			};
-		}
 	}
 }

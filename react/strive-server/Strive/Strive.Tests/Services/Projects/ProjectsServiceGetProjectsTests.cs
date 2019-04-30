@@ -2,6 +2,7 @@
 using Strive.Data.Entities;
 using System.Collections.Generic;
 using Strive.Exceptions;
+using Strive.Tests.TestValues;
 using Xunit;
 
 namespace Strive.Tests.Services.Projects
@@ -22,7 +23,7 @@ namespace Strive.Tests.Services.Projects
 		public void GetProjectsReturnsFullCollectionForUser()
 		{
 			int userId = 1;
-			List<Project> testProjects = GetTestProjects(userId);
+			List<Project> testProjects = TestValuesProvider.GetProjects(userId);
 			_projectRepositoryMock.Setup(repo => repo.GetAll())
 				.Returns(testProjects);
 
