@@ -15,8 +15,6 @@ namespace Strive.Data
 			IOptions<DatabaseSettings> dbSettings) : base(dbContextOptions)
 		{
 			_dbSettings = dbSettings.Value;
-
-			Database.EnsureCreated();
 		}
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
