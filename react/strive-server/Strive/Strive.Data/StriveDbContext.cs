@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Strive.Data.Entities;
 using Strive.Data.EntityConfigurations;
@@ -26,8 +26,11 @@ namespace Strive.Data
 		{
 			base.OnModelCreating(modelBuilder);
 			modelBuilder.ApplyConfiguration(new UserConfiguration());
+			modelBuilder.ApplyConfiguration(new ProjectConfiguration());
 		}
 
 		public DbSet<User> Users { get; set; }
+
+		public DbSet<Project> Projects { get; set; }
 	}
 }

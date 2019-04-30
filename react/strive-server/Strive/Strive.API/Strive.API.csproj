@@ -6,8 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20190430061638_AddedProjectEntity.cs" />
     <Compile Remove="Migrations\20190430062339_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190430065033_ProjectEntityCreation.cs" />
+    <Compile Remove="Migrations\20190430075510_ProjectEntityCreation.cs" />
   </ItemGroup>
 
   <ItemGroup>

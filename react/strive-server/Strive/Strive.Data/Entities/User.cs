@@ -1,4 +1,6 @@
-﻿namespace Strive.Data.Entities
+﻿using System.Collections.Generic;
+
+namespace Strive.Data.Entities
 {
 	/// <summary>
 	/// Contains application user data
@@ -14,5 +16,7 @@
 		public byte[] PasswordHash { get; set; }
 
 		public byte[] PasswordSalt { get; set; }
+
+		public List<Project> Projects { get; set; }
 	}
 }
