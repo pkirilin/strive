@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Strive.Data.Entities;
 using Strive.Data.EntityConfigurations;
@@ -21,7 +21,7 @@ namespace Strive.Data
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseNpgsql(_dbSettings.ConnectionString);
+			optionsBuilder.UseNpgsql(_dbSettings.ConnectionString, b => b.MigrationsAssembly("Strive.API"));
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
