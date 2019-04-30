@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Strive.Data.Services;
 
 namespace Strive.API.Controllers
 {
@@ -9,8 +10,11 @@ namespace Strive.API.Controllers
 	[ApiController]
 	public class ProjectsController : ControllerBase
 	{
-		public ProjectsController()
+		private readonly IProjectService _projectService;
+
+		public ProjectsController(IProjectService projectService)
 		{
+			_projectService = projectService;
 		}
 
 		[HttpGet("get-list")]

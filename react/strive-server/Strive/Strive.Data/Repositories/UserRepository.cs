@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Strive.Data.Entities;
 
@@ -10,13 +11,25 @@ namespace Strive.Data.Repositories
 		{
 		}
 
-		public User Add(User newEntity)
+		public IEnumerable<User> GetAll()
 		{
 			try
 			{
-				_dbContext.Users.Add(newEntity);
+				return _dbContext.Users.AsEnumerable();
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+		}
+
+		public User Add(User user)
+		{
+			try
+			{
+				_dbContext.Users.Add(user);
 				_dbContext.SaveChanges();
-				return newEntity;
+				return user;
 			}
 			catch (Exception)
 			{
