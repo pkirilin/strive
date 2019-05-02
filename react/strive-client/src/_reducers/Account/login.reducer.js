@@ -1,5 +1,4 @@
-// TODO: import { config } from "../../_helpers" makes config undefined
-import { config } from "../../_helpers/config.helper";
+import { config } from "../../_helpers";
 import { loginConstants } from "../../_constants";
 import Cookies from "js-cookie";
 
