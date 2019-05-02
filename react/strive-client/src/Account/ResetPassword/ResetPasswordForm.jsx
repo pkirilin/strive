@@ -116,7 +116,7 @@ export class ResetPasswordForm extends React.Component {
   render() {
     return <div />;
     // return (
-    //   <Form id="resetPasswordForm" onSubmit={this.onSubmit}>
+    //   <Form id="resetPasswordForm">
     //     <FormGroup>
     //       <TextBox
     //         {...this.state.email}

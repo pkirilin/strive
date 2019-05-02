@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, FormGroup, Input } from "reactstrap";
+import { Form, FormGroup, Button } from "reactstrap";
 import { TextBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 import {
@@ -76,7 +76,7 @@ export class ForgotPasswordForm extends React.Component {
       placeholders
     } = this.resources.account.forgotPassword;
     return (
-      <Form id="forgotPasswordForm" onSubmit={this.onSubmit}>
+      <Form id="forgotPasswordForm">
         <FormGroup>
           <TextBox
             {...this.state.email}
@@ -87,7 +87,11 @@ export class ForgotPasswordForm extends React.Component {
           />
         </FormGroup>
 
-        <Input type="submit" className="btn btn-success" value={buttons.send} />
+        <FormGroup>
+          <Button color="success" className="col" onClick={this.onSubmit}>
+            {buttons.send}
+          </Button>
+        </FormGroup>
       </Form>
     );
   }

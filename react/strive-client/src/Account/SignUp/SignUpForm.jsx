@@ -76,7 +76,7 @@ export class SignUpForm extends React.Component {
   render() {
     return <div />;
     // return (
-    //   <Form id="signUpForm" method="post" onSubmit={this.onSubmit}>
+    //   <Form id="signUpForm">
     //     <FormGroup>
     //       <TextBox
     //         {...this.state.email}

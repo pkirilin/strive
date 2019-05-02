@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Form, FormGroup, Input } from "reactstrap";
+import { Form, FormGroup, Button } from "reactstrap";
 import { Loading, TextBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 import {
@@ -242,7 +242,7 @@ class RegisterForm extends React.Component {
       placeholders
     } = this.resources.account.register;
     return (
-      <Form id="registerForm" method="post" onSubmit={this.onSubmit}>
+      <Form id="registerForm">
         {registering && <Loading />}
         <FormGroup>
           <TextBox
@@ -281,11 +281,9 @@ class RegisterForm extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <Input
-            type="submit"
-            className="btn btn-success"
-            value={buttons.createAccount}
-          />
+          <Button color="success" className="col" onClick={this.onSubmit}>
+            {buttons.createAccount}
+          </Button>
         </FormGroup>
 
         <FormGroup className="text-center">

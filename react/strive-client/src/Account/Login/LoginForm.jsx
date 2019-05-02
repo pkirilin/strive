@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Form, FormGroup, Input } from "reactstrap";
+import { Form, FormGroup, Button } from "reactstrap";
 import { Loading, TextBox, CheckBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 import {
@@ -132,7 +132,7 @@ class LoginForm extends React.Component {
     const { loggingIn } = this.props;
     let { buttons, labels, links, placeholders } = this.resources.account.login;
     return (
-      <Form id="loginForm" method="post" onSubmit={this.onSubmit}>
+      <Form id="loginForm">
         {loggingIn && <Loading />}
         <FormGroup>
           <TextBox
@@ -158,11 +158,9 @@ class LoginForm extends React.Component {
         />
 
         <FormGroup>
-          <Input
-            type="submit"
-            className="btn btn-success"
-            value={buttons.signIn}
-          />
+          <Button color="success" className="col" onClick={this.onSubmit}>
+            {buttons.signIn}
+          </Button>
         </FormGroup>
 
         <FormGroup className="text-center">
