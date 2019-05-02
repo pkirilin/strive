@@ -1,12 +1,10 @@
 ﻿using Moq;
-using Strive.Data.Entities;
 using Strive.Data.Repositories;
 using Strive.Data.Services;
-using System.Collections.Generic;
 
 namespace Strive.Tests.Services.Projects
 {
-	public class ProjectServiceTests
+    public class ProjectServiceTests
 	{
 		protected readonly Mock<IProjectRepository> _projectRepositoryMock;
 

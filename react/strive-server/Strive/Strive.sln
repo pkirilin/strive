@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.329
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strive.API", "Strive.API\Strive.API.csproj", "{102EF506-492B-4EC6-893F-4F36C5BDF6F0}"
 EndProject
@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strive.Data", "Strive.Data\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strive.Exceptions", "Strive.Exceptions\Strive.Exceptions.csproj", "{722EBA4E-B1A3-46A4-A78B-F795714137A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Tests", "Strive.Tests\Strive.Tests.csproj", "{8F2DB442-1716-4F96-936A-F7FBBE73CAF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Strive.Tests", "Strive.Tests\Strive.Tests.csproj", "{8F2DB442-1716-4F96-936A-F7FBBE73CAF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strive.Extensions", "Strive.Extensions\Strive.Extensions.csproj", "{3C3A9C72-C930-4E4C-9E14-3874B1045F1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{8F2DB442-1716-4F96-936A-F7FBBE73CAF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F2DB442-1716-4F96-936A-F7FBBE73CAF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F2DB442-1716-4F96-936A-F7FBBE73CAF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C3A9C72-C930-4E4C-9E14-3874B1045F1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C3A9C72-C930-4E4C-9E14-3874B1045F1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C3A9C72-C930-4E4C-9E14-3874B1045F1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C3A9C72-C930-4E4C-9E14-3874B1045F1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,13 +8,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Strive.Data;
-using Strive.Data.Repositories;
-using Strive.Data.Services;
+using Strive.Extensions.NetCore;
 using Strive.Helpers.Settings;
 
 namespace Strive.API
 {
-	public class Startup
+    public class Startup
 	{
 		public Startup(IConfiguration configuration)
 		{
@@ -70,10 +69,8 @@ namespace Strive.API
 			services.AddMvc()
 				.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-			services.AddScoped<IAccountService, AccountService>();
-			services.AddScoped<IUserRepository, UserRepository>();
-			services.AddScoped<IProjectService, ProjectService>();
-			services.AddScoped<IProjectRepository, ProjectRepository>();
+			services.AddAppServices();
+			services.AddAppRepositories();
 		}
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)

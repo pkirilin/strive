@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Strive.Data\Strive.Data.csproj" />
     <ProjectReference Include="..\Strive.Exceptions\Strive.Exceptions.csproj" />
+    <ProjectReference Include="..\Strive.Extensions\Strive.Extensions.csproj" />
     <ProjectReference Include="..\Strive.Helpers\Strive.Helpers.csproj" />
   </ItemGroup>
 

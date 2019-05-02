@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Strive.Data.Entities;
 
 namespace Strive.Tests.TestValues
 {
-	public static class TestValuesProvider
+    public static class TestValuesProvider
 	{
 		public static List<Project> GetProjects(int userId)
 		{
