@@ -8,6 +8,9 @@ using Strive.Exceptions;
 
 namespace Strive.API.Controllers
 {
+	/// <summary>
+	/// Provides API methods for viewing and editing application projects
+	/// </summary>
 	[Authorize]
 	[Route("[controller]")]
 	[ApiController]
@@ -20,6 +23,10 @@ namespace Strive.API.Controllers
 			_projectService = projectService;
 		}
 
+		/// <summary>
+		/// Gets a list of projects by specified parameters
+		/// </summary>
+		/// <param name="userId">Projects owner id</param>
 		[HttpGet("get-list")]
 		public IActionResult GetProjectList(int userId)
 		{

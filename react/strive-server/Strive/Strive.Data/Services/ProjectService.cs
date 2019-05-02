@@ -16,6 +16,11 @@ namespace Strive.Data.Services
 			_projectRepo = projectRepo;
 		}
 
+		/// <summary>
+		/// Gets projects list by specified parameters
+		/// </summary>
+		/// <param name="userId">Projects owner id</param>
+		/// <returns>Projects list</returns>
 		public List<Project> GetProjects(int userId)
 		{
 			List<Project> projects;
