@@ -29,6 +29,7 @@ class ProjectList extends React.Component {
   }
 
   render() {
+    let { contents } = this.resources.projects.overview;
     let {
       loadingProjectList,
       failedToFetch,
@@ -38,22 +39,34 @@ class ProjectList extends React.Component {
 
     // Rendering loading spinner while data is fetching from server
     if (loadingProjectList) {
-      return <Loading />;
+      return <Loading text={contents.loadingProjects} />;
     }
 
     // Server is not working, then showing a message, that data has not been fetched
     if (failedToFetch) {
-      return <div>Failed to fetch</div>;
+      return (
+        <div className="text-center text-danger">
+          {contents.failedToGetProjects}
+        </div>
+      );
     }
 
     // Server is working, but some server-side error occured
     if (badRequest) {
-      return <div>Bad request</div>;
+      return (
+        <div className="text-center text-danger">
+          {contents.getProjectsBadRequest}
+        </div>
+      );
     }
 
     // Server is working, but no projects were found for target user
     if (projects.length === 0) {
-      return <div>You have not any project yet</div>;
+      return (
+        <div className="text-center text-secondary">
+          {contents.projectsListEmpty}
+        </div>
+      );
     }
 
     // Server worked fine and returned project collection
