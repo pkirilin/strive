@@ -1,40 +1,70 @@
 import { projectListConstants } from "../_constants";
+import { httpStatuses, history } from "../_helpers";
+import { projectsService } from "../_services";
 
 /** Contains Redux action creators for actions related to projects */
 export const projectsActions = {
-  getAll,
+  /** Redux action creator, gets projects list for current user from server */
+  getList,
   add
 };
 
-function getAll() {
+/** Redux action creator, gets projects list for current user from server */
+function getList() {
   return dispatch => {
-    let projects = [
-      {
-        key: 1,
-        name: "First"
+    dispatch(request());
+    projectsService.getList().then(
+      projectListResponse => {
+        switch (projectListResponse.status) {
+          case httpStatuses.ok:
+            projectListResponse.json().then(projects => {
+              dispatch(success(projects));
+            });
+            break;
+          case httpStatuses.unauthorized:
+            history.push("/account/login");
+            break;
+          case httpStatuses.badRequest:
+            dispatch(error({ badRequest: true }));
+            break;
+          default:
+            break;
+        }
       },
-      {
-        key: 2,
-        name: "Second"
-      },
-      {
-        key: 3,
-        name: "Third"
+      () => {
+        dispatch(error({ failedToFetch: true }));
       }
-    ];
-    dispatch(success(projects));
+    );
   };
 
-  // function request() {}
+  /** Get projects list request action creator */
+  function request() {
+    return {
+      type: projectListConstants.GET_LIST_REQUEST
+    };
+  }
 
+  /**
+   * Get projects list success action creator
+   * @param {Array} projects Projects list received from server
+   */
   function success(projects) {
     return {
-      type: projectListConstants.GET_ALL_SUCCESS,
+      type: projectListConstants.GET_LIST_SUCCESS,
       projects
     };
   }
 
-  // function error() {}
+  /**
+   * Get projects list error action creator
+   * @param {object} errorData Error data indicating which type of error occured
+   */
+  function error(errorData) {
+    return {
+      type: projectListConstants.GET_LIST_ERROR,
+      errorData
+    };
+  }
 }
 
 function add(project) {
