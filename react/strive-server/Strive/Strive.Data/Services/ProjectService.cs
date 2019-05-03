@@ -7,7 +7,7 @@ using Strive.Exceptions;
 
 namespace Strive.Data.Services
 {
-	public class ProjectService : IProjectService
+    public class ProjectService : IProjectService
 	{
 		private readonly IProjectRepository _projectRepo;
 
@@ -38,5 +38,51 @@ namespace Strive.Data.Services
 
 			return projects;
 		}
+
+	    /// <summary>
+	    /// Creates a new project
+	    /// </summary>
+	    /// <param name="project">Project data</param>
+	    /// <returns>Added project</returns>
+	    public Project Create(Project project)
+	    {
+	        if (project == null)
+	            throw new ArgumentNullException("Failed to add project. Project cannot be null");
+
+	        try
+	        {
+	            _projectRepo.Add(project);
+	            return project;
+            }
+	        catch (Exception e)
+	        {
+	            throw new StriveDatabaseException($"Failed to add project. Error message: {e.Message}");
+	        }
+	    }
+
+        /// <summary>
+        /// Checks if project with specified name for specified user is already exists
+        /// </summary>
+        /// <param name="projectName">Project name</param>
+        /// <param name="userId">Project owner id</param>
+	    public bool IsProjectExists(string projectName, int userId)
+	    {
+	        Project targetProject;
+
+	        try
+	        {
+	            targetProject = _projectRepo.GetAll()
+	                .Where(project => project.Name == projectName && project.UserId == userId)
+	                .FirstOrDefault();
+
+	            if (targetProject == null)
+	                return false;
+	            return true;
+	        }
+	        catch (Exception e)
+	        {
+                throw new StriveDatabaseException($"Cannot check if project is exists. Error message: {e.Message}");
+            }
+	    }
 	}
 }

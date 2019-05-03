@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Strive.Data.Dtos;
 using Strive.Data.Entities;
 using Strive.Data.Services;
 using Strive.Exceptions;
@@ -18,9 +20,14 @@ namespace Strive.API.Controllers
 	{
 		private readonly IProjectService _projectService;
 
-		public ProjectsController(IProjectService projectService)
+	    private readonly IMapper _mapper;
+
+		public ProjectsController(
+		    IProjectService projectService, 
+		    IMapper mapper)
 		{
 			_projectService = projectService;
+		    _mapper = mapper;
 		}
 
 		/// <summary>
@@ -44,10 +51,35 @@ namespace Strive.API.Controllers
 			return Ok(projects);
 		}
 
+        /// <summary>
+        /// Validates sent project data and creates a new project based on received data
+        /// </summary>
+        /// <param name="projectData">Project data received from form</param>
 		[HttpPost("create")]
-		public IActionResult CreateProject()
+		public IActionResult CreateProject([FromBody]ProjectDto projectData)
 		{
-			throw new NotImplementedException();
+		    if (ModelState.IsValid)
+		    {
+		        if(_projectService.IsProjectExists(projectData.Name, projectData.UserId))
+                    ModelState.AddModelError("projectNameRemote", "Project for target user with specified name is already exists");
+		    }
+
+		    if (ModelState.IsValid)
+		    {
+		        Project project = _mapper.Map<Project>(projectData);
+
+		        try
+		        {
+		            _projectService.Create(project);
+		            return Ok();
+		        }
+		        catch (Exception e)
+		        {
+		            return BadRequest(e.Message);
+		        }
+            }
+
+		    return BadRequest(ModelState);
 		}
 
 		[HttpPost("update")]

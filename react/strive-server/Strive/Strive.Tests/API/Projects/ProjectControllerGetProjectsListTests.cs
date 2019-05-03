@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Strive.Tests.API.Projects
 {
-	public class ProjectsControllerGetProjectsListTests : ProjectsControllerTests
+	public class ProjectControllerGetProjectsListTests : ProjectControllerTests
 	{
 		[Fact]
 		public void ProjectsControllerReturnsNotFoundResultIfServiceThrewException()
