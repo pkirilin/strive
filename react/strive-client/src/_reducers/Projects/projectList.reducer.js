@@ -5,6 +5,7 @@ let initialState = {
 };
 
 export const projectListReducer = (state = initialState, action) => {
+  // Get project list
   switch (action.type) {
     case projectListConstants.GET_LIST_REQUEST:
       return {
@@ -21,12 +22,28 @@ export const projectListReducer = (state = initialState, action) => {
         projects: [...state.projects]
       };
 
-    case projectListConstants.ADD_SUCCESS:
-      return state;
-    // return {
-    //   ...state,
-    //   projects: [...state.projects, action.project]
-    // };
+    // Create project
+    case projectListConstants.CREATE_REQUEST:
+      return {
+        projects: [...state.projects],
+        creatingProject: true
+      };
+    case projectListConstants.CREATE_SUCCESS:
+      return {
+        projects: [...state.projects],
+        projectCreated: true
+      };
+    case projectListConstants.CREATE_ERROR:
+      return {
+        projects: [...state.projects],
+        failedToCreateProject: true
+      };
+    case projectListConstants.CREATE_BADREQUEST:
+      return {
+        projects: [...state.projects],
+        badRequestResponseJson: action.badRequestResponseJson
+      };
+
     default:
       return state;
   }

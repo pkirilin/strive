@@ -74,7 +74,7 @@ class ProjectList extends React.Component {
       <ListGroup>
         {this.props.projects.map(project => (
           <ProjectListItem
-            key={project.key}
+            key={project.id}
             data={project}
             resources={this.resources}
           />

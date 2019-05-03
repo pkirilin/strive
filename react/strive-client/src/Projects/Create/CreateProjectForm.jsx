@@ -1,14 +1,27 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Form, FormGroup, Button, Row, Col } from "reactstrap";
-import { TextBox, TextArea } from "../../_components";
+import { TextBox, TextArea, Loading } from "../../_components";
 import { history } from "../../_helpers";
 import { validationStatuses } from "../../_constants";
 import {
   validationRulesSetters,
   validationUtils
 } from "../../_helpers/validation";
+import { projectsActions } from "../../_actions";
 
-export class CreateProjectForm extends React.Component {
+const mapStateToProps = state => {
+  let {
+    creatingProject,
+    badRequestResponseJson
+  } = state.projectsReducer.projectListReducer;
+  return {
+    creatingProject,
+    badRequestResponseJson
+  };
+};
+
+class CreateProjectForm extends React.Component {
   constructor(props) {
     super(props);
     this.resources = this.props.resources;
@@ -17,8 +30,12 @@ export class CreateProjectForm extends React.Component {
     this.onProjectDescriptionValueChanged = this.onProjectDescriptionValueChanged.bind(
       this
     );
-    this.onCreate = this.onCreate.bind(this);
-    this.onCreateValidationCompleted = this.onCreateValidationCompleted.bind(
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onSubmitValidationCompleted = this.onSubmitValidationCompleted.bind(
+      this
+    );
+
+    this.trackProjectNameBadRequestResponse = this.trackProjectNameBadRequestResponse.bind(
       this
     );
 
@@ -40,6 +57,37 @@ export class CreateProjectForm extends React.Component {
         onChange: this.onProjectDescriptionValueChanged
       }
     };
+  }
+
+  trackProjectNameBadRequestResponse() {
+    if (
+      this.props.badRequestResponseJson &&
+      this.props.badRequestResponseJson.projectNameRemote
+    ) {
+      this.setState({
+        ...this.state,
+        projectName: {
+          ...this.state.projectName,
+          validationState: {
+            status: validationStatuses.invalid,
+            message: this.props.badRequestResponseJson.projectNameRemote.join(
+              ". "
+            )
+          }
+        }
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    // Tracks if any bad request (validation error) received from API
+    if (
+      prevProps.badRequestResponseJson !== this.props.badRequestResponseJson
+    ) {
+      this.trackProjectNameBadRequestResponse();
+      return true;
+    }
+    return false;
   }
 
   onProjectNameValueChanged(event) {
@@ -72,7 +120,7 @@ export class CreateProjectForm extends React.Component {
     history.push("/projects/overview");
   }
 
-  onCreate() {
+  onSubmit() {
     this.setState(
       {
         projectName: {
@@ -84,18 +132,29 @@ export class CreateProjectForm extends React.Component {
           )
         }
       },
-      this.onCreateValidationCompleted
+      this.onSubmitValidationCompleted
     );
   }
 
-  onCreateValidationCompleted() {
-    validationUtils.focusFirstInvalidField("#createProjectForm");
+  onSubmitValidationCompleted() {
+    if (
+      validationUtils.focusFirstInvalidField("#createProjectForm") === false
+    ) {
+      this.props.dispatch(
+        projectsActions.create({
+          name: this.state.projectName.value,
+          description: this.state.projectDescription.value
+        })
+      );
+    }
   }
 
   render() {
+    let { creatingProject } = this.props;
     let { buttons, labels, placeholders } = this.resources.projects.create;
     return (
       <Form id="createProjectForm" className="col-12">
+        {creatingProject && <Loading text="Creating a project" />}
         <FormGroup>
           <TextBox
             {...this.state.projectName}
@@ -113,13 +172,13 @@ export class CreateProjectForm extends React.Component {
           />
         </FormGroup>
 
-        <FormGroup className="">
+        <FormGroup>
           {/* Alignment right */}
           <Row>
             <Col sm={{ size: 6, offset: 6 }} xs={{ size: 12, offset: 0 }}>
               <Row>
                 <Col className="pt-2 pb-2">
-                  <Button className="col" onClick={this.onCreate}>
+                  <Button className="col" onClick={this.onSubmit}>
                     {buttons.create}
                   </Button>
                 </Col>
@@ -148,3 +207,6 @@ export class CreateProjectForm extends React.Component {
     );
   }
 }
+
+const connectedCreateProjectForm = connect(mapStateToProps)(CreateProjectForm);
+export { connectedCreateProjectForm as CreateProjectForm };

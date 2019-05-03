@@ -1,3 +1,4 @@
+import { alertActions } from "./alert.actions";
 import { projectListConstants } from "../_constants";
 import { httpStatuses, history } from "../_helpers";
 import { projectsService } from "../_services";
@@ -6,7 +7,9 @@ import { projectsService } from "../_services";
 export const projectsActions = {
   /** Redux action creator, gets projects list for current user from server */
   getList,
-  add
+
+  /** Redux action creator, creates project for current user */
+  create
 };
 
 /** Redux action creator, gets projects list for current user from server */
@@ -67,15 +70,77 @@ function getList() {
   }
 }
 
-function add(project) {
+/**
+ * Redux action creator, creates project for current user
+ * @param {object} project Project data
+ */
+function create(project) {
   return dispatch => {
-    dispatch(success(project));
+    dispatch(request(project));
+    projectsService.create(project).then(
+      createProjectResponse => {
+        switch (createProjectResponse.status) {
+          case httpStatuses.ok:
+            dispatch(success(project));
+            history.push("/projects/overview");
+            dispatch(
+              alertActions.success(
+                `The project "${project.name}" has been successfully created`
+              )
+            );
+            break;
+          case httpStatuses.unauthorized:
+            history.push("account/login");
+            break;
+          case httpStatuses.badRequest:
+            createProjectResponse
+              .json()
+              .then(createProjectBadRequestJsonData => {
+                if (createProjectBadRequestJsonData) {
+                  dispatch(badRequest(createProjectBadRequestJsonData));
+                }
+              });
+            break;
+          default:
+            break;
+        }
+      },
+      errorResponse => {
+        dispatch(error(errorResponse));
+        dispatch(
+          alertActions.error(
+            "Failed to create project: server is not available"
+          )
+        );
+      }
+    );
   };
+
+  function request(project) {
+    return {
+      type: projectListConstants.CREATE_REQUEST,
+      project
+    };
+  }
 
   function success(project) {
     return {
-      type: projectListConstants.ADD_SUCCESS,
+      type: projectListConstants.CREATE_SUCCESS,
       project
+    };
+  }
+
+  function error(error) {
+    return {
+      type: projectListConstants.CREATE_ERROR,
+      error
+    };
+  }
+
+  function badRequest(badRequestResponseJson) {
+    return {
+      type: projectListConstants.CREATE_BADREQUEST,
+      badRequestResponseJson
     };
   }
 }
