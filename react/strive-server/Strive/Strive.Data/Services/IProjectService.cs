@@ -25,5 +25,11 @@ namespace Strive.Data.Services
 	    /// <param name="projectName">Project name</param>
 	    /// <param name="userId">Project owner id</param>
 	    bool IsProjectExists(string projectName, int userId);
-	}
+
+        /// <summary>
+        /// Checks if project with specified id exists
+        /// </summary>
+        /// <param name="projectId">Specified project id</param>
+        bool IsProjectExists(int projectId);
+    }
 }

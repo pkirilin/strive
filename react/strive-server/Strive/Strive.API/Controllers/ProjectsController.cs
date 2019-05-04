@@ -89,9 +89,13 @@ namespace Strive.API.Controllers
 		}
 
 		[HttpDelete("delete")]
-		public IActionResult DeleteProject()
+		public IActionResult DeleteProject([FromBody]int projectId)
 		{
-			throw new NotImplementedException();
+		    if (_projectService.IsProjectExists(projectId))
+		    {
+		    }
+
+		    throw new NotImplementedException();
 		}
 	}
 }

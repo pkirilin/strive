@@ -5,21 +5,23 @@ namespace Strive.Tests.TestValues
 {
     public static class TestValuesProvider
 	{
-		public static List<Project> GetProjects(int userId)
+		public static List<Project> GetProjects()
 		{
 			return new List<Project>()
 			{
 				new Project()
 				{
+                    Id = 1,
 					Name = "Test 1 name",
 					Description = "Test 1 description",
-					UserId = userId
+					UserId = 1
 				},
 				new Project()
 				{
+                    Id = 2,
 					Name = "Test 2 name",
 					Description = "Test 2 description",
-					UserId = userId
+					UserId = 1
 				}
 			};
 		}

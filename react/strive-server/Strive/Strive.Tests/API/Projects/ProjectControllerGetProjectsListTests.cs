@@ -25,7 +25,7 @@ namespace Strive.Tests.API.Projects
 		public void ProjectsControllerReturnsOkResultIfNoExceptionThrown()
 		{
 			int userId = 1;
-			List<Project> testProjects = TestValuesProvider.GetProjects(userId);
+			List<Project> testProjects = TestValuesProvider.GetProjects();
 			_projectServiceMock.Setup(service => service.GetProjects(userId))
 				.Returns(testProjects);
 

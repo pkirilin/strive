@@ -12,12 +12,18 @@ namespace Strive.Tests.Services.Projects
         {
             string projectName = "Test 1 name";
             int userId = 1;
+            int projectId = 1;
             _projectRepositoryMock.Setup(repo => repo.GetAll())
                 .Throws<Exception>();
 
             Assert.Throws<StriveDatabaseException>(() =>
             {
                 this.ProjectServiceInstance.IsProjectExists(projectName, userId);
+            });
+
+            Assert.Throws<StriveDatabaseException>(() =>
+            {
+                this.ProjectServiceInstance.IsProjectExists(projectId);
             });
         }
 
@@ -27,7 +33,7 @@ namespace Strive.Tests.Services.Projects
             string projectName = "This project doesn't exists";
             int userId = 1;
             _projectRepositoryMock.Setup(repo => repo.GetAll())
-                .Returns(TestValuesProvider.GetProjects(userId));
+                .Returns(TestValuesProvider.GetProjects());
 
             bool result = this.ProjectServiceInstance.IsProjectExists(projectName, userId);
 
@@ -38,12 +44,23 @@ namespace Strive.Tests.Services.Projects
         public void IsProjectExistsReturnsFalseWhenUserIdNotFound()
         {
             string projectName = "Test 1 name";
-            int expectedUserId = 1;
             int actualUserId = 2;
             _projectRepositoryMock.Setup(repo => repo.GetAll())
-                .Returns(TestValuesProvider.GetProjects(expectedUserId));
+                .Returns(TestValuesProvider.GetProjects());
 
             bool result = this.ProjectServiceInstance.IsProjectExists(projectName, actualUserId);
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void IsProjectExistsReturnsFalseWhenProjectNotFoundById()
+        {
+            int projectId = -1;
+            _projectRepositoryMock.Setup(repo => repo.GetAll())
+                .Returns(TestValuesProvider.GetProjects());
+
+            bool result = this.ProjectServiceInstance.IsProjectExists(projectId);
 
             Assert.False(result);
         }
@@ -52,10 +69,9 @@ namespace Strive.Tests.Services.Projects
         public void IsProjectExistsReturnsFalseWhenProjectNameAndUserIdNotFound()
         {
             string projectName = "This project doesn't exists";
-            int expectedUserId = 1;
             int actualUserId = 2;
             _projectRepositoryMock.Setup(repo => repo.GetAll())
-                .Returns(TestValuesProvider.GetProjects(expectedUserId));
+                .Returns(TestValuesProvider.GetProjects());
 
             bool result = this.ProjectServiceInstance.IsProjectExists(projectName, actualUserId);
 
@@ -63,14 +79,26 @@ namespace Strive.Tests.Services.Projects
         }
 
         [Fact]
-        public void IsProjectExistsReturnsTrueWhenProjectExists()
+        public void IsProjectExistsReturnsTrueWhenProjectExistsByNameAndUserId()
         {
             string projectName = "Test 1 name";
             int userId = 1;
             _projectRepositoryMock.Setup(repo => repo.GetAll())
-                .Returns(TestValuesProvider.GetProjects(userId));
+                .Returns(TestValuesProvider.GetProjects());
 
             bool result = this.ProjectServiceInstance.IsProjectExists(projectName, userId);
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void IsProjectExistsReturnsTrueWhenProjectExistsById()
+        {
+            int projectId = 1;
+            _projectRepositoryMock.Setup(repo => repo.GetAll())
+                .Returns(TestValuesProvider.GetProjects());
+
+            bool result = this.ProjectServiceInstance.IsProjectExists(projectId);
 
             Assert.True(result);
         }

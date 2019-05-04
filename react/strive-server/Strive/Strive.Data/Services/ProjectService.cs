@@ -84,5 +84,29 @@ namespace Strive.Data.Services
                 throw new StriveDatabaseException($"Cannot check if project is exists. Error message: {e.Message}");
             }
 	    }
-	}
+
+	    /// <summary>
+	    /// Checks if project with specified id exists
+	    /// </summary>
+	    /// <param name="projectId">Specified project id</param>
+        public bool IsProjectExists(int projectId)
+	    {
+	        Project targetProject;
+
+	        try
+	        {
+	            targetProject = _projectRepo.GetAll()
+	                .Where(project => project.Id == projectId)
+	                .FirstOrDefault();
+
+	            if (targetProject == null)
+	                return false;
+	            return true;
+	        }
+	        catch (Exception e)
+	        {
+	            throw new StriveDatabaseException($"Cannot check if project is exists. Error message: {e.Message}");
+            }
+        }
+    }
 }

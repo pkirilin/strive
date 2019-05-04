@@ -23,7 +23,7 @@ namespace Strive.Tests.Services.Projects
 		public void GetProjectsReturnsFullCollectionForUser()
 		{
 			int userId = 1;
-			List<Project> testProjects = TestValuesProvider.GetProjects(userId);
+			List<Project> testProjects = TestValuesProvider.GetProjects();
 			_projectRepositoryMock.Setup(repo => repo.GetAll())
 				.Returns(testProjects);
 
