@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Strive.Tests.Services.Projects
 {
-	public class ProjectsServiceGetProjectsTests : ProjectServiceTests
+	public class ProjectServiceGetProjectsTests : ProjectServiceTests
 	{
 		[Fact]
 		public void GetProjectsThrowsExceptionWhenDbExceptionOccurs()

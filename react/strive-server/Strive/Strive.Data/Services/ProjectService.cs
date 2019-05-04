@@ -105,25 +105,20 @@ namespace Strive.Data.Services
 	    }
 
 	    /// <summary>
-	    /// Checks if project with specified id exists
+	    /// Gets a project entity by specified id
 	    /// </summary>
-	    /// <param name="projectId">Specified project id</param>
-        public bool IsProjectExists(int projectId)
+	    /// <param name="projectId">Target project id</param>
+	    /// <returns>Project entity if project was found, null if not</returns>
+	    public Project GetProjectById(int projectId)
 	    {
-	        Project targetProject;
-
 	        try
 	        {
-	            targetProject = _projectRepo.GetById(projectId);
-
-	            if (targetProject == null)
-	                return false;
-	            return true;
+	            return _projectRepo.GetById(projectId);
 	        }
 	        catch (Exception e)
 	        {
-	            throw new StriveDatabaseException($"Cannot check if project is exists. Error message: {e.Message}");
-            }
-        }
-    }
+	            throw new StriveDatabaseException($"Failed to get project by id. Error message: {e.Message}");
+	        }
+	    }
+	}
 }

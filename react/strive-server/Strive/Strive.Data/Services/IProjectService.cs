@@ -33,9 +33,10 @@ namespace Strive.Data.Services
 	    bool IsProjectExists(string projectName, int userId);
 
         /// <summary>
-        /// Checks if project with specified id exists
+        /// Gets a project entity by specified id
         /// </summary>
-        /// <param name="projectId">Specified project id</param>
-        bool IsProjectExists(int projectId);
-    }
+        /// <param name="projectId">Target project id</param>
+        /// <returns>Project entity if project was found, null if not</returns>
+	    Project GetProjectById(int projectId);
+	}
 }
