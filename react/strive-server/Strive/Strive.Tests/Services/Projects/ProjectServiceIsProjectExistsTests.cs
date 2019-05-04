@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using Moq;
+using Strive.Data.Entities;
 using Strive.Exceptions;
 using Strive.Tests.TestValues;
 using Xunit;
@@ -14,6 +17,8 @@ namespace Strive.Tests.Services.Projects
             int userId = 1;
             int projectId = 1;
             _projectRepositoryMock.Setup(repo => repo.GetAll())
+                .Throws<Exception>();
+            _projectRepositoryMock.Setup(repo => repo.GetById(It.IsAny<object>()))
                 .Throws<Exception>();
 
             Assert.Throws<StriveDatabaseException>(() =>
@@ -57,8 +62,8 @@ namespace Strive.Tests.Services.Projects
         public void IsProjectExistsReturnsFalseWhenProjectNotFoundById()
         {
             int projectId = -1;
-            _projectRepositoryMock.Setup(repo => repo.GetAll())
-                .Returns(TestValuesProvider.GetProjects());
+            _projectRepositoryMock.Setup(repo => repo.GetById(It.IsAny<object>()))
+                .Returns(null as Project);
 
             bool result = this.ProjectServiceInstance.IsProjectExists(projectId);
 
@@ -95,8 +100,8 @@ namespace Strive.Tests.Services.Projects
         public void IsProjectExistsReturnsTrueWhenProjectExistsById()
         {
             int projectId = 1;
-            _projectRepositoryMock.Setup(repo => repo.GetAll())
-                .Returns(TestValuesProvider.GetProjects());
+            _projectRepositoryMock.Setup(repo => repo.GetById(It.IsAny<object>()))
+                .Returns(TestValuesProvider.GetProjects().FirstOrDefault());
 
             bool result = this.ProjectServiceInstance.IsProjectExists(projectId);
 

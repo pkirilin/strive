@@ -95,9 +95,7 @@ namespace Strive.Data.Services
 
 	        try
 	        {
-	            targetProject = _projectRepo.GetAll()
-	                .Where(project => project.Id == projectId)
-	                .FirstOrDefault();
+	            targetProject = _projectRepo.GetById(projectId);
 
 	            if (targetProject == null)
 	                return false;

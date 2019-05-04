@@ -23,7 +23,21 @@ namespace Strive.Data.Repositories
 			}
 		}
 
-		public User Add(User user)
+	    public User GetById(object id)
+	    {
+	        int userId = (int)id;
+
+	        try
+	        {
+	            return _dbContext.Users.Find(userId);
+	        }
+	        catch (Exception)
+	        {
+	            throw;
+	        }
+	    }
+
+        public User Add(User user)
 		{
 			try
 			{
@@ -64,5 +78,5 @@ namespace Strive.Data.Repositories
 				return null;
 			}
 		}
-	}
+    }
 }

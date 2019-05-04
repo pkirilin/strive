@@ -6,6 +6,8 @@ namespace Strive.Data.Repositories
 	{
 		IEnumerable<TEntity> GetAll();
 
+	    TEntity GetById(object id);
+
 		TEntity Add(TEntity newEntity);
 	}
 }

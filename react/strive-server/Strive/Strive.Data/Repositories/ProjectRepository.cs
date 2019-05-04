@@ -23,7 +23,21 @@ namespace Strive.Data.Repositories
 			}
 		}
 
-		public Project Add(Project project)
+	    public Project GetById(object id)
+	    {
+	        int projectId = (int)id;
+
+	        try
+	        {
+	            return _dbContext.Projects.Find(projectId);
+	        }
+	        catch (Exception)
+	        {
+	            throw;
+	        }
+	    }
+
+        public Project Add(Project project)
 		{
 			try
 			{
@@ -36,5 +50,5 @@ namespace Strive.Data.Repositories
 				throw;
 			}
 		}
-	}
+    }
 }
