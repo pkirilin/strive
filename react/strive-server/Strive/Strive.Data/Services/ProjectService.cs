@@ -61,6 +61,25 @@ namespace Strive.Data.Services
 	    }
 
         /// <summary>
+        /// Deletes specified project
+        /// </summary>
+        /// <param name="project">Project data</param>
+	    public void Delete(Project project)
+	    {
+            if(project == null)
+                throw new ArgumentNullException("Failed to delete project. Project cannot be null");
+
+	        try
+	        {
+	            _projectRepo.Remove(project);
+            }
+	        catch (Exception e)
+	        {
+	            throw new StriveDatabaseException($"Failed to delete project. Error message: {e.Message}");
+	        }
+	    }
+
+        /// <summary>
         /// Checks if project with specified name for specified user is already exists
         /// </summary>
         /// <param name="projectName">Project name</param>

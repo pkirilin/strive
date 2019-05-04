@@ -51,7 +51,20 @@ namespace Strive.Data.Repositories
 			}
 		}
 
-		public User GetByEmail(string email)
+	    public void Remove(User user)
+	    {
+	        try
+	        {
+	            _dbContext.Users.Remove(user);
+	            _dbContext.SaveChanges();
+	        }
+	        catch (Exception)
+	        {
+	            throw;
+	        }
+        }
+
+        public User GetByEmail(string email)
 		{
 			User user;
 			try

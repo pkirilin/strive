@@ -9,5 +9,7 @@ namespace Strive.Data.Repositories
 	    TEntity GetById(object id);
 
 		TEntity Add(TEntity newEntity);
+
+	    void Remove(TEntity entityForDelete);
 	}
 }

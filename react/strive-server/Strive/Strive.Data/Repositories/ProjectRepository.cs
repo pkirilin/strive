@@ -50,5 +50,18 @@ namespace Strive.Data.Repositories
 				throw;
 			}
 		}
+
+	    public void Remove(Project project)
+	    {
+	        try
+	        {
+	            _dbContext.Projects.Remove(project);
+	            _dbContext.SaveChanges();
+	        }
+	        catch (Exception)
+	        {
+	            throw;
+	        }
+        }
     }
 }

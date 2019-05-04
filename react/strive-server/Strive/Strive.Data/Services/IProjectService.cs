@@ -20,6 +20,12 @@ namespace Strive.Data.Services
 	    Project Create(Project project);
 
 	    /// <summary>
+	    /// Deletes specified project
+	    /// </summary>
+	    /// <param name="project">Project data</param>
+	    void Delete(Project project);
+
+	    /// <summary>
 	    /// Checks if project with specified name for specified user is already exists
 	    /// </summary>
 	    /// <param name="projectName">Project name</param>
