@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Strive.API.Controllers;
@@ -30,9 +31,10 @@ namespace Strive.Tests.API.Projects
             _projectServiceMock.Setup(service => service.Create(It.IsAny<Project>()))
                 .Throws<Exception>();
 
-            IActionResult result = controller.CreateProject(projectData);
+            ObjectResult result = controller.CreateProject(projectData) as ObjectResult;
 
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.NotNull(result);
+            Assert.Equal(result.StatusCode, StatusCodes.Status500InternalServerError);
         }
 
         [Fact]

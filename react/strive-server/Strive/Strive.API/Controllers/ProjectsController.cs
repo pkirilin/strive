@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Strive.Data.Dtos;
 using Strive.Data.Entities;
 using Strive.Data.Services;
-using Strive.Exceptions;
 
 namespace Strive.API.Controllers
 {
-	/// <summary>
-	/// Provides API methods for viewing and editing application projects
-	/// </summary>
-	[Authorize]
+    /// <summary>
+    /// Provides API methods for viewing and editing application projects
+    /// </summary>
+    [Authorize]
 	[Route("[controller]")]
 	[ApiController]
 	public class ProjectsController : ControllerBase
@@ -43,7 +43,7 @@ namespace Strive.API.Controllers
 			{
 				projects = _projectService.GetProjects(userId);
 			}
-			catch (StriveDatabaseException e)
+			catch (Exception e)
 			{
 				return BadRequest(e.Message);
 			}
@@ -75,8 +75,8 @@ namespace Strive.API.Controllers
 		        }
 		        catch (Exception e)
 		        {
-		            return BadRequest(e.Message);
-		        }
+		            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+                }
             }
 
 		    return BadRequest(ModelState);
@@ -88,17 +88,32 @@ namespace Strive.API.Controllers
 			throw new NotImplementedException();
 		}
 
+        /// <summary>
+        /// Searches project by specified id. If project is found, deletes it
+        /// </summary>
+        /// <param name="projectId">Specified project id</param>
 		[HttpDelete("delete")]
 		public IActionResult DeleteProject([FromBody]int projectId)
 		{
-            //Project projectForDelete = _projectService.
+		    Project projectForDelete;
+            
+		    try
+		    {
+		        projectForDelete = _projectService.GetProjectById(projectId);
 
-		    //if (_projectService.IsProjectExists(projectId))
-		    //{
-      //          _projectService.Delete();
-		    //}
+                if (projectForDelete != null)
+		        {
+		            // Project was found and can be deleted
+		            _projectService.Delete(projectForDelete);
+		            return Ok();
+		        }
+            }
+		    catch (Exception e)
+		    {
+		        return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+		    }
 
-		    throw new NotImplementedException();
-		}
+		    return BadRequest($"Failed to delete project. Couldn't find project with specified id");
+        }
 	}
 }
