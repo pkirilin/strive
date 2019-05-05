@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using Strive.Data.Entities;
 using Strive.Exceptions;
+using Strive.Tests.TestValues;
 using Xunit;
 
 namespace Strive.Tests.Services.Projects
@@ -18,11 +20,7 @@ namespace Strive.Tests.Services.Projects
         [Fact]
         public void CreateThrowsDatabaseExceptionWhenRepoFailed()
         {
-            Project project = new Project()
-            {
-                Name = "Test project",
-                Description = ""
-            };
+            Project project = TestValuesProvider.GetProjects().FirstOrDefault();
             _projectRepositoryMock.Setup(repo => repo.Add(project))
                 .Throws<Exception>();
 
@@ -32,11 +30,7 @@ namespace Strive.Tests.Services.Projects
         [Fact]
         public void CreateReturnsProjectOnSuccess()
         {
-            Project project = new Project()
-            {
-                Name = "Test project",
-                Description = ""
-            };
+            Project project = TestValuesProvider.GetProjects().FirstOrDefault();
             _projectRepositoryMock.Setup(repo => repo.Add(project))
                 .Returns(project);
 

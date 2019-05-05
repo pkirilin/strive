@@ -24,7 +24,7 @@ namespace Strive.Tests.API.Projects
         }
 
         [Fact]
-        public void CreateProjectReturnsBadRequestOnServiceException()
+        public void CreateProjectReturnsStatus500OnServiceException()
         {
             ProjectDto projectData = new ProjectDto();
             ProjectsController controller = this.ProjectsControllerInstance;
@@ -45,7 +45,7 @@ namespace Strive.Tests.API.Projects
 
             IActionResult result = controller.CreateProject(projectData);
 
-            Assert.IsType<OkResult>(result);
+            Assert.IsType<OkObjectResult>(result);
         }
     }
 }

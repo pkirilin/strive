@@ -10,6 +10,8 @@ namespace Strive.Data.Repositories
 
 		TEntity Add(TEntity newEntity);
 
-	    void Remove(TEntity entityForDelete);
+	    TEntity Update(TEntity updatedEntity);
+
+	    TEntity Remove(TEntity entityForDelete);
 	}
 }

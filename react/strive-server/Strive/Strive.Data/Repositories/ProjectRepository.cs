@@ -41,9 +41,9 @@ namespace Strive.Data.Repositories
 		{
 			try
 			{
-				_dbContext.Projects.Add(project);
+				var projectEntry = _dbContext.Projects.Add(project);
 				_dbContext.SaveChanges();
-				return project;
+				return projectEntry.Entity;
 			}
 			catch (Exception)
 			{
@@ -51,12 +51,27 @@ namespace Strive.Data.Repositories
 			}
 		}
 
-	    public void Remove(Project project)
+	    public Project Update(Project project)
 	    {
 	        try
 	        {
-	            _dbContext.Projects.Remove(project);
+	            var projectEntry = _dbContext.Projects.Update(project);
 	            _dbContext.SaveChanges();
+	            return projectEntry.Entity;
+	        }
+	        catch (Exception)
+	        {
+	            throw;
+	        }
+        }
+
+        public Project Remove(Project project)
+	    {
+	        try
+	        {
+	            var projectEntry = _dbContext.Projects.Remove(project);
+	            _dbContext.SaveChanges();
+	            return projectEntry.Entity;
 	        }
 	        catch (Exception)
 	        {

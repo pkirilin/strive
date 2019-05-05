@@ -14,7 +14,7 @@ namespace Strive.API.Controllers
     /// Provides API methods for viewing and editing application projects
     /// </summary>
     [Authorize]
-	[Route("[controller]")]
+    [Route("[controller]")]
 	[ApiController]
 	public class ProjectsController : ControllerBase
 	{
@@ -70,8 +70,7 @@ namespace Strive.API.Controllers
 
 		        try
 		        {
-		            _projectService.Create(project);
-		            return Ok();
+		            return Ok(_projectService.Create(project));
 		        }
 		        catch (Exception e)
 		        {
@@ -82,30 +81,44 @@ namespace Strive.API.Controllers
 		    return BadRequest(ModelState);
 		}
 
-		[HttpPost("update")]
-		public IActionResult UpdateProject()
+		[HttpPut("update/{projectId}")]
+		public IActionResult UpdateProject(int projectId, [FromBody]ProjectDto updatedProjectData)
 		{
-			throw new NotImplementedException();
-		}
+		    try
+		    {
+		        Project projectForUpdate = _projectService.GetProjectById(projectId);
+
+		        if (projectForUpdate != null)
+		        {
+		            // Returns projectForUpdate object with fields rewritten according to DTO object
+		            projectForUpdate = _mapper.Map(updatedProjectData, projectForUpdate);
+		            return Ok(_projectService.Update(projectForUpdate));
+		        }
+            }
+		    catch (Exception e)
+		    {
+		        return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+
+		    return BadRequest($"Failed to update project. Couldn't find project with specified id");
+        }
 
         /// <summary>
         /// Searches project by specified id. If project is found, deletes it
         /// </summary>
         /// <param name="projectId">Specified project id</param>
-		[HttpDelete("delete")]
-		public IActionResult DeleteProject([FromBody]int projectId)
+		[HttpDelete("delete/{projectId}")]
+		public IActionResult DeleteProject(int projectId)
 		{
-		    Project projectForDelete;
-            
 		    try
 		    {
-		        projectForDelete = _projectService.GetProjectById(projectId);
+                // Getting target project by id
+		        Project projectForDelete = _projectService.GetProjectById(projectId);
 
                 if (projectForDelete != null)
 		        {
 		            // Project was found and can be deleted
-		            _projectService.Delete(projectForDelete);
-		            return Ok();
+		            return Ok(_projectService.Delete(projectForDelete));
 		        }
             }
 		    catch (Exception e)

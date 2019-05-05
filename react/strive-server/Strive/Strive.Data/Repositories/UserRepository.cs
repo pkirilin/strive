@@ -51,12 +51,27 @@ namespace Strive.Data.Repositories
 			}
 		}
 
-	    public void Remove(User user)
+	    public User Update(User user)
 	    {
 	        try
 	        {
-	            _dbContext.Users.Remove(user);
+	            var userEntry = _dbContext.Users.Update(user);
 	            _dbContext.SaveChanges();
+	            return userEntry.Entity;
+	        }
+	        catch (Exception)
+	        {
+	            throw;
+	        }
+	    }
+
+        public User Remove(User user)
+	    {
+	        try
+	        {
+	            var userEntry = _dbContext.Users.Remove(user);
+	            _dbContext.SaveChanges();
+	            return userEntry.Entity;
 	        }
 	        catch (Exception)
 	        {
@@ -78,7 +93,7 @@ namespace Strive.Data.Repositories
 			}
 		}
 
-		public User GetByUsername(string username)
+        public User GetByUsername(string username)
 		{
 			User user;
 			try

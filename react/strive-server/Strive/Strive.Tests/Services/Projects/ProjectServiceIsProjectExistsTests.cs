@@ -13,7 +13,6 @@ namespace Strive.Tests.Services.Projects
         {
             string projectName = "Test 1 name";
             int userId = 1;
-            int projectId = 1;
             _projectRepositoryMock.Setup(repo => repo.GetAll())
                 .Throws<Exception>();
             _projectRepositoryMock.Setup(repo => repo.GetById(It.IsAny<object>()))

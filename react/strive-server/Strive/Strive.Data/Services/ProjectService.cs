@@ -40,19 +40,35 @@ namespace Strive.Data.Services
 		}
 
 	    /// <summary>
-	    /// Creates a new project
+	    /// Gets a project entity by specified id
 	    /// </summary>
-	    /// <param name="project">Project data</param>
-	    /// <returns>Added project</returns>
-	    public Project Create(Project project)
+	    /// <param name="projectId">Target project id</param>
+	    /// <returns>Project entity if project was found, null if not</returns>
+	    public Project GetProjectById(int projectId)
+	    {
+	        try
+	        {
+	            return _projectRepo.GetById(projectId);
+	        }
+	        catch (Exception e)
+	        {
+	            throw new StriveDatabaseException($"Failed to get project by id. Error message: {e.Message}");
+	        }
+	    }
+
+        /// <summary>
+        /// Creates a new project
+        /// </summary>
+        /// <param name="project">Project data</param>
+        /// <returns>Added project</returns>
+        public Project Create(Project project)
 	    {
 	        if (project == null)
 	            throw new ArgumentNullException("Failed to add project. Project cannot be null");
 
 	        try
 	        {
-	            _projectRepo.Add(project);
-	            return project;
+	            return _projectRepo.Add(project);
             }
 	        catch (Exception e)
 	        {
@@ -61,25 +77,46 @@ namespace Strive.Data.Services
 	    }
 
         /// <summary>
-        /// Deletes specified project
+        /// Updates specified project
         /// </summary>
-        /// <param name="project">Project data</param>
-	    public void Delete(Project project)
-	    {
-            if(project == null)
-                throw new ArgumentNullException("Failed to delete project. Project cannot be null");
+        /// <param name="project">Project for update</param>
+        /// <returns>Updated project</returns>
+        public Project Update(Project project)
+        {
+	        if (project == null)
+	            throw new ArgumentNullException("Failed to update project. Updated project cannot be null");
 
 	        try
 	        {
-	            _projectRepo.Remove(project);
+	            return _projectRepo.Update(project);
+	        }
+	        catch (Exception e)
+	        {
+	            throw new StriveDatabaseException($"Failed to update project. Error message: {e.Message}");
             }
+        }
+
+	    /// <summary>
+	    /// Deletes specified project
+	    /// </summary>
+	    /// <param name="project">Project for delete</param>
+	    /// <returns>Deleted project</returns>
+	    public Project Delete(Project project)
+	    {
+	        if (project == null)
+	            throw new ArgumentNullException("Failed to delete project. Project cannot be null");
+
+	        try
+	        {
+	            return _projectRepo.Remove(project);
+	        }
 	        catch (Exception e)
 	        {
 	            throw new StriveDatabaseException($"Failed to delete project. Error message: {e.Message}");
 	        }
-	    }
+        }
 
-        /// <summary>
+	    /// <summary>
         /// Checks if project with specified name for specified user is already exists
         /// </summary>
         /// <param name="projectName">Project name</param>
@@ -102,23 +139,6 @@ namespace Strive.Data.Services
 	        {
                 throw new StriveDatabaseException($"Cannot check if project is exists. Error message: {e.Message}");
             }
-	    }
-
-	    /// <summary>
-	    /// Gets a project entity by specified id
-	    /// </summary>
-	    /// <param name="projectId">Target project id</param>
-	    /// <returns>Project entity if project was found, null if not</returns>
-	    public Project GetProjectById(int projectId)
-	    {
-	        try
-	        {
-	            return _projectRepo.GetById(projectId);
-	        }
-	        catch (Exception e)
-	        {
-	            throw new StriveDatabaseException($"Failed to get project by id. Error message: {e.Message}");
-	        }
 	    }
 	}
 }

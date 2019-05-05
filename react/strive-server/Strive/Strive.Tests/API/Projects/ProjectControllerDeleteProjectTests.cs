@@ -60,7 +60,8 @@ namespace Strive.Tests.API.Projects
 
             IActionResult result = this.ProjectsControllerInstance.DeleteProject(projectId);
 
-            Assert.IsType<OkResult>(result);
+            Assert.IsType<OkObjectResult>(result);
+
         }
     }
 }
