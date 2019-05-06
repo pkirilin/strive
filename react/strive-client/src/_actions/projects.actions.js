@@ -9,7 +9,10 @@ export const projectsActions = {
   getList,
 
   /** Redux action creator, creates project for current user */
-  create
+  create,
+
+  /** Redux action creator, updates project for current user */
+  update
 };
 
 /** Redux action creator, gets projects list for current user from server */
@@ -140,6 +143,84 @@ function create(project) {
   function badRequest(badRequestResponseJson) {
     return {
       type: projectListConstants.CREATE_BADREQUEST,
+      badRequestResponseJson
+    };
+  }
+}
+
+/**
+ * Redux action creator, updates project for current user
+ * @param {number} projectId Id of project to be updated
+ * @param {object} project Modified project data
+ */
+function update(projectId, project) {
+  return dispatch => {
+    dispatch(request(projectId, project));
+    projectsService.update(projectId, project).then(
+      updateProjectResponse => {
+        switch (updateProjectResponse.status) {
+          case httpStatuses.ok:
+            dispatch(success(projectId, project));
+            history.push("/projects/overview");
+            dispatch(
+              alertActions.success(
+                `The project "${project.name}" has been successfully updated`
+              )
+            );
+            break;
+          case httpStatuses.unauthorized:
+            history.push("account/login");
+            break;
+          case httpStatuses.badRequest:
+            updateProjectResponse
+              .json()
+              .then(updateProjectBadRequestJsonData => {
+                if (updateProjectBadRequestJsonData) {
+                  dispatch(badRequest(updateProjectBadRequestJsonData));
+                }
+              });
+            break;
+          default:
+            break;
+        }
+      },
+      errorResponse => {
+        dispatch(error(errorResponse));
+        dispatch(
+          alertActions.error(
+            "Failed to update project: server is not available"
+          )
+        );
+      }
+    );
+  };
+
+  function request(projectId, project) {
+    return {
+      type: projectListConstants.UPDATE_REQUEST,
+      projectId,
+      project
+    };
+  }
+
+  function success(projectId, project) {
+    return {
+      type: projectListConstants.UPDATE_SUCCESS,
+      projectId,
+      project
+    };
+  }
+
+  function error(error) {
+    return {
+      type: projectListConstants.UPDATE_ERROR,
+      error
+    };
+  }
+
+  function badRequest(badRequestResponseJson) {
+    return {
+      type: projectListConstants.UPDATE_BADREQUEST,
       badRequestResponseJson
     };
   }

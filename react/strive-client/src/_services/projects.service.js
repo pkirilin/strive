@@ -7,7 +7,10 @@ export const projectsService = {
   getList,
 
   /** Performs api call to API method responsible for creating a project */
-  create
+  create,
+
+  /** Performs api call to API method responsible for updating a project */
+  update
 };
 
 /** Performs api call to API method responsible for getting a project list */
@@ -41,4 +44,25 @@ function create(project) {
     body: JSON.stringify(project)
   };
   return fetch(`${config.apiUrl}/projects/create`, requestOptions);
+}
+
+/**
+ * Performs api call to API method responsible for updating a project
+ * @param {number} projectId Id of project to be updated
+ * @param {object} project Modified project data
+ */
+function update(projectId, project) {
+  let userFromCookies = Cookies.getJSON(config.cookies.user.keyName);
+  // Setting userId explicitly as it is not entered in create form
+  project["userId"] = userFromCookies.id;
+
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      ...httpHeaders.contentTypeJson,
+      ...httpHeaders.authorization()
+    },
+    body: JSON.stringify(project)
+  };
+  return fetch(`${config.apiUrl}/projects/update/${projectId}`, requestOptions);
 }

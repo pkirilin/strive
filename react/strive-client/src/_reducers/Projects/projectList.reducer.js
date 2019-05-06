@@ -44,6 +44,26 @@ export const projectListReducer = (state = initialState, action) => {
         badRequestResponseJson: action.badRequestResponseJson
       };
 
+    // Update project
+    case projectListConstants.UPDATE_REQUEST:
+      return {
+        projects: [...state.projects],
+        sendingProjectInfo: true
+      };
+    case projectListConstants.UPDATE_SUCCESS:
+      return {
+        projects: [...state.projects]
+      };
+    case projectListConstants.UPDATE_ERROR:
+      return {
+        projects: [...state.projects]
+      };
+    case projectListConstants.UPDATE_BADREQUEST:
+      return {
+        projects: [...state.projects],
+        badRequestResponseJson: action.badRequestResponseJson
+      };
+
     default:
       return state;
   }

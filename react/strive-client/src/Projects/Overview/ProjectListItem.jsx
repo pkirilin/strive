@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { ListGroupItem, Row, Col, Fade, Button } from "reactstrap";
 
 export class ProjectListItem extends React.Component {
@@ -43,7 +44,9 @@ export class ProjectListItem extends React.Component {
               <Fade in={this.state.showButtons}>
                 <Row>
                   <Col className="d-flex justify-content-center pt-2 pb-2">
-                    <Button className="col-12">{buttons.editProject}</Button>
+                    <Link to={`/projects/edit/${this.props.data.id}`}>
+                      <Button className="col-12">{buttons.editProject}</Button>
+                    </Link>
                   </Col>
                   <Col className="d-flex justify-content-center pt-2 pb-2">
                     <Button className="col-12">{buttons.deleteProject}</Button>
