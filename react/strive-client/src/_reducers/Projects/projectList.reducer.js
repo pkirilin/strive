@@ -26,7 +26,7 @@ export const projectListReducer = (state = initialState, action) => {
     case projectListConstants.CREATE_REQUEST:
       return {
         projects: [...state.projects],
-        creatingProject: true
+        sendingProjectInfo: true
       };
     case projectListConstants.CREATE_SUCCESS:
       return {

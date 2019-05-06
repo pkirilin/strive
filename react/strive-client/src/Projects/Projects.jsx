@@ -3,6 +3,7 @@ import { Switch, Redirect, Route } from "react-router";
 import { NotFoundPage } from "../ErrorPages";
 import { ProjectsOverviewPage } from "./Overview/ProjectsOverviewPage";
 import { CreateProjectPage } from "./Create/CreateProjectPage";
+import { EditProjectPage } from "./Update/EditProjectPage";
 
 export class Projects extends React.Component {
   render() {
@@ -16,6 +17,7 @@ export class Projects extends React.Component {
           component={ProjectsOverviewPage}
         />
         <Route exact path="/projects/create" component={CreateProjectPage} />
+        <Route exact path="/projects/edit" component={EditProjectPage} />
         <Route component={NotFoundPage} />
       </Switch>
     );

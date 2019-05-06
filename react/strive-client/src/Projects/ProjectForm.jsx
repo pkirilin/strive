@@ -1,27 +1,32 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Form, FormGroup, Button, Row, Col } from "reactstrap";
-import { TextBox, TextArea, Loading } from "../../_components";
-import { history } from "../../_helpers";
-import { validationStatuses } from "../../_constants";
+import { TextBox, TextArea, Loading } from "../_components";
+import { history } from "../_helpers";
+import { validationStatuses } from "../_constants";
 import {
   validationRulesSetters,
   validationUtils
-} from "../../_helpers/validation";
-import { projectsActions } from "../../_actions";
+} from "../_helpers/validation";
 
 const mapStateToProps = state => {
   let {
-    creatingProject,
+    sendingProjectInfo,
     badRequestResponseJson
   } = state.projectsReducer.projectListReducer;
   return {
-    creatingProject,
+    sendingProjectInfo,
     badRequestResponseJson
   };
 };
 
-class CreateProjectForm extends React.Component {
+class ProjectForm extends React.Component {
+  static defaultProps = {
+    id: "projectForm",
+    loadingText: "Sending a project info",
+    submitButtonText: "Send"
+  };
+
   constructor(props) {
     super(props);
     this.resources = this.props.resources;
@@ -31,6 +36,7 @@ class CreateProjectForm extends React.Component {
       this
     );
     this.onSubmit = this.onSubmit.bind(this);
+
     this.onSubmitValidationCompleted = this.onSubmitValidationCompleted.bind(
       this
     );
@@ -137,38 +143,39 @@ class CreateProjectForm extends React.Component {
   }
 
   onSubmitValidationCompleted() {
-    if (
-      validationUtils.focusFirstInvalidField("#createProjectForm") === false
-    ) {
-      this.props.dispatch(
-        projectsActions.create({
-          name: this.state.projectName.value,
-          description: this.state.projectDescription.value
-        })
-      );
+    if (validationUtils.focusFirstInvalidField(`#${this.props.id}`) === false) {
+      let { projectsAction } = this.props;
+      if (projectsAction) {
+        this.props.dispatch(
+          projectsAction({
+            name: this.state.projectName.value,
+            description: this.state.projectDescription.value
+          })
+        );
+      }
     }
   }
 
   render() {
-    let { creatingProject } = this.props;
-    let { buttons, labels, placeholders } = this.resources.projects.create;
+    let { sendingProjectInfo } = this.props;
+    //let { buttons, labels, placeholders } = this.resources.projects.create;
     return (
-      <Form id="createProjectForm" className="col-12">
-        {creatingProject && <Loading text="Creating a project" />}
+      <Form id={this.props.id} className="col-12">
+        {sendingProjectInfo && <Loading text={this.props.loadingText} />}
         <FormGroup>
           <TextBox
             {...this.state.projectName}
             type="text"
-            label={labels.projectName}
-            placeholder={placeholders.projectName}
+            label="Project name"
+            placeholder="Enter project name"
           />
         </FormGroup>
 
         <FormGroup>
           <TextArea
             {...this.state.projectDescription}
-            label={labels.projectDescription}
-            placeholder={placeholders.projectDescription}
+            label="Project description"
+            placeholder="Enter project description"
           />
         </FormGroup>
 
@@ -179,12 +186,12 @@ class CreateProjectForm extends React.Component {
               <Row>
                 <Col className="pt-2 pb-2">
                   <Button className="col" onClick={this.onSubmit}>
-                    {buttons.create}
+                    {this.props.submitButtonText}
                   </Button>
                 </Col>
                 <Col className="pt-2 pb-2">
                   <Button className="col" onClick={this.onCancel}>
-                    {buttons.cancel}
+                    Cancel
                   </Button>
                 </Col>
               </Row>
@@ -208,5 +215,5 @@ class CreateProjectForm extends React.Component {
   }
 }
 
-const connectedCreateProjectForm = connect(mapStateToProps)(CreateProjectForm);
-export { connectedCreateProjectForm as CreateProjectForm };
+const connectedCreateProjectForm = connect(mapStateToProps)(ProjectForm);
+export { connectedCreateProjectForm as ProjectForm };

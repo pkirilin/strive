@@ -6,7 +6,8 @@ import {
   DocumentTitleSetter
 } from "../../_components";
 import { getResources } from "../../_helpers";
-import { CreateProjectForm } from "./CreateProjectForm";
+import { ProjectForm } from "../ProjectForm";
+import { projectsActions } from "../../_actions";
 
 export class CreateProjectPage extends React.Component {
   constructor(props) {
@@ -22,7 +23,14 @@ export class CreateProjectPage extends React.Component {
         <PrivateLayout>
           <PageTitle>{titles.pageHeader}</PageTitle>
           <MarginedLayout>
-            <CreateProjectForm resources={this.resources} />
+            {/* <CreateProjectForm resources={this.resources} /> */}
+            <ProjectForm
+              resources={this.resources}
+              id="createProjectForm"
+              loadingText="Creating project"
+              submitButtonText="Create"
+              projectsAction={projectsActions.create}
+            />
           </MarginedLayout>
         </PrivateLayout>
       </DocumentTitleSetter>
