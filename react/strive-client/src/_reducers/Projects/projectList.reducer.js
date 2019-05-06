@@ -22,6 +22,22 @@ export const projectListReducer = (state = initialState, action) => {
         projects: [...state.projects]
       };
 
+    // Get project
+    case projectListConstants.GET_PROJECT_REQUEST:
+      return {
+        projects: [...state.projects],
+        gettingProjectForUpdate: true
+      };
+    case projectListConstants.GET_PROJECT_SUCCESS:
+      return {
+        projects: [...state.projects],
+        projectFetched: action.projectFetched
+      };
+    case projectListConstants.GET_PROJECT_ERROR:
+      return {
+        projects: [...state.projects]
+      };
+
     // Create project
     case projectListConstants.CREATE_REQUEST:
       return {

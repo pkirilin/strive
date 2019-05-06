@@ -8,6 +8,9 @@ export const projectsActions = {
   /** Redux action creator, gets projects list for current user from server */
   getList,
 
+  /** Redux action creator, gets project info for current user from server by id */
+  getInfo,
+
   /** Redux action creator, creates project for current user */
   create,
 
@@ -71,6 +74,14 @@ function getList() {
       errorData
     };
   }
+}
+
+/**
+ * Redux action creator, gets project info for current user from server by id
+ * @param {number} projectId Target project id
+ */
+function getInfo(projectId) {
+  return dispatch => {};
 }
 
 /**

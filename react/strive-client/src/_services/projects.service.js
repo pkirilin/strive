@@ -6,6 +6,9 @@ export const projectsService = {
   /** Performs api call to API method responsible for getting a project list */
   getList,
 
+  /** Performs api call to API method responsible for getting project info by id */
+  getInfo,
+
   /** Performs api call to API method responsible for creating a project */
   create,
 
@@ -25,6 +28,12 @@ function getList() {
     requestOptions
   );
 }
+
+/**
+ * Performs api call to API method responsible for getting project info by id
+ * @param {number} projectId Target project id
+ */
+function getInfo(projectId) {}
 
 /**
  * Performs api call to API method responsible for creating a project

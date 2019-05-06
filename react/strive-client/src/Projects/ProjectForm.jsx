@@ -8,15 +8,20 @@ import {
   validationRulesSetters,
   validationUtils
 } from "../_helpers/validation";
+import { projectsActions } from "../_actions";
 
 const mapStateToProps = state => {
   let {
     sendingProjectInfo,
-    badRequestResponseJson
+    badRequestResponseJson,
+    gettingProjectForUpdate,
+    projectFetched
   } = state.projectsReducer.projectListReducer;
   return {
     sendingProjectInfo,
-    badRequestResponseJson
+    badRequestResponseJson,
+    gettingProjectForUpdate,
+    projectFetched
   };
 };
 
@@ -44,6 +49,14 @@ class ProjectForm extends React.Component {
     this.trackProjectNameBadRequestResponse = this.trackProjectNameBadRequestResponse.bind(
       this
     );
+    this.trackProjectForUpdateFetchedFromServer = this.trackProjectForUpdateFetchedFromServer.bind(
+      this
+    );
+
+    if (this.props.projectId) {
+      // Update project with specified id called
+      this.props.dispatch(projectsActions.getInfo(this.props.projectId));
+    }
 
     let initFieldObj = {
       value: "",
@@ -85,6 +98,20 @@ class ProjectForm extends React.Component {
     }
   }
 
+  trackProjectForUpdateFetchedFromServer() {
+    let { projectFetched } = this.props;
+    this.setState({
+      projectName: {
+        value: projectFetched.name,
+        validationState: validationRulesSetters.resetAll()
+      },
+      projectDescription: {
+        value: projectFetched.description,
+        validationState: validationRulesSetters.resetAll()
+      }
+    });
+  }
+
   componentDidUpdate(prevProps) {
     // Tracks if any bad request (validation error) received from API
     if (
@@ -93,7 +120,13 @@ class ProjectForm extends React.Component {
       this.trackProjectNameBadRequestResponse();
       return true;
     }
-    return false;
+
+    // Tracks if current form state values must be replaced by fetched from server ones
+    // This happens when user clicked "Edit project" button and server found project with requested id
+    if (prevProps.projectFetched !== this.props.projectFetched) {
+      this.trackProjectForUpdateFetchedFromServer();
+      return true;
+    }
   }
 
   onProjectNameValueChanged(event) {
