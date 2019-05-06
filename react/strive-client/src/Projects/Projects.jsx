@@ -17,7 +17,11 @@ export class Projects extends React.Component {
           component={ProjectsOverviewPage}
         />
         <Route exact path="/projects/create" component={CreateProjectPage} />
-        <Route exact path="/projects/edit" component={EditProjectPage} />
+        <Route
+          exact
+          path="/projects/edit/:projectId"
+          component={EditProjectPage}
+        />
         <Route component={NotFoundPage} />
       </Switch>
     );

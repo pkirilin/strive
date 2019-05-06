@@ -10,6 +10,8 @@ import { ProjectForm } from "../ProjectForm";
 
 export class EditProjectPage extends React.Component {
   render() {
+    // Getting projectId for editing from request string
+    let { projectId } = this.props.match.params;
     return (
       <DocumentTitleSetter values={["Edit project"]}>
         <PrivateLayout>
@@ -20,6 +22,7 @@ export class EditProjectPage extends React.Component {
               loadingText="Updating project"
               submitButtonText="Save"
               //projectsAction={projectsActions.}
+              projectId={projectId}
             />
           </MarginedLayout>
         </PrivateLayout>

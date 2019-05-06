@@ -144,14 +144,20 @@ class ProjectForm extends React.Component {
 
   onSubmitValidationCompleted() {
     if (validationUtils.focusFirstInvalidField(`#${this.props.id}`) === false) {
-      let { projectsAction } = this.props;
+      let { projectsAction, projectId } = this.props;
+
       if (projectsAction) {
-        this.props.dispatch(
-          projectsAction({
-            name: this.state.projectName.value,
-            description: this.state.projectDescription.value
-          })
-        );
+        let projectDto = {
+          name: this.state.projectName.value,
+          description: this.state.projectDescription.value
+        };
+
+        // Checking whether projectId needs to be assigned (for update request)
+        if (projectId) {
+          projectDto["projectId"] = projectId;
+        }
+
+        this.props.dispatch(projectsAction({ ...projectDto }));
       }
     }
   }
