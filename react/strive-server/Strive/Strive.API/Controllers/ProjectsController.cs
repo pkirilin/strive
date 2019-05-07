@@ -52,6 +52,26 @@ namespace Strive.API.Controllers
 		}
 
         /// <summary>
+        /// Gets a project info by specified parameters
+        /// </summary>
+        /// <param name="projectId">Target project id</param>
+        [HttpGet("get-info")]
+	    public IActionResult GetProjectInfo(int projectId)
+        {
+            try
+            {
+                Project project = _projectService.GetProjectById(projectId);
+                if (project == null)
+                    return NotFound(projectId);
+                return Ok(project);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
+
+	    /// <summary>
         /// Validates sent project data and creates a new project based on received data
         /// </summary>
         /// <param name="projectData">Project data received from form</param>
