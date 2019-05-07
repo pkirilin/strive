@@ -13,70 +13,34 @@ namespace Strive.Data.Repositories
 
 		public IEnumerable<Project> GetAll()
 		{
-			try
-			{
-				return _dbContext.Projects.AsEnumerable();
-			}
-			catch (Exception)
-			{
-				throw;
-			}
-		}
+		    return _dbContext.Projects.AsEnumerable();
+        }
 
 	    public Project GetById(object id)
 	    {
 	        int projectId = (int)id;
-
-	        try
-	        {
-	            return _dbContext.Projects.Find(projectId);
-	        }
-	        catch (Exception)
-	        {
-	            throw;
-	        }
-	    }
+	        return _dbContext.Projects.Find(projectId);
+        }
 
         public Project Add(Project project)
 		{
-			try
-			{
-				var projectEntry = _dbContext.Projects.Add(project);
-				_dbContext.SaveChanges();
-				return projectEntry.Entity;
-			}
-			catch (Exception)
-			{
-				throw;
-			}
-		}
+		    var projectEntry = _dbContext.Projects.Add(project);
+		    _dbContext.SaveChanges();
+		    return projectEntry.Entity;
+        }
 
 	    public Project Update(Project project)
 	    {
-	        try
-	        {
-	            var projectEntry = _dbContext.Projects.Update(project);
-	            _dbContext.SaveChanges();
-	            return projectEntry.Entity;
-	        }
-	        catch (Exception)
-	        {
-	            throw;
-	        }
+	        var projectEntry = _dbContext.Projects.Update(project);
+	        _dbContext.SaveChanges();
+	        return projectEntry.Entity;
         }
 
         public Project Remove(Project project)
 	    {
-	        try
-	        {
-	            var projectEntry = _dbContext.Projects.Remove(project);
-	            _dbContext.SaveChanges();
-	            return projectEntry.Entity;
-	        }
-	        catch (Exception)
-	        {
-	            throw;
-	        }
+	        var projectEntry = _dbContext.Projects.Remove(project);
+	        _dbContext.SaveChanges();
+	        return projectEntry.Entity;
         }
     }
 }

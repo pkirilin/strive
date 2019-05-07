@@ -13,98 +13,44 @@ namespace Strive.Data.Repositories
 
 		public IEnumerable<User> GetAll()
 		{
-			try
-			{
-				return _dbContext.Users.AsEnumerable();
-			}
-			catch (Exception)
-			{
-				throw;
-			}
-		}
+		    return _dbContext.Users.AsEnumerable();
+        }
 
 	    public User GetById(object id)
 	    {
 	        int userId = (int)id;
-
-	        try
-	        {
-	            return _dbContext.Users.Find(userId);
-	        }
-	        catch (Exception)
-	        {
-	            throw;
-	        }
-	    }
+	        return _dbContext.Users.Find(userId);
+        }
 
         public User Add(User user)
 		{
-			try
-			{
-				_dbContext.Users.Add(user);
-				_dbContext.SaveChanges();
-				return user;
-			}
-			catch (Exception)
-			{
-				throw;
-			}
-		}
+		    _dbContext.Users.Add(user);
+		    _dbContext.SaveChanges();
+		    return user;
+        }
 
 	    public User Update(User user)
 	    {
-	        try
-	        {
-	            var userEntry = _dbContext.Users.Update(user);
-	            _dbContext.SaveChanges();
-	            return userEntry.Entity;
-	        }
-	        catch (Exception)
-	        {
-	            throw;
-	        }
-	    }
+	        var userEntry = _dbContext.Users.Update(user);
+	        _dbContext.SaveChanges();
+	        return userEntry.Entity;
+        }
 
         public User Remove(User user)
 	    {
-	        try
-	        {
-	            var userEntry = _dbContext.Users.Remove(user);
-	            _dbContext.SaveChanges();
-	            return userEntry.Entity;
-	        }
-	        catch (Exception)
-	        {
-	            throw;
-	        }
+	        var userEntry = _dbContext.Users.Remove(user);
+	        _dbContext.SaveChanges();
+	        return userEntry.Entity;
         }
 
         public User GetByEmail(string email)
 		{
-			User user;
-			try
-			{
-				user = _dbContext.Users.SingleOrDefault(u => u.Email == email);
-				return user;
-			}
-			catch (Exception)
-			{
-				return null;
-			}
-		}
+		    return _dbContext.Users.SingleOrDefault(u => u.Email == email);
+        }
 
         public User GetByUsername(string username)
 		{
-			User user;
-			try
-			{
-				user = _dbContext.Users.SingleOrDefault(u => u.Username == username);
-				return user;
-			}
-			catch (Exception)
-			{
-				return null;
-			}
-		}
+		    return _dbContext.Users.SingleOrDefault(u => u.Username == username);
+        }
     }
 }
