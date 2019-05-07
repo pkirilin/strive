@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Strive.Tests.API.Projects
 {
-    public class ProjectControllerDeleteProjectTests : ProjectControllerTests
+    public class ProjectsControllerDeleteProjectTests : ProjectsControllerTests
     {
         [Fact]
         public void DeleteProjectReturnsStatus500IfRepoSearchFailed()

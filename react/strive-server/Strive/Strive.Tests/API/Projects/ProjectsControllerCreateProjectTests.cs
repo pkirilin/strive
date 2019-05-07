@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Strive.Tests.API.Projects
 {
-    public class ProjectControllerCreateProjectTests : ProjectControllerTests
+    public class ProjectControllerCreateProjectTests : ProjectsControllerTests
     {
         [Fact]
         public void CreateProjectReturnsBadRequestOnInvalidData()

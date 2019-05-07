@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Strive.Tests.API.Projects
 {
-    public class ProjectControllerUpdateProjectTests : ProjectControllerTests
+    public class ProjectsControllerUpdateProjectTests : ProjectsControllerTests
     {
         [Fact]
         public void UpdateProjectReturnsStatus500IfRepoSearchFailed()

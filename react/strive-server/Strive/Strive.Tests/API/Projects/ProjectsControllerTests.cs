@@ -6,13 +6,13 @@ using Strive.Data.Services;
 
 namespace Strive.Tests.API.Projects
 {
-	public class ProjectControllerTests
+	public class ProjectsControllerTests
 	{
 	    protected readonly Mock<IMapper> _mapperMock;
 
         protected readonly Mock<IProjectService> _projectServiceMock;
 
-		public ProjectControllerTests()
+		public ProjectsControllerTests()
 		{
 		    var mapperConfig = new MapperConfiguration(cfg =>
 		    {
