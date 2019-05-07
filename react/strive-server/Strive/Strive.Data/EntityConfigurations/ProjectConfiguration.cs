@@ -29,13 +29,14 @@ namespace Strive.Data.EntityConfigurations
 
 			#endregion
 
-			#region Keys
+			#region Constraints
 
 			builder.HasKey(project => project.Id)
 				.HasName("PK_Project");
 
-			builder.HasAlternateKey(project => new { project.Name, project.UserId })
-				.HasName("UN_Project_Name_UserId");
+		    builder.HasIndex(project => new { project.Name, project.UserId })
+		        .HasName("IN_Project_Name_UserId")
+		        .IsUnique(true);
 
 			#endregion
 
