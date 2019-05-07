@@ -81,7 +81,63 @@ function getList() {
  * @param {number} projectId Target project id
  */
 function getInfo(projectId) {
-  return dispatch => {};
+  return dispatch => {
+    dispatch(request(projectId));
+    projectsService.getInfo(projectId).then(
+      projectFetchedResponse => {
+        switch (projectFetchedResponse.status) {
+          case httpStatuses.ok:
+            projectFetchedResponse.json().then(projectFetched => {
+              dispatch(success(projectFetched));
+            });
+            break;
+          case httpStatuses.unauthorized:
+            history.push("/account/login");
+            break;
+          case httpStatuses.notFound:
+            dispatch(
+              error({
+                notFound: true
+              })
+            );
+            break;
+          default:
+            break;
+        }
+      },
+      () => {
+        dispatch(
+          error({
+            failedToFetch: true
+          })
+        );
+      }
+    );
+  };
+
+  /** Get project info request action creator */
+  function request(projectId) {
+    return {
+      type: projectListConstants.GET_PROJECT_REQUEST,
+      projectId
+    };
+  }
+
+  /** Get project info success action creator */
+  function success(projectFetched) {
+    return {
+      type: projectListConstants.GET_PROJECT_SUCCESS,
+      projectFetched
+    };
+  }
+
+  /** Get project info error action creator */
+  function error(errorData) {
+    return {
+      type: projectListConstants.GET_PROJECT_ERROR,
+      errorData
+    };
+  }
 }
 
 /**
@@ -130,6 +186,7 @@ function create(project) {
     );
   };
 
+  /** Create project request action creator */
   function request(project) {
     return {
       type: projectListConstants.CREATE_REQUEST,
@@ -137,6 +194,7 @@ function create(project) {
     };
   }
 
+  /** Create project success action creator */
   function success(project) {
     return {
       type: projectListConstants.CREATE_SUCCESS,
@@ -144,6 +202,7 @@ function create(project) {
     };
   }
 
+  /** Create project error action creator */
   function error(error) {
     return {
       type: projectListConstants.CREATE_ERROR,
@@ -151,6 +210,7 @@ function create(project) {
     };
   }
 
+  /** Create project bad request action creator */
   function badRequest(badRequestResponseJson) {
     return {
       type: projectListConstants.CREATE_BADREQUEST,
@@ -206,6 +266,7 @@ function update(projectId, project) {
     );
   };
 
+  /** Update project request action creator */
   function request(projectId, project) {
     return {
       type: projectListConstants.UPDATE_REQUEST,
@@ -214,6 +275,7 @@ function update(projectId, project) {
     };
   }
 
+  /** Update project success action creator */
   function success(projectId, project) {
     return {
       type: projectListConstants.UPDATE_SUCCESS,
@@ -222,6 +284,7 @@ function update(projectId, project) {
     };
   }
 
+  /** Update project error action creator */
   function error(error) {
     return {
       type: projectListConstants.UPDATE_ERROR,
@@ -229,6 +292,7 @@ function update(projectId, project) {
     };
   }
 
+  /** Update project bad request action creator */
   function badRequest(badRequestResponseJson) {
     return {
       type: projectListConstants.UPDATE_BADREQUEST,

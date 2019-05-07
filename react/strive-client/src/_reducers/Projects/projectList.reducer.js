@@ -35,6 +35,7 @@ export const projectListReducer = (state = initialState, action) => {
       };
     case projectListConstants.GET_PROJECT_ERROR:
       return {
+        ...action.errorData,
         projects: [...state.projects]
       };
 

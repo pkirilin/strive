@@ -33,7 +33,16 @@ function getList() {
  * Performs api call to API method responsible for getting project info by id
  * @param {number} projectId Target project id
  */
-function getInfo(projectId) {}
+function getInfo(projectId) {
+  const requestOptions = {
+    method: "GET",
+    headers: httpHeaders.authorization()
+  };
+  return fetch(
+    `${config.apiUrl}/projects/get-info?projectId=${projectId}`,
+    requestOptions
+  );
+}
 
 /**
  * Performs api call to API method responsible for creating a project

@@ -15,13 +15,15 @@ const mapStateToProps = state => {
     sendingProjectInfo,
     badRequestResponseJson,
     gettingProjectForUpdate,
-    projectFetched
+    projectFetched,
+    notFound
   } = state.projectsReducer.projectListReducer;
   return {
     sendingProjectInfo,
     badRequestResponseJson,
     gettingProjectForUpdate,
-    projectFetched
+    projectFetched,
+    notFound
   };
 };
 
@@ -53,11 +55,6 @@ class ProjectForm extends React.Component {
       this
     );
 
-    if (this.props.projectId) {
-      // Update project with specified id called
-      this.props.dispatch(projectsActions.getInfo(this.props.projectId));
-    }
-
     let initFieldObj = {
       value: "",
       validationState: {
@@ -76,6 +73,12 @@ class ProjectForm extends React.Component {
         onChange: this.onProjectDescriptionValueChanged
       }
     };
+
+    // If projectId is set, it means that update project needs to be executed
+    if (this.props.projectId) {
+      // Dispatching action to get info for project to load it into update form
+      this.props.dispatch(projectsActions.getInfo(this.props.projectId));
+    }
   }
 
   trackProjectNameBadRequestResponse() {
@@ -103,11 +106,13 @@ class ProjectForm extends React.Component {
     this.setState({
       projectName: {
         value: projectFetched.name,
-        validationState: validationRulesSetters.resetAll()
+        validationState: validationRulesSetters.resetAll(),
+        onChange: this.onProjectNameValueChanged
       },
       projectDescription: {
         value: projectFetched.description,
-        validationState: validationRulesSetters.resetAll()
+        validationState: validationRulesSetters.resetAll(),
+        onChange: this.onProjectDescriptionValueChanged
       }
     });
   }
@@ -123,7 +128,10 @@ class ProjectForm extends React.Component {
 
     // Tracks if current form state values must be replaced by fetched from server ones
     // This happens when user clicked "Edit project" button and server found project with requested id
-    if (prevProps.projectFetched !== this.props.projectFetched) {
+    if (
+      prevProps.projectFetched === undefined &&
+      this.props.projectFetched !== undefined
+    ) {
       this.trackProjectForUpdateFetchedFromServer();
       return true;
     }
@@ -198,8 +206,21 @@ class ProjectForm extends React.Component {
   }
 
   render() {
-    let { sendingProjectInfo } = this.props;
+    let { sendingProjectInfo, gettingProjectForUpdate, notFound } = this.props;
     //let { buttons, labels, placeholders } = this.resources.projects.create;
+
+    // Showing loading project info spinner while data is fetching (for update)
+    if (gettingProjectForUpdate) {
+      return <Loading text="Getting project for update" />;
+    }
+
+    // If server returned not found for current request, showing error message
+    if (notFound) {
+      return (
+        <div className="text-center text-danger">Project was not found</div>
+      );
+    }
+
     return (
       <Form id={this.props.id} className="col-12">
         {sendingProjectInfo && <Loading text={this.props.loadingText} />}

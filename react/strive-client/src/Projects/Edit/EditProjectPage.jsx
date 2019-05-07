@@ -6,7 +6,7 @@ import {
   DocumentTitleSetter
 } from "../../_components";
 import { ProjectForm } from "../ProjectForm";
-//import { projectsActions } from "../../_actions";
+import { projectsActions } from "../../_actions";
 
 export class EditProjectPage extends React.Component {
   render() {
@@ -21,7 +21,7 @@ export class EditProjectPage extends React.Component {
               id="editProjectForm"
               loadingText="Updating project"
               submitButtonText="Save"
-              //projectsAction={projectsActions.}
+              projectsAction={projectsActions.update}
               projectId={projectId}
             />
           </MarginedLayout>

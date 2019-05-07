@@ -3,7 +3,7 @@ import { Switch, Redirect, Route } from "react-router";
 import { NotFoundPage } from "../ErrorPages";
 import { ProjectsOverviewPage } from "./Overview/ProjectsOverviewPage";
 import { CreateProjectPage } from "./Create/CreateProjectPage";
-import { EditProjectPage } from "./Update/EditProjectPage";
+import { EditProjectPage } from "./Edit/EditProjectPage";
 
 export class Projects extends React.Component {
   render() {
