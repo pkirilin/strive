@@ -40,7 +40,7 @@ namespace Strive.Tests.API.Projects
         }
 
         [Fact]
-        public void DeleteProjectReturnsBadRequestIfProjectNotFoundById()
+        public void DeleteProjectReturnsNotFoundIfProjectNotFoundById()
         {
             int projectId = 1;
             _projectServiceMock.Setup(service => service.GetProjectById(projectId))
@@ -48,7 +48,7 @@ namespace Strive.Tests.API.Projects
 
             IActionResult result = this.ProjectsControllerInstance.DeleteProject(projectId);
 
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<NotFoundObjectResult>(result);
         }
 
         [Fact]

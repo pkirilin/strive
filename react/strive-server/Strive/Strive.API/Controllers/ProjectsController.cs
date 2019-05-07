@@ -86,11 +86,10 @@ namespace Strive.API.Controllers
 
 		    if (ModelState.IsValid)
 		    {
-		        Project project = _mapper.Map<Project>(projectData);
-
 		        try
 		        {
-		            return Ok(_projectService.Create(project));
+		            Project project = _mapper.Map<Project>(projectData);
+                    return Ok(_projectService.Create(project));
 		        }
 		        catch (Exception e)
 		        {
@@ -104,23 +103,33 @@ namespace Strive.API.Controllers
 		[HttpPut("update/{projectId}")]
 		public IActionResult UpdateProject(int projectId, [FromBody]ProjectDto updatedProjectData)
 		{
-		    try
+		    if (ModelState.IsValid)
 		    {
-		        Project projectForUpdate = _projectService.GetProjectById(projectId);
+		        if (_projectService.IsProjectExists(updatedProjectData.Name, updatedProjectData.UserId))
+		            ModelState.AddModelError("projectNameRemote", "Project for target user with specified name is already exists");
+		    }
 
-		        if (projectForUpdate != null)
+            if (ModelState.IsValid)
+		    {
+		        try
 		        {
-		            // Returns projectForUpdate object with fields rewritten according to DTO object
-		            projectForUpdate = _mapper.Map(updatedProjectData, projectForUpdate);
-		            return Ok(_projectService.Update(projectForUpdate));
+		            Project projectForUpdate = _projectService.GetProjectById(projectId);
+		            if (projectForUpdate != null)
+		            {
+		                // Returns projectForUpdate object with fields rewritten according to DTO object
+		                projectForUpdate = _mapper.Map(updatedProjectData, projectForUpdate);
+		                return Ok(_projectService.Update(projectForUpdate));
+		            }
+
+		            return NotFound(projectId);
+		        }
+		        catch (Exception e)
+		        {
+		            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
 		        }
             }
-		    catch (Exception e)
-		    {
-		        return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
 
-		    return BadRequest($"Failed to update project. Couldn't find project with specified id");
+		    return BadRequest(ModelState);
         }
 
         /// <summary>
@@ -140,13 +149,13 @@ namespace Strive.API.Controllers
 		            // Project was found and can be deleted
 		            return Ok(_projectService.Delete(projectForDelete));
 		        }
-            }
+
+		        return NotFound(projectId);
+		    }
 		    catch (Exception e)
 		    {
 		        return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
 		    }
-
-		    return BadRequest($"Failed to delete project. Couldn't find project with specified id");
-        }
+		}
 	}
 }

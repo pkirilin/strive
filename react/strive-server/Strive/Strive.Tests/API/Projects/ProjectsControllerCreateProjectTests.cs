@@ -12,18 +12,6 @@ namespace Strive.Tests.API.Projects
     public class ProjectControllerCreateProjectTests : ProjectsControllerTests
     {
         [Fact]
-        public void CreateProjectReturnsBadRequestOnInvalidData()
-        {
-            ProjectDto projectData = new ProjectDto();
-            ProjectsController controller = this.ProjectsControllerInstance;
-            controller.ModelState.AddModelError("error", "error");
-
-            IActionResult result = controller.CreateProject(projectData);
-
-            Assert.IsType<BadRequestObjectResult>(result);
-        }
-
-        [Fact]
         public void CreateProjectReturnsStatus500OnServiceException()
         {
             ProjectDto projectData = new ProjectDto();
@@ -35,6 +23,18 @@ namespace Strive.Tests.API.Projects
 
             Assert.NotNull(result);
             Assert.Equal(result.StatusCode, StatusCodes.Status500InternalServerError);
+        }
+
+        [Fact]
+        public void CreateProjectReturnsBadRequestOnInvalidData()
+        {
+            ProjectDto projectData = new ProjectDto();
+            ProjectsController controller = this.ProjectsControllerInstance;
+            controller.ModelState.AddModelError("error", "error");
+
+            IActionResult result = controller.CreateProject(projectData);
+
+            Assert.IsType<BadRequestObjectResult>(result);
         }
 
         [Fact]

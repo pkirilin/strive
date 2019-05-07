@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Strive.API.Controllers;
 using Strive.Data.Dtos;
 using Strive.Data.Entities;
 using Strive.Tests.TestValues;
@@ -53,7 +54,7 @@ namespace Strive.Tests.API.Projects
         }
 
         [Fact]
-        public void UpdateProjectReturnsBadRequestIfProjectNotFoundById()
+        public void UpdateProjectReturnsNotFoundIfProjectNotFoundById()
         {
             int projectId = 1;
             ProjectDto projectData = new ProjectDto()
@@ -66,6 +67,24 @@ namespace Strive.Tests.API.Projects
                 .Returns(null as Project);
 
             IActionResult result = this.ProjectsControllerInstance.UpdateProject(projectId, projectData);
+
+            Assert.IsType<NotFoundObjectResult>(result);
+        }
+
+        [Fact]
+        public void UpdateProjectReturnsBadRequestOnInvalidData()
+        {
+            int projectId = 1;
+            ProjectDto projectData = new ProjectDto()
+            {
+                Name = "Test",
+                Description = "Test",
+                UserId = 1
+            };
+            ProjectsController controller = this.ProjectsControllerInstance;
+            controller.ModelState.AddModelError("error", "error");
+
+            IActionResult result = controller.UpdateProject(projectId, projectData);
 
             Assert.IsType<BadRequestObjectResult>(result);
         }
