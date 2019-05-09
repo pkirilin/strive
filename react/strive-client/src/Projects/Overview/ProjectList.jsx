@@ -3,20 +3,24 @@ import { connect } from "react-redux";
 import { ListGroup } from "reactstrap";
 import { ProjectListItem } from "./ProjectListItem";
 import { projectsActions } from "../../_actions";
-import { Loading } from "../../_components";
+import { Loading, ConfirmationModal } from "../../_components";
 
 const mapStateToProps = state => {
   let {
     loadingProjectList,
     failedToFetch,
     badRequest,
+    deletingProject,
     projects
   } = state.projectsReducer.projectListReducer;
+  let { deleteProjectModal } = state.modalReducer;
   return {
     loadingProjectList,
     failedToFetch,
     badRequest,
-    projects
+    deletingProject,
+    projects,
+    deleteProjectModal
   };
 };
 
@@ -34,7 +38,9 @@ class ProjectList extends React.Component {
       loadingProjectList,
       failedToFetch,
       badRequest,
-      projects
+      deletingProject,
+      projects,
+      deleteProjectModal
     } = this.props;
 
     // Rendering loading spinner while data is fetching from server
@@ -72,6 +78,8 @@ class ProjectList extends React.Component {
     // Server worked fine and returned project collection
     return (
       <ListGroup>
+        <ConfirmationModal {...deleteProjectModal} />
+        {deletingProject && <Loading text="Deleting project" />}
         {this.props.projects.map(project => (
           <ProjectListItem
             key={project.id}

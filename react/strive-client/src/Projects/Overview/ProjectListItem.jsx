@@ -1,9 +1,16 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ListGroupItem, Row, Col, Fade, Button } from "reactstrap";
+import { modalActions, projectsActions, alertActions } from "../../_actions";
+import { modalConstants } from "../../_constants";
 import { history } from "../../_helpers";
 
-export class ProjectListItem extends React.Component {
+const mapStateToProps = state => {
+  return {};
+};
+
+class ProjectListItem extends React.Component {
   constructor(props) {
     super(props);
     this.resources = this.props.resources;
@@ -15,6 +22,7 @@ export class ProjectListItem extends React.Component {
     this.showProjectButtons = this.showProjectButtons.bind(this);
     this.hideProjectButtons = this.hideProjectButtons.bind(this);
     this.onEdit = this.onEdit.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
   showProjectButtons() {
@@ -31,6 +39,33 @@ export class ProjectListItem extends React.Component {
 
   onEdit() {
     history.push(`/projects/edit/${this.props.data.id}`);
+  }
+
+  onDelete() {
+    this.props.dispatch(alertActions.clear());
+    this.props.dispatch(
+      modalActions.open(modalConstants.DELETE_PROJECT_OPEN, {
+        title: "Delete project confirmation",
+        message: (
+          <div>
+            Delete project <b>{this.props.data.name}</b>?
+          </div>
+        ),
+        onClose: () => {
+          closeModal();
+        },
+        onConfirm: () => {
+          closeModal();
+          this.props.dispatch(projectsActions.delete(this.props.data.id));
+        }
+      })
+    );
+
+    const closeModal = () => {
+      this.props.dispatch(
+        modalActions.close(modalConstants.DELETE_PROJECT_CLOSE)
+      );
+    };
   }
 
   render() {
@@ -55,7 +90,9 @@ export class ProjectListItem extends React.Component {
                     </Button>
                   </Col>
                   <Col className="d-flex justify-content-center pt-2 pb-2">
-                    <Button className="col-12">{buttons.deleteProject}</Button>
+                    <Button className="col-12" onClick={this.onDelete}>
+                      {buttons.deleteProject}
+                    </Button>
                   </Col>
                 </Row>
               </Fade>
@@ -66,3 +103,6 @@ export class ProjectListItem extends React.Component {
     );
   }
 }
+
+const connectedProjectListItem = connect(mapStateToProps)(ProjectListItem);
+export { connectedProjectListItem as ProjectListItem };

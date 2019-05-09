@@ -1,19 +1,21 @@
 import { modalConstants } from "../_constants";
 
-const initialState = {
-  isOpen: false
-};
-
-export const modalReducer = (state = initialState, action) => {
+export const modalReducer = (state = {}, action) => {
   switch (action.type) {
-    case modalConstants.CLOSE:
+    case modalConstants.DELETE_PROJECT_OPEN:
       return {
-        isOpen: false
+        ...state,
+        deleteProjectModal: {
+          isOpen: true,
+          ...action
+        }
       };
-    case modalConstants.OPEN_CONFIRMATION:
+    case modalConstants.DELETE_PROJECT_CLOSE:
       return {
-        isOpen: true,
-        modalType: action.modalType
+        ...state,
+        deleteProjectModal: {
+          isOpen: false
+        }
       };
     default:
       return state;

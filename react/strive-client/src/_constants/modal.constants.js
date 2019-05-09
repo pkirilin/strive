@@ -1,10 +1,5 @@
 /** Redux actions related to application modals */
 export const modalConstants = {
-  CLOSE: "MODAL_CLOSE",
-  OPEN_CONFIRMATION: "MODAL_OPEN_CONFIRMATION"
-};
-
-/** Modal types to determine which modal needs to be opened */
-export const modalTypes = {
-  CONFIRMATION: "MODALTYPE_CONFIRMATION"
+  DELETE_PROJECT_OPEN: "MODAL_DELETE_PROJECT_OPEN",
+  DELETE_PROJECT_CLOSE: "MODAL_DELETE_PROJECT_CLOSE"
 };

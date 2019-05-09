@@ -1,24 +1,30 @@
-import { modalConstants, modalTypes } from "../_constants";
-
 /** Contains Redux action creators for application modals actions */
 export const modalActions = {
-  /** Redux action creator, closes any opened modal */
-  close,
-  /** Redux action creator, opens confirmation modal */
-  openConfirmation
+  /** Redux action creator, opens application modal */
+  open,
+
+  /** Redux action creator, closes application modal */
+  close
 };
 
-/** Redux action creator for closing any opened modal */
-function close() {
+/**
+ * Redux action creator, opens application modal
+ * @param {string} type Redux action type for app modal to be opened
+ * @param {object} data Additional modal data
+ */
+function open(type, data) {
   return {
-    type: modalConstants.CLOSE
+    type,
+    ...data
   };
 }
 
-/** Redux action creator, opens confirmation modal */
-function openConfirmation() {
+/**
+ * Redux action creator, closes application modal
+ * @param {string} type Redux action type for app modal to be closed
+ */
+function close(type) {
   return {
-    type: modalConstants.OPEN_CONFIRMATION,
-    modalType: modalTypes.CONFIRMATION
+    type
   };
 }
