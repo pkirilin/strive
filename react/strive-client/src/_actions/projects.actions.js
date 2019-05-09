@@ -1,3 +1,4 @@
+import React from "react";
 import { alertActions } from "./alert.actions";
 import { projectListConstants } from "../_constants";
 import { httpStatuses, history } from "../_helpers";
@@ -158,7 +159,10 @@ function create(project) {
             history.push("/projects/overview");
             dispatch(
               alertActions.success(
-                `The project "${project.name}" has been successfully created`
+                <div>
+                  The project <b>{project.name}</b> has been successfully
+                  created
+                </div>
               )
             );
             break;
@@ -238,7 +242,10 @@ function update(projectId, project) {
             history.push("/projects/overview");
             dispatch(
               alertActions.success(
-                `The project "${project.name}" has been successfully updated`
+                <div>
+                  The project <b>{project.name}</b> has been successfully
+                  updated
+                </div>
               )
             );
             break;
@@ -319,9 +326,10 @@ function deleteProject(projectId) {
               dispatch(success(deletedProject));
               dispatch(
                 alertActions.success(
-                  `The project "${
-                    deletedProject.name
-                  }" has been successfully deleted`
+                  <div>
+                    The project <b>{deletedProject.name}</b> has been
+                    successfully deleted
+                  </div>
                 )
               );
             });
@@ -335,7 +343,11 @@ function deleteProject(projectId) {
                 projectIdJson
               )}) is not found for delete`;
               dispatch(error(notFoundErrorMessage));
-              dispatch(alertActions.error(notFoundErrorMessage));
+              dispatch(
+                alertActions.error(
+                  "Project is not found for delete: wrong project ID"
+                )
+              );
             });
             break;
           default:
