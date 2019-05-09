@@ -15,7 +15,10 @@ export const projectsActions = {
   create,
 
   /** Redux action creator, updates project for current user */
-  update
+  update,
+
+  /** Redux action creator, deletes project */
+  delete: deleteProject
 };
 
 /** Redux action creator, gets projects list for current user from server */
@@ -160,7 +163,7 @@ function create(project) {
             );
             break;
           case httpStatuses.unauthorized:
-            history.push("account/login");
+            history.push("/account/login");
             break;
           case httpStatuses.badRequest:
             createProjectResponse
@@ -240,7 +243,7 @@ function update(projectId, project) {
             );
             break;
           case httpStatuses.unauthorized:
-            history.push("account/login");
+            history.push("/account/login");
             break;
           case httpStatuses.badRequest:
             updateProjectResponse
@@ -297,6 +300,89 @@ function update(projectId, project) {
     return {
       type: projectListConstants.UPDATE_BADREQUEST,
       badRequestResponseJson
+    };
+  }
+}
+
+/**
+ * Redux action creator, deletes project
+ * @param {number} projectId Id of project to be deleted
+ */
+function deleteProject(projectId) {
+  return dispatch => {
+    dispatch(request(projectId));
+    projectsService.delete(projectId).then(
+      deleteProjectResponse => {
+        switch (deleteProjectResponse.status) {
+          case httpStatuses.ok:
+            deleteProjectResponse.json().then(deletedProject => {
+              dispatch(success(deletedProject));
+              dispatch(
+                alertActions.success(
+                  `The project "${
+                    deletedProject.name
+                  }" has been successfully deleted`
+                )
+              );
+            });
+            break;
+          case httpStatuses.unauthorized:
+            history.push("/account/login");
+            break;
+          case httpStatuses.notFound:
+            deleteProjectResponse.json().then(projectIdJson => {
+              let notFoundErrorMessage = `Project (id = ${JSON.parse(
+                projectIdJson
+              )}) is not found for delete`;
+              dispatch(error(notFoundErrorMessage));
+              dispatch(alertActions.error(notFoundErrorMessage));
+            });
+            break;
+          default:
+            break;
+        }
+      },
+      errorResponse => {
+        dispatch(error(errorResponse));
+        dispatch(
+          alertActions.error(
+            "Failed to delete project: server is not available"
+          )
+        );
+      }
+    );
+  };
+
+  /**
+   * Delete project request action creator
+   * @param {number} projectId Id of project to be deleted
+   */
+  function request(projectId) {
+    return {
+      type: projectListConstants.DELETE_REQUEST,
+      projectId
+    };
+  }
+
+  /**
+   * Delete project success action creator
+   * @param {object} deletedProject Deleted project data
+   */
+  function success(deletedProject) {
+    return {
+      type: projectListConstants.DELETE_SUCCESS,
+      deletedProject
+    };
+  }
+
+  /**
+   * Delete project error action creator
+   * @param {string} error Error message
+   */
+  function error(error) {
+    return {
+      type: projectListConstants.DELETE_ERROR,
+      error
     };
   }
 }

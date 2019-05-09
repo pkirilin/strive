@@ -25,13 +25,13 @@ export const projectListReducer = (state = initialState, action) => {
     // Get project
     case projectListConstants.GET_PROJECT_REQUEST:
       return {
-        projects: [...state.projects],
-        gettingProjectForUpdate: true
+        gettingProjectForUpdate: true,
+        projects: [...state.projects]
       };
     case projectListConstants.GET_PROJECT_SUCCESS:
       return {
-        projects: [...state.projects],
-        projectFetched: action.projectFetched
+        projectFetched: action.projectFetched,
+        projects: [...state.projects]
       };
     case projectListConstants.GET_PROJECT_ERROR:
       return {
@@ -42,30 +42,30 @@ export const projectListReducer = (state = initialState, action) => {
     // Create project
     case projectListConstants.CREATE_REQUEST:
       return {
-        projects: [...state.projects],
-        sendingProjectInfo: true
+        sendingProjectInfo: true,
+        projects: [...state.projects]
       };
     case projectListConstants.CREATE_SUCCESS:
       return {
-        projects: [...state.projects],
-        projectCreated: true
+        projectCreated: true,
+        projects: [...state.projects]
       };
     case projectListConstants.CREATE_ERROR:
       return {
-        projects: [...state.projects],
-        failedToCreateProject: true
+        failedToCreateProject: true,
+        projects: [...state.projects]
       };
     case projectListConstants.CREATE_BADREQUEST:
       return {
-        projects: [...state.projects],
-        badRequestResponseJson: action.badRequestResponseJson
+        badRequestResponseJson: action.badRequestResponseJson,
+        projects: [...state.projects]
       };
 
     // Update project
     case projectListConstants.UPDATE_REQUEST:
       return {
-        projects: [...state.projects],
-        sendingProjectInfo: true
+        sendingProjectInfo: true,
+        projects: [...state.projects]
       };
     case projectListConstants.UPDATE_SUCCESS:
       return {
@@ -77,8 +77,27 @@ export const projectListReducer = (state = initialState, action) => {
       };
     case projectListConstants.UPDATE_BADREQUEST:
       return {
-        projects: [...state.projects],
-        badRequestResponseJson: action.badRequestResponseJson
+        badRequestResponseJson: action.badRequestResponseJson,
+        projects: [...state.projects]
+      };
+
+    case projectListConstants.DELETE_REQUEST:
+      return {
+        deletingProject: true,
+        projects: [...state.projects]
+      };
+    case projectListConstants.DELETE_SUCCESS:
+      return {
+        projects: state.projects.filter(project => {
+          if (project.id === action.deletedProject.id) {
+            return false;
+          }
+          return true;
+        })
+      };
+    case projectListConstants.DELETE_ERROR:
+      return {
+        projects: [...state.projects]
       };
 
     default:
