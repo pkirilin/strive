@@ -261,6 +261,20 @@ function update(projectId, project) {
                 }
               });
             break;
+          case httpStatuses.notFound:
+            updateProjectResponse.json().then(notFoundProjectId => {
+              dispatch(
+                error(
+                  `Server couldn't find a project with id = ${notFoundProjectId}`
+                )
+              );
+              dispatch(
+                alertActions.error(
+                  "Failed to update project: server couldn't find target project"
+                )
+              );
+            });
+            break;
           default:
             break;
         }
@@ -338,14 +352,15 @@ function deleteProject(projectId) {
             history.push("/account/login");
             break;
           case httpStatuses.notFound:
-            deleteProjectResponse.json().then(projectIdJson => {
-              let notFoundErrorMessage = `Project (id = ${JSON.parse(
-                projectIdJson
-              )}) is not found for delete`;
-              dispatch(error(notFoundErrorMessage));
+            deleteProjectResponse.json().then(notFoundProjectId => {
+              dispatch(
+                error(
+                  `Server couldn't find a project with id = ${notFoundProjectId}`
+                )
+              );
               dispatch(
                 alertActions.error(
-                  "Project is not found for delete: wrong project ID"
+                  "Failed to delete project: server couldn't find target project"
                 )
               );
             });
