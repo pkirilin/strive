@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Strive.Data.Entities;
 
 namespace Strive.Data.Repositories
 {
-	public class ProjectRepository : RepositoryBase, IProjectRepository
+    public class ProjectRepository : RepositoryBase, IProjectRepository
 	{
 		public ProjectRepository(StriveDbContext dbContext) : base(dbContext)
 		{

@@ -15,7 +15,7 @@ using AutoMapper;
 namespace Strive.API.Controllers
 {
 	[Authorize]
-	[Route("[controller]")]
+	[Route("account")]
 	public class AccountController : Controller
 	{
 		private readonly IAccountService _accountService;

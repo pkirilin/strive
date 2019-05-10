@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,9 +13,8 @@ namespace Strive.API.Controllers
     /// Provides API methods for viewing and editing application projects
     /// </summary>
     [Authorize]
-    [Route("[controller]")]
-	[ApiController]
-	public class ProjectsController : ControllerBase
+    [Route("projects")]
+	public class ProjectsController : Controller
 	{
 		private readonly IProjectService _projectService;
 

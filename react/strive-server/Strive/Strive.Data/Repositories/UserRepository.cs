@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Strive.Data.Entities;
 
 namespace Strive.Data.Repositories
 {
-	public class UserRepository : RepositoryBase, IUserRepository
+    public class UserRepository : RepositoryBase, IUserRepository
 	{
 		public UserRepository(StriveDbContext dbContext) : base(dbContext)
 		{
