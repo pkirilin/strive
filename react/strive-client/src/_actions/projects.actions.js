@@ -1,7 +1,7 @@
 import React from "react";
 import { alertActions } from "./alert.actions";
 import { projectListConstants } from "../_constants";
-import { httpStatuses, history } from "../_helpers";
+import { httpStatuses, history, actionHelper } from "../_helpers";
 import { projectsService } from "../_services";
 
 /** Contains Redux action creators for actions related to projects */
@@ -35,7 +35,7 @@ function getList() {
             });
             break;
           case httpStatuses.unauthorized:
-            history.push("/account/login");
+            actionHelper.redirectToLogin();
             break;
           case httpStatuses.badRequest:
             dispatch(error({ badRequest: true }));
@@ -96,7 +96,7 @@ function getInfo(projectId) {
             });
             break;
           case httpStatuses.unauthorized:
-            history.push("/account/login");
+            actionHelper.redirectToLogin();
             break;
           case httpStatuses.notFound:
             dispatch(
@@ -167,7 +167,7 @@ function create(project) {
             );
             break;
           case httpStatuses.unauthorized:
-            history.push("/account/login");
+            actionHelper.redirectToLogin();
             break;
           case httpStatuses.badRequest:
             createProjectResponse
@@ -250,7 +250,7 @@ function update(projectId, project) {
             );
             break;
           case httpStatuses.unauthorized:
-            history.push("/account/login");
+            actionHelper.redirectToLogin();
             break;
           case httpStatuses.badRequest:
             updateProjectResponse
@@ -349,7 +349,7 @@ function deleteProject(projectId) {
             });
             break;
           case httpStatuses.unauthorized:
-            history.push("/account/login");
+            actionHelper.redirectToLogin();
             break;
           case httpStatuses.notFound:
             deleteProjectResponse.json().then(notFoundProjectId => {

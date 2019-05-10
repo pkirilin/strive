@@ -1,9 +1,14 @@
-import { registerConstants, loginConstants } from "../_constants";
-import { accountService } from "../_services";
-import { httpStatuses, history, getResources } from "../_helpers";
 import { alertActions } from "../_actions";
+import { registerConstants, loginConstants } from "../_constants";
+import {
+  config,
+  httpStatuses,
+  history,
+  getResources,
+  actionHelper
+} from "../_helpers";
+import { accountService } from "../_services";
 import Cookies from "js-cookie";
-import { config } from "../_helpers";
 
 const resources = getResources();
 
@@ -31,7 +36,7 @@ function register(user) {
         switch (userResponse.status) {
           case httpStatuses.ok:
             dispatch(success(userResponse));
-            history.push("/account/login");
+            actionHelper.redirectToLogin();
             dispatch(alertActions.success(alerts.success));
             break;
           case httpStatuses.badRequest:
