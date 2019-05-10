@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Strive.Data.Entities;
+using Strive.Data.Repositories.Interfaces;
 
-namespace Strive.Data.Repositories
+namespace Strive.Data.Repositories.Classes
 {
     public class UserRepository : RepositoryBase, IUserRepository
 	{

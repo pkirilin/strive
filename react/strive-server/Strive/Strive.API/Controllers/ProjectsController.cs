@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Strive.Data.Dtos;
 using Strive.Data.Entities;
-using Strive.Data.Services;
+using Strive.Data.Services.Interfaces;
 
 namespace Strive.API.Controllers
 {

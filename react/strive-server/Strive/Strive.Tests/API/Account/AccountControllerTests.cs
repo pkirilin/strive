@@ -3,12 +3,12 @@ using Microsoft.Extensions.Options;
 using Moq;
 using Strive.API;
 using Strive.API.Controllers;
-using Strive.Data.Services;
+using Strive.Data.Services.Interfaces;
 using Strive.Helpers.Settings;
 
 namespace Strive.Tests.API.Account
 {
-	public class AccountControllerTests
+    public class AccountControllerTests
 	{
 		protected readonly Mock<IMapper> _mapperMock;
 

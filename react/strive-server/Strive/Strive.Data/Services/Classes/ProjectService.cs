@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Strive.Data.Entities;
-using Strive.Data.Repositories;
+using Strive.Data.Repositories.Interfaces;
+using Strive.Data.Services.Interfaces;
 using Strive.Exceptions;
 
-namespace Strive.Data.Services
+namespace Strive.Data.Services.Classes
 {
     public class ProjectService : IProjectService
 	{

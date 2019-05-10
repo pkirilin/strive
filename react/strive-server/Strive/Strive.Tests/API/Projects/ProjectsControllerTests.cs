@@ -2,11 +2,11 @@
 using Moq;
 using Strive.API;
 using Strive.API.Controllers;
-using Strive.Data.Services;
+using Strive.Data.Services.Interfaces;
 
 namespace Strive.Tests.API.Projects
 {
-	public class ProjectsControllerTests
+    public class ProjectsControllerTests
 	{
 	    protected readonly Mock<IMapper> _mapperMock;
 

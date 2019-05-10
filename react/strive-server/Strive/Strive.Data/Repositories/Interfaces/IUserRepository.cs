@@ -1,6 +1,6 @@
 ﻿using Strive.Data.Entities;
 
-namespace Strive.Data.Repositories
+namespace Strive.Data.Repositories.Interfaces
 {
 	public interface IUserRepository : IRepository<User>
 	{

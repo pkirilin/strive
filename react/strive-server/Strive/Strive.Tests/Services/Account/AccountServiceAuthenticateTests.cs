@@ -1,12 +1,12 @@
 ﻿using System;
 using Strive.Data.Entities;
-using Strive.Data.Services;
+using Strive.Data.Services.Classes;
 using Strive.Exceptions;
 using Xunit;
 
 namespace Strive.Tests.Services.Account
 {
-	public class AccountServiceAuthenticateTests : AccountServiceTests
+    public class AccountServiceAuthenticateTests : AccountServiceTests
 	{
 		[Fact]
 		public void AuthenticationFailsOnIncorrectArguments()

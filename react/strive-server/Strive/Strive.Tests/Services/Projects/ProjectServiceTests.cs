@@ -1,6 +1,6 @@
 ﻿using Moq;
-using Strive.Data.Repositories;
-using Strive.Data.Services;
+using Strive.Data.Repositories.Interfaces;
+using Strive.Data.Services.Classes;
 
 namespace Strive.Tests.Services.Projects
 {

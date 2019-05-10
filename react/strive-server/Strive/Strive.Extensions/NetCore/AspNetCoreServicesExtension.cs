@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Strive.Data.Repositories;
-using Strive.Data.Services;
+using Strive.Data.Repositories.Classes;
+using Strive.Data.Repositories.Interfaces;
+using Strive.Data.Services.Classes;
+using Strive.Data.Services.Interfaces;
 
 namespace Strive.Extensions.NetCore
 {

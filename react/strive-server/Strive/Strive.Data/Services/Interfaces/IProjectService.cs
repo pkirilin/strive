@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Strive.Data.Entities;
 
-namespace Strive.Data.Services
+namespace Strive.Data.Services.Interfaces
 {
     public interface IProjectService
 	{

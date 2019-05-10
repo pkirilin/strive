@@ -1,12 +1,13 @@
-﻿using Strive.Data.Entities;
-using Strive.Data.Repositories;
+﻿using System;
+using Strive.Data.Entities;
+using Strive.Data.Repositories.Interfaces;
+using Strive.Data.Services.Interfaces;
 using Strive.Exceptions;
 using Strive.Helpers;
-using System;
 
-namespace Strive.Data.Services
+namespace Strive.Data.Services.Classes
 {
-	public class AccountService : IAccountService
+    public class AccountService : IAccountService
 	{
 		private readonly IUserRepository _userRepo;
 

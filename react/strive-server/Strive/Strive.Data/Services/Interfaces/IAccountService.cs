@@ -1,6 +1,6 @@
 ﻿using Strive.Data.Entities;
 
-namespace Strive.Data.Services
+namespace Strive.Data.Services.Interfaces
 {
 	public interface IAccountService
 	{

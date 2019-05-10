@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Strive.Data.Dtos;
 using Strive.Data.Entities;
-using Strive.Data.Services;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Strive.Helpers.Settings;
@@ -12,6 +11,7 @@ using System.Security.Claims;
 using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Strive.Data.Services.Interfaces;
 
 namespace Strive.API.Controllers
 {
