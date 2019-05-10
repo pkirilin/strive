@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Strive.API.Controllers;
@@ -11,24 +12,7 @@ namespace Strive.Tests.API.Account
 	public class AccountControllerRegisterTests : AccountControllerTests
 	{
 		[Fact]
-		public void RegisterCorrectData()
-		{
-			var registerRequest = new UserRegisterRequestDto()
-			{
-				Email = "test@gmail.com",
-				Username = "username",
-				Password = "password",
-				PasswordConfirm = "password"
-			};
-			AccountController controller = this.AccountControllerInstance;
-
-			IActionResult result = controller.Register(registerRequest);
-
-			Assert.IsType<OkResult>(result);
-		}
-
-		[Fact]
-		public void RegisterDataHasValidationErrors()
+		public void RegisterReturnsBadRequestOnInvalidData()
 		{
 			var registerRequest = new UserRegisterRequestDto()
 			{
@@ -46,7 +30,7 @@ namespace Strive.Tests.API.Account
 		}
 
 		[Fact]
-		public void RegisterCorrectDataButAccountServiceThrewException()
+		public void RegisterReturnsStatus500OnServiceException()
 		{
 			var registerRequest = new UserRegisterRequestDto()
 			{
@@ -56,14 +40,30 @@ namespace Strive.Tests.API.Account
 				PasswordConfirm = "password"
 			};
 			_accountServiceMock
-				.Setup(service => service.Create(It.IsNotNull<User>(), It.IsNotNull<string>()))
+				.Setup(service => service.Create(It.IsAny<User>(), It.IsAny<string>()))
 				.Throws<Exception>();
-			AccountController controller = this.AccountControllerInstance;
-			controller.ModelState.AddModelError("error", "error");
 
-			IActionResult result = controller.Register(registerRequest);
+		    ObjectResult result = this.AccountControllerInstance.Register(registerRequest) as ObjectResult;
 
-			Assert.IsType<BadRequestObjectResult>(result);
+            Assert.NotNull(result);
+            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
 		}
-	}
+
+	    [Fact]
+	    public void RegisterReturnsOkOnCorrectData()
+	    {
+	        var registerRequest = new UserRegisterRequestDto()
+	        {
+	            Email = "test@gmail.com",
+	            Username = "username",
+	            Password = "password",
+	            PasswordConfirm = "password"
+	        };
+	        AccountController controller = this.AccountControllerInstance;
+
+	        IActionResult result = controller.Register(registerRequest);
+
+	        Assert.IsType<OkResult>(result);
+	    }
+    }
 }

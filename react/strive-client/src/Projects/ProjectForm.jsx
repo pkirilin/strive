@@ -16,14 +16,16 @@ const mapStateToProps = state => {
     badRequestResponseJson,
     gettingProjectForUpdate,
     projectFetched,
-    notFound
+    notFound,
+    internalServerError
   } = state.projectsReducer.projectListReducer;
   return {
     sendingProjectInfo,
     badRequestResponseJson,
     gettingProjectForUpdate,
     projectFetched,
-    notFound
+    notFound,
+    internalServerError
   };
 };
 
@@ -206,7 +208,12 @@ class ProjectForm extends React.Component {
   }
 
   render() {
-    let { sendingProjectInfo, gettingProjectForUpdate, notFound } = this.props;
+    let {
+      sendingProjectInfo,
+      gettingProjectForUpdate,
+      notFound,
+      internalServerError
+    } = this.props;
     //let { buttons, labels, placeholders } = this.resources.projects.create;
 
     // Showing loading project info spinner while data is fetching (for update)
@@ -218,6 +225,12 @@ class ProjectForm extends React.Component {
     if (notFound) {
       return (
         <div className="text-center text-danger">Project was not found</div>
+      );
+    }
+
+    if (internalServerError) {
+      return (
+        <div className="text-center text-danger">{internalServerError}</div>
       );
     }
 

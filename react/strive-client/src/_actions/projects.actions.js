@@ -40,6 +40,13 @@ function getList() {
           case httpStatuses.badRequest:
             dispatch(error({ badRequest: true }));
             break;
+          case httpStatuses.internalServerError:
+            actionHelper.handleInternalServerErrorResponse(
+              projectListResponse,
+              dispatch,
+              error
+            );
+            break;
           default:
             break;
         }
@@ -103,6 +110,13 @@ function getInfo(projectId) {
               error({
                 notFound: true
               })
+            );
+            break;
+          case httpStatuses.internalServerError:
+            actionHelper.handleInternalServerErrorResponse(
+              projectFetchedResponse,
+              dispatch,
+              error
             );
             break;
           default:
@@ -170,13 +184,18 @@ function create(project) {
             actionHelper.redirectToLogin();
             break;
           case httpStatuses.badRequest:
-            createProjectResponse
-              .json()
-              .then(createProjectBadRequestJsonData => {
-                if (createProjectBadRequestJsonData) {
-                  dispatch(badRequest(createProjectBadRequestJsonData));
-                }
-              });
+            createProjectResponse.json().then(badRequestData => {
+              if (badRequestData) {
+                dispatch(badRequest(badRequestData));
+              }
+            });
+            break;
+          case httpStatuses.internalServerError:
+            actionHelper.handleInternalServerErrorResponse(
+              createProjectResponse,
+              dispatch,
+              error
+            );
             break;
           default:
             break;
@@ -275,6 +294,13 @@ function update(projectId, project) {
               );
             });
             break;
+          case httpStatuses.internalServerError:
+            actionHelper.handleInternalServerErrorResponse(
+              updateProjectResponse,
+              dispatch,
+              error
+            );
+            break;
           default:
             break;
         }
@@ -364,6 +390,13 @@ function deleteProject(projectId) {
                 )
               );
             });
+            break;
+          case httpStatuses.internalServerError:
+            actionHelper.handleInternalServerErrorResponse(
+              deleteProjectResponse,
+              dispatch,
+              error
+            );
             break;
           default:
             break;

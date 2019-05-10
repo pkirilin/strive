@@ -11,10 +11,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 
 namespace Strive.API.Controllers
 {
-	[Authorize]
+    [Authorize]
 	[Route("account")]
 	public class AccountController : Controller
 	{
@@ -53,20 +54,29 @@ namespace Strive.API.Controllers
 				return Unauthorized();
 			}
 
-			var tokenHandler = new JwtSecurityTokenHandler();
-			var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+		    string tokenString;
 
-			var tokenDescriptor = new SecurityTokenDescriptor
-			{
-				Subject = new ClaimsIdentity(new Claim[]
-				{
-					new Claim(ClaimTypes.Name, user.Id.ToString())
-				}),
-				Expires = DateTime.UtcNow.AddDays(7),
-				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-			};
-			var token = tokenHandler.CreateToken(tokenDescriptor);
-			var tokenString = tokenHandler.WriteToken(token);
+		    try
+		    {
+		        var tokenHandler = new JwtSecurityTokenHandler();
+		        var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+
+		        var tokenDescriptor = new SecurityTokenDescriptor
+		        {
+		            Subject = new ClaimsIdentity(new Claim[]
+		            {
+		                new Claim(ClaimTypes.Name, user.Id.ToString())
+		            }),
+		            Expires = DateTime.UtcNow.AddDays(7),
+		            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+		        };
+		        var token = tokenHandler.CreateToken(tokenDescriptor);
+		        tokenString = tokenHandler.WriteToken(token);
+		    }
+		    catch (Exception e)
+		    {
+		        return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+		    }
 
 			// Returning basic user info (without password) and token to store client side
 			return Ok(new
@@ -98,16 +108,15 @@ namespace Strive.API.Controllers
 			// Validates all data including business logic
 			if (ModelState.IsValid)
 			{
-				User user = _mapper.Map<User>(userRegisterRequestData);
-
-				try
+                try
 				{
-					_accountService.Create(user, userRegisterRequestData.Password);
+				    User user = _mapper.Map<User>(userRegisterRequestData);
+                    _accountService.Create(user, userRegisterRequestData.Password);
 					return Ok();
 				}
 				catch (Exception e)
 				{
-					return BadRequest(e.Message);
+					return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
 				}
 			}
 

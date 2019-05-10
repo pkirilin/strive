@@ -1,16 +1,36 @@
 ﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Strive.Data.Dtos;
 using Strive.Data.Entities;
+using Strive.Helpers.Settings;
 using Xunit;
 
 namespace Strive.Tests.API.Account
 {
 	public class AccountControllerAuthenticateTests : AccountControllerTests
 	{
-		[Fact]
-		public void UserUnauthorized()
+	    [Fact]
+	    public void AuthenticateReturnsStatus500IfTokenCreatedWithException()
+	    {
+	        var loginRequest = new UserLoginRequestDto()
+	        {
+	            Email = "username",
+	            Password = "password"
+	        };
+            // Configuring settings to return null to get exception for the test
+            _appSettingsMock.Setup(s => s.Value)
+	            .Returns(null as AppSettings);
+
+	        ObjectResult result = this.AccountControllerInstance.Authenticate(loginRequest) as ObjectResult;
+
+            Assert.NotNull(result);
+            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
+	    }
+
+	    [Fact]
+		public void AuthenticateReturnsUnauthorizedIfServiceFailed()
 		{
 			var loginRequest = new UserLoginRequestDto()
 			{
@@ -28,7 +48,7 @@ namespace Strive.Tests.API.Account
 		}
 
 		[Fact]
-		public void TokenCreatedWithoutException()
+		public void AuthenticateReturnsOkIfTokenCreatedWithoutException()
 		{
 			var loginRequest = new UserLoginRequestDto()
 			{

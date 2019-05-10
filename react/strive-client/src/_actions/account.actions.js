@@ -4,8 +4,6 @@ import { config, httpStatuses, getResources, actionHelper } from "../_helpers";
 import { accountService } from "../_services";
 import Cookies from "js-cookie";
 
-const resources = getResources();
-
 /** Contains Redux action creators for actions related to account */
 export const accountActions = {
   /** Redux action creator, performs account registration */
@@ -21,6 +19,7 @@ export const accountActions = {
  * @param {object} user User register DTO
  */
 function register(user) {
+  const resources = getResources();
   let { alerts } = resources.account.register;
   return dispatch => {
     dispatch(request(user));
@@ -44,9 +43,14 @@ function register(user) {
               }
             );
             break;
+          case httpStatuses.internalServerError:
+            actionHelper.handleInternalServerErrorResponse(
+              userResponse,
+              dispatch,
+              error
+            );
+            break;
           default:
-            dispatch(error(""));
-            dispatch(alertActions.clear());
             break;
         }
       },
@@ -108,6 +112,7 @@ function register(user) {
  * @param {object} userLoginData User login request DTO
  */
 function login(userLoginData) {
+  const resources = getResources();
   let { alerts } = resources.account.login;
   return dispatch => {
     dispatch(request(userLoginData));
@@ -158,9 +163,14 @@ function login(userLoginData) {
             dispatch(error(alerts.unauthorized));
             dispatch(alertActions.error(alerts.unauthorized));
             break;
+          case httpStatuses.internalServerError:
+            actionHelper.handleInternalServerErrorResponse(
+              userResponse,
+              dispatch,
+              error
+            );
+            break;
           default:
-            dispatch(error(""));
-            dispatch(alertActions.clear());
             break;
         }
       },
