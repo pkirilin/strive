@@ -22,7 +22,7 @@ namespace Strive.Tests.API.Projects
             ObjectResult result = controller.CreateProject(projectData) as ObjectResult;
 
             Assert.NotNull(result);
-            Assert.Equal(result.StatusCode, StatusCodes.Status500InternalServerError);
+            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
         }
 
         [Fact]

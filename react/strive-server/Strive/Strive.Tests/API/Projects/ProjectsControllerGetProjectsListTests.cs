@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Strive.Data.Entities;
 using Strive.Exceptions;
@@ -10,15 +11,16 @@ namespace Strive.Tests.API.Projects
 	public class ProjectsControllerGetProjectsListTests : ProjectsControllerTests
 	{
 		[Fact]
-		public void ProjectsControllerReturnsNotFoundResultIfServiceThrewException()
+		public void ProjectsControllerReturnsStatus500IfServiceThrewException()
 		{
 			int userId = 1;
 			_projectServiceMock.Setup(service => service.GetProjects(userId))
 				.Throws<StriveDatabaseException>();
 
-			IActionResult result = this.ProjectsControllerInstance.GetProjectList(userId);
+			ObjectResult result = this.ProjectsControllerInstance.GetProjectList(userId) as ObjectResult;
 
-			Assert.IsType<BadRequestObjectResult>(result);
+            Assert.NotNull(result);
+			Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
 		}
 
 		[Fact]

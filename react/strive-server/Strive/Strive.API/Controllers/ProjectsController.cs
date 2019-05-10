@@ -37,18 +37,14 @@ namespace Strive.API.Controllers
 		[HttpGet("get-list")]
 		public IActionResult GetProjectList(int userId)
 		{
-			List<Project> projects;
-
 			try
 			{
-				projects = _projectService.GetProjects(userId);
-			}
+			    return Ok(_projectService.GetProjects(userId));
+            }
 			catch (Exception e)
 			{
-				return BadRequest(e.Message);
+			    return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
 			}
-
-			return Ok(projects);
 		}
 
         /// <summary>
@@ -100,6 +96,11 @@ namespace Strive.API.Controllers
 		    return BadRequest(ModelState);
 		}
 
+        /// <summary>
+        /// Validates sent project data and updates an existing project
+        /// </summary>
+        /// <param name="projectId">Existing project id</param>
+        /// <param name="updatedProjectData">New project data</param>
 		[HttpPut("update/{projectId}")]
 		public IActionResult UpdateProject(int projectId, [FromBody]ProjectDto updatedProjectData)
 		{
@@ -141,7 +142,6 @@ namespace Strive.API.Controllers
 		{
 		    try
 		    {
-                // Getting target project by id
 		        Project projectForDelete = _projectService.GetProjectById(projectId);
 
                 if (projectForDelete != null)

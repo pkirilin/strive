@@ -23,20 +23,16 @@ namespace Strive.Data.Services
 		/// <returns>Projects list</returns>
 		public List<Project> GetProjects(int userId)
 		{
-			List<Project> projects;
-
 			try
 			{
-				projects = _projectRepo.GetAll()
-					.Where(project => project.UserId == userId)
-					.ToList();
-			}
+			    return _projectRepo.GetAll()
+			        .Where(project => project.UserId == userId)
+			        .ToList();
+            }
 			catch (Exception e)
 			{
 				throw new StriveDatabaseException($"Failed to get projects from database. Error message: {e.Message}");
 			}
-
-			return projects;
 		}
 
 	    /// <summary>
