@@ -1,7 +1,7 @@
 import React from "react";
 import { alertActions } from "./alert.actions";
 import { projectListConstants } from "../_constants";
-import { httpStatuses, history, actionHelper } from "../_helpers";
+import { httpStatuses, actionHelper } from "../_helpers";
 import { projectsService } from "../_services";
 
 /** Contains Redux action creators for actions related to projects */
@@ -156,7 +156,7 @@ function create(project) {
         switch (createProjectResponse.status) {
           case httpStatuses.ok:
             dispatch(success(project));
-            history.push("/projects/overview");
+            actionHelper.redirectToProjects();
             dispatch(
               alertActions.success(
                 <div>
@@ -239,7 +239,7 @@ function update(projectId, project) {
         switch (updateProjectResponse.status) {
           case httpStatuses.ok:
             dispatch(success(projectId, project));
-            history.push("/projects/overview");
+            actionHelper.redirectToProjects();
             dispatch(
               alertActions.success(
                 <div>

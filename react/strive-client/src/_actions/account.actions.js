@@ -1,12 +1,6 @@
 import { alertActions } from "../_actions";
 import { registerConstants, loginConstants } from "../_constants";
-import {
-  config,
-  httpStatuses,
-  history,
-  getResources,
-  actionHelper
-} from "../_helpers";
+import { config, httpStatuses, getResources, actionHelper } from "../_helpers";
 import { accountService } from "../_services";
 import Cookies from "js-cookie";
 
@@ -152,7 +146,7 @@ function login(userLoginData) {
                   );
                 }
                 dispatch(success(authenticatedUserJson));
-                history.push("/");
+                actionHelper.redirectToRoot();
               } else {
                 // Token not found, authentication failed
                 dispatch(error(alerts.unauthorized));
@@ -217,7 +211,7 @@ function login(userLoginData) {
  */
 function logout() {
   accountService.logout();
-  history.push("/");
+  actionHelper.redirectToRoot();
   return {
     type: loginConstants.LOGOUT
   };

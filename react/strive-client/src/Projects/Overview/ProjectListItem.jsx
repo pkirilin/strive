@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { ListGroupItem, Row, Col, Fade, Button } from "reactstrap";
 import { modalActions, projectsActions, alertActions } from "../../_actions";
 import { modalConstants } from "../../_constants";
-import { history } from "../../_helpers";
+import { actionHelper } from "../../_helpers";
 
 const mapStateToProps = state => {
   return {};
@@ -38,7 +38,7 @@ class ProjectListItem extends React.Component {
   }
 
   onEdit() {
-    history.push(`/projects/edit/${this.props.data.id}`);
+    actionHelper.redirectToEditProject(this.props.data.id);
   }
 
   onDelete() {

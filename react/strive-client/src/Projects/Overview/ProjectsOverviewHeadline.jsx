@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Row, Col, Button } from "reactstrap";
-import { history } from "../../_helpers";
 import { SectionTitle } from "../../_components";
-//import { projectsActions } from "../../_actions";
+import { actionHelper } from "../../_helpers";
 
 const mapStateToProps = state => {
   return {
@@ -20,7 +19,7 @@ class ProjectsOverviewHeadline extends React.Component {
   }
 
   createProject() {
-    history.push("/projects/create");
+    actionHelper.redirectToCreateProject();
   }
 
   render() {

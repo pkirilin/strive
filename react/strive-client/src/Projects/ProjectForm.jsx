@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Form, FormGroup, Button, Row, Col } from "reactstrap";
 import { TextBox, TextArea, Loading } from "../_components";
-import { history } from "../_helpers";
+import { actionHelper } from "../_helpers";
 import { validationStatuses } from "../_constants";
 import {
   validationRulesSetters,
@@ -164,7 +164,7 @@ class ProjectForm extends React.Component {
   }
 
   onCancel() {
-    history.push("/projects/overview");
+    actionHelper.redirectToProjects();
   }
 
   onSubmit() {
