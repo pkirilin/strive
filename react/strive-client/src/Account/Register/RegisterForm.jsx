@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Form, FormGroup, Button } from "reactstrap";
@@ -22,6 +23,14 @@ const mapStateToProps = state => {
 };
 
 class RegisterForm extends React.Component {
+  static propTypes = {
+    registering: PropTypes.bool,
+    badRequestResponseJson: PropTypes.shape({
+      emailRemote: PropTypes.arrayOf(PropTypes.string),
+      usernameRemote: PropTypes.arrayOf(PropTypes.string)
+    })
+  };
+
   constructor(props) {
     super(props);
     this.resources = this.props.resources;

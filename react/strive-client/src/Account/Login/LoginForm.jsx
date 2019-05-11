@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Form, FormGroup, Button } from "reactstrap";
@@ -16,6 +17,10 @@ const mapStateToProps = state => {
 };
 
 class LoginForm extends React.Component {
+  static propTypes = {
+    loggingIn: PropTypes.bool
+  };
+
   constructor(props) {
     super(props);
     this.resources = this.props.resources;

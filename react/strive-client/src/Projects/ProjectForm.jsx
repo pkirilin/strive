@@ -42,7 +42,7 @@ class ProjectForm extends React.Component {
     internalServerError: PropTypes.string,
 
     badRequestResponseJson: PropTypes.shape({
-      projectNameRemote: PropTypes.arrayOf(PropTypes.string).isRequired
+      projectNameRemote: PropTypes.arrayOf(PropTypes.string)
     }),
 
     projectFetched: PropTypes.shape({
