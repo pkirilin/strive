@@ -1,6 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export class CheckBox extends React.Component {
+  static propTypes = {
+    id: PropTypes.number.isRequired,
+    label: PropTypes.string.isRequired,
+    checked: PropTypes.bool,
+    onChange: PropTypes.func.isRequired
+  };
+
   static defaultProps = {
     checked: false
   };

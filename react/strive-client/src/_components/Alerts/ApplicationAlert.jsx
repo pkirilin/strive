@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Alert } from "reactstrap";
 import { history, config } from "../../_helpers";
@@ -12,6 +13,11 @@ const mapStateToProps = state => {
 };
 
 class ApplicationAlert extends React.Component {
+  static propTypes = {
+    message: PropTypes.string,
+    type: PropTypes.string
+  };
+
   constructor(props) {
     super(props);
 
