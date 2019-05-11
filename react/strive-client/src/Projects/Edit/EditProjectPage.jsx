@@ -2,7 +2,6 @@ import React from "react";
 import {
   PrivateLayout,
   PageTitle,
-  MarginedLayout,
   DocumentTitleSetter
 } from "../../_components";
 import { ProjectForm } from "../ProjectForm";
@@ -16,15 +15,13 @@ export class EditProjectPage extends React.Component {
       <DocumentTitleSetter values={["Edit project"]}>
         <PrivateLayout>
           <PageTitle>Edit project</PageTitle>
-          <MarginedLayout>
-            <ProjectForm
-              id="editProjectForm"
-              loadingText="Updating project"
-              submitButtonText="Save"
-              projectsAction={projectsActions.update}
-              projectId={projectId}
-            />
-          </MarginedLayout>
+          <ProjectForm
+            id="editProjectForm"
+            loadingText="Updating project"
+            submitButtonText="Save"
+            projectsAction={projectsActions.update}
+            projectId={projectId}
+          />
         </PrivateLayout>
       </DocumentTitleSetter>
     );

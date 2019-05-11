@@ -171,8 +171,7 @@ function create(project) {
             dispatch(
               alertActions.success(
                 <div>
-                  The project <b>{project.name}</b> has been successfully
-                  created
+                  Project <b>{project.name}</b> has been successfully created
                 </div>
               )
             );
@@ -259,8 +258,7 @@ function update(projectId, project) {
             dispatch(
               alertActions.success(
                 <div>
-                  The project <b>{project.name}</b> has been successfully
-                  updated
+                  Project <b>{project.name}</b> has been successfully updated
                 </div>
               )
             );
@@ -364,8 +362,8 @@ function deleteProject(projectId) {
               dispatch(
                 alertActions.success(
                   <div>
-                    The project <b>{deletedProject.name}</b> has been
-                    successfully deleted
+                    Project <b>{deletedProject.name}</b> has been successfully
+                    deleted
                   </div>
                 )
               );

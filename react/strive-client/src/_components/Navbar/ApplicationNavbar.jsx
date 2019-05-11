@@ -36,17 +36,15 @@ class ApplicationNavbar extends React.Component {
   render() {
     let { buttons } = this.resources.app.navbar;
     return (
-      <div>
-        <Navbar color="light" light expand="sm">
-          <NavbarBrand href="/">{config.brandName}</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <div className="d-flex flex-fill justify-content-sm-end">
-              <Button onClick={this.onLogoutClick}>{buttons.logout}</Button>
-            </div>
-          </Collapse>
-        </Navbar>
-      </div>
+      <Navbar color="light" light expand="sm">
+        <NavbarBrand href="/">{config.brandName}</NavbarBrand>
+        <NavbarToggler onClick={this.toggle} />
+        <Collapse isOpen={this.state.isOpen} navbar>
+          <div className="d-flex flex-fill justify-content-sm-end">
+            <Button onClick={this.onLogoutClick}>{buttons.logout}</Button>
+          </div>
+        </Collapse>
+      </Navbar>
     );
   }
 }

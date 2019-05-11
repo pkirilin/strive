@@ -1,9 +1,7 @@
 import React from "react";
 import {
-  CenteredFormLayout,
   DocumentTitleSetter,
   PageTitle,
-  MarginedLayout,
   PublicLayout
 } from "../../_components";
 import { getResources } from "../../_helpers";
@@ -22,11 +20,7 @@ export class ForgotPasswordPage extends React.Component {
       <DocumentTitleSetter values={[documentTitles.forgotPassword]}>
         <PublicLayout>
           <PageTitle>{titles.pageHeader}</PageTitle>
-          <MarginedLayout>
-            <CenteredFormLayout>
-              <ForgotPasswordForm resources={this.resources} />
-            </CenteredFormLayout>
-          </MarginedLayout>
+          <ForgotPasswordForm resources={this.resources} />
         </PublicLayout>
       </DocumentTitleSetter>
     );

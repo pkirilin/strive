@@ -1,9 +1,7 @@
 import React from "react";
 import {
-  CenteredFormLayout,
   DocumentTitleSetter,
   PageTitle,
-  MarginedLayout,
   PublicLayout
 } from "../../_components";
 import { getResources } from "../../_helpers";
@@ -22,11 +20,7 @@ export class LoginPage extends React.Component {
       <DocumentTitleSetter values={[documentTitles.login]}>
         <PublicLayout>
           <PageTitle>{titles.pageHeader}</PageTitle>
-          <MarginedLayout>
-            <CenteredFormLayout>
-              <LoginForm resources={this.resources} />
-            </CenteredFormLayout>
-          </MarginedLayout>
+          <LoginForm resources={this.resources} />
         </PublicLayout>
       </DocumentTitleSetter>
     );

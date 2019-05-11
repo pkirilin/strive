@@ -2,7 +2,6 @@ import React from "react";
 import {
   PrivateLayout,
   PageTitle,
-  MarginedLayout,
   DocumentTitleSetter
 } from "../../_components";
 import { getResources } from "../../_helpers";
@@ -23,11 +22,9 @@ export class ProjectsOverviewPage extends React.Component {
       <DocumentTitleSetter values={[documentTitles.overview]}>
         <PrivateLayout>
           <PageTitle>{titles.pageHeader}</PageTitle>
-          <MarginedLayout>
-            <ProjectsOverviewHeadline resources={this.resources} />
-            <ProjectsFilter resources={this.resources} />
-            <ProjectList resources={this.resources} />
-          </MarginedLayout>
+          <ProjectsOverviewHeadline resources={this.resources} />
+          <ProjectsFilter resources={this.resources} />
+          <ProjectList resources={this.resources} />
         </PrivateLayout>
       </DocumentTitleSetter>
     );

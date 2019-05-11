@@ -5,6 +5,6 @@ export class SectionTitle extends React.Component {
 
   render() {
     let classNames = [];
-    return <h4 className={classNames.join(" ")}>{this.props.children}</h4>;
+    return <h2 className={classNames.join(" ")}>{this.props.children}</h2>;
   }
 }

@@ -2,12 +2,7 @@ export { ApplicationAlert } from "./Alerts";
 export { Loading } from "./Effects";
 export { ApplicationFooter } from "./Footer";
 export { TextBox, TextArea, CheckBox } from "./FormControls";
-export {
-  PublicLayout,
-  PrivateLayout,
-  CenteredFormLayout,
-  MarginedLayout
-} from "./Layouts";
+export { PublicLayout, PrivateLayout } from "./Layouts";
 export { ConfirmationModal } from "./Modals";
 export { ApplicationNavbar } from "./Navbar";
 export { PrivateRoute } from "./Routes";

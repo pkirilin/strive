@@ -7,12 +7,12 @@ export class Loading extends React.Component {
   };
 
   static defaultProps = {
-    text: "Loading..."
+    text: "Loading"
   };
 
   render() {
     return (
-      <div className="d-flex justify-content-center align-items-center">
+      <div className="d-flex justify-content-center align-items-center sticky-top p-3">
         <div className="spinner-border text-muted" />
         <span className="p-2 bg-transparent text-muted">{this.props.text}</span>
       </div>

@@ -1,8 +1,7 @@
 import React from "react";
 import { Router, Switch, Route } from "react-router";
 import { history, config } from "../_helpers";
-import { PrivateRoute, ApplicationAlert } from "../_components";
-//import { Home } from "../Home";
+import { PrivateRoute } from "../_components";
 import { Account } from "../Account";
 import { Projects } from "../Projects";
 import { NotFoundPage } from "../ErrorPages";
@@ -14,19 +13,14 @@ export class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <ApplicationAlert />
-        <Router history={history}>
-          <Switch>
-            {/* <PrivateRoute exact path="/" component={Home} />
-            <PrivateRoute exact path="/home" component={Home} /> */}
-            <PrivateRoute exact path="/" component={Projects} />
-            <PrivateRoute path="/projects" component={Projects} />
-            <Route path="/account" component={Account} />
-            <Route component={NotFoundPage} />
-          </Switch>
-        </Router>
-      </div>
+      <Router history={history}>
+        <Switch>
+          <PrivateRoute exact path="/" component={Projects} />
+          <PrivateRoute path="/projects" component={Projects} />
+          <Route path="/account" component={Account} />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </Router>
     );
   }
 }

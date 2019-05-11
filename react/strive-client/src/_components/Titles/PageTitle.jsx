@@ -1,6 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export class PageTitle extends React.Component {
+  static propTypes = {
+    centered: PropTypes.bool
+  };
+
   static defaultProps = {
     centered: true
   };
@@ -10,6 +15,6 @@ export class PageTitle extends React.Component {
     if (this.props.centered && this.props.centered === true) {
       classNames.push("text-center");
     }
-    return <h2 className={classNames.join(" ")}>{this.props.children}</h2>;
+    return <h1 className={classNames.join(" ")}>{this.props.children}</h1>;
   }
 }

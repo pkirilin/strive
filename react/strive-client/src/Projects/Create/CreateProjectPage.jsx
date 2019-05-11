@@ -1,13 +1,12 @@
 import React from "react";
+import { projectsActions } from "../../_actions";
 import {
   PrivateLayout,
   PageTitle,
-  MarginedLayout,
   DocumentTitleSetter
 } from "../../_components";
 import { getResources } from "../../_helpers";
 import { ProjectForm } from "../ProjectForm";
-import { projectsActions } from "../../_actions";
 
 export class CreateProjectPage extends React.Component {
   constructor(props) {
@@ -22,16 +21,13 @@ export class CreateProjectPage extends React.Component {
       <DocumentTitleSetter values={[documentTitles.create]}>
         <PrivateLayout>
           <PageTitle>{titles.pageHeader}</PageTitle>
-          <MarginedLayout>
-            {/* <CreateProjectForm resources={this.resources} /> */}
-            <ProjectForm
-              resources={this.resources}
-              id="createProjectForm"
-              loadingText="Creating project"
-              submitButtonText="Create"
-              projectsAction={projectsActions.create}
-            />
-          </MarginedLayout>
+          <ProjectForm
+            resources={this.resources}
+            id="createProjectForm"
+            loadingText="Creating project"
+            submitButtonText="Create"
+            projectsAction={projectsActions.create}
+          />
         </PrivateLayout>
       </DocumentTitleSetter>
     );

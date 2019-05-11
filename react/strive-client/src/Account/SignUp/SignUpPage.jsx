@@ -1,8 +1,6 @@
 import React from "react";
 import {
-  CenteredFormLayout,
   PageTitle,
-  MarginedLayout,
   PublicLayout,
   DocumentTitleSetter
 } from "../../_components";
@@ -14,11 +12,7 @@ export class SignUpPage extends React.Component {
       <DocumentTitleSetter>
         <PublicLayout>
           <PageTitle>Sign up to Strive</PageTitle>
-          <MarginedLayout>
-            <CenteredFormLayout>
-              <SignUpForm />
-            </CenteredFormLayout>
-          </MarginedLayout>
+          <SignUpForm />
         </PublicLayout>
       </DocumentTitleSetter>
     );

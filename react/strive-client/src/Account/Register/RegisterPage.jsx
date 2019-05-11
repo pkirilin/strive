@@ -1,8 +1,6 @@
 import React from "react";
 import {
-  CenteredFormLayout,
   PageTitle,
-  MarginedLayout,
   PublicLayout,
   DocumentTitleSetter
 } from "../../_components";
@@ -22,11 +20,7 @@ export class RegisterPage extends React.Component {
       <DocumentTitleSetter values={[documentTitles.register]}>
         <PublicLayout>
           <PageTitle>{titles.pageHeader}</PageTitle>
-          <MarginedLayout>
-            <CenteredFormLayout>
-              <RegisterForm resources={this.resources} />
-            </CenteredFormLayout>
-          </MarginedLayout>
+          <RegisterForm resources={this.resources} />
         </PublicLayout>
       </DocumentTitleSetter>
     );

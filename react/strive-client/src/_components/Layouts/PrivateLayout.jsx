@@ -1,4 +1,6 @@
 import React from "react";
+import { Container } from "reactstrap";
+import { ApplicationAlert } from "../Alerts";
 import { ApplicationFooter } from "../Footer";
 import { ApplicationNavbar } from "../Navbar";
 
@@ -7,7 +9,10 @@ export class PrivateLayout extends React.Component {
     return (
       <div>
         <ApplicationNavbar />
-        {this.props.children}
+        <Container fluid>
+          <ApplicationAlert />
+          {this.props.children}
+        </Container>
         <ApplicationFooter />
       </div>
     );
