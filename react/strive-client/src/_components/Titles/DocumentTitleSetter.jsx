@@ -6,7 +6,7 @@ export class DocumentTitleSetter extends React.Component {
   static propTypes = {
     displayBrand: PropTypes.bool,
     brand: PropTypes.string,
-    values: PropTypes.array
+    values: PropTypes.arrayOf(PropTypes.string)
   };
 
   static defaultProps = {

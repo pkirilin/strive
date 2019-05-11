@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ListGroupItem, Row, Col, Fade, Button } from "reactstrap";
@@ -6,11 +7,15 @@ import { modalActions, projectsActions, alertActions } from "../../_actions";
 import { modalConstants } from "../../_constants";
 import { actionHelper } from "../../_helpers";
 
-const mapStateToProps = state => {
-  return {};
-};
-
 class ProjectListItem extends React.Component {
+  static propTypes = {
+    data: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string
+    }).isRequired
+  };
+
   constructor(props) {
     super(props);
     this.resources = this.props.resources;
@@ -104,5 +109,5 @@ class ProjectListItem extends React.Component {
   }
 }
 
-const connectedProjectListItem = connect(mapStateToProps)(ProjectListItem);
+const connectedProjectListItem = connect()(ProjectListItem);
 export { connectedProjectListItem as ProjectListItem };

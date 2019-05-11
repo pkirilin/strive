@@ -37,9 +37,6 @@ function getList() {
           case httpStatuses.unauthorized:
             actionHelper.redirectToLogin();
             break;
-          case httpStatuses.badRequest:
-            dispatch(error({ badRequest: true }));
-            break;
           case httpStatuses.internalServerError:
             actionHelper.handleInternalServerErrorResponse(
               projectListResponse,

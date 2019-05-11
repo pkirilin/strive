@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Form, FormGroup, Button, Row, Col } from "reactstrap";
 import { TextBox, TextArea, Loading } from "../_components";
@@ -30,6 +31,27 @@ const mapStateToProps = state => {
 };
 
 class ProjectForm extends React.Component {
+  static propTypes = {
+    id: PropTypes.string,
+    loadingText: PropTypes.string,
+    submitButtonText: PropTypes.string,
+
+    sendingProjectInfo: PropTypes.bool,
+    gettingProjectForUpdate: PropTypes.bool,
+    notFound: PropTypes.bool,
+    internalServerError: PropTypes.string,
+
+    badRequestResponseJson: PropTypes.shape({
+      projectNameRemote: PropTypes.arrayOf(PropTypes.string).isRequired
+    }),
+
+    projectFetched: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string
+    })
+  };
+
   static defaultProps = {
     id: "projectForm",
     loadingText: "Sending a project info",

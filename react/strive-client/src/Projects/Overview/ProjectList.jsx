@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { ListGroup } from "reactstrap";
 import { ProjectListItem } from "./ProjectListItem";
@@ -9,7 +10,7 @@ const mapStateToProps = state => {
   let {
     loadingProjectList,
     failedToFetch,
-    badRequest,
+    internalServerError,
     deletingProject,
     projects
   } = state.projectsReducer.projectListReducer;
@@ -17,7 +18,7 @@ const mapStateToProps = state => {
   return {
     loadingProjectList,
     failedToFetch,
-    badRequest,
+    internalServerError,
     deletingProject,
     projects,
     deleteProjectModal
@@ -25,6 +26,28 @@ const mapStateToProps = state => {
 };
 
 class ProjectList extends React.Component {
+  static propTypes = {
+    loadingProjectList: PropTypes.bool,
+    failedToFetch: PropTypes.bool,
+    internalServerError: PropTypes.string,
+    deletingProject: PropTypes.bool,
+
+    projects: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        description: PropTypes.string
+      })
+    ).isRequired,
+
+    deleteProjectModal: PropTypes.shape({
+      title: PropTypes.string,
+      message: PropTypes.node,
+      onClose: PropTypes.func,
+      onConfirm: PropTypes.func
+    })
+  };
+
   constructor(props) {
     super(props);
     this.resources = this.props.resources;
@@ -37,7 +60,7 @@ class ProjectList extends React.Component {
     let {
       loadingProjectList,
       failedToFetch,
-      badRequest,
+      internalServerError,
       deletingProject,
       projects,
       deleteProjectModal
@@ -58,11 +81,9 @@ class ProjectList extends React.Component {
     }
 
     // Server is working, but some server-side error occured
-    if (badRequest) {
+    if (internalServerError) {
       return (
-        <div className="text-center text-danger">
-          {contents.getProjectsBadRequest}
-        </div>
+        <div className="text-center text-danger">{internalServerError}</div>
       );
     }
 

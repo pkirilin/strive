@@ -4,11 +4,11 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 export class ConfirmationModal extends React.Component {
   static propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    title: PropTypes.string.isRequired,
-    message: PropTypes.string.isRequired,
-    onClose: PropTypes.func.isRequired,
-    onConfirm: PropTypes.func.isRequired
+    isOpen: PropTypes.bool,
+    title: PropTypes.string,
+    message: PropTypes.node,
+    onClose: PropTypes.func,
+    onConfirm: PropTypes.func
   };
 
   render() {
