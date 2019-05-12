@@ -90,12 +90,20 @@ class ProjectListItem extends React.Component {
               <Fade in={this.state.showButtons}>
                 <Row>
                   <Col className="d-flex justify-content-center pt-2 pb-2">
-                    <Button className="col-12" onClick={this.onEdit}>
+                    <Button
+                      color="light border"
+                      className="col-12"
+                      onClick={this.onEdit}
+                    >
                       {buttons.editProject}
                     </Button>
                   </Col>
                   <Col className="d-flex justify-content-center pt-2 pb-2">
-                    <Button className="col-12" onClick={this.onDelete}>
+                    <Button
+                      color="light border"
+                      className="col-12"
+                      onClick={this.onDelete}
+                    >
                       {buttons.deleteProject}
                     </Button>
                   </Col>

@@ -30,7 +30,9 @@ class ProjectsOverviewHeadline extends React.Component {
           <SectionTitle>{titles.projectsListTitle}</SectionTitle>
         </Col>
         <Col className="pt-2 pb-2 d-flex justify-content-sm-end justify-content-center">
-          <Button onClick={this.createProject}>{buttons.createProject}</Button>
+          <Button color="light border" onClick={this.createProject}>
+            {buttons.createProject}
+          </Button>
         </Col>
       </Row>
     );

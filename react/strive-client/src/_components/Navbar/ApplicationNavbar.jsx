@@ -41,7 +41,9 @@ class ApplicationNavbar extends React.Component {
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <div className="d-flex flex-fill justify-content-sm-end">
-            <Button onClick={this.onLogoutClick}>{buttons.logout}</Button>
+            <Button color="light border" onClick={this.onLogoutClick}>
+              {buttons.logout}
+            </Button>
           </div>
         </Collapse>
       </Navbar>

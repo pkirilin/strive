@@ -18,10 +18,10 @@ export class ConfirmationModal extends React.Component {
         <ModalHeader toggle={onClose}>{title}</ModalHeader>
         <ModalBody>{message}</ModalBody>
         <ModalFooter>
-          <Button className="col-3" onClick={onConfirm}>
+          <Button color="light border" className="col-3" onClick={onConfirm}>
             Yes
           </Button>
-          <Button className="col-3" onClick={onClose}>
+          <Button color="light border" className="col-3" onClick={onClose}>
             No
           </Button>
         </ModalFooter>

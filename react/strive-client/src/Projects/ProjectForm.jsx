@@ -282,12 +282,20 @@ class ProjectForm extends React.Component {
             <Col sm={{ size: 6, offset: 6 }} xs={{ size: 12, offset: 0 }}>
               <Row>
                 <Col className="pt-2 pb-2">
-                  <Button className="col" onClick={this.onSubmit}>
+                  <Button
+                    color="light border"
+                    className="col"
+                    onClick={this.onSubmit}
+                  >
                     {this.props.submitButtonText}
                   </Button>
                 </Col>
                 <Col className="pt-2 pb-2">
-                  <Button className="col" onClick={this.onCancel}>
+                  <Button
+                    color="light border"
+                    className="col"
+                    onClick={this.onCancel}
+                  >
                     Cancel
                   </Button>
                 </Col>
