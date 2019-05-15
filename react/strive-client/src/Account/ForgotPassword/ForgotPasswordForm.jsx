@@ -10,7 +10,6 @@ import {
 export class ForgotPasswordForm extends React.Component {
   constructor(props) {
     super(props);
-    this.resources = this.props.resources;
 
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -40,8 +39,7 @@ export class ForgotPasswordForm extends React.Component {
         ...this.state.email,
         value: event.target.value,
         validationState: validationRulesSetters.validateEmail(
-          event.target.value,
-          this.resources.account.forgotPassword
+          event.target.value
         )
       }
     });
@@ -59,8 +57,7 @@ export class ForgotPasswordForm extends React.Component {
         email: {
           ...this.state.email,
           validationState: validationRulesSetters.validateEmail(
-            this.state.email.value,
-            this.resources.account.forgotPassword
+            this.state.email.value
           )
         }
       },
@@ -69,27 +66,21 @@ export class ForgotPasswordForm extends React.Component {
   }
 
   render() {
-    let {
-      buttons,
-      helps,
-      labels,
-      placeholders
-    } = this.resources.account.forgotPassword;
     return (
       <Form id="forgotPasswordForm">
         <FormGroup>
           <TextBox
             {...this.state.email}
             type="text"
-            label={labels.email}
-            placeholder={placeholders.email}
-            help={helps.email}
+            label="Email"
+            placeholder="Enter email"
+            help="Enter your email. You will receive a link to reset your password"
           />
         </FormGroup>
 
         <FormGroup>
           <Button color="success" className="col" onClick={this.onSubmit}>
-            {buttons.send}
+            Send
           </Button>
         </FormGroup>
       </Form>

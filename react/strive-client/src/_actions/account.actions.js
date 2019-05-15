@@ -1,6 +1,6 @@
 import { alertActions } from "../_actions";
 import { registerConstants, loginConstants } from "../_constants";
-import { config, httpStatuses, getResources, actionHelper } from "../_helpers";
+import { config, httpStatuses, actionHelper } from "../_helpers";
 import { accountService } from "../_services";
 import Cookies from "js-cookie";
 
@@ -19,8 +19,6 @@ export const accountActions = {
  * @param {object} user User register DTO
  */
 function register(user) {
-  const resources = getResources();
-  let { alerts } = resources.account.register;
   return dispatch => {
     dispatch(request(user));
     accountService.register(user).then(
@@ -30,7 +28,7 @@ function register(user) {
           case httpStatuses.ok:
             dispatch(success(userResponse));
             actionHelper.redirectToLogin();
-            dispatch(alertActions.success(alerts.success));
+            dispatch(alertActions.success("Registration successful"));
             break;
           case httpStatuses.badRequest:
             userResponse.json().then(
@@ -57,7 +55,11 @@ function register(user) {
       // Server is not available
       errorResponse => {
         dispatch(error(errorResponse));
-        dispatch(alertActions.error(alerts.failedToFetch));
+        dispatch(
+          alertActions.error(
+            "Registration failed: unable to fetch data from API"
+          )
+        );
       }
     );
   };
@@ -112,8 +114,8 @@ function register(user) {
  * @param {object} userLoginData User login request DTO
  */
 function login(userLoginData) {
-  const resources = getResources();
-  let { alerts } = resources.account.login;
+  let unauthorizedErrorMessage =
+    "Authentication failed: wrong email or password";
   return dispatch => {
     dispatch(request(userLoginData));
     accountService.login(userLoginData).then(
@@ -154,14 +156,14 @@ function login(userLoginData) {
                 actionHelper.redirectToRoot();
               } else {
                 // Token not found, authentication failed
-                dispatch(error(alerts.unauthorized));
-                dispatch(alertActions.error(alerts.unauthorized));
+                dispatch(error(unauthorizedErrorMessage));
+                dispatch(alertActions.error(unauthorizedErrorMessage));
               }
             });
             break;
           case httpStatuses.unauthorized:
-            dispatch(error(alerts.unauthorized));
-            dispatch(alertActions.error(alerts.unauthorized));
+            dispatch(error(unauthorizedErrorMessage));
+            dispatch(alertActions.error(unauthorizedErrorMessage));
             break;
           case httpStatuses.internalServerError:
             actionHelper.handleInternalServerErrorResponse(
@@ -177,7 +179,7 @@ function login(userLoginData) {
       // Server is not available
       errorResponse => {
         dispatch(error(errorResponse));
-        dispatch(alertActions.error(alerts.failedToFetch));
+        dispatch(alertActions.error(unauthorizedErrorMessage));
       }
     );
   };

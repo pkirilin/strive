@@ -23,7 +23,6 @@ class LoginForm extends React.Component {
 
   constructor(props) {
     super(props);
-    this.resources = this.props.resources;
 
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onPasswordChange = this.onPasswordChange.bind(this);
@@ -64,8 +63,7 @@ class LoginForm extends React.Component {
         ...this.state.email,
         value: event.target.value,
         validationState: validationRulesSetters.validateEmail(
-          event.target.value,
-          this.resources.account.login
+          event.target.value
         )
       }
     });
@@ -77,8 +75,7 @@ class LoginForm extends React.Component {
         ...this.state.password,
         value: event.target.value,
         validationState: validationRulesSetters.validatePassword(
-          event.target.value,
-          this.resources.account.login
+          event.target.value
         )
       }
     });
@@ -115,15 +112,13 @@ class LoginForm extends React.Component {
         email: {
           ...this.state.email,
           validationState: validationRulesSetters.validateEmail(
-            this.state.email.value,
-            this.resources.account.login
+            this.state.email.value
           )
         },
         password: {
           ...this.state.password,
           validationState: validationRulesSetters.validatePassword(
-            this.state.password.value,
-            this.resources.account.login
+            this.state.password.value
           )
         }
       },
@@ -133,15 +128,14 @@ class LoginForm extends React.Component {
 
   render() {
     const { loggingIn } = this.props;
-    let { buttons, labels, links, placeholders } = this.resources.account.login;
     return (
       <Form id="loginForm">
         {loggingIn && <Loading />}
         <FormGroup>
           <TextBox
             {...this.state.email}
-            label={labels.email}
-            placeholder={placeholders.email}
+            label="Email"
+            placeholder="Enter email"
           />
         </FormGroup>
 
@@ -149,29 +143,29 @@ class LoginForm extends React.Component {
           <TextBox
             {...this.state.password}
             type="password"
-            label={labels.password}
-            placeholder={placeholders.password}
+            label="Password"
+            placeholder="Enter password"
           />
         </FormGroup>
 
         <CheckBox
           {...this.state.rememberMe}
           id="rememberMe"
-          label={labels.rememberMe}
+          label="Remember me"
         />
 
         <FormGroup>
           <Button color="success" className="col" onClick={this.onSubmit}>
-            {buttons.signIn}
+            Sign in
           </Button>
         </FormGroup>
 
         {/* <FormGroup className="text-center">
-          <Link to="/account/forgot-password">{links.forgotPassword}</Link>
+          <Link to="/account/forgot-password">Forgot password?</Link>
         </FormGroup> */}
 
         <FormGroup className="text-center">
-          <Link to="/account/register">{links.signUp}</Link>
+          <Link to="/account/register">Sign up</Link>
         </FormGroup>
       </Form>
     );

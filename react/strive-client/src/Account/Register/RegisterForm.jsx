@@ -33,7 +33,6 @@ class RegisterForm extends React.Component {
 
   constructor(props) {
     super(props);
-    this.resources = this.props.resources;
 
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onUsernameChange = this.onUsernameChange.bind(this);
@@ -133,8 +132,7 @@ class RegisterForm extends React.Component {
         ...this.state.email,
         value: event.target.value,
         validationState: validationRulesSetters.validateEmail(
-          event.target.value,
-          this.resources.account.register
+          event.target.value
         )
       }
     });
@@ -146,8 +144,7 @@ class RegisterForm extends React.Component {
         ...this.state.username,
         value: event.target.value,
         validationState: validationRulesSetters.validateUsername(
-          event.target.value,
-          this.resources.account.register
+          event.target.value
         )
       }
     });
@@ -155,8 +152,7 @@ class RegisterForm extends React.Component {
 
   onPasswordChange(event) {
     let passwordValidationState = validationRulesSetters.validatePassword(
-      event.target.value,
-      this.resources.account.register
+      event.target.value
     );
     this.setState({
       password: {
@@ -169,8 +165,7 @@ class RegisterForm extends React.Component {
         validationState: validationRulesSetters.validatePasswordConfirm(
           this.state.passwordConfirm.value,
           event.target.value,
-          passwordValidationState.status,
-          this.resources.account.register
+          passwordValidationState.status
         )
       }
     });
@@ -184,8 +179,7 @@ class RegisterForm extends React.Component {
         validationState: validationRulesSetters.validatePasswordConfirm(
           event.target.value,
           this.state.password.value,
-          this.state.password.validationState.status,
-          this.resources.account.register
+          this.state.password.validationState.status
         )
       }
     });
@@ -210,8 +204,7 @@ class RegisterForm extends React.Component {
     this.props.dispatch(alertActions.clear());
 
     let passwordValidationState = validationRulesSetters.validatePassword(
-      this.state.password.value,
-      this.resources.account.register
+      this.state.password.value
     );
 
     this.setState(
@@ -219,15 +212,13 @@ class RegisterForm extends React.Component {
         email: {
           ...this.state.email,
           validationState: validationRulesSetters.validateEmail(
-            this.state.email.value,
-            this.resources.account.register
+            this.state.email.value
           )
         },
         username: {
           ...this.state.username,
           validationState: validationRulesSetters.validateUsername(
-            this.state.username.value,
-            this.resources.account.register
+            this.state.username.value
           )
         },
         password: {
@@ -239,8 +230,7 @@ class RegisterForm extends React.Component {
           validationState: validationRulesSetters.validatePasswordConfirm(
             this.state.passwordConfirm.value,
             this.state.password.value,
-            passwordValidationState.status,
-            this.resources.account.register
+            passwordValidationState.status
           )
         }
       },
@@ -250,12 +240,6 @@ class RegisterForm extends React.Component {
 
   render() {
     const { registering } = this.props;
-    let {
-      buttons,
-      labels,
-      links,
-      placeholders
-    } = this.resources.account.register;
     return (
       <Form id="registerForm">
         {registering && <Loading />}
@@ -263,8 +247,8 @@ class RegisterForm extends React.Component {
           <TextBox
             {...this.state.email}
             type="text"
-            label={labels.email}
-            placeholder={placeholders.email}
+            label="Email"
+            placeholder="Enter email"
           />
         </FormGroup>
 
@@ -272,8 +256,8 @@ class RegisterForm extends React.Component {
           <TextBox
             {...this.state.username}
             type="text"
-            label={labels.username}
-            placeholder={placeholders.username}
+            label="Username"
+            placeholder="Enter username"
           />
         </FormGroup>
 
@@ -281,8 +265,8 @@ class RegisterForm extends React.Component {
           <TextBox
             {...this.state.password}
             type="password"
-            label={labels.password}
-            placeholder={placeholders.password}
+            label="Password"
+            placeholder="Enter password"
           />
         </FormGroup>
 
@@ -290,19 +274,19 @@ class RegisterForm extends React.Component {
           <TextBox
             {...this.state.passwordConfirm}
             type="password"
-            label={labels.passwordConfirm}
-            placeholder={placeholders.passwordConfirm}
+            label="Password confirm"
+            placeholder="Enter password again"
           />
         </FormGroup>
 
         <FormGroup>
           <Button color="success" className="col" onClick={this.onSubmit}>
-            {buttons.createAccount}
+            Create account
           </Button>
         </FormGroup>
 
         <FormGroup className="text-center">
-          <Link to="/account/login">{links.signIn}</Link>
+          <Link to="/account/login">Sign in</Link>
         </FormGroup>
       </Form>
     );

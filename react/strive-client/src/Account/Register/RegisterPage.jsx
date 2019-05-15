@@ -5,22 +5,14 @@ import {
   DocumentTitleSetter
 } from "../../_components";
 import { RegisterForm } from "./RegisterForm";
-import { getResources } from "../../_helpers";
 
 export class RegisterPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.resources = getResources();
-  }
-
   render() {
-    let { documentTitles } = this.resources.account;
-    let { titles } = this.resources.account.register;
     return (
-      <DocumentTitleSetter values={[documentTitles.register]}>
+      <DocumentTitleSetter values={["Register"]}>
         <PublicLayout>
-          <PageTitle>{titles.pageHeader}</PageTitle>
-          <RegisterForm resources={this.resources} />
+          <PageTitle>Sign up to Strive</PageTitle>
+          <RegisterForm />
         </PublicLayout>
       </DocumentTitleSetter>
     );

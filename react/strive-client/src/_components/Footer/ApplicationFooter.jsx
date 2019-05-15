@@ -1,4 +1,5 @@
 import React from "react";
+import { config } from "../../_helpers";
 
 export class ApplicationFooter extends React.Component {
   constructor(props) {
@@ -24,7 +25,9 @@ export class ApplicationFooter extends React.Component {
     return (
       <div>
         <hr />
-        <div className="text-center">&copy; Strive, {this.state.year}</div>
+        <div className="text-center">
+          &copy; {config.brandName}, {this.state.year}
+        </div>
       </div>
     );
   }

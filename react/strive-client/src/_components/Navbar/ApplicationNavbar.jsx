@@ -8,12 +8,11 @@ import {
   Button
 } from "reactstrap";
 import { accountActions } from "../../_actions";
-import { getResources, config } from "../../_helpers";
+import { config } from "../../_helpers";
 
 class ApplicationNavbar extends React.Component {
   constructor(props) {
     super(props);
-    this.resources = getResources();
 
     this.state = {
       isOpen: false
@@ -34,7 +33,6 @@ class ApplicationNavbar extends React.Component {
   }
 
   render() {
-    let { buttons } = this.resources.app.navbar;
     return (
       <Navbar color="light" light expand="sm">
         <NavbarBrand href="/">{config.brandName}</NavbarBrand>
@@ -42,7 +40,7 @@ class ApplicationNavbar extends React.Component {
         <Collapse isOpen={this.state.isOpen} navbar>
           <div className="d-flex flex-fill justify-content-sm-end">
             <Button color="light border" onClick={this.onLogoutClick}>
-              {buttons.logout}
+              Logout
             </Button>
           </div>
         </Collapse>

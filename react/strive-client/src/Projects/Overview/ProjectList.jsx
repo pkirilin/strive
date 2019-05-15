@@ -50,13 +50,11 @@ class ProjectList extends React.Component {
 
   constructor(props) {
     super(props);
-    this.resources = this.props.resources;
 
     this.props.dispatch(projectsActions.getList());
   }
 
   render() {
-    let { contents } = this.resources.projects.overview;
     let {
       loadingProjectList,
       failedToFetch,
@@ -68,14 +66,14 @@ class ProjectList extends React.Component {
 
     // Rendering loading spinner while data is fetching from server
     if (loadingProjectList) {
-      return <Loading text={contents.loadingProjects} />;
+      return <Loading text="Getting projects" />;
     }
 
     // Server is not working, then showing a message, that data has not been fetched
     if (failedToFetch) {
       return (
         <div className="text-center text-danger">
-          {contents.failedToGetProjects}
+          Failed to get projects: server is not available
         </div>
       );
     }
@@ -90,9 +88,7 @@ class ProjectList extends React.Component {
     // Server is working, but no projects were found for target user
     if (projects.length === 0) {
       return (
-        <div className="text-center text-secondary">
-          {contents.projectsListEmpty}
-        </div>
+        <div className="text-center text-secondary">Project list is empty</div>
       );
     }
 
@@ -102,11 +98,7 @@ class ProjectList extends React.Component {
         <ConfirmationModal {...deleteProjectModal} />
         {deletingProject && <Loading text="Deleting project" />}
         {this.props.projects.map(project => (
-          <ProjectListItem
-            key={project.id}
-            data={project}
-            resources={this.resources}
-          />
+          <ProjectListItem key={project.id} data={project} />
         ))}
       </ListGroup>
     );

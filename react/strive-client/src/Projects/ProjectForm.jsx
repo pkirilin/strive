@@ -60,7 +60,6 @@ class ProjectForm extends React.Component {
 
   constructor(props) {
     super(props);
-    this.resources = this.props.resources;
 
     this.onProjectNameValueChanged = this.onProjectNameValueChanged.bind(this);
     this.onProjectDescriptionValueChanged = this.onProjectDescriptionValueChanged.bind(
@@ -167,8 +166,7 @@ class ProjectForm extends React.Component {
         ...this.state.projectName,
         value: event.target.value,
         validationState: validationRulesSetters.validateProjectName(
-          event.target.value,
-          this.resources
+          event.target.value
         )
       }
     });
@@ -180,8 +178,7 @@ class ProjectForm extends React.Component {
         ...this.state.projectDescription,
         value: event.target.value,
         validationState: validationRulesSetters.validateProjectDescription(
-          event.target.value,
-          this.resources
+          event.target.value
         )
       }
     });
@@ -198,8 +195,7 @@ class ProjectForm extends React.Component {
           ...this.state.projectName,
           value: this.state.projectName.value,
           validationState: validationRulesSetters.validateProjectName(
-            this.state.projectName.value,
-            this.resources
+            this.state.projectName.value
           )
         }
       },
@@ -236,7 +232,6 @@ class ProjectForm extends React.Component {
       notFound,
       internalServerError
     } = this.props;
-    //let { buttons, labels, placeholders } = this.resources.projects.create;
 
     // Showing loading project info spinner while data is fetching (for update)
     if (gettingProjectForUpdate) {

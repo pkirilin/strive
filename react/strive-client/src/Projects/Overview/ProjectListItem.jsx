@@ -18,7 +18,6 @@ class ProjectListItem extends React.Component {
 
   constructor(props) {
     super(props);
-    this.resources = this.props.resources;
 
     this.state = {
       showButtons: false
@@ -74,7 +73,6 @@ class ProjectListItem extends React.Component {
   }
 
   render() {
-    let { buttons } = this.resources.projects.overview;
     return (
       <ListGroupItem
         action
@@ -95,7 +93,7 @@ class ProjectListItem extends React.Component {
                       className="col-12"
                       onClick={this.onEdit}
                     >
-                      {buttons.editProject}
+                      Edit
                     </Button>
                   </Col>
                   <Col className="d-flex justify-content-center pt-2 pb-2">
@@ -104,7 +102,7 @@ class ProjectListItem extends React.Component {
                       className="col-12"
                       onClick={this.onDelete}
                     >
-                      {buttons.deleteProject}
+                      Delete
                     </Button>
                   </Col>
                 </Row>

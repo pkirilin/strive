@@ -37,39 +37,22 @@ function resetAll() {
 /*
  *  Sets all nessesary validation rules for checking email
  */
-function validateEmail(emailValue, resources) {
+function validateEmail(emailValue) {
   return validationRules.multiple([
-    validationRules.required(
-      emailValue,
-      resources.validation.invalid.email.required.message
-    ),
-    validationRules.lengthMin(
-      emailValue,
-      resources.validation.invalid.email.lengthMin.min,
-      resources.validation.invalid.email.lengthMin.message
-    ),
-    validationRules.lengthMax(
-      emailValue,
-      resources.validation.invalid.email.lengthMax.max,
-      resources.validation.invalid.email.lengthMax.message
-    ),
-    validationRules.email(
-      emailValue,
-      resources.validation.invalid.email.email.message
-    )
+    validationRules.required(emailValue, "Email is required"),
+    validationRules.lengthMin(emailValue, 4, "Email is too short"),
+    validationRules.lengthMax(emailValue, 255, "Email is too long"),
+    validationRules.email(emailValue, "Email format is incorrect")
   ]);
 }
 
 /*
  * Sets all nessesary validation rules for checking password
  */
-function validatePassword(passwordValue, resources) {
+function validatePassword(passwordValue) {
   // TODO: Add more validation rules
   return validationRules.multiple([
-    validationRules.required(
-      passwordValue,
-      resources.validation.invalid.password.required.message
-    ),
+    validationRules.required(passwordValue, "Password is required"),
     validationRules.lengthMin(passwordValue, 4, "Password is too short"),
     validationRules.lengthMax(passwordValue, 16, "Password is too long")
   ]);
@@ -81,20 +64,19 @@ function validatePassword(passwordValue, resources) {
 function validatePasswordConfirm(
   passwordConfirmValue,
   compareValue,
-  compareValidationStatus,
-  resources
+  compareValidationStatus
 ) {
   // TODO: Add more validation rules
   return validationRules.multiple([
     validationRules.required(
       passwordConfirmValue,
-      resources.validation.invalid.passwordConfirm.required.message
+      "Password confirmation is required"
     ),
     validationRules.compare(
       passwordConfirmValue,
       compareValue,
       compareValidationStatus,
-      resources.validation.invalid.passwordConfirm.compare.message
+      "Passwords are mismatch"
     )
   ]);
 }
@@ -102,12 +84,9 @@ function validatePasswordConfirm(
 /*
  * Sets all nessesary validation rules for checking username/login
  */
-function validateUsername(usernameValue, resources) {
+function validateUsername(usernameValue) {
   return validationRules.multiple([
-    validationRules.required(
-      usernameValue,
-      resources.validation.invalid.username.required.message
-    ),
+    validationRules.required(usernameValue, "Username is required"),
     validationRules.username(
       usernameValue,
       "Username must contain from 4 to 20 symbols. Allowed symbols: alphanumeric characters, underscores (_) and dots (.). Numeric character can't be at the start of a username. Underscore and dot can't be at the end or start of a username. Underscore and dot can't be next to each other. Underscore or dot can't be used multiple times in a row"
@@ -118,7 +97,7 @@ function validateUsername(usernameValue, resources) {
 /**
  * Sets all nessesary validation rules for checking project name's correct value
  */
-function validateProjectName(projectNameValue, resources) {
+function validateProjectName(projectNameValue) {
   return validationRules.multiple([
     validationRules.required(projectNameValue, "Project name is required"),
     validationRules.lengthMin(projectNameValue, 3, "Project name is too short"),
@@ -129,7 +108,7 @@ function validateProjectName(projectNameValue, resources) {
 /**
  * Sets all nessesary validation rules for checking project description's correct value
  */
-function validateProjectDescription(projectDescriptionValue, resources) {
+function validateProjectDescription(projectDescriptionValue) {
   return validationRules.multiple([
     validationRules.lengthMax(
       projectDescriptionValue,
