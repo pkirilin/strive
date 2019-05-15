@@ -2,7 +2,7 @@ import React from "react";
 import { projectsActions } from "../../_actions";
 import {
   PrivateLayout,
-  PageTitle,
+  AppHeader,
   DocumentTitleSetter
 } from "../../_components";
 import { ProjectForm } from "../ProjectForm";
@@ -12,7 +12,7 @@ export class CreateProjectPage extends React.Component {
     return (
       <DocumentTitleSetter values={["Create project"]}>
         <PrivateLayout>
-          <PageTitle>Create project</PageTitle>
+          <AppHeader>Create project</AppHeader>
           <ProjectForm
             id="createProjectForm"
             loadingText="Creating project"

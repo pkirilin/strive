@@ -1,7 +1,7 @@
 import React from "react";
 import {
   DocumentTitleSetter,
-  PageTitle,
+  AppHeader,
   PublicLayout
 } from "../../_components";
 import { ForgotPasswordForm } from "./ForgotPasswordForm";
@@ -11,7 +11,7 @@ export class ForgotPasswordPage extends React.Component {
     return (
       <DocumentTitleSetter values={["Forgot password?"]}>
         <PublicLayout>
-          <PageTitle>Forgot password?</PageTitle>
+          <AppHeader>Forgot password?</AppHeader>
           <ForgotPasswordForm />
         </PublicLayout>
       </DocumentTitleSetter>

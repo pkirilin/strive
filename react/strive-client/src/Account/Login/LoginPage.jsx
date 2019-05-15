@@ -1,7 +1,7 @@
 import React from "react";
 import {
   DocumentTitleSetter,
-  PageTitle,
+  AppHeader,
   PublicLayout
 } from "../../_components";
 import { LoginForm } from "./LoginForm";
@@ -11,7 +11,7 @@ export class LoginPage extends React.Component {
     return (
       <DocumentTitleSetter values={["Login"]}>
         <PublicLayout>
-          <PageTitle>Sign in to Strive</PageTitle>
+          <AppHeader>Sign in to Strive</AppHeader>
           <LoginForm />
         </PublicLayout>
       </DocumentTitleSetter>

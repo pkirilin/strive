@@ -10,7 +10,7 @@ import {
 import { accountActions } from "../../_actions";
 import { config } from "../../_helpers";
 
-class ApplicationNavbar extends React.Component {
+class AppNavbar extends React.Component {
   constructor(props) {
     super(props);
 
@@ -49,5 +49,5 @@ class ApplicationNavbar extends React.Component {
   }
 }
 
-const connectedNavbar = connect()(ApplicationNavbar);
-export { connectedNavbar as ApplicationNavbar };
+const connectedNavbar = connect()(AppNavbar);
+export { connectedNavbar as AppNavbar };

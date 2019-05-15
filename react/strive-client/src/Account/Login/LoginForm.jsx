@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Form, FormGroup, Button } from "reactstrap";
-import { Loading, TextBox, CheckBox } from "../../_components";
+import { AppSpinner, AppTextBox, AppCheckBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 import {
   validationUtils,
@@ -130,9 +130,9 @@ class LoginForm extends React.Component {
     const { loggingIn } = this.props;
     return (
       <Form id="loginForm">
-        {loggingIn && <Loading />}
+        {loggingIn && <AppSpinner />}
         <FormGroup>
-          <TextBox
+          <AppTextBox
             {...this.state.email}
             label="Email"
             placeholder="Enter email"
@@ -140,7 +140,7 @@ class LoginForm extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <TextBox
+          <AppTextBox
             {...this.state.password}
             type="password"
             label="Password"
@@ -148,7 +148,7 @@ class LoginForm extends React.Component {
           />
         </FormGroup>
 
-        <CheckBox
+        <AppCheckBox
           {...this.state.rememberMe}
           id="rememberMe"
           label="Remember me"

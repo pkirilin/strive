@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export class CheckBox extends React.Component {
+export class AppCheckBox extends React.Component {
   static propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     checked: PropTypes.bool,
     onChange: PropTypes.func.isRequired

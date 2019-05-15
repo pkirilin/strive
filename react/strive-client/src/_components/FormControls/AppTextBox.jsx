@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { Label, Input } from "reactstrap";
 import { validationStatuses } from "../../_constants";
 
-export class TextBox extends React.Component {
+export class AppTextBox extends React.Component {
   static propTypes = {
-    type: PropTypes.string.isRequired,
+    type: PropTypes.string,
     label: PropTypes.string,
     placeholder: PropTypes.string,
     value: PropTypes.string.isRequired,
@@ -17,6 +17,7 @@ export class TextBox extends React.Component {
   };
 
   static defaultProps = {
+    type: "text",
     validationState: {
       status: validationStatuses.default
     }

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Label, Input } from "reactstrap";
 import { validationStatuses } from "../../_constants";
 
-export class TextArea extends React.Component {
+export class AppTextArea extends React.Component {
   static propTypes = {
     label: PropTypes.string,
     placeholder: PropTypes.string,

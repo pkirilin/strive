@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  PageTitle,
+  AppHeader,
   PublicLayout,
   DocumentTitleSetter
 } from "../../_components";
@@ -11,7 +11,7 @@ export class ResetPasswordPage extends React.Component {
     return (
       <DocumentTitleSetter>
         <PublicLayout>
-          <PageTitle>Password change</PageTitle>
+          <AppHeader>Password change</AppHeader>
           <ResetPasswordForm />
         </PublicLayout>
       </DocumentTitleSetter>

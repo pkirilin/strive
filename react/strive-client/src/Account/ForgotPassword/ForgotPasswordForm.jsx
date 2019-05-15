@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, FormGroup, Button } from "reactstrap";
-import { TextBox } from "../../_components";
+import { AppTextBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 import {
   validationUtils,
@@ -69,7 +69,7 @@ export class ForgotPasswordForm extends React.Component {
     return (
       <Form id="forgotPasswordForm">
         <FormGroup>
-          <TextBox
+          <AppTextBox
             {...this.state.email}
             type="text"
             label="Email"

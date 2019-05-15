@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Form, FormGroup, Button } from "reactstrap";
-import { Loading, TextBox } from "../../_components";
+import { AppSpinner, AppTextBox } from "../../_components";
 import { validationStatuses } from "../../_constants";
 import {
   validationRulesSetters,
@@ -242,9 +242,9 @@ class RegisterForm extends React.Component {
     const { registering } = this.props;
     return (
       <Form id="registerForm">
-        {registering && <Loading />}
+        {registering && <AppSpinner />}
         <FormGroup>
-          <TextBox
+          <AppTextBox
             {...this.state.email}
             type="text"
             label="Email"
@@ -253,7 +253,7 @@ class RegisterForm extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <TextBox
+          <AppTextBox
             {...this.state.username}
             type="text"
             label="Username"
@@ -262,7 +262,7 @@ class RegisterForm extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <TextBox
+          <AppTextBox
             {...this.state.password}
             type="password"
             label="Password"
@@ -271,7 +271,7 @@ class RegisterForm extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <TextBox
+          <AppTextBox
             {...this.state.passwordConfirm}
             type="password"
             label="Password confirm"

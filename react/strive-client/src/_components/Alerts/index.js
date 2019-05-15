@@ -1,1 +1,1 @@
-export { ApplicationAlert } from "./ApplicationAlert";
+export { AppAlert } from "./AppAlert";

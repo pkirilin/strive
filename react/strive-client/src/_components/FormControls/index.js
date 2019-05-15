@@ -1,3 +1,3 @@
-export { TextBox } from "./TextBox";
-export { TextArea } from "./TextArea";
-export { CheckBox } from "./CheckBox";
+export { AppTextBox } from "./AppTextBox";
+export { AppTextArea } from "./AppTextArea";
+export { AppCheckBox } from "./AppCheckBox";

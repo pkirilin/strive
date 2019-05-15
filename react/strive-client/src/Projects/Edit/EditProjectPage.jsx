@@ -1,7 +1,7 @@
 import React from "react";
 import {
   PrivateLayout,
-  PageTitle,
+  AppHeader,
   DocumentTitleSetter
 } from "../../_components";
 import { ProjectForm } from "../ProjectForm";
@@ -14,7 +14,7 @@ export class EditProjectPage extends React.Component {
     return (
       <DocumentTitleSetter values={["Edit project"]}>
         <PrivateLayout>
-          <PageTitle>Edit project</PageTitle>
+          <AppHeader>Edit project</AppHeader>
           <ProjectForm
             id="editProjectForm"
             loadingText="Updating project"

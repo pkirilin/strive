@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  PageTitle,
+  AppHeader,
   PublicLayout,
   DocumentTitleSetter
 } from "../../_components";
@@ -11,7 +11,7 @@ export class RegisterPage extends React.Component {
     return (
       <DocumentTitleSetter values={["Register"]}>
         <PublicLayout>
-          <PageTitle>Sign up to Strive</PageTitle>
+          <AppHeader>Sign up to Strive</AppHeader>
           <RegisterForm />
         </PublicLayout>
       </DocumentTitleSetter>

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Form, FormGroup, Button, Row, Col } from "reactstrap";
-import { TextBox, TextArea, Loading } from "../_components";
+import { AppTextBox, AppTextArea, AppSpinner } from "../_components";
 import { actionHelper } from "../_helpers";
 import { validationStatuses } from "../_constants";
 import {
@@ -235,7 +235,7 @@ class ProjectForm extends React.Component {
 
     // Showing loading project info spinner while data is fetching (for update)
     if (gettingProjectForUpdate) {
-      return <Loading text="Getting project for update" />;
+      return <AppSpinner text="Getting project for update" />;
     }
 
     // If server returned not found for current request, showing error message
@@ -253,9 +253,9 @@ class ProjectForm extends React.Component {
 
     return (
       <Form id={this.props.id} className="col-12">
-        {sendingProjectInfo && <Loading text={this.props.loadingText} />}
+        {sendingProjectInfo && <AppSpinner text={this.props.loadingText} />}
         <FormGroup>
-          <TextBox
+          <AppTextBox
             {...this.state.projectName}
             type="text"
             label="Project name"
@@ -264,7 +264,7 @@ class ProjectForm extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <TextArea
+          <AppTextArea
             {...this.state.projectDescription}
             label="Project description"
             placeholder="Enter project description"

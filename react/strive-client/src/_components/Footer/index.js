@@ -1,1 +1,1 @@
-export { ApplicationFooter } from "./ApplicationFooter";
+export { AppFooter } from "./AppFooter";

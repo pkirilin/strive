@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-export class ConfirmationModal extends React.Component {
+export class AppConfirmationModal extends React.Component {
   static propTypes = {
     isOpen: PropTypes.bool,
     title: PropTypes.string,

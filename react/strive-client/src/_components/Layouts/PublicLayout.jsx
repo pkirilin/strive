@@ -1,17 +1,17 @@
 import React from "react";
 import { Container } from "reactstrap";
-import { ApplicationAlert } from "../Alerts";
-import { ApplicationFooter } from "../Footer";
+import { AppAlert } from "../Alerts";
+import { AppFooter } from "../Footer";
 
 export class PublicLayout extends React.Component {
   render() {
     return (
       <div>
         <Container>
-          <ApplicationAlert />
+          <AppAlert />
           {this.props.children}
         </Container>
-        <ApplicationFooter />
+        <AppFooter />
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import { config } from "../../_helpers";
 
-export class ApplicationFooter extends React.Component {
+export class AppFooter extends React.Component {
   constructor(props) {
     super(props);
 

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export class Loading extends React.Component {
+export class AppSpinner extends React.Component {
   static propTypes = {
     text: PropTypes.string
   };

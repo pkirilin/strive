@@ -1,1 +1,1 @@
-export { Loading } from "./Loading";
+export { AppSpinner } from "./AppSpinner";

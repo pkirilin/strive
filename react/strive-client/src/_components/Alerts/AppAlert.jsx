@@ -12,7 +12,7 @@ const mapStateToProps = state => {
   };
 };
 
-class ApplicationAlert extends React.Component {
+class AppAlert extends React.Component {
   static propTypes = {
     message: PropTypes.string,
     type: PropTypes.string
@@ -71,5 +71,5 @@ class ApplicationAlert extends React.Component {
   }
 }
 
-const connectedApplicationAlert = connect(mapStateToProps)(ApplicationAlert);
-export { connectedApplicationAlert as ApplicationAlert };
+const connectedAppAlert = connect(mapStateToProps)(AppAlert);
+export { connectedAppAlert as AppAlert };

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { ListGroup } from "reactstrap";
 import { ProjectListItem } from "./ProjectListItem";
 import { projectsActions } from "../../_actions";
-import { Loading, ConfirmationModal } from "../../_components";
+import { AppSpinner, AppConfirmationModal } from "../../_components";
 
 const mapStateToProps = state => {
   let {
@@ -66,7 +66,7 @@ class ProjectList extends React.Component {
 
     // Rendering loading spinner while data is fetching from server
     if (loadingProjectList) {
-      return <Loading text="Getting projects" />;
+      return <AppSpinner text="Getting projects" />;
     }
 
     // Server is not working, then showing a message, that data has not been fetched
@@ -95,8 +95,8 @@ class ProjectList extends React.Component {
     // Server worked fine and returned project collection
     return (
       <ListGroup>
-        <ConfirmationModal {...deleteProjectModal} />
-        {deletingProject && <Loading text="Deleting project" />}
+        <AppConfirmationModal {...deleteProjectModal} />
+        {deletingProject && <AppSpinner text="Deleting project" />}
         {this.props.projects.map(project => (
           <ProjectListItem key={project.id} data={project} />
         ))}

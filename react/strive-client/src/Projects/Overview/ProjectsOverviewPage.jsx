@@ -1,8 +1,8 @@
 import React from "react";
 import {
   PrivateLayout,
-  PageTitle,
-  DocumentTitleSetter
+  DocumentTitleSetter,
+  AppHeader
 } from "../../_components";
 import { ProjectsOverviewHeadline } from "./ProjectsOverviewHeadline";
 import { ProjectsFilter } from "./ProjectsFilter";
@@ -13,7 +13,7 @@ export class ProjectsOverviewPage extends React.Component {
     return (
       <DocumentTitleSetter values={["Projects"]}>
         <PrivateLayout>
-          <PageTitle>Projects</PageTitle>
+          <AppHeader>Projects</AppHeader>
           <ProjectsOverviewHeadline />
           <ProjectsFilter />
           <ProjectList />
