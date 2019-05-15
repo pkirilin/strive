@@ -1,6 +1,10 @@
 import React from "react";
 import { Switch, Redirect, Route } from "react-router";
-import { LoginPage, RegisterPage, ForgotPasswordPage } from "./";
+import {
+  LoginPage,
+  RegisterPage
+  //, ForgotPasswordPage
+} from "./";
 import { NotFoundPage } from "../ErrorPages";
 
 export class Account extends React.Component {
@@ -10,11 +14,11 @@ export class Account extends React.Component {
         <Redirect exact from="/account" to="/account/login" />
         <Route exact path="/account/login" component={LoginPage} />
         <Route exact path="/account/register" component={RegisterPage} />
-        <Route
+        {/* <Route
           exact
           path="/account/forgot-password"
           component={ForgotPasswordPage}
-        />
+        /> */}
         <Route component={NotFoundPage} />
       </Switch>
     );

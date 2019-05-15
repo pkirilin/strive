@@ -45,13 +45,11 @@ class LoginForm extends React.Component {
     this.state = {
       email: {
         ...initFieldObj,
-        onChange: this.onEmailChange,
-        value: "test@test.com"
+        onChange: this.onEmailChange
       },
       password: {
         ...initFieldObj,
-        onChange: this.onPasswordChange,
-        value: "1"
+        onChange: this.onPasswordChange
       },
       rememberMe: {
         checked: false,
@@ -168,9 +166,9 @@ class LoginForm extends React.Component {
           </Button>
         </FormGroup>
 
-        <FormGroup className="text-center">
+        {/* <FormGroup className="text-center">
           <Link to="/account/forgot-password">{links.forgotPassword}</Link>
-        </FormGroup>
+        </FormGroup> */}
 
         <FormGroup className="text-center">
           <Link to="/account/register">{links.signUp}</Link>
