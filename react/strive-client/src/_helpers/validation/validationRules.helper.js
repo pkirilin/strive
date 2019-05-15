@@ -23,6 +23,9 @@ export const validationRules = {
   /** Validation rule function for checking email address */
   email,
 
+  /** Validation rule function for checking username */
+  username,
+
   /** Validation rule function for checking whether origin value is the same as compare value */
   compare,
 
@@ -111,14 +114,28 @@ function email(value, invalidMessage = "", validMessage = "") {
   );
 }
 
+/** Validation rule function for checking username */
+function username(value, invalidMessage = "", validMessage = "") {
+  return regularExpression(
+    value,
+    validationRegexes.USERNAME,
+    invalidMessage,
+    validMessage
+  );
+}
+
 /** Validation rule function for checking whether origin value is the same as compare value */
 function compare(
   originValue,
   compareValue,
+  compareValidationStatus = validationStatuses.default,
   invalidMessage = "",
   validMessage = ""
 ) {
-  if (originValue === compareValue) {
+  if (
+    originValue === compareValue &&
+    compareValidationStatus === validationStatuses.valid
+  ) {
     return {
       status: validationStatuses.valid,
       message: validMessage

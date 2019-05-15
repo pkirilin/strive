@@ -154,20 +154,22 @@ class RegisterForm extends React.Component {
   }
 
   onPasswordChange(event) {
+    let passwordValidationState = validationRulesSetters.validatePassword(
+      event.target.value,
+      this.resources.account.register
+    );
     this.setState({
       password: {
         ...this.state.password,
         value: event.target.value,
-        validationState: validationRulesSetters.validatePassword(
-          event.target.value,
-          this.resources.account.register
-        )
+        validationState: passwordValidationState
       },
       passwordConfirm: {
         ...this.state.passwordConfirm,
         validationState: validationRulesSetters.validatePasswordConfirm(
           this.state.passwordConfirm.value,
           event.target.value,
+          passwordValidationState.status,
           this.resources.account.register
         )
       }
@@ -182,6 +184,7 @@ class RegisterForm extends React.Component {
         validationState: validationRulesSetters.validatePasswordConfirm(
           event.target.value,
           this.state.password.value,
+          this.state.password.validationState.status,
           this.resources.account.register
         )
       }
@@ -206,6 +209,11 @@ class RegisterForm extends React.Component {
     event.preventDefault();
     this.props.dispatch(alertActions.clear());
 
+    let passwordValidationState = validationRulesSetters.validatePassword(
+      this.state.password.value,
+      this.resources.account.register
+    );
+
     this.setState(
       {
         email: {
@@ -224,16 +232,14 @@ class RegisterForm extends React.Component {
         },
         password: {
           ...this.state.password,
-          validationState: validationRulesSetters.validatePassword(
-            this.state.password.value,
-            this.resources.account.register
-          )
+          validationState: passwordValidationState
         },
         passwordConfirm: {
           ...this.state.passwordConfirm,
           validationState: validationRulesSetters.validatePasswordConfirm(
             this.state.passwordConfirm.value,
             this.state.password.value,
+            passwordValidationState.status,
             this.resources.account.register
           )
         }

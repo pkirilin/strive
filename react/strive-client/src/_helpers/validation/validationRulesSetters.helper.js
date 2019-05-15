@@ -69,7 +69,9 @@ function validatePassword(passwordValue, resources) {
     validationRules.required(
       passwordValue,
       resources.validation.invalid.password.required.message
-    )
+    ),
+    validationRules.lengthMin(passwordValue, 4, "Password is too short"),
+    validationRules.lengthMax(passwordValue, 16, "Password is too long")
   ]);
 }
 
@@ -79,6 +81,7 @@ function validatePassword(passwordValue, resources) {
 function validatePasswordConfirm(
   passwordConfirmValue,
   compareValue,
+  compareValidationStatus,
   resources
 ) {
   // TODO: Add more validation rules
@@ -90,6 +93,7 @@ function validatePasswordConfirm(
     validationRules.compare(
       passwordConfirmValue,
       compareValue,
+      compareValidationStatus,
       resources.validation.invalid.passwordConfirm.compare.message
     )
   ]);
@@ -103,6 +107,10 @@ function validateUsername(usernameValue, resources) {
     validationRules.required(
       usernameValue,
       resources.validation.invalid.username.required.message
+    ),
+    validationRules.username(
+      usernameValue,
+      "Username must contain from 4 to 20 symbols. Allowed symbols: alphanumeric characters, underscores (_) and dots (.). Numeric character can't be at the start of a username. Underscore and dot can't be at the end or start of a username. Underscore and dot can't be next to each other. Underscore or dot can't be used multiple times in a row"
     )
   ]);
 }
