@@ -4,6 +4,7 @@ import {
   PublicLayout,
   DocumentTitleSetter
 } from "../../_components";
+import { config } from "../../_helpers";
 import { RegisterForm } from "./RegisterForm";
 
 export class RegisterPage extends React.Component {
@@ -11,7 +12,7 @@ export class RegisterPage extends React.Component {
     return (
       <DocumentTitleSetter values={["Register"]}>
         <PublicLayout>
-          <AppHeader>Sign up to Strive</AppHeader>
+          <AppHeader>Sign up to {config.brandName}</AppHeader>
           <RegisterForm />
         </PublicLayout>
       </DocumentTitleSetter>
