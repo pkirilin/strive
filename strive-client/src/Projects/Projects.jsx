@@ -4,6 +4,7 @@ import { NotFoundPage } from "../ErrorPages";
 import { ProjectsOverviewPage } from "./Overview/ProjectsOverviewPage";
 import { CreateProjectPage } from "./Create/CreateProjectPage";
 import { EditProjectPage } from "./Edit/EditProjectPage";
+import { ProjectInfoPage } from "./Info/ProjectInfoPage";
 
 export class Projects extends React.Component {
   render() {
@@ -15,6 +16,11 @@ export class Projects extends React.Component {
           exact
           path="/projects/overview"
           component={ProjectsOverviewPage}
+        />
+        <Route
+          exact
+          path="/projects/info/:projectId"
+          component={ProjectInfoPage}
         />
         <Route exact path="/projects/create" component={CreateProjectPage} />
         <Route

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Row, Col, Button } from "reactstrap";
+import { Button } from "reactstrap";
 import { AppHeader } from "../../_components";
 import { actionHelper } from "../../_helpers";
 
@@ -23,16 +23,14 @@ class ProjectsOverviewHeadline extends React.Component {
 
   render() {
     return (
-      <Row className="p-3 d-flex align-items-center">
-        <Col className="text-sm-left text-center">
-          <AppHeader level="2">Projects</AppHeader>
-        </Col>
-        <Col className="pt-2 pb-2 d-flex justify-content-sm-end justify-content-center">
-          <Button color="light border" onClick={this.createProject}>
-            Create project
-          </Button>
-        </Col>
-      </Row>
+      <div className="mb-3 d-flex justify-content-between align-items-center">
+        <AppHeader level="2" centered={false}>
+          Projects list
+        </AppHeader>
+        <Button color="light border" onClick={this.createProject}>
+          Create project
+        </Button>
+      </div>
     );
   }
 }

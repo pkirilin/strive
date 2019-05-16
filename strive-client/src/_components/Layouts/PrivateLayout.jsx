@@ -9,7 +9,7 @@ export class PrivateLayout extends React.Component {
     return (
       <div>
         <AppNavbar />
-        <Container fluid>
+        <Container>
           <AppAlert />
           {this.props.children}
         </Container>

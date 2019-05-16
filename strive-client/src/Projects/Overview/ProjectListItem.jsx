@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { ListGroupItem, Row, Col, Fade, Button } from "reactstrap";
 import { modalActions, projectsActions, alertActions } from "../../_actions";
 import { modalConstants } from "../../_constants";
+import { AppHeader } from "../../_components";
 import { actionHelper } from "../../_helpers";
 
 class ProjectListItem extends React.Component {
@@ -81,7 +82,14 @@ class ProjectListItem extends React.Component {
       >
         <Row className="d-flex align-items-center">
           <Col sm="8">
-            <Link to="/">{this.props.data.name}</Link>
+            <Link
+              className="text-body text-decoration-none"
+              to={`/projects/info/${this.props.data.id}`}
+            >
+              <AppHeader level="4" centered={false}>
+                {this.props.data.name}
+              </AppHeader>
+            </Link>
           </Col>
           <div className="d-flex flex-fill justify-content-end">
             <Col xs="auto">
@@ -109,6 +117,11 @@ class ProjectListItem extends React.Component {
               </Fade>
             </Col>
           </div>
+        </Row>
+        <Row>
+          <Col>
+            <div className="text-secondary">{this.props.data.description}</div>
+          </Col>
         </Row>
       </ListGroupItem>
     );
