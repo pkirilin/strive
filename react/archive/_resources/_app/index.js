@@ -1,1 +1,0 @@
-export { getAppNavbarResources } from "./Navbar";
