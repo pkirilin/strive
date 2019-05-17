@@ -50,13 +50,15 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="projectId">Target project id</param>
         [HttpGet("get-info")]
-	    public IActionResult GetProjectInfo(int projectId)
+	    public IActionResult GetProjectInfo(int projectId, int userId)
         {
             try
             {
                 Project project = _projectService.GetProjectById(projectId);
                 if (project == null)
                     return NotFound(projectId);
+                if (project.UserId != userId)
+                    return Unauthorized();
                 return Ok(project);
             }
             catch (Exception e)

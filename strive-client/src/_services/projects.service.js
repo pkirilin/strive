@@ -37,12 +37,15 @@ function getList() {
  * @param {number} projectId Target project id
  */
 function getInfo(projectId) {
+  let userFromCookies = Cookies.getJSON(config.cookies.user.keyName);
   const requestOptions = {
     method: "GET",
     headers: httpHeaders.authorization()
   };
   return fetch(
-    `${config.apiUrl}/projects/get-info?projectId=${projectId}`,
+    `${config.apiUrl}/projects/get-info?projectId=${projectId}&userId=${
+      userFromCookies.id
+    }`,
     requestOptions
   );
 }

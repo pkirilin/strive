@@ -100,7 +100,7 @@ function getInfo(projectId) {
             });
             break;
           case httpStatuses.unauthorized:
-            actionHelper.redirectToLogin();
+            actionHelper.redirectToProjects();
             break;
           case httpStatuses.notFound:
             dispatch(
