@@ -1,6 +1,10 @@
 import { projectInfoConstants } from "../../_constants";
 
-export const projectInfoReducer = (state = {}, action) => {
+const initialState = {
+  gettingProject: true
+};
+
+export const projectInfoReducer = (state = initialState, action) => {
   switch (action.type) {
     case projectInfoConstants.GET_PROJECT_REQUEST:
       return {

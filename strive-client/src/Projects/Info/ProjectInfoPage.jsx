@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import {
   DocumentTitleSetter,
   PrivateLayout,
@@ -10,33 +11,61 @@ import { TaskFilter } from "./TaskFilter";
 import { TaskChoosePanel } from "./TaskChoosePanel";
 import { TaskList } from "./TaskList";
 
-export const ProjectInfoPage = props => {
-  let { projectId } = props.match.params;
-
-  // Testing
-  let project = {
-    id: projectId,
-    name: "Name",
-    description: "Description"
+const mapStateToProps = state => {
+  let {
+    notFound: notFoundProjectData
+  } = state.projectsReducer.projectInfoReducer;
+  return {
+    notFoundProjectData
   };
-  let tasks = [
-    {
-      id: 0,
-      name: "test",
-      checked: false
-    }
-  ];
+};
 
-  return (
-    <DocumentTitleSetter values={["Project", "Name"]}>
-      <PrivateLayout>
-        <AppHeader>Project info</AppHeader>
-        <ProjectData data={project} />
+class ProjectInfoPage extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.projectId = Number(this.props.match.params.projectId);
+  }
+
+  render() {
+    let tasks = [
+      {
+        id: 0,
+        name: "test",
+        checked: false
+      }
+    ];
+
+    let { notFoundProjectData } = this.props;
+
+    let content = (
+      <div>
+        <ProjectData projectId={this.projectId} />
         <TaskStatusTabsPanel />
         <TaskFilter />
         <TaskChoosePanel />
         <TaskList tasks={tasks} />
-      </PrivateLayout>
-    </DocumentTitleSetter>
-  );
-};
+      </div>
+    );
+
+    if (notFoundProjectData) {
+      content = (
+        <div className="mt-4 mb-4 text-danger text-center">
+          Failed to get project: project was not found
+        </div>
+      );
+    }
+
+    return (
+      <DocumentTitleSetter values={["Project", "Name"]}>
+        <PrivateLayout>
+          <AppHeader>Project info</AppHeader>
+          {content}
+        </PrivateLayout>
+      </DocumentTitleSetter>
+    );
+  }
+}
+
+const connectedProjectInfoPage = connect(mapStateToProps)(ProjectInfoPage);
+export { connectedProjectInfoPage as ProjectInfoPage };
