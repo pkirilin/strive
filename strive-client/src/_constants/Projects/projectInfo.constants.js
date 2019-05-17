@@ -1,0 +1,6 @@
+/** Redux action types related to project info */
+export const projectInfoConstants = {
+  GET_PROJECT_REQUEST: "PROJECT_INFO_GET_PROJECT_REQUEST",
+  GET_PROJECT_SUCCESS: "PROJECT_INFO_GET_PROJECT_SUCCESS",
+  GET_PROJECT_ERROR: "PROJECT_INFO_GET_PROJECT_ERROR"
+};

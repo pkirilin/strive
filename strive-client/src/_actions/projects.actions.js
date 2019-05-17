@@ -1,6 +1,6 @@
 import React from "react";
 import { alertActions } from "./alert.actions";
-import { projectListConstants } from "../_constants";
+import { projectInfoConstants, projectListConstants } from "../_constants";
 import { httpStatuses, actionHelper } from "../_helpers";
 import { projectsService } from "../_services";
 
@@ -92,11 +92,11 @@ function getInfo(projectId) {
   return dispatch => {
     dispatch(request(projectId));
     projectsService.getInfo(projectId).then(
-      projectFetchedResponse => {
-        switch (projectFetchedResponse.status) {
+      projectResponse => {
+        switch (projectResponse.status) {
           case httpStatuses.ok:
-            projectFetchedResponse.json().then(projectFetched => {
-              dispatch(success(projectFetched));
+            projectResponse.json().then(project => {
+              dispatch(success(project));
             });
             break;
           case httpStatuses.unauthorized:
@@ -111,7 +111,7 @@ function getInfo(projectId) {
             break;
           case httpStatuses.internalServerError:
             actionHelper.handleInternalServerErrorResponse(
-              projectFetchedResponse,
+              projectResponse,
               dispatch,
               error
             );
@@ -133,23 +133,23 @@ function getInfo(projectId) {
   /** Get project info request action creator */
   function request(projectId) {
     return {
-      type: projectListConstants.GET_PROJECT_REQUEST,
+      type: projectInfoConstants.GET_PROJECT_REQUEST,
       projectId
     };
   }
 
   /** Get project info success action creator */
-  function success(projectFetched) {
+  function success(project) {
     return {
-      type: projectListConstants.GET_PROJECT_SUCCESS,
-      projectFetched
+      type: projectInfoConstants.GET_PROJECT_SUCCESS,
+      project
     };
   }
 
   /** Get project info error action creator */
   function error(errorData) {
     return {
-      type: projectListConstants.GET_PROJECT_ERROR,
+      type: projectInfoConstants.GET_PROJECT_ERROR,
       errorData
     };
   }

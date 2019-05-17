@@ -15,17 +15,23 @@ const mapStateToProps = state => {
   let {
     sendingProjectInfo,
     badRequestResponseJson,
-    gettingProjectForUpdate,
-    projectFetched,
-    notFound,
     internalServerError
   } = state.projectsReducer.projectListReducer;
+
+  let {
+    gettingProject,
+    project,
+    notFound,
+    failedToFetch
+  } = state.projectsReducer.projectInfoReducer;
+
   return {
     sendingProjectInfo,
     badRequestResponseJson,
-    gettingProjectForUpdate,
-    projectFetched,
-    notFound,
+    gettingProjectForUpdate: gettingProject,
+    projectFetched: project,
+    notFoundProjectForUpdate: notFound,
+    failedToFetchProjectForUpdate: failedToFetch,
     internalServerError
   };
 };
@@ -38,7 +44,7 @@ class ProjectForm extends React.Component {
 
     sendingProjectInfo: PropTypes.bool,
     gettingProjectForUpdate: PropTypes.bool,
-    notFound: PropTypes.bool,
+    notFoundProjectForUpdate: PropTypes.bool,
     internalServerError: PropTypes.string,
 
     badRequestResponseJson: PropTypes.shape({
@@ -229,7 +235,8 @@ class ProjectForm extends React.Component {
     let {
       sendingProjectInfo,
       gettingProjectForUpdate,
-      notFound,
+      notFoundProjectForUpdate,
+      failedToFetchProjectForUpdate,
       internalServerError
     } = this.props;
 
@@ -238,16 +245,29 @@ class ProjectForm extends React.Component {
       return <AppSpinner text="Getting project for update" />;
     }
 
-    // If server returned not found for current request, showing error message
-    if (notFound) {
+    // If server is not available, showing error message
+    if (failedToFetchProjectForUpdate) {
       return (
-        <div className="text-center text-danger">Project was not found</div>
+        <div className="mt-4 text-center text-danger">
+          Failed to fetch project data: server is not available
+        </div>
+      );
+    }
+
+    // If server returned not found for current request, showing error message
+    if (notFoundProjectForUpdate) {
+      return (
+        <div className="mt-4 text-center text-danger">
+          Project was not found
+        </div>
       );
     }
 
     if (internalServerError) {
       return (
-        <div className="text-center text-danger">{internalServerError}</div>
+        <div className="mt-4 text-center text-danger">
+          {internalServerError}
+        </div>
       );
     }
 
