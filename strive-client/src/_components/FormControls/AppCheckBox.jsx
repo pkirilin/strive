@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 
 export class AppCheckBox extends React.Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
+    id: PropTypes.string,
+    label: PropTypes.string,
     checked: PropTypes.bool,
     onChange: PropTypes.func.isRequired
   };
