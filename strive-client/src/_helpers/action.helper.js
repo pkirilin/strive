@@ -18,6 +18,12 @@ export const actionHelper = {
   /** Redirects user to edit project page */
   redirectToEditProject,
 
+  /** Redirects user to project info page */
+  redirectToProjectInfo,
+
+  /** Redirects user to create task page */
+  redirectToCreateTask,
+
   /** Universal internal server error response handler */
   handleInternalServerErrorResponse
 };
@@ -48,6 +54,22 @@ function redirectToCreateProject() {
  */
 function redirectToEditProject(projectId) {
   history.push(`/projects/edit/${projectId}`);
+}
+
+/**
+ * Redirects user to project info page
+ * @param {number} projectId Project id for request string
+ */
+function redirectToProjectInfo(projectId) {
+  history.push(`/projects/info/${projectId}`);
+}
+
+/**
+ * Redirects user to create task page
+ * @param {number} projectId Id of project created task belongs to
+ */
+function redirectToCreateTask(projectId) {
+  history.push("/tasks/create", { projectId });
 }
 
 /**

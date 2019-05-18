@@ -24,7 +24,13 @@ export const validationRulesSetters = {
   validateProjectName,
 
   /** Sets all nessesary validation rules for checking project description's correct value */
-  validateProjectDescription
+  validateProjectDescription,
+
+  /** Sets all nessesary validation rules for checking task name's correct value */
+  validateTaskName,
+
+  /** Sets all nessesary validation rules for checking task description's correct value */
+  validateTaskDescription
 };
 
 /*
@@ -112,6 +118,26 @@ function validateProjectDescription(projectDescriptionValue) {
   return validationRules.multiple([
     validationRules.lengthMax(
       projectDescriptionValue,
+      511,
+      "Project description is too long"
+    )
+  ]);
+}
+
+/** Sets all nessesary validation rules for checking task name's correct value */
+function validateTaskName(taskNameValue) {
+  return validationRules.multiple([
+    validationRules.required(taskNameValue, "Task name is required"),
+    validationRules.lengthMin(taskNameValue, 3, "Task name is too short"),
+    validationRules.lengthMax(taskNameValue, 255, "Task name is too long")
+  ]);
+}
+
+/** Sets all nessesary validation rules for checking task description's correct value */
+function validateTaskDescription(taskDescriptionValue) {
+  return validationRules.multiple([
+    validationRules.lengthMax(
+      taskDescriptionValue,
       511,
       "Project description is too long"
     )

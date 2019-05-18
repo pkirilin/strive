@@ -41,7 +41,7 @@ class ProjectInfoPage extends React.Component {
     let content = (
       <div>
         <ProjectData projectId={this.projectId} />
-        <TaskStatusTabsPanel />
+        <TaskStatusTabsPanel projectId={this.projectId} />
         <TaskFilter />
         <TaskChoosePanel />
         <TaskList tasks={tasks} />

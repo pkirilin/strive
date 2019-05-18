@@ -1,7 +1,27 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { Nav, NavItem, NavLink, Button, Badge } from "reactstrap";
+import { actionHelper } from "../../_helpers";
 
 export class TaskStatusTabsPanel extends React.Component {
+  static propTypes = {
+    projectId: PropTypes.number.isRequired
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.createTask = this.createTask.bind(this);
+  }
+
+  createTask() {
+    // Each task should belong to its project, so id of a project needs to be "remembered"
+    // both for adding a new task and redirecting user back to project info page
+    // Id is remembered in browser history state inside this helper method
+    actionHelper.redirectToCreateTask(this.props.projectId);
+  }
+
   render() {
     return (
       <div className="mt-4 d-flex justify-content-between">
@@ -29,7 +49,9 @@ export class TaskStatusTabsPanel extends React.Component {
             </NavItem>
           </Nav>
         </div>
-        <Button color="light border">New task</Button>
+        <Button color="light border" onClick={this.createTask}>
+          New task
+        </Button>
       </div>
     );
   }
