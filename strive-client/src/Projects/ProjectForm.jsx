@@ -2,14 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Form, FormGroup, Button, Row, Col } from "reactstrap";
+import { projectsActions } from "../_actions";
 import { AppTextBox, AppTextArea, AppSpinner } from "../_components";
-import { actionHelper } from "../_helpers";
 import { validationStatuses } from "../_constants";
+import { actionHelper } from "../_helpers";
 import {
   validationRulesSetters,
   validationUtils
 } from "../_helpers/validation";
-import { projectsActions } from "../_actions";
 
 const mapStateToProps = state => {
   let {
@@ -60,7 +60,7 @@ class ProjectForm extends React.Component {
 
   static defaultProps = {
     id: "projectForm",
-    loadingText: "Sending a project info",
+    loadingText: "Sending project info",
     submitButtonText: "Send"
   };
 
@@ -199,9 +199,14 @@ class ProjectForm extends React.Component {
       {
         projectName: {
           ...this.state.projectName,
-          value: this.state.projectName.value,
           validationState: validationRulesSetters.validateProjectName(
             this.state.projectName.value
+          )
+        },
+        projectDescription: {
+          ...this.state.projectDescription,
+          validationState: validationRulesSetters.validateProjectDescription(
+            this.state.projectDescription.value
           )
         }
       },
