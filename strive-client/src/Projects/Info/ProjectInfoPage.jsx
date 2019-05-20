@@ -28,14 +28,6 @@ class ProjectInfoPage extends React.Component {
   }
 
   render() {
-    let tasks = [
-      {
-        id: 0,
-        name: "test",
-        checked: false
-      }
-    ];
-
     let { notFoundProjectData } = this.props;
 
     let content = (
@@ -44,7 +36,7 @@ class ProjectInfoPage extends React.Component {
         <TaskStatusTabsPanel projectId={this.projectId} />
         <TaskFilter />
         <TaskChoosePanel />
-        <TaskList tasks={tasks} />
+        <TaskList projectId={this.projectId} />
       </div>
     );
 

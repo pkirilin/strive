@@ -7,7 +7,7 @@ export class TaskListItem extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      checked: PropTypes.bool
+      checked: PropTypes.bool.isRequired
     })
   };
 
@@ -20,10 +20,10 @@ export class TaskListItem extends React.Component {
   onSelectTask() {}
 
   render() {
-    let { name } = this.props.data;
+    let { name, checked } = this.props.data;
     return (
       <div className="d-flex align-items-center">
-        <AppCheckBox checked={false} onChange={this.onSelectTask} />
+        <AppCheckBox checked={checked} onChange={this.onSelectTask} />
         <ListGroupItem action>{name}</ListGroupItem>
       </div>
     );
