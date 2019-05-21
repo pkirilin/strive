@@ -1,14 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import {
   UncontrolledDropdown,
   DropdownItem,
   DropdownMenu,
   DropdownToggle
 } from "reactstrap";
+import { tasksActions } from "../../_actions";
 import { AppCheckBox } from "../../_components";
 
-export class TaskChoosePanel extends React.Component {
+class TaskChoosePanel extends React.Component {
   static propTypes = {
     className: PropTypes.string
   };
@@ -16,10 +18,23 @@ export class TaskChoosePanel extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onChooseAllChecked = this.onChooseAllChecked.bind(this);
+    this.state = {
+      chooseAllChecked: false
+    };
+
+    this.onChooseAllCheck = this.onChooseAllCheck.bind(this);
   }
 
-  onChooseAllChecked() {}
+  onChooseAllCheck() {
+    this.setState(
+      {
+        chooseAllChecked: !this.state.chooseAllChecked
+      },
+      () => {
+        this.props.dispatch(tasksActions.checkAll());
+      }
+    );
+  }
 
   render() {
     return (
@@ -28,8 +43,8 @@ export class TaskChoosePanel extends React.Component {
           <AppCheckBox
             id="chkChooseAllTasks"
             label="Choose all"
-            checked={false}
-            onChange={this.onChooseAllChecked}
+            checked={this.state.chooseAllChecked}
+            onChange={this.onChooseAllCheck}
           />
           <UncontrolledDropdown>
             <DropdownToggle color="light border" caret>
@@ -46,3 +61,6 @@ export class TaskChoosePanel extends React.Component {
     );
   }
 }
+
+const connectedTaskChoosePanel = connect()(TaskChoosePanel);
+export { connectedTaskChoosePanel as TaskChoosePanel };

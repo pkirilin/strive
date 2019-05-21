@@ -4,7 +4,12 @@ import { tasksService } from "../_services";
 /** Contains Redux action creators for actions related to tasks */
 export const tasksActions = {
   /** Redux action creator, gets tasks list for current user and project from server */
-  getList
+  getList,
+
+  /** Redux action cretor, selects/unselects all tasks for making changes */
+  checkAll,
+
+  checkTarget
 };
 
 /**
@@ -41,5 +46,19 @@ function getList(projectId) {
     //     errorData
     //   };
     // }
+  };
+}
+
+/** Redux action cretor, selects/unselects all tasks for making changes */
+function checkAll() {
+  return {
+    type: taskListConstants.CHECK_ALL
+  };
+}
+
+function checkTarget(targetTaskId) {
+  return {
+    type: taskListConstants.CHECK_TARGET,
+    targetTaskId
   };
 }
