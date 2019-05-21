@@ -19,7 +19,7 @@ export const AppHeader = props => {
 AppHeader.propTypes = {
   centered: PropTypes.bool,
   level: PropTypes.oneOf(["1", "2", "3", "4", "5", "6"]),
-  children: PropTypes.string.isRequired
+  children: PropTypes.any.isRequired
 };
 
 AppHeader.defaultProps = {
