@@ -24,7 +24,8 @@ namespace Strive.Data.EntityConfigurations
 
 			builder.Property(project => project.Description)
 				.HasColumnName("Description")
-				.IsRequired(true)
+				.IsRequired(false)
+			    .HasDefaultValue("")
 				.HasMaxLength(511);
 
 			#endregion
