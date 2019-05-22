@@ -26,19 +26,19 @@ export const taskListReducer = (state = initialState, action) => {
     case taskListConstants.CHECK_ALL:
       return {
         tasks: state.tasks.map(task => {
-          task.checked = !task.checked;
+          task.checked = action.chooseAllChecked;
           return task;
         })
       };
-    // case taskListConstants.CHECK_TARGET:
-    //   return {
-    //     tasks: state.tasks.map(task => {
-    //       if (task.id === action.targetTaskId) {
-    //         task.checked = !task.checked;
-    //       }
-    //       return task;
-    //     })
-    //   };
+    case taskListConstants.CHECK_TARGET:
+      return {
+        tasks: state.tasks.map(task => {
+          if (task.id === action.targetTaskId) {
+            task.checked = !task.checked;
+          }
+          return task;
+        })
+      };
 
     default:
       return state;

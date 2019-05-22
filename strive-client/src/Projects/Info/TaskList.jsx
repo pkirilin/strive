@@ -42,10 +42,11 @@ class TaskList extends React.Component {
       return <div className="text-center text-muted">Task list is empty</div>;
     }
 
+    // Task's key is not only id because it is nessesary to render and refresh task checkbox checked value
     return (
       <div>
         {tasks.map(task => (
-          <TaskListItem key={task.id} data={task} />
+          <TaskListItem key={`${task.id}_${task.checked}`} data={task} />
         ))}
       </div>
     );

@@ -9,6 +9,7 @@ export const tasksActions = {
   /** Redux action cretor, selects/unselects all tasks for making changes */
   checkAll,
 
+  /** Redux action cretor, selects/unselects specified task */
   checkTarget
 };
 
@@ -49,13 +50,21 @@ function getList(projectId) {
   };
 }
 
-/** Redux action cretor, selects/unselects all tasks for making changes */
-function checkAll() {
+/**
+ * Redux action cretor, selects/unselects all tasks for making changes
+ * @param {boolean} chooseAllChecked Current "Select all" checkbox value to determine which value needs to be applied to all tasks
+ */
+function checkAll(chooseAllChecked) {
   return {
-    type: taskListConstants.CHECK_ALL
+    type: taskListConstants.CHECK_ALL,
+    chooseAllChecked
   };
 }
 
+/**
+ * Redux action cretor, selects/unselects specified task
+ * @param {number} targetTaskId Id of task to be selected/unselected
+ */
 function checkTarget(targetTaskId) {
   return {
     type: taskListConstants.CHECK_TARGET,

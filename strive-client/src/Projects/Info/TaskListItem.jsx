@@ -1,11 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { ListGroupItem } from "reactstrap";
 import { AppCheckBox } from "../../_components";
+import { tasksActions } from "../../_actions";
 
-export class TaskListItem extends React.Component {
+class TaskListItem extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
+      id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       checked: PropTypes.bool.isRequired
     })
@@ -17,7 +20,17 @@ export class TaskListItem extends React.Component {
     this.onSelectTask = this.onSelectTask.bind(this);
   }
 
-  onSelectTask() {}
+  onSelectTask() {
+    let { id: targetTaskId } = this.props.data;
+    this.props.dispatch(tasksActions.checkTarget(targetTaskId));
+  }
+
+  // shouldComponentUpdate(nextProps) {
+  //   if (this.props.data !== nextProps.data) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   render() {
     let { name, checked } = this.props.data;
@@ -29,3 +42,6 @@ export class TaskListItem extends React.Component {
     );
   }
 }
+
+const connectedTaskListItem = connect()(TaskListItem);
+export { connectedTaskListItem as TaskListItem };

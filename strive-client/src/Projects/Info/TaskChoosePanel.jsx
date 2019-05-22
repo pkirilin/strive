@@ -10,6 +10,13 @@ import {
 import { tasksActions } from "../../_actions";
 import { AppCheckBox } from "../../_components";
 
+const mapStateToProps = state => {
+  let { tasks } = state.tasksReducer.taskListReducer;
+  return {
+    tasks
+  };
+};
+
 class TaskChoosePanel extends React.Component {
   static propTypes = {
     className: PropTypes.string
@@ -25,13 +32,33 @@ class TaskChoosePanel extends React.Component {
     this.onChooseAllCheck = this.onChooseAllCheck.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    let { tasks } = this.props;
+    // If there's a task collection received
+    if (tasks !== nextProps.tasks && tasks.length > 0) {
+      if (tasks.every(task => task.checked === true)) {
+        // Checking "Select all" checkbox, if every task in list was checked
+        this.setState({
+          chooseAllChecked: true
+        });
+      } else {
+        // Unchecking "Select all" checkbox, if any task in list was unchecked
+        if (tasks.some(task => task.checked === false)) {
+          this.setState({
+            chooseAllChecked: false
+          });
+        }
+      }
+    }
+  }
+
   onChooseAllCheck() {
     this.setState(
       {
         chooseAllChecked: !this.state.chooseAllChecked
       },
       () => {
-        this.props.dispatch(tasksActions.checkAll());
+        this.props.dispatch(tasksActions.checkAll(this.state.chooseAllChecked));
       }
     );
   }
@@ -62,5 +89,5 @@ class TaskChoosePanel extends React.Component {
   }
 }
 
-const connectedTaskChoosePanel = connect()(TaskChoosePanel);
+const connectedTaskChoosePanel = connect(mapStateToProps)(TaskChoosePanel);
 export { connectedTaskChoosePanel as TaskChoosePanel };
