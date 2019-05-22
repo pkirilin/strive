@@ -1,4 +1,6 @@
-﻿namespace Strive.Data.Entities
+﻿using System.Collections.Generic;
+
+namespace Strive.Data.Entities
 {
 	/// <summary>
 	/// Contains info about project
@@ -14,5 +16,7 @@
 		public int UserId { get; set; }
 
 		public User User { get; set; }
+
+        public List<Task> Tasks { get; set; }
 	}
 }

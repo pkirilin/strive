@@ -27,10 +27,13 @@ namespace Strive.Data
 			base.OnModelCreating(modelBuilder);
 			modelBuilder.ApplyConfiguration(new UserConfiguration());
 			modelBuilder.ApplyConfiguration(new ProjectConfiguration());
+		    modelBuilder.ApplyConfiguration(new TaskConfiguration());
 		}
 
 		public DbSet<User> Users { get; set; }
 
 		public DbSet<Project> Projects { get; set; }
+
+        public DbSet<Task> Tasks { get; set; }
 	}
 }
