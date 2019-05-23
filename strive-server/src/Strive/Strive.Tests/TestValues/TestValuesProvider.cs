@@ -25,5 +25,26 @@ namespace Strive.Tests.TestValues
 				}
 			};
 		}
+
+	    public static List<Task> GetTasks()
+	    {
+            return new List<Task>()
+            {
+                new Task()
+                {
+                    Id = 1,
+                    Name = "Test task name 1",
+                    Description = "Test task description 1",
+                    ProjectId = 1
+                },
+                new Task()
+                {
+                    Id = 2,
+                    Name = "Test task name 2",
+                    Description = "Test task description 2",
+                    ProjectId = 1
+                }
+            };
+	    }
 	}
 }
