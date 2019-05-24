@@ -37,6 +37,23 @@ namespace Strive.Data.Services.Classes
         }
 
         /// <summary>
+        /// Gets a task entity by specified id
+        /// </summary>
+        /// <param name="taskId">Target task id</param>
+        /// <returns>Project entity if task was found, null if not</returns>
+        public Task GetTaskById(int taskId)
+        {
+            try
+            {
+                return _taskRepo.GetById(taskId);
+            }
+            catch (Exception e)
+            {
+                throw new StriveDatabaseException($"Failed to get task by id. Error message: {e.Message}");
+            }
+        }
+
+        /// <summary>
         /// Creates a new task
         /// </summary>
         /// <param name="task">Task data</param>
