@@ -1,7 +1,9 @@
 ﻿using System;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Strive.Data.Dtos;
+using Strive.Data.Entities;
 using Strive.Data.Services.Interfaces;
 
 namespace Strive.API.Controllers
@@ -31,7 +33,14 @@ namespace Strive.API.Controllers
         [HttpGet("get-list")]
         public IActionResult GetTaskList(int projectId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Ok(_taskService.GetTasks(projectId));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
 
         /// <summary>
@@ -41,7 +50,26 @@ namespace Strive.API.Controllers
         [HttpPost("create")]
         public IActionResult CreateTask([FromBody]TaskDto taskData)
         {
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                if(_taskService.IsTaskExists(taskData.Name, taskData.ProjectId))
+                    ModelState.AddModelError("taskNameRemote", "Task with specified name is already exists in specified project");
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Task task = _mapper.Map<Task>(taskData);
+                    return Ok(_taskService.Create(task));
+                }
+                catch (Exception e)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+                }
+            }
+
+            return BadRequest(ModelState);
         }
 
         /// <summary>
@@ -52,7 +80,32 @@ namespace Strive.API.Controllers
         [HttpPut("update/{taskId}")]
         public IActionResult UpdateTask(int taskId, [FromBody]TaskDto updatedTaskData)
         {
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                if (_taskService.IsTaskExists(updatedTaskData.Name, updatedTaskData.ProjectId))
+                    ModelState.AddModelError("taskNameRemote", "Task with specified name is already exists in specified project");
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Task taskForUpdate = _taskService.GetTaskById(taskId);
+                    if (taskForUpdate != null)
+                    {
+                        taskForUpdate = _mapper.Map(updatedTaskData, taskForUpdate);
+                        return Ok(_taskService.Update(taskForUpdate));
+                    }
+
+                    return NotFound(taskId);
+                }
+                catch (Exception e)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+                }
+            }
+
+            return BadRequest(ModelState);
         }
 
         /// <summary>
@@ -62,7 +115,19 @@ namespace Strive.API.Controllers
         [HttpDelete("delete/{taskId}")]
         public IActionResult DeleteTask(int taskId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Task taskForDelete = _taskService.GetTaskById(taskId);
+
+                if (taskForDelete != null)
+                    return Ok(_taskService.Delete(taskForDelete));
+
+                return NotFound(taskId);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
     }
 }

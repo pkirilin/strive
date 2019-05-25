@@ -1,5 +1,4 @@
 ﻿using System;
-using Moq;
 using Strive.Exceptions;
 using Strive.Tests.TestValues;
 using Xunit;

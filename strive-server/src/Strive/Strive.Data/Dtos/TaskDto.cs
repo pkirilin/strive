@@ -13,5 +13,7 @@ namespace Strive.Data.Dtos
         public string Description { get; set; }
 
         public bool Checked { get; set; } = false;
+
+        public int ProjectId { get; set; }
     }
 }
