@@ -4,13 +4,13 @@ using Strive.Data.Entities;
 
 namespace Strive.API
 {
-	public class AutoMapperProfile : Profile
-	{
-		public AutoMapperProfile()
-		{
-			CreateMap<UserRegisterRequestDto, User>();
-		    CreateMap<ProjectDto, Project>();
-		    CreateMap<TaskDto, Task>();
-		}
-	}
+    public class AutoMapperProfile : Profile
+    {
+        public AutoMapperProfile()
+        {
+            CreateMap<UserRegisterRequestDto, User>();
+            CreateMap<ProjectDto, Project>();
+            CreateMap<TaskDto, Task>();
+        }
+    }
 }

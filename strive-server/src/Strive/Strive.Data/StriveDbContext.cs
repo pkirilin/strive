@@ -6,34 +6,34 @@ using Strive.Helpers.Settings;
 
 namespace Strive.Data
 {
-	public class StriveDbContext : DbContext
-	{
-		private readonly DatabaseSettings _dbSettings;
+    public class StriveDbContext : DbContext
+    {
+        private readonly DatabaseSettings _dbSettings;
 
-		public StriveDbContext(
-			DbContextOptions<StriveDbContext> dbContextOptions,
-			IOptions<DatabaseSettings> dbSettings) : base(dbContextOptions)
-		{
-			_dbSettings = dbSettings.Value;
-		}
+        public StriveDbContext(
+            DbContextOptions<StriveDbContext> dbContextOptions,
+            IOptions<DatabaseSettings> dbSettings) : base(dbContextOptions)
+        {
+            _dbSettings = dbSettings.Value;
+        }
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		{
-			optionsBuilder.UseNpgsql(_dbSettings.ConnectionString, b => b.MigrationsAssembly("Strive.API"));
-		}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql(_dbSettings.ConnectionString, b => b.MigrationsAssembly("Strive.API"));
+        }
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
-		{
-			base.OnModelCreating(modelBuilder);
-			modelBuilder.ApplyConfiguration(new UserConfiguration());
-			modelBuilder.ApplyConfiguration(new ProjectConfiguration());
-		    modelBuilder.ApplyConfiguration(new TaskConfiguration());
-		}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new ProjectConfiguration());
+            modelBuilder.ApplyConfiguration(new TaskConfiguration());
+        }
 
-		public DbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
 
-		public DbSet<Project> Projects { get; set; }
+        public DbSet<Project> Projects { get; set; }
 
         public DbSet<Task> Tasks { get; set; }
-	}
+    }
 }

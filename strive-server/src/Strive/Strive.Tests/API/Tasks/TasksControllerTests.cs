@@ -14,10 +14,7 @@ namespace Strive.Tests.API.Tasks
 
         public TasksControllerTests()
         {
-            var mapperConfig = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new AutoMapperProfile());
-            });
+            var mapperConfig = new MapperConfiguration(cfg => { cfg.AddProfile(new AutoMapperProfile()); });
 
             _mapperMock = new Mock<IMapper>();
             _taskServiceMock = new Mock<ITaskService>();
@@ -25,10 +22,7 @@ namespace Strive.Tests.API.Tasks
 
         public TasksController TasksControllerInstance
         {
-            get
-            {
-                return new TasksController(_taskServiceMock.Object, _mapperMock.Object);
-            }
+            get { return new TasksController(_taskServiceMock.Object, _mapperMock.Object); }
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Strive.API.Migrations
             migrationBuilder.CreateIndex(
                 name: "IN_Project_Name_UserId",
                 table: "Project",
-                columns: new[] { "Name", "UserId" },
+                columns: new[] {"Name", "UserId"},
                 unique: true);
         }
 
@@ -26,7 +26,7 @@ namespace Strive.API.Migrations
             migrationBuilder.AddUniqueConstraint(
                 name: "UN_Project_Name_UserId",
                 table: "Project",
-                columns: new[] { "Name", "UserId" });
+                columns: new[] {"Name", "UserId"});
         }
     }
 }

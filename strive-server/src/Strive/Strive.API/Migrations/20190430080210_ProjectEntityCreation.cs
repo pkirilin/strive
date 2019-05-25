@@ -20,7 +20,7 @@ namespace Strive.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Project", x => x.Id);
-                    table.UniqueConstraint("UN_Project_Name_UserId", x => new { x.Name, x.UserId });
+                    table.UniqueConstraint("UN_Project_Name_UserId", x => new {x.Name, x.UserId});
                     table.ForeignKey(
                         name: "FK_Project_User",
                         column: x => x.UserId,

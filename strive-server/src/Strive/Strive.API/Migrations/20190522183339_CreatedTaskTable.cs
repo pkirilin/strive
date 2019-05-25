@@ -36,7 +36,7 @@ namespace Strive.API.Migrations
             migrationBuilder.CreateIndex(
                 name: "IN_Task_Name_ProjectId",
                 table: "Task",
-                columns: new[] { "Name", "ProjectId" },
+                columns: new[] {"Name", "ProjectId"},
                 unique: true);
         }
 

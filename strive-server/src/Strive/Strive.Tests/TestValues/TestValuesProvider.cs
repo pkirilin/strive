@@ -4,30 +4,30 @@ using Strive.Data.Entities;
 namespace Strive.Tests.TestValues
 {
     public static class TestValuesProvider
-	{
-		public static List<Project> GetProjects()
-		{
-			return new List<Project>()
-			{
-				new Project()
-				{
+    {
+        public static List<Project> GetProjects()
+        {
+            return new List<Project>()
+            {
+                new Project()
+                {
                     Id = 1,
-					Name = "Test 1 name",
-					Description = "Test 1 description",
-					UserId = 1
-				},
-				new Project()
-				{
+                    Name = "Test 1 name",
+                    Description = "Test 1 description",
+                    UserId = 1
+                },
+                new Project()
+                {
                     Id = 2,
-					Name = "Test 2 name",
-					Description = "Test 2 description",
-					UserId = 1
-				}
-			};
-		}
+                    Name = "Test 2 name",
+                    Description = "Test 2 description",
+                    UserId = 1
+                }
+            };
+        }
 
-	    public static List<Task> GetTasks()
-	    {
+        public static List<Task> GetTasks()
+        {
             return new List<Task>()
             {
                 new Task()
@@ -45,6 +45,6 @@ namespace Strive.Tests.TestValues
                     ProjectId = 1
                 }
             };
-	    }
-	}
+        }
+    }
 }

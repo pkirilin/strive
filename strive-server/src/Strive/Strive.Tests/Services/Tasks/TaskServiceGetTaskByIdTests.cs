@@ -17,10 +17,7 @@ namespace Strive.Tests.Services.Tasks
             _taskRepositoryMock.Setup(repo => repo.GetById(taskId))
                 .Throws<Exception>();
 
-            Assert.Throws<StriveDatabaseException>(() =>
-            {
-                this.TaskServiceInstance.GetTaskById(taskId);
-            });
+            Assert.Throws<StriveDatabaseException>(() => { this.TaskServiceInstance.GetTaskById(taskId); });
         }
 
         [Fact]

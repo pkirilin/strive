@@ -19,7 +19,7 @@ namespace Strive.API.Controllers
         private readonly IMapper _mapper;
 
         public TasksController(
-            ITaskService taskService, 
+            ITaskService taskService,
             IMapper mapper)
         {
             _taskService = taskService;
@@ -48,12 +48,13 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="taskData">Task data received from form</param>
         [HttpPost("create")]
-        public IActionResult CreateTask([FromBody]TaskDto taskData)
+        public IActionResult CreateTask([FromBody] TaskDto taskData)
         {
             if (ModelState.IsValid)
             {
-                if(_taskService.IsTaskExists(taskData.Name, taskData.ProjectId))
-                    ModelState.AddModelError("taskNameRemote", "Task with specified name is already exists in specified project");
+                if (_taskService.IsTaskExists(taskData.Name, taskData.ProjectId))
+                    ModelState.AddModelError("taskNameRemote",
+                        "Task with specified name is already exists in specified project");
             }
 
             if (ModelState.IsValid)
@@ -78,12 +79,13 @@ namespace Strive.API.Controllers
         /// <param name="taskId">Existing task id</param>
         /// <param name="updatedTaskData">New task data</param>
         [HttpPut("update/{taskId}")]
-        public IActionResult UpdateTask(int taskId, [FromBody]TaskDto updatedTaskData)
+        public IActionResult UpdateTask(int taskId, [FromBody] TaskDto updatedTaskData)
         {
             if (ModelState.IsValid)
             {
                 if (_taskService.IsTaskExists(updatedTaskData.Name, updatedTaskData.ProjectId))
-                    ModelState.AddModelError("taskNameRemote", "Task with specified name is already exists in specified project");
+                    ModelState.AddModelError("taskNameRemote",
+                        "Task with specified name is already exists in specified project");
             }
 
             if (ModelState.IsValid)

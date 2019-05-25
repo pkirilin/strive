@@ -18,10 +18,8 @@ namespace Strive.Tests.Services.Tasks
             _taskRepositoryMock.Setup(repo => repo.GetAll())
                 .Throws<Exception>();
 
-            Assert.Throws<StriveDatabaseException>(() =>
-            {
-                this.TaskServiceInstance.IsTaskExists(taskName, projectId);
-            });
+            Assert.Throws<StriveDatabaseException>(
+                () => { this.TaskServiceInstance.IsTaskExists(taskName, projectId); });
         }
 
         [Fact]

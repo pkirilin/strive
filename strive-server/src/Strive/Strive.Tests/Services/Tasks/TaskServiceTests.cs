@@ -15,10 +15,7 @@ namespace Strive.Tests.Services.Tasks
 
         public TaskService TaskServiceInstance
         {
-            get
-            {
-                return new TaskService(_taskRepositoryMock.Object);
-            }
+            get { return new TaskService(_taskRepositoryMock.Object); }
         }
     }
 }

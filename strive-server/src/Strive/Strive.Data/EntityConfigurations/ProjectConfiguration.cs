@@ -4,52 +4,52 @@ using Strive.Data.Entities;
 
 namespace Strive.Data.EntityConfigurations
 {
-	public class ProjectConfiguration : IEntityTypeConfiguration<Project>
-	{
-		public void Configure(EntityTypeBuilder<Project> builder)
-		{
-			builder.ToTable("Project");
+    public class ProjectConfiguration : IEntityTypeConfiguration<Project>
+    {
+        public void Configure(EntityTypeBuilder<Project> builder)
+        {
+            builder.ToTable("Project");
 
-			#region Properties
+            #region Properties
 
-			builder.Property(project => project.Id)
-				.HasColumnName("Id")
-				.IsRequired(true)
-				.ValueGeneratedOnAdd();
+            builder.Property(project => project.Id)
+                .HasColumnName("Id")
+                .IsRequired(true)
+                .ValueGeneratedOnAdd();
 
-			builder.Property(project => project.Name)
-				.HasColumnName("Name")
-				.IsRequired(true)
-				.HasMaxLength(255);
+            builder.Property(project => project.Name)
+                .HasColumnName("Name")
+                .IsRequired(true)
+                .HasMaxLength(255);
 
-			builder.Property(project => project.Description)
-				.HasColumnName("Description")
-				.IsRequired(false)
-			    .HasDefaultValue("")
-				.HasMaxLength(511);
+            builder.Property(project => project.Description)
+                .HasColumnName("Description")
+                .IsRequired(false)
+                .HasDefaultValue("")
+                .HasMaxLength(511);
 
-			#endregion
+            #endregion
 
-			#region Constraints
+            #region Constraints
 
-			builder.HasKey(project => project.Id)
-				.HasName("PK_Project");
+            builder.HasKey(project => project.Id)
+                .HasName("PK_Project");
 
-		    builder.HasIndex(project => new { project.Name, project.UserId })
-		        .HasName("IN_Project_Name_UserId")
-		        .IsUnique(true);
+            builder.HasIndex(project => new {project.Name, project.UserId})
+                .HasName("IN_Project_Name_UserId")
+                .IsUnique(true);
 
-			#endregion
+            #endregion
 
-			#region ForeignKeys
+            #region ForeignKeys
 
-			builder.HasOne(project => project.User)
-				.WithMany(user => user.Projects)
-				.HasForeignKey(project => project.UserId)
-				.HasConstraintName("FK_Project_User")
-				.OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(project => project.User)
+                .WithMany(user => user.Projects)
+                .HasForeignKey(project => project.UserId)
+                .HasConstraintName("FK_Project_User")
+                .OnDelete(DeleteBehavior.Cascade);
 
-			#endregion
-		}
-	}
+            #endregion
+        }
+    }
 }

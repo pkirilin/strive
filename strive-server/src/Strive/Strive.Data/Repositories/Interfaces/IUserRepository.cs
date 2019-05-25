@@ -2,10 +2,10 @@
 
 namespace Strive.Data.Repositories.Interfaces
 {
-	public interface IUserRepository : IRepository<User>
-	{
-		User GetByEmail(string email);
+    public interface IUserRepository : IRepository<User>
+    {
+        User GetByEmail(string email);
 
-		User GetByUsername(string username);
-	}
+        User GetByUsername(string username);
+    }
 }

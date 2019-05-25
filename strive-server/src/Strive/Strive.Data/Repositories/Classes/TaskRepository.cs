@@ -18,7 +18,7 @@ namespace Strive.Data.Repositories.Classes
 
         public Task GetById(object id)
         {
-            int TaskId = (int)id;
+            int TaskId = (int) id;
             return _dbContext.Tasks.Find(TaskId);
         }
 

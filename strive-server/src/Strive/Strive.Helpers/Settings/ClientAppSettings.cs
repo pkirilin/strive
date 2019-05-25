@@ -1,7 +1,7 @@
 ﻿namespace Strive.Helpers.Settings
 {
-	public class ClientAppSettings
-	{
-		public string Host { get; set; }
-	}
+    public class ClientAppSettings
+    {
+        public string Host { get; set; }
+    }
 }
