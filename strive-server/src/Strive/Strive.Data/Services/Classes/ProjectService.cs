@@ -120,11 +120,9 @@ namespace Strive.Data.Services.Classes
         /// <param name="userId">Project owner id</param>
 	    public bool IsProjectExists(string projectName, int userId)
 	    {
-	        Project targetProject;
-
 	        try
 	        {
-	            targetProject = _projectRepo.GetAll()
+	            Project targetProject = _projectRepo.GetAll()
 	                .Where(project => project.Name == projectName && project.UserId == userId)
 	                .FirstOrDefault();
 

@@ -15,8 +15,6 @@ namespace Strive.Tests.Services.Projects
             int userId = 1;
             _projectRepositoryMock.Setup(repo => repo.GetAll())
                 .Throws<Exception>();
-            _projectRepositoryMock.Setup(repo => repo.GetById(It.IsAny<object>()))
-                .Throws<Exception>();
 
             Assert.Throws<StriveDatabaseException>(() =>
             {

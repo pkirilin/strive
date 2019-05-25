@@ -39,5 +39,12 @@ namespace Strive.Data.Services.Interfaces
         /// <param name="task">Task for delete</param>
         /// <returns>Deleted task</returns>
         Task Delete(Task task);
+
+        /// <summary>
+        /// Checks if task with specified name for specified project is already exists
+        /// </summary>
+        /// <param name="taskName">Task name</param>
+        /// <param name="userId">Specified project id</param>
+        bool IsTaskExists(string taskName, int projectId);
     }
 }

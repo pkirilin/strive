@@ -112,5 +112,28 @@ namespace Strive.Data.Services.Classes
                 throw new StriveDatabaseException($"Failed to delete task. Error message: {e.Message}");
             }
         }
+
+        /// <summary>
+        /// Checks if task with specified name for specified project is already exists
+        /// </summary>
+        /// <param name="taskName">Task name</param>
+        /// <param name="userId">Specified project id</param>
+        public bool IsTaskExists(string taskName, int projectId)
+        {
+            try
+            {
+                Task targetTask = _taskRepo.GetAll()
+                    .Where(task => task.Name == taskName && task.ProjectId == projectId)
+                    .FirstOrDefault();
+
+                if (targetTask == null)
+                    return false;
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw new StriveDatabaseException($"Cannot check if task is exists. Error message: {e.Message}");
+            }
+        }
     }
 }
