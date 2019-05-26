@@ -1,10 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  DocumentTitleSetter,
-  PrivateLayout,
-  AppHeader
-} from "../../_components";
+import { DocumentTitleSetter, PrivateLayout } from "../../_components";
 import { ProjectData } from "./ProjectData";
 import { TaskStatusTabsPanel } from "./TaskStatusTabsPanel";
 import { TaskFilter } from "./TaskFilter";
@@ -36,7 +32,9 @@ class ProjectInfoPage extends React.Component {
         <TaskStatusTabsPanel projectId={this.projectId} />
         <TaskFilter />
         <TaskChoosePanel />
-        <TaskList projectId={this.projectId} />
+        <div className="mt-4">
+          <TaskList projectId={this.projectId} />
+        </div>
       </div>
     );
 
@@ -49,11 +47,8 @@ class ProjectInfoPage extends React.Component {
     }
 
     return (
-      <DocumentTitleSetter values={["Project", "Name"]}>
-        <PrivateLayout>
-          <AppHeader>Project info</AppHeader>
-          {content}
-        </PrivateLayout>
+      <DocumentTitleSetter values={["Project"]}>
+        <PrivateLayout>{content}</PrivateLayout>
       </DocumentTitleSetter>
     );
   }

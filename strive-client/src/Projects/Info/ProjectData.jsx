@@ -62,26 +62,26 @@ class ProjectData extends React.Component {
     }
 
     return (
-      <div>
-        <div className="d-flex justify-content-between align-items-center">
+      <div className="d-flex justify-content-between align-items-center">
+        <div>
           <AppHeader level="4" centered={false}>
             {project.name}
           </AppHeader>
-          <UncontrolledDropdown>
-            <DropdownToggle color="light border" caret>
-              Actions
-            </DropdownToggle>
-            <DropdownMenu right>
-              <DropdownItem header>Tasks</DropdownItem>
-              <DropdownItem onClick={this.onNewTask}>New task</DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem header>Project</DropdownItem>
-              <DropdownItem>Edit project</DropdownItem>
-              <DropdownItem>Delete project</DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
+          <div>{project.description}</div>
         </div>
-        <div>{project.description}</div>
+        <UncontrolledDropdown>
+          <DropdownToggle color="light border" caret>
+            Actions
+          </DropdownToggle>
+          <DropdownMenu right>
+            <DropdownItem header>Tasks</DropdownItem>
+            <DropdownItem onClick={this.onNewTask}>New task</DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem header>Project</DropdownItem>
+            <DropdownItem>Edit project</DropdownItem>
+            <DropdownItem>Delete project</DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
       </div>
     );
   }

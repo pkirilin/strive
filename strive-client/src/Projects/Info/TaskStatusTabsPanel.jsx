@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-import { Nav, NavItem, NavLink, Button, Badge } from "reactstrap";
+import { Nav, NavItem, NavLink, Badge } from "reactstrap";
 import { actionHelper } from "../../_helpers";
 
 export class TaskStatusTabsPanel extends React.Component {
@@ -24,35 +23,28 @@ export class TaskStatusTabsPanel extends React.Component {
 
   render() {
     return (
-      <div className="mt-4 d-flex justify-content-between">
-        <div>
-          <Nav tabs>
-            <NavItem>
-              <NavLink className="text-body" href="#" active={true}>
-                Planned <Badge color="danger">0</Badge>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="text-body" href="#" active={false}>
-                In process <Badge color="primary">0</Badge>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="text-body" href="#" active={false}>
-                Completed <Badge color="success">0</Badge>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="text-body" href="#" active={false}>
-                All <Badge color="secondary">0</Badge>
-              </NavLink>
-            </NavItem>
-          </Nav>
-        </div>
-        <Button color="light border" onClick={this.createTask}>
-          New task
-        </Button>
-      </div>
+      <Nav className="mt-4" tabs>
+        <NavItem>
+          <NavLink className="text-body" href="#" active={true}>
+            Planned <Badge color="danger">0</Badge>
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink className="text-body" href="#" active={false}>
+            In process <Badge color="primary">0</Badge>
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink className="text-body" href="#" active={false}>
+            Completed <Badge color="success">0</Badge>
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink className="text-body" href="#" active={false}>
+            All <Badge color="secondary">0</Badge>
+          </NavLink>
+        </NavItem>
+      </Nav>
     );
   }
 }

@@ -64,26 +64,29 @@ class TaskChoosePanel extends React.Component {
   }
 
   render() {
+    let { tasks } = this.props;
+    if (!tasks || (tasks && tasks.length === 0)) {
+      // If task collection is empty or not exists, there's no point to show this panel
+      return <div />;
+    }
     return (
-      <div className="mt-4 mb-4">
-        <div className="d-flex justify-content-between align-items-baseline">
-          <AppCheckBox
-            id="chkChooseAllTasks"
-            label="Choose all"
-            checked={this.state.chooseAllChecked}
-            onChange={this.onChooseAllCheck}
-          />
-          <UncontrolledDropdown>
-            <DropdownToggle color="light border" caret>
-              Set status
-            </DropdownToggle>
-            <DropdownMenu right>
-              <DropdownItem>Planned</DropdownItem>
-              <DropdownItem>In process</DropdownItem>
-              <DropdownItem>Completed</DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
-        </div>
+      <div className="mt-4 d-flex justify-content-between align-items-baseline">
+        <AppCheckBox
+          id="chkChooseAllTasks"
+          label="Choose all"
+          checked={this.state.chooseAllChecked}
+          onChange={this.onChooseAllCheck}
+        />
+        <UncontrolledDropdown>
+          <DropdownToggle color="light border" caret>
+            Set status
+          </DropdownToggle>
+          <DropdownMenu right>
+            <DropdownItem>Planned</DropdownItem>
+            <DropdownItem>In process</DropdownItem>
+            <DropdownItem>Completed</DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
       </div>
     );
   }
