@@ -41,6 +41,8 @@ class ProjectForm extends React.Component {
     id: PropTypes.string,
     loadingText: PropTypes.string,
     submitButtonText: PropTypes.string,
+    projectId: PropTypes.number,
+    projectsAction: PropTypes.func.isRequired,
 
     sendingProjectInfo: PropTypes.bool,
     gettingProjectForUpdate: PropTypes.bool,
@@ -322,18 +324,6 @@ class ProjectForm extends React.Component {
               </Row>
             </Col>
           </Row>
-
-          {/* Alignment between */}
-          {/* <Row>
-              <Col className="pt-2 pb-2">
-                <Button className="col-sm-4 col-12">Create</Button>
-              </Col>
-              <Col className="pt-2 pb-2 d-flex justify-content-end">
-                <Button className="col-sm-4 col-12" onClick={this.cancel}>
-                  Cancel
-                </Button>
-              </Col>
-            </Row> */}
         </FormGroup>
       </Form>
     );
