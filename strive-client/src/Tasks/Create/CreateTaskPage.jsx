@@ -6,6 +6,7 @@ import {
   DocumentTitleSetter
 } from "../../_components";
 import { TaskForm } from "../TaskForm";
+import { tasksActions } from "../../_actions";
 
 export class CreateTaskPage extends React.Component {
   constructor(props) {
@@ -28,6 +29,7 @@ export class CreateTaskPage extends React.Component {
             loadingText="Creating task"
             submitButtonText="Create"
             projectId={this.projectId}
+            tasksAction={tasksActions.create}
           />
         </PrivateLayout>
       </DocumentTitleSetter>

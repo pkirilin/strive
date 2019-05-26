@@ -3,7 +3,10 @@ import { config, httpHeaders } from "../_helpers";
 /** Encapsulates all backend API calls for performing operations on task controller */
 export const tasksService = {
   /** Performs API call to API method responsible for getting a task list */
-  getList
+  getList,
+
+  /** Performs API call to API method responsible for creating a task */
+  create
 };
 
 /**
@@ -19,4 +22,20 @@ function getList(projectId) {
     `${config.apiUrl}/tasks/get-list?projectId=${projectId}`,
     requestOptions
   );
+}
+
+/**
+ * Performs API call to API method responsible for creating a task
+ * @param {object} task Task data
+ */
+function create(task) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      ...httpHeaders.contentTypeJson,
+      ...httpHeaders.authorization()
+    },
+    body: JSON.stringify(task)
+  };
+  return fetch(`${config.apiUrl}/tasks/create`, requestOptions);
 }

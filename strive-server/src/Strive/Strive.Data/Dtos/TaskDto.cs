@@ -4,6 +4,8 @@ namespace Strive.Data.Dtos
 {
     public class TaskDto
     {
+        public int Id { get; set; }
+
         [Required]
         [MinLength(3)]
         [MaxLength(255)]

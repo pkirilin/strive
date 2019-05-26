@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Form, FormGroup, Row, Col, Button } from "reactstrap";
 import { alertActions } from "../_actions";
-import { AppTextBox, AppTextArea } from "../_components";
+import { AppTextBox, AppTextArea, AppSpinner } from "../_components";
 import { validationStatuses } from "../_constants";
 import { actionHelper } from "../_helpers";
 import {
@@ -11,12 +11,33 @@ import {
   validationRulesSetters
 } from "../_helpers/validation";
 
+const mapStateToProps = state => {
+  let {
+    sendingTaskInfo,
+    badRequestResponseJson,
+    internalServerError
+  } = state.tasksReducer.taskOperationsReducer;
+  return {
+    sendingTaskInfo,
+    badRequestResponseJson,
+    internalServerError
+  };
+};
+
 class TaskForm extends React.Component {
   static propTypes = {
     id: PropTypes.string,
     loadingText: PropTypes.string,
     submitButtonText: PropTypes.string,
-    projectId: PropTypes.number
+    projectId: PropTypes.number,
+    tasksAction: PropTypes.func.isRequired,
+
+    sendingTaskInfo: PropTypes.bool,
+    internalServerError: PropTypes.string,
+
+    badRequestResponseJson: PropTypes.shape({
+      taskNameRemote: PropTypes.arrayOf(PropTypes.string)
+    })
   };
 
   static defaultProps = {
@@ -36,6 +57,10 @@ class TaskForm extends React.Component {
     this.onCancel = this.onCancel.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onSubmitValidationCompleted = this.onSubmitValidationCompleted.bind(
+      this
+    );
+
+    this.trackTaskNameBadRequestResponse = this.trackTaskNameBadRequestResponse.bind(
       this
     );
 
@@ -68,6 +93,34 @@ class TaskForm extends React.Component {
           "Unable to determine project id. Redirected to your project list"
         )
       );
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    // Tracks if any bad request (validation error) received from API
+    if (
+      prevProps.badRequestResponseJson !== this.props.badRequestResponseJson
+    ) {
+      this.trackTaskNameBadRequestResponse();
+      return true;
+    }
+  }
+
+  trackTaskNameBadRequestResponse() {
+    if (
+      this.props.badRequestResponseJson &&
+      this.props.badRequestResponseJson.taskNameRemote
+    ) {
+      this.setState({
+        ...this.state,
+        taskName: {
+          ...this.state.taskName,
+          validationState: {
+            status: validationStatuses.invalid,
+            message: this.props.badRequestResponseJson.taskNameRemote.join(". ")
+          }
+        }
+      });
     }
   }
 
@@ -124,12 +177,38 @@ class TaskForm extends React.Component {
 
   onSubmitValidationCompleted() {
     if (validationUtils.focusFirstInvalidField(`#${this.props.id}`) === false) {
+      let { tasksAction, taskId, projectId } = this.props;
+      let taskDto = {
+        name: this.state.taskName.value,
+        description: this.state.taskDescription.value,
+        projectId
+      };
+
+      if (tasksAction) {
+        if (taskId) {
+          // Update task action
+        } else {
+          // Create task action
+          this.props.dispatch(tasksAction(taskDto));
+        }
+      }
     }
   }
 
   render() {
+    let { sendingTaskInfo, loadingText, internalServerError } = this.props;
+
+    if (internalServerError) {
+      return (
+        <div className="mt-4 text-center text-danger">
+          {internalServerError}
+        </div>
+      );
+    }
+
     return (
       <Form id={this.props.id}>
+        {sendingTaskInfo && <AppSpinner text={loadingText} />}
         <FormGroup>
           <AppTextBox
             {...this.state.taskName}
@@ -177,5 +256,5 @@ class TaskForm extends React.Component {
   }
 }
 
-const connectedTaskForm = connect()(TaskForm);
+const connectedTaskForm = connect(mapStateToProps)(TaskForm);
 export { connectedTaskForm as TaskForm };

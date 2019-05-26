@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Strive.Data.Dtos;
@@ -11,6 +13,7 @@ namespace Strive.API.Controllers
     /// <summary>
     /// Provides API methods for viewing and editing application tasks
     /// </summary>
+    [Authorize]
     [Route("tasks")]
     public class TasksController : Controller
     {
@@ -35,7 +38,9 @@ namespace Strive.API.Controllers
         {
             try
             {
-                return Ok(_taskService.GetTasks(projectId));
+                List<Task> taskEntities = _taskService.GetTasks(projectId);
+                List<TaskDto> taskDtos = _mapper.Map<List<Task>, List<TaskDto>>(taskEntities);
+                return Ok(taskDtos);
             }
             catch (Exception e)
             {

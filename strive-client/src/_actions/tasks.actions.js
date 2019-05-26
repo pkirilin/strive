@@ -1,17 +1,22 @@
-import { taskListConstants } from "../_constants";
-import { tasksService } from "../_services";
+import React from "react";
+import { alertActions } from "./alert.actions";
+import { taskListConstants, taskOperationsConstants } from "../_constants";
 import { httpStatuses, actionHelper } from "../_helpers";
+import { tasksService } from "../_services";
 
 /** Contains Redux action creators for actions related to tasks */
 export const tasksActions = {
   /** Redux action creator, gets tasks list for current user and project from server */
   getList,
 
-  /** Redux action cretor, selects/unselects all tasks for making changes */
+  /** Redux action creator, selects/unselects all tasks for making changes */
   checkAll,
 
-  /** Redux action cretor, selects/unselects specified task */
-  checkTarget
+  /** Redux action creator, selects/unselects specified task */
+  checkTarget,
+
+  /** Redux action creator, creates a new task */
+  create
 };
 
 /**
@@ -98,4 +103,84 @@ function checkTarget(targetTaskId) {
     type: taskListConstants.CHECK_TARGET,
     targetTaskId
   };
+}
+
+/**
+ * Redux action creator, creates a new task
+ * @param {object} task Task data
+ */
+function create(task) {
+  return dispatch => {
+    dispatch(request(task));
+    tasksService.create(task).then(
+      createTaskResponse => {
+        switch (createTaskResponse.status) {
+          case httpStatuses.ok:
+            dispatch(success(task));
+            actionHelper.redirectToProjectInfo(task.projectId);
+            dispatch(
+              alertActions.success(
+                <div>
+                  Task <b>{task.name}</b> has been successfully created
+                </div>
+              )
+            );
+            break;
+          case httpStatuses.unauthorized:
+            actionHelper.redirectToLogin();
+            break;
+          case httpStatuses.badRequest:
+            createTaskResponse.json().then(badRequestData => {
+              if (badRequestData) {
+                dispatch(badRequest(badRequestData));
+              }
+            });
+            break;
+          case httpStatuses.internalServerError:
+            actionHelper.handleInternalServerErrorResponse(
+              createTaskResponse,
+              dispatch,
+              error
+            );
+            break;
+          default:
+            break;
+        }
+      },
+      errorResponse => {
+        dispatch(error(errorResponse));
+        dispatch(
+          alertActions.error("Failed to create task: server is not available")
+        );
+      }
+    );
+  };
+
+  function request(task) {
+    return {
+      type: taskOperationsConstants.CREATE_REQUEST,
+      task
+    };
+  }
+
+  function success(task) {
+    return {
+      type: taskOperationsConstants.CREATE_SUCCESS,
+      task
+    };
+  }
+
+  function error(error) {
+    return {
+      type: taskOperationsConstants.CREATE_ERROR,
+      error
+    };
+  }
+
+  function badRequest(badRequestResponseJson) {
+    return {
+      type: taskOperationsConstants.CREATE_BADREQUEST,
+      badRequestResponseJson
+    };
+  }
 }

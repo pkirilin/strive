@@ -11,6 +11,7 @@ namespace Strive.API
             CreateMap<UserRegisterRequestDto, User>();
             CreateMap<ProjectDto, Project>();
             CreateMap<TaskDto, Task>();
+            CreateMap<Task, TaskDto>();
         }
     }
 }
