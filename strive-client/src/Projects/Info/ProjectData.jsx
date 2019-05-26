@@ -9,6 +9,7 @@ import {
 } from "reactstrap";
 import { AppHeader, AppSpinner } from "../../_components";
 import { projectsActions } from "../../_actions";
+import { actionHelper } from "../../_helpers";
 
 const mapStateToProps = state => {
   let {
@@ -35,7 +36,13 @@ class ProjectData extends React.Component {
   constructor(props) {
     super(props);
 
+    this.onNewTask = this.onNewTask.bind(this);
+
     this.props.dispatch(projectsActions.getInfo(this.props.projectId));
+  }
+
+  onNewTask() {
+    actionHelper.redirectToCreateTask(this.props.projectId);
   }
 
   render() {
@@ -65,6 +72,10 @@ class ProjectData extends React.Component {
               Actions
             </DropdownToggle>
             <DropdownMenu right>
+              <DropdownItem header>Tasks</DropdownItem>
+              <DropdownItem onClick={this.onNewTask}>New task</DropdownItem>
+              <DropdownItem divider />
+              <DropdownItem header>Project</DropdownItem>
               <DropdownItem>Edit project</DropdownItem>
               <DropdownItem>Delete project</DropdownItem>
             </DropdownMenu>

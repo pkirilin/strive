@@ -25,17 +25,10 @@ class TaskListItem extends React.Component {
     this.props.dispatch(tasksActions.checkTarget(targetTaskId));
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //   if (this.props.data !== nextProps.data) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
   render() {
     let { name, checked } = this.props.data;
     return (
-      <div className="d-flex align-items-center">
+      <div className="mt-2 d-flex align-items-center">
         <AppCheckBox checked={checked} onChange={this.onSelectTask} />
         <ListGroupItem action>{name}</ListGroupItem>
       </div>

@@ -1,3 +1,5 @@
+import { config, httpHeaders } from "../_helpers";
+
 /** Encapsulates all backend API calls for performing operations on task controller */
 export const tasksService = {
   /** Performs API call to API method responsible for getting a task list */
@@ -9,19 +11,12 @@ export const tasksService = {
  * @param {number} projectId Specified project id
  */
 function getList(projectId) {
-  // Fake implementation for testing
-  return new Promise(resolve => {
-    resolve([
-      {
-        id: 0,
-        name: "test 1",
-        checked: false
-      },
-      {
-        id: 1,
-        name: "test 2",
-        checked: false
-      }
-    ]);
-  });
+  const requestOptions = {
+    method: "GET",
+    headers: httpHeaders.authorization()
+  };
+  return fetch(
+    `${config.apiUrl}/tasks/get-list?projectId=${projectId}`,
+    requestOptions
+  );
 }

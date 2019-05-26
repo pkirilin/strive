@@ -1,5 +1,6 @@
 import { taskListConstants } from "../_constants";
 import { tasksService } from "../_services";
+import { httpStatuses, actionHelper } from "../_helpers";
 
 /** Contains Redux action creators for actions related to tasks */
 export const tasksActions = {
@@ -20,34 +21,61 @@ export const tasksActions = {
 function getList(projectId) {
   return dispatch => {
     dispatch(request(projectId));
-    tasksService.getList(projectId).then(tasks => {
-      dispatch(success(tasks));
-    });
-
-    /** Get tasks list request action creator */
-    function request(projectId) {
-      return {
-        type: taskListConstants.GET_LIST_REQUEST,
-        projectId
-      };
-    }
-
-    /** Get tasks list success action creator */
-    function success(tasks) {
-      return {
-        type: taskListConstants.GET_LIST_SUCCESS,
-        tasks
-      };
-    }
-
-    /** Get tasks list error action creator */
-    // function error(errorData) {
-    //   return {
-    //     type: taskListConstants.GET_LIST_ERROR,
-    //     errorData
-    //   };
-    // }
+    tasksService.getList(projectId).then(
+      taskListResponse => {
+        switch (taskListResponse.status) {
+          case httpStatuses.ok:
+            taskListResponse.json().then(tasks => {
+              dispatch(success(tasks));
+            });
+            break;
+          case httpStatuses.unauthorized:
+            actionHelper.redirectToLogin();
+            break;
+          case httpStatuses.internalServerError:
+            actionHelper.handleInternalServerErrorResponse(
+              taskListResponse,
+              dispatch,
+              error
+            );
+            break;
+          default:
+            break;
+        }
+      },
+      () => {
+        dispatch(
+          error({
+            failedToFetch: true
+          })
+        );
+      }
+    );
   };
+
+  /** Get tasks list request action creator */
+  function request(projectId) {
+    return {
+      type: taskListConstants.GET_LIST_REQUEST,
+      projectId
+    };
+  }
+
+  /** Get tasks list success action creator */
+  function success(tasks) {
+    return {
+      type: taskListConstants.GET_LIST_SUCCESS,
+      tasks
+    };
+  }
+
+  /** Get tasks list error action creator */
+  function error(errorData) {
+    return {
+      type: taskListConstants.GET_LIST_ERROR,
+      errorData
+    };
+  }
 }
 
 /**
