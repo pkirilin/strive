@@ -48,11 +48,34 @@ class ProjectData extends React.Component {
   render() {
     let { gettingProject, project, failedToFetch } = this.props;
 
-    // Showing loading spinner while loading project data from server
-    if (gettingProject) {
-      return <AppSpinner text="Getting project data" />;
+    // Server is working and some project data was received
+    if (project) {
+      return (
+        <div className="d-flex justify-content-between align-items-center">
+          <div>
+            <AppHeader level="4" centered={false}>
+              {project.name}
+            </AppHeader>
+            <div>{project.description}</div>
+          </div>
+          <UncontrolledDropdown>
+            <DropdownToggle color="light border" caret>
+              Actions
+            </DropdownToggle>
+            <DropdownMenu right>
+              <DropdownItem header>Tasks</DropdownItem>
+              <DropdownItem onClick={this.onNewTask}>New task</DropdownItem>
+              <DropdownItem divider />
+              <DropdownItem header>Project</DropdownItem>
+              <DropdownItem>Edit project</DropdownItem>
+              <DropdownItem>Delete project</DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+        </div>
+      );
     }
 
+    // Server is not available, showing error message
     if (failedToFetch) {
       return (
         <div className="mt-4 mb-4 text-danger text-center">
@@ -61,28 +84,9 @@ class ProjectData extends React.Component {
       );
     }
 
+    // Showing loading spinner while loading project data from server
     return (
-      <div className="d-flex justify-content-between align-items-center">
-        <div>
-          <AppHeader level="4" centered={false}>
-            {project.name}
-          </AppHeader>
-          <div>{project.description}</div>
-        </div>
-        <UncontrolledDropdown>
-          <DropdownToggle color="light border" caret>
-            Actions
-          </DropdownToggle>
-          <DropdownMenu right>
-            <DropdownItem header>Tasks</DropdownItem>
-            <DropdownItem onClick={this.onNewTask}>New task</DropdownItem>
-            <DropdownItem divider />
-            <DropdownItem header>Project</DropdownItem>
-            <DropdownItem>Edit project</DropdownItem>
-            <DropdownItem>Delete project</DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-      </div>
+      <div>{gettingProject && <AppSpinner text="Getting project data" />}</div>
     );
   }
 }
