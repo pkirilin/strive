@@ -1,3 +1,4 @@
+/** Redux action types related to task operations (create, update, delete) */
 export const taskOperationsConstants = {
   CREATE_REQUEST: "TASK_OPERATIONS_CREATE_REQUEST",
   CREATE_SUCCESS: "TASK_OPERATIONS_CREATE_SUCCESS",

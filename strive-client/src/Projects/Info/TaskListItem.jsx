@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { ListGroupItem } from "reactstrap";
-import { AppCheckBox } from "../../_components";
+import { AppCheckBox, AppHeader } from "../../_components";
 import { tasksActions } from "../../_actions";
 
 class TaskListItem extends React.Component {
@@ -26,11 +27,20 @@ class TaskListItem extends React.Component {
   }
 
   render() {
-    let { name, checked } = this.props.data;
+    let { id, name, checked } = this.props.data;
     return (
       <div className="mt-2 d-flex align-items-center">
         <AppCheckBox checked={checked} onChange={this.onSelectTask} />
-        <ListGroupItem action>{name}</ListGroupItem>
+        <ListGroupItem action>
+          <Link
+            className="text-body text-decoration-none"
+            to={`/tasks/info/${id}`}
+          >
+            <AppHeader level="6" centered={false}>
+              {name}
+            </AppHeader>
+          </Link>
+        </ListGroupItem>
       </div>
     );
   }

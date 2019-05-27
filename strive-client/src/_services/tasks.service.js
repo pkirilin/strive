@@ -5,6 +5,9 @@ export const tasksService = {
   /** Performs API call to API method responsible for getting a task list */
   getList,
 
+  /** Performs API call to API method responsible for getting a task info */
+  getInfo,
+
   /** Performs API call to API method responsible for creating a task */
   create
 };
@@ -20,6 +23,21 @@ function getList(projectId) {
   };
   return fetch(
     `${config.apiUrl}/tasks/get-list?projectId=${projectId}`,
+    requestOptions
+  );
+}
+
+/**
+ * Performs API call to API method responsible for getting a task info
+ * @param {number} taskId Task id
+ */
+function getInfo(taskId) {
+  const requestOptions = {
+    method: "GET",
+    headers: httpHeaders.authorization()
+  };
+  return fetch(
+    `${config.apiUrl}/tasks/get-info?taskId=${taskId}`,
     requestOptions
   );
 }

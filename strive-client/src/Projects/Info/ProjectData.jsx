@@ -27,6 +27,9 @@ const mapStateToProps = state => {
 class ProjectData extends React.Component {
   static propTypes = {
     projectId: PropTypes.number.isRequired,
+
+    gettingProject: PropTypes.bool,
+    failedToFetch: PropTypes.bool,
     project: PropTypes.shape({
       name: PropTypes.string.isRequired,
       description: PropTypes.string

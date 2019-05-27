@@ -3,11 +3,15 @@ import { alertActions } from "./alert.actions";
 import { taskListConstants, taskOperationsConstants } from "../_constants";
 import { httpStatuses, actionHelper } from "../_helpers";
 import { tasksService } from "../_services";
+import { taskInfoConstants } from "../_constants/Tasks";
 
 /** Contains Redux action creators for actions related to tasks */
 export const tasksActions = {
   /** Redux action creator, gets tasks list for current user and project from server */
   getList,
+
+  /** Redux action creator, gets task info for current user from server by id */
+  getInfo,
 
   /** Redux action creator, selects/unselects all tasks for making changes */
   checkAll,
@@ -78,6 +82,70 @@ function getList(projectId) {
   function error(errorData) {
     return {
       type: taskListConstants.GET_LIST_ERROR,
+      errorData
+    };
+  }
+}
+
+/**
+ * Redux action creator, gets task info for current user from server by id
+ * @param {number} taskId Task id
+ */
+function getInfo(taskId) {
+  return dispatch => {
+    dispatch(request(taskId));
+    tasksService.getInfo(taskId).then(
+      taskResponse => {
+        switch (taskResponse.status) {
+          case httpStatuses.ok:
+            taskResponse.json().then(task => {
+              dispatch(success(task));
+            });
+            break;
+          case httpStatuses.unauthorized:
+            actionHelper.redirectToProjects();
+            break;
+          case httpStatuses.notFound:
+            dispatch(
+              error({
+                notFound: true
+              })
+            );
+            break;
+          default:
+            break;
+        }
+      },
+      () => {
+        dispatch(
+          error({
+            failedToFetch: true
+          })
+        );
+      }
+    );
+  };
+
+  /** Get task info request action creator */
+  function request(taskId) {
+    return {
+      type: taskInfoConstants.GET_TASK_REQUEST,
+      taskId
+    };
+  }
+
+  /** Get task info success action creator */
+  function success(task) {
+    return {
+      type: taskInfoConstants.GET_TASK_SUCCESS,
+      task
+    };
+  }
+
+  /** Get task info error action creator */
+  function error(errorData) {
+    return {
+      type: taskInfoConstants.GET_TASK_ERROR,
       errorData
     };
   }
@@ -156,6 +224,7 @@ function create(task) {
     );
   };
 
+  /** Create task request action creator */
   function request(task) {
     return {
       type: taskOperationsConstants.CREATE_REQUEST,
@@ -163,6 +232,7 @@ function create(task) {
     };
   }
 
+  /** Create task success action creator */
   function success(task) {
     return {
       type: taskOperationsConstants.CREATE_SUCCESS,
@@ -170,6 +240,7 @@ function create(task) {
     };
   }
 
+  /** Create task error action creator */
   function error(error) {
     return {
       type: taskOperationsConstants.CREATE_ERROR,
@@ -177,6 +248,7 @@ function create(task) {
     };
   }
 
+  /** Create task bad request action creator */
   function badRequest(badRequestResponseJson) {
     return {
       type: taskOperationsConstants.CREATE_BADREQUEST,

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { DocumentTitleSetter, PrivateLayout } from "../../_components";
 import { ProjectData } from "./ProjectData";
@@ -17,6 +18,10 @@ const mapStateToProps = state => {
 };
 
 class ProjectInfoPage extends React.Component {
+  static propTypes = {
+    notFoundProjectData: PropTypes.bool
+  };
+
   constructor(props) {
     super(props);
 
@@ -47,7 +52,7 @@ class ProjectInfoPage extends React.Component {
     }
 
     return (
-      <DocumentTitleSetter values={["Project"]}>
+      <DocumentTitleSetter values={["Project info"]}>
         <PrivateLayout>{content}</PrivateLayout>
       </DocumentTitleSetter>
     );
