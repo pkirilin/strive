@@ -46,7 +46,7 @@ namespace Strive.API.Controllers
         }
 
         /// <summary>
-        /// Gets a project info by specified parameters
+        /// Gets project info by specified parameters
         /// </summary>
         /// <param name="projectId">Target project id</param>
         [HttpGet("get-info")]

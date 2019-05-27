@@ -49,6 +49,26 @@ namespace Strive.API.Controllers
         }
 
         /// <summary>
+        /// Gets task info by specified parameters
+        /// </summary>
+        /// <param name="taskId">Target task id</param>
+        [HttpGet("get-info")]
+        public IActionResult GetTaskInfo(int taskId)
+        {
+            try
+            {
+                Task task = _taskService.GetTaskById(taskId);
+                if (task == null)
+                    return NotFound(taskId);
+                return Ok(_mapper.Map<Task, TaskDto>(task));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
+
+        /// <summary>
         /// Validates sent task data and creates a new task based on received data
         /// </summary>
         /// <param name="taskData">Task data received from form</param>
