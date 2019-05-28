@@ -1,7 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { DocumentTitleSetter, PrivateLayout } from "../../_components";
+import {
+  DocumentTitleSetter,
+  PrivateLayout,
+  AppConfirmationModal,
+  AppSpinner
+} from "../../_components";
 import { ProjectData } from "./ProjectData";
 import { TaskStatusTabsPanel } from "./TaskStatusTabsPanel";
 import { TaskFilter } from "./TaskFilter";
@@ -12,14 +17,27 @@ const mapStateToProps = state => {
   let {
     notFound: notFoundProjectData
   } = state.projectsReducer.projectInfoReducer;
+  let { deleteProjectModal } = state.modalReducer;
+  let { deletingProject } = state.projectsReducer.projectListReducer;
   return {
-    notFoundProjectData
+    notFoundProjectData,
+    deleteProjectModal,
+    deletingProject
   };
 };
 
 class ProjectInfoPage extends React.Component {
   static propTypes = {
-    notFoundProjectData: PropTypes.bool
+    notFoundProjectData: PropTypes.bool,
+
+    deleteProjectModal: PropTypes.shape({
+      title: PropTypes.string,
+      message: PropTypes.node,
+      onClose: PropTypes.func,
+      onConfirm: PropTypes.func
+    }),
+
+    deletingProject: PropTypes.bool
   };
 
   constructor(props) {
@@ -29,10 +47,15 @@ class ProjectInfoPage extends React.Component {
   }
 
   render() {
-    let { notFoundProjectData } = this.props;
+    let {
+      notFoundProjectData,
+      deleteProjectModal,
+      deletingProject
+    } = this.props;
 
     let content = (
       <div>
+        <AppConfirmationModal {...deleteProjectModal} />
         <ProjectData projectId={this.projectId} />
         <TaskStatusTabsPanel projectId={this.projectId} />
         <TaskFilter />
@@ -42,6 +65,11 @@ class ProjectInfoPage extends React.Component {
         </div>
       </div>
     );
+
+    // Deleting project modal confirmed, modal closed, deleting in process. Showing loading spinner
+    if (deletingProject) {
+      content = <AppSpinner text="Deleting project" />;
+    }
 
     if (notFoundProjectData) {
       content = (

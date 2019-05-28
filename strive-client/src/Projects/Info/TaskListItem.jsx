@@ -2,15 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { ListGroupItem } from "reactstrap";
-import { AppCheckBox, AppHeader } from "../../_components";
+import { ListGroupItem, Row, Col } from "reactstrap";
 import { tasksActions } from "../../_actions";
+import { AppCheckBox, AppHeader } from "../../_components";
 
 class TaskListItem extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
       checked: PropTypes.bool.isRequired
     })
   };
@@ -27,19 +28,26 @@ class TaskListItem extends React.Component {
   }
 
   render() {
-    let { id, name, checked } = this.props.data;
+    let { id, name, description, checked } = this.props.data;
     return (
       <div className="mt-2 d-flex align-items-center">
         <AppCheckBox checked={checked} onChange={this.onSelectTask} />
         <ListGroupItem action>
-          <Link
-            className="text-body text-decoration-none"
-            to={`/tasks/info/${id}`}
-          >
-            <AppHeader level="6" centered={false}>
-              {name}
-            </AppHeader>
-          </Link>
+          <Row>
+            <Col xs="auto">
+              <Link
+                className="text-body text-decoration-none"
+                to={`/tasks/info/${id}`}
+              >
+                <AppHeader level="6" centered={false}>
+                  {name}
+                </AppHeader>
+              </Link>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="text-secondary">{description}</Col>
+          </Row>
         </ListGroupItem>
       </div>
     );

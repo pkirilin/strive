@@ -254,14 +254,16 @@ function update(projectId, project) {
         switch (updateProjectResponse.status) {
           case httpStatuses.ok:
             dispatch(success(projectId, project));
-            actionHelper.redirectToProjects();
-            dispatch(
-              alertActions.success(
-                <div>
-                  Project <b>{project.name}</b> has been successfully updated
-                </div>
-              )
-            );
+            actionHelper.goBack(() => {
+              dispatch(
+                alertActions.success(
+                  <div>
+                    Project <b>{project.name}</b> has been successfully updated
+                  </div>
+                )
+              );
+            });
+
             break;
           case httpStatuses.unauthorized:
             actionHelper.redirectToLogin();
@@ -358,6 +360,7 @@ function deleteProject(projectId) {
         switch (deleteProjectResponse.status) {
           case httpStatuses.ok:
             deleteProjectResponse.json().then(deletedProject => {
+              actionHelper.redirectToProjects();
               dispatch(success(deletedProject));
               dispatch(
                 alertActions.success(

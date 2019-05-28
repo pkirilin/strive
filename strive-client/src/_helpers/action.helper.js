@@ -3,6 +3,9 @@ import { alertActions } from "../_actions";
 
 /** Contains helper functions for using in app actions */
 export const actionHelper = {
+  /** Redirects user to previous page */
+  goBack,
+
   /** Redirects user to root/home page */
   redirectToRoot,
 
@@ -27,6 +30,20 @@ export const actionHelper = {
   /** Universal internal server error response handler */
   handleInternalServerErrorResponse
 };
+
+/**
+ * Redirects user to previous page
+ * @param {Function} postAction Unnessesary action after showing previous page
+ */
+function goBack(postAction) {
+  history.goBack();
+  if (postAction) {
+    // Timeout to perform some action after showing previous page
+    setTimeout(() => {
+      postAction();
+    }, 1);
+  }
+}
 
 /** Redirects user to root/home page */
 function redirectToRoot() {

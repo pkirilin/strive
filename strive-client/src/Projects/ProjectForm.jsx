@@ -193,7 +193,7 @@ class ProjectForm extends React.Component {
   }
 
   onCancel() {
-    actionHelper.redirectToProjects();
+    actionHelper.goBack();
   }
 
   onSubmit() {

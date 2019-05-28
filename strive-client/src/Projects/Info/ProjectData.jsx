@@ -8,8 +8,9 @@ import {
   DropdownItem
 } from "reactstrap";
 import { AppHeader, AppSpinner } from "../../_components";
-import { projectsActions } from "../../_actions";
+import { projectsActions, alertActions, modalActions } from "../../_actions";
 import { actionHelper } from "../../_helpers";
+import { modalConstants } from "../../_constants";
 
 const mapStateToProps = state => {
   let {
@@ -31,8 +32,9 @@ class ProjectData extends React.Component {
     gettingProject: PropTypes.bool,
     failedToFetch: PropTypes.bool,
     project: PropTypes.shape({
+      id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
-      description: PropTypes.string
+      description: PropTypes.string.isRequired
     })
   };
 
@@ -40,12 +42,46 @@ class ProjectData extends React.Component {
     super(props);
 
     this.onNewTask = this.onNewTask.bind(this);
+    this.onEditProject = this.onEditProject.bind(this);
+    this.onDeleteProject = this.onDeleteProject.bind(this);
 
     this.props.dispatch(projectsActions.getInfo(this.props.projectId));
   }
 
   onNewTask() {
     actionHelper.redirectToCreateTask(this.props.projectId);
+  }
+
+  onEditProject() {
+    actionHelper.redirectToEditProject(this.props.projectId);
+  }
+
+  onDeleteProject() {
+    let { project } = this.props;
+    this.props.dispatch(alertActions.clear());
+    this.props.dispatch(
+      modalActions.open(modalConstants.DELETE_PROJECT_OPEN, {
+        title: "Delete project confirmation",
+        message: (
+          <div>
+            Delete project <b>{project.name}</b>?
+          </div>
+        ),
+        onClose: () => {
+          closeModal();
+        },
+        onConfirm: () => {
+          closeModal();
+          this.props.dispatch(projectsActions.delete(project.id));
+        }
+      })
+    );
+
+    const closeModal = () => {
+      this.props.dispatch(
+        modalActions.close(modalConstants.DELETE_PROJECT_CLOSE)
+      );
+    };
   }
 
   render() {
@@ -70,8 +106,12 @@ class ProjectData extends React.Component {
               <DropdownItem onClick={this.onNewTask}>New task</DropdownItem>
               <DropdownItem divider />
               <DropdownItem header>Project</DropdownItem>
-              <DropdownItem>Edit project</DropdownItem>
-              <DropdownItem>Delete project</DropdownItem>
+              <DropdownItem onClick={this.onEditProject}>
+                Edit project
+              </DropdownItem>
+              <DropdownItem onClick={this.onDeleteProject}>
+                Delete project
+              </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </div>
