@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { AppSpinner, AppHeader } from "../../_components";
+import { AppSpinner } from "../../_components";
 import { tasksActions } from "../../_actions";
 
 const mapStateToProps = state => {
@@ -39,7 +39,6 @@ class TaskData extends Component {
     if (task) {
       return (
         <div>
-          <AppHeader>Task info (test)</AppHeader>
           <div>Name: {task.name}</div>
           <div>Description: {task.description}</div>
         </div>

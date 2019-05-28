@@ -27,6 +27,9 @@ export const actionHelper = {
   /** Redirects user to create task page */
   redirectToCreateTask,
 
+  /** Redirects user to edit task page */
+  redirectToEditTask,
+
   /** Universal internal server error response handler */
   handleInternalServerErrorResponse
 };
@@ -87,6 +90,14 @@ function redirectToProjectInfo(projectId) {
  */
 function redirectToCreateTask(projectId) {
   history.push("/tasks/create", { projectId });
+}
+
+/**
+ * Redirects user to edit task page
+ * @param {number} taskId Task id for request string
+ */
+function redirectToEditTask(taskId) {
+  history.push(`/tasks/edit/${taskId}`);
 }
 
 /**

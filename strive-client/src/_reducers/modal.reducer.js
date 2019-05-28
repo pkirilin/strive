@@ -17,6 +17,22 @@ export const modalReducer = (state = {}, action) => {
           isOpen: false
         }
       };
+
+    case modalConstants.DELETE_TASK_OPEN:
+      return {
+        ...state,
+        deleteTaskModal: {
+          isOpen: true,
+          ...action
+        }
+      };
+    case modalConstants.DELETE_TASK_CLOSE:
+      return {
+        ...state,
+        deleteTaskModal: {
+          isOpen: false
+        }
+      };
     default:
       return state;
   }
