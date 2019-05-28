@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 export const AppHeader = props => {
   let HeaderTag = `h${props.level}`;
-  let headerClassNames = ["mt-3"];
+  let headerClassNames = [];
 
   if (props.centered === true) {
     headerClassNames.push("text-center");
