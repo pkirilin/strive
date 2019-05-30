@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Form, FormGroup, Row, Col, Button } from "reactstrap";
-import { alertActions } from "../_actions";
+import { alertActions, tasksActions } from "../_actions";
 import { AppTextBox, AppTextArea, AppSpinner } from "../_components";
 import { validationStatuses } from "../_constants";
 import { actionHelper } from "../_helpers";
@@ -17,10 +17,22 @@ const mapStateToProps = state => {
     badRequestResponseJson,
     internalServerError
   } = state.tasksReducer.taskOperationsReducer;
+
+  let {
+    gettingTask,
+    task,
+    notFound,
+    failedToFetch
+  } = state.tasksReducer.taskInfoReducer;
+
   return {
     sendingTaskInfo,
     badRequestResponseJson,
-    internalServerError
+    internalServerError,
+    gettingTaskForUpdate: gettingTask,
+    taskFetched: task,
+    notFoundTaskForUpdate: notFound,
+    failedToFetchTaskForUpdate: failedToFetch
   };
 };
 
@@ -30,6 +42,7 @@ class TaskForm extends React.Component {
     loadingText: PropTypes.string,
     submitButtonText: PropTypes.string,
     projectId: PropTypes.number,
+    taskId: PropTypes.number,
     tasksAction: PropTypes.func.isRequired,
 
     sendingTaskInfo: PropTypes.bool,
@@ -37,7 +50,16 @@ class TaskForm extends React.Component {
 
     badRequestResponseJson: PropTypes.shape({
       taskNameRemote: PropTypes.arrayOf(PropTypes.string)
-    })
+    }),
+
+    gettingTaskForUpdate: PropTypes.bool,
+    taskFetched: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired
+    }),
+    notFoundTaskForUpdate: PropTypes.bool,
+    failedToFetchTaskForUpdate: PropTypes.bool
   };
 
   static defaultProps = {
@@ -63,6 +85,9 @@ class TaskForm extends React.Component {
     this.trackTaskNameBadRequestResponse = this.trackTaskNameBadRequestResponse.bind(
       this
     );
+    this.trackTaskForUpdateFetchedFromServer = this.trackTaskForUpdateFetchedFromServer.bind(
+      this
+    );
 
     let initFieldObj = {
       value: "",
@@ -82,27 +107,11 @@ class TaskForm extends React.Component {
         onChange: this.onTaskDescriptionValueChanged
       }
     };
-  }
 
-  componentWillMount() {
-    // If project id is not set, it's unable to create task, because it should be bound to specific project
-    if (!this.props.projectId) {
-      actionHelper.redirectToProjects();
-      this.props.dispatch(
-        alertActions.error(
-          "Unable to determine project id. Redirected to your project list"
-        )
-      );
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    // Tracks if any bad request (validation error) received from API
-    if (
-      prevProps.badRequestResponseJson !== this.props.badRequestResponseJson
-    ) {
-      this.trackTaskNameBadRequestResponse();
-      return true;
+    // If taskId is set, it means that update task needs to be executed
+    if (this.props.taskId) {
+      // Dispatching action to get info for task to load it into update form
+      this.props.dispatch(tasksActions.getInfo(this.props.taskId));
     }
   }
 
@@ -121,6 +130,57 @@ class TaskForm extends React.Component {
           }
         }
       });
+    }
+  }
+
+  trackTaskForUpdateFetchedFromServer() {
+    let { taskFetched } = this.props;
+    this.setState({
+      taskName: {
+        value: taskFetched.name,
+        validationState: validationRulesSetters.resetAll(),
+        onChange: this.onTaskNameValueChanged
+      },
+      taskDescription: {
+        value: taskFetched.description,
+        validationState: validationRulesSetters.resetAll(),
+        onChange: this.onTaskDescriptionValueChanged
+      }
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    // Tracks if any bad request (validation error) received from API
+    if (
+      prevProps.badRequestResponseJson !== this.props.badRequestResponseJson
+    ) {
+      this.trackTaskNameBadRequestResponse();
+      return true;
+    }
+
+    // Tracks if current form state values must be replaced by fetched from server ones
+    // This happens when user clicked "Edit task" button and server found task with requested id
+    if (
+      prevProps.taskFetched === undefined &&
+      this.props.taskFetched !== undefined
+    ) {
+      this.trackTaskForUpdateFetchedFromServer();
+      return true;
+    }
+  }
+
+  componentWillMount() {
+    // If project id is not set, it's unable to create task, because it should be bound to specific project
+    // Checking this if only create task is in process (where taskId is not defined)
+    // Project id for update operation is received from reducer with task data
+    let { projectId, taskId } = this.props;
+    if (!taskId && !projectId) {
+      actionHelper.redirectToProjects();
+      this.props.dispatch(
+        alertActions.error(
+          "Unable to determine project id. Redirected to your project list"
+        )
+      );
     }
   }
 
@@ -149,10 +209,7 @@ class TaskForm extends React.Component {
   }
 
   onCancel() {
-    const { projectId } = this.props;
-    if (projectId) {
-      actionHelper.redirectToProjectInfo(projectId);
-    }
+    actionHelper.goBack();
   }
 
   onSubmit() {
@@ -177,16 +234,20 @@ class TaskForm extends React.Component {
 
   onSubmitValidationCompleted() {
     if (validationUtils.focusFirstInvalidField(`#${this.props.id}`) === false) {
-      let { tasksAction, taskId, projectId } = this.props;
+      let { tasksAction, taskId, taskFetched } = this.props;
       let taskDto = {
         name: this.state.taskName.value,
         description: this.state.taskDescription.value,
-        projectId
+        projectId: taskFetched.projectId
       };
 
       if (tasksAction) {
         if (taskId) {
-          // Update task action
+          if (taskFetched) {
+            // Update task action
+            taskDto["id"] = taskId;
+            this.props.dispatch(tasksAction(taskId, taskDto));
+          }
         } else {
           // Create task action
           this.props.dispatch(tasksAction(taskDto));
@@ -196,7 +257,35 @@ class TaskForm extends React.Component {
   }
 
   render() {
-    let { sendingTaskInfo, loadingText, internalServerError } = this.props;
+    let {
+      sendingTaskInfo,
+      loadingText,
+      internalServerError,
+      gettingTaskForUpdate,
+      failedToFetchTaskForUpdate,
+      notFoundTaskForUpdate
+    } = this.props;
+
+    // Showing loading task info spinner while data is fetching (for update)
+    if (gettingTaskForUpdate) {
+      return <AppSpinner text="Getting task for update" />;
+    }
+
+    // If server is not available, showing error message
+    if (failedToFetchTaskForUpdate) {
+      return (
+        <div className="mt-4 text-center text-danger">
+          Failed to fetch task data: server is not available
+        </div>
+      );
+    }
+
+    // If server returned not found for current request, showing error message
+    if (notFoundTaskForUpdate) {
+      return (
+        <div className="mt-4 text-center text-danger">Task was not found</div>
+      );
+    }
 
     if (internalServerError) {
       return (

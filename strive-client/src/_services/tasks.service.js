@@ -9,7 +9,10 @@ export const tasksService = {
   getInfo,
 
   /** Performs API call to API method responsible for creating a task */
-  create
+  create,
+
+  /** Performs API call to API method responsible for updating a task */
+  update
 };
 
 /**
@@ -56,4 +59,21 @@ function create(task) {
     body: JSON.stringify(task)
   };
   return fetch(`${config.apiUrl}/tasks/create`, requestOptions);
+}
+
+/**
+ * Performs API call to API method responsible for updating a task
+ * @param {number} taskId Id of task to be updated
+ * @param {object} task Updated task data
+ */
+function update(taskId, task) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      ...httpHeaders.contentTypeJson,
+      ...httpHeaders.authorization()
+    },
+    body: JSON.stringify(task)
+  };
+  return fetch(`${config.apiUrl}/tasks/update/${taskId}`, requestOptions);
 }

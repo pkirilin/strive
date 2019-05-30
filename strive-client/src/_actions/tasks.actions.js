@@ -20,7 +20,10 @@ export const tasksActions = {
   checkTarget,
 
   /** Redux action creator, creates a new task */
-  create
+  create,
+
+  /** Redux action creator, updates an existing task */
+  update
 };
 
 /**
@@ -252,6 +255,109 @@ function create(task) {
   function badRequest(badRequestResponseJson) {
     return {
       type: taskOperationsConstants.CREATE_BADREQUEST,
+      badRequestResponseJson
+    };
+  }
+}
+
+/**
+ * Redux action creator, updates an existing
+ * @param {number} taskId Id of task to be updated
+ * @param {object} task Updated task data
+ */
+function update(taskId, task) {
+  return dispatch => {
+    dispatch(request(taskId, task));
+    tasksService.update(taskId, task).then(
+      updateTaskResponse => {
+        switch (updateTaskResponse.status) {
+          case httpStatuses.ok:
+            updateTaskResponse.json().then(updatedTask => {
+              dispatch(success(taskId, updatedTask));
+              actionHelper.goBack(() => {
+                dispatch(
+                  alertActions.success(
+                    <div>
+                      Task <b>{updatedTask.name}</b> has been successfully
+                      updated
+                    </div>
+                  )
+                );
+              });
+            });
+            break;
+          case httpStatuses.unauthorized:
+            actionHelper.redirectToLogin();
+            break;
+          case httpStatuses.badRequest:
+            updateTaskResponse.json().then(updateTaskBadRequestJsonData => {
+              if (updateTaskBadRequestJsonData) {
+                dispatch(badRequest(updateTaskBadRequestJsonData));
+              }
+            });
+            break;
+          case httpStatuses.notFound:
+            updateTaskResponse.json().then(notFoundTaskId => {
+              dispatch(
+                error(`Server couldn't find a task with id = ${notFoundTaskId}`)
+              );
+              dispatch(
+                alertActions.error(
+                  "Failed to update task: server couldn't find target task"
+                )
+              );
+            });
+            break;
+          case httpStatuses.internalServerError:
+            actionHelper.handleInternalServerErrorResponse(
+              updateTaskResponse,
+              dispatch,
+              error
+            );
+            break;
+          default:
+            break;
+        }
+      },
+      errorResponse => {
+        dispatch(error(errorResponse));
+        dispatch(
+          alertActions.error("Failed to update task: server is not available")
+        );
+      }
+    );
+  };
+
+  /** Update task request action creator */
+  function request(taskId, task) {
+    return {
+      type: taskOperationsConstants.UPDATE_REQUEST,
+      taskId,
+      task
+    };
+  }
+
+  /** Update task success action creator */
+  function success(taskId, task) {
+    return {
+      type: taskOperationsConstants.UPDATE_SUCCESS,
+      taskId,
+      task
+    };
+  }
+
+  /** Update task error action creator */
+  function error(error) {
+    return {
+      type: taskOperationsConstants.UPDATE_ERROR,
+      error
+    };
+  }
+
+  /** Update task bad request action creator */
+  function badRequest(badRequestResponseJson) {
+    return {
+      type: taskOperationsConstants.UPDATE_BADREQUEST,
       badRequestResponseJson
     };
   }

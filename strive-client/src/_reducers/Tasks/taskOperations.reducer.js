@@ -19,6 +19,24 @@ export const taskOperationsReducer = (state = {}, action) => {
       return {
         badRequestResponseJson: action.badRequestResponseJson
       };
+
+    // Update project
+    case taskOperationsConstants.UPDATE_REQUEST:
+      return {
+        sendingTaskInfo: true
+      };
+    case taskOperationsConstants.UPDATE_SUCCESS:
+      return {
+        taskUpdated: true
+      };
+    case taskOperationsConstants.UPDATE_ERROR:
+      return {
+        failedToUpdateTask: true
+      };
+    case taskOperationsConstants.UPDATE_BADREQUEST:
+      return {
+        badRequestResponseJson: action.badRequestResponseJson
+      };
     default:
       return state;
   }

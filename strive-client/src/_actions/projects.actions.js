@@ -263,7 +263,6 @@ function update(projectId, project) {
                 )
               );
             });
-
             break;
           case httpStatuses.unauthorized:
             actionHelper.redirectToLogin();
