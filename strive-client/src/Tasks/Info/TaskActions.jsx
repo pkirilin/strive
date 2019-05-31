@@ -8,7 +8,7 @@ import {
   DropdownItem
 } from "reactstrap";
 import { actionHelper } from "../../_helpers";
-import { modalActions } from "../../_actions";
+import { modalActions, tasksActions } from "../../_actions";
 import { modalConstants } from "../../_constants";
 
 const mapStateToProps = state => {
@@ -37,18 +37,18 @@ class TaskActions extends React.Component {
 
     this.props.dispatch(
       modalActions.open(modalConstants.DELETE_TASK_OPEN, {
-        title: "Delete project confirmation",
+        title: "Delete task confirmation",
         message: (
           <div>
-            Delete project <b>{task.name}</b>?
+            Delete task <b>{task.name}</b>?
           </div>
         ),
         onClose: () => {
           closeModal();
         },
         onConfirm: () => {
-          //closeModal();
-          //this.props.dispatch(tasksActions.delete(task.id));
+          closeModal();
+          this.props.dispatch(tasksActions.delete(task.id));
         }
       })
     );

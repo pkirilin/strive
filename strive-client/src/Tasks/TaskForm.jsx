@@ -237,8 +237,7 @@ class TaskForm extends React.Component {
       let { tasksAction, taskId, taskFetched } = this.props;
       let taskDto = {
         name: this.state.taskName.value,
-        description: this.state.taskDescription.value,
-        projectId: taskFetched.projectId
+        description: this.state.taskDescription.value
       };
 
       if (tasksAction) {
@@ -246,10 +245,12 @@ class TaskForm extends React.Component {
           if (taskFetched) {
             // Update task action
             taskDto["id"] = taskId;
+            taskDto["projectId"] = taskFetched.projectId;
             this.props.dispatch(tasksAction(taskId, taskDto));
           }
         } else {
           // Create task action
+          taskDto["projectId"] = this.props.projectId;
           this.props.dispatch(tasksAction(taskDto));
         }
       }

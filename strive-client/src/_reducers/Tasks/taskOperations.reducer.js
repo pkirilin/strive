@@ -37,6 +37,16 @@ export const taskOperationsReducer = (state = {}, action) => {
       return {
         badRequestResponseJson: action.badRequestResponseJson
       };
+
+    // Delete project
+    case taskOperationsConstants.DELETE_REQUEST:
+      return {
+        deletingTask: true
+      };
+    case taskOperationsConstants.DELETE_SUCCESS:
+      return {};
+    case taskOperationsConstants.DELETE_ERROR:
+      return {};
     default:
       return state;
   }

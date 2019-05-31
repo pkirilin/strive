@@ -12,7 +12,10 @@ export const tasksService = {
   create,
 
   /** Performs API call to API method responsible for updating a task */
-  update
+  update,
+
+  /** Performs API call to API method responsible for deleting a task */
+  delete: deleteTask
 };
 
 /**
@@ -76,4 +79,16 @@ function update(taskId, task) {
     body: JSON.stringify(task)
   };
   return fetch(`${config.apiUrl}/tasks/update/${taskId}`, requestOptions);
+}
+
+/**
+ * Performs API call to API method responsible for deleting a task
+ * @param {number} taskId Id of task to be deleted
+ */
+function deleteTask(taskId) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: httpHeaders.authorization()
+  };
+  return fetch(`${config.apiUrl}/tasks/delete/${taskId}`, requestOptions);
 }

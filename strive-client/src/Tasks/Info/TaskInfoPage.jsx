@@ -6,15 +6,18 @@ import {
   DocumentTitleSetter,
   PrivateLayout,
   AppHeader,
-  AppConfirmationModal
+  AppConfirmationModal,
+  AppSpinner
 } from "../../_components";
 import { TaskData } from "./TaskData";
 import { TaskActions } from "./TaskActions";
 
 const mapStateToProps = state => {
   let { notFound: notFoundTaskData } = state.tasksReducer.taskInfoReducer;
+  let { deletingTask } = state.tasksReducer.taskOperationsReducer;
   let { deleteTaskModal } = state.modalReducer;
   return {
+    deletingTask,
     notFoundTaskData,
     deleteTaskModal
   };
@@ -39,7 +42,7 @@ class TaskInfoPage extends React.Component {
   }
 
   render() {
-    let { notFoundTaskData, deleteTaskModal } = this.props;
+    let { deletingTask, notFoundTaskData, deleteTaskModal } = this.props;
     let content = (
       <div>
         <AppConfirmationModal {...deleteTaskModal} />
@@ -54,6 +57,11 @@ class TaskInfoPage extends React.Component {
         </Row>
       </div>
     );
+
+    // Deleting task modal confirmed, modal closed, deleting in process. Showing loading spinner
+    if (deletingTask) {
+      content = <AppSpinner text="Deleting task" />;
+    }
 
     if (notFoundTaskData) {
       content = (

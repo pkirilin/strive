@@ -23,7 +23,10 @@ export const tasksActions = {
   create,
 
   /** Redux action creator, updates an existing task */
-  update
+  update,
+
+  /** Redux action creator, deletes an existing task */
+  delete: deleteTask
 };
 
 /**
@@ -261,7 +264,7 @@ function create(task) {
 }
 
 /**
- * Redux action creator, updates an existing
+ * Redux action creator, updates an existing task
  * @param {number} taskId Id of task to be updated
  * @param {object} task Updated task data
  */
@@ -359,6 +362,86 @@ function update(taskId, task) {
     return {
       type: taskOperationsConstants.UPDATE_BADREQUEST,
       badRequestResponseJson
+    };
+  }
+}
+
+/**
+ * Redux action creator, deletes an existing task
+ * @param {number} taskId Id of task to be deleted
+ */
+function deleteTask(taskId) {
+  return dispatch => {
+    dispatch(request(taskId));
+    tasksService.delete(taskId).then(
+      deleteTaskResponse => {
+        switch (deleteTaskResponse.status) {
+          case httpStatuses.ok:
+            deleteTaskResponse.json().then(deletedTask => {
+              actionHelper.redirectToProjectInfo(deletedTask.projectId);
+              dispatch(success(deletedTask));
+              dispatch(
+                alertActions.success(
+                  <div>
+                    Task <b>{deletedTask.name}</b> has been successfully deleted
+                  </div>
+                )
+              );
+            });
+            break;
+          case httpStatuses.unauthorized:
+            actionHelper.redirectToLogin();
+            break;
+          case httpStatuses.notFound:
+            deleteTaskResponse.json().then(notFoundTaskId => {
+              dispatch(
+                error(`Server couldn't find a task with id = ${notFoundTaskId}`)
+              );
+              dispatch(
+                alertActions.error(
+                  "Failed to delete task: server couldn't find target task"
+                )
+              );
+            });
+            break;
+          case httpStatuses.internalServerError:
+            actionHelper.handleInternalServerErrorResponse(
+              deleteTaskResponse,
+              dispatch,
+              error
+            );
+            break;
+          default:
+            break;
+        }
+      },
+      errorResponse => {
+        dispatch(error(errorResponse));
+        dispatch(
+          alertActions.error("Failed to delete task: server is not available")
+        );
+      }
+    );
+  };
+
+  function request(taskId) {
+    return {
+      type: taskOperationsConstants.DELETE_REQUEST,
+      taskId
+    };
+  }
+
+  function success(deletedTask) {
+    return {
+      type: taskOperationsConstants.DELETE_SUCCESS,
+      deletedTask
+    };
+  }
+
+  function error(taskId) {
+    return {
+      type: taskOperationsConstants.DELETE_ERROR,
+      taskId
     };
   }
 }
