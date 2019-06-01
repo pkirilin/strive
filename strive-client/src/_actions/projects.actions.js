@@ -1,6 +1,10 @@
 import React from "react";
 import { alertActions } from "./alert.actions";
-import { projectInfoConstants, projectListConstants } from "../_constants";
+import {
+  projectInfoConstants,
+  projectListConstants,
+  projectOperationsConstants
+} from "../_constants";
 import { httpStatuses, actionHelper } from "../_helpers";
 import { projectsService } from "../_services";
 
@@ -211,7 +215,7 @@ function create(project) {
   /** Create project request action creator */
   function request(project) {
     return {
-      type: projectListConstants.CREATE_REQUEST,
+      type: projectOperationsConstants.CREATE_REQUEST,
       project
     };
   }
@@ -219,7 +223,7 @@ function create(project) {
   /** Create project success action creator */
   function success(project) {
     return {
-      type: projectListConstants.CREATE_SUCCESS,
+      type: projectOperationsConstants.CREATE_SUCCESS,
       project
     };
   }
@@ -227,7 +231,7 @@ function create(project) {
   /** Create project error action creator */
   function error(error) {
     return {
-      type: projectListConstants.CREATE_ERROR,
+      type: projectOperationsConstants.CREATE_ERROR,
       error
     };
   }
@@ -235,7 +239,7 @@ function create(project) {
   /** Create project bad request action creator */
   function badRequest(badRequestResponseJson) {
     return {
-      type: projectListConstants.CREATE_BADREQUEST,
+      type: projectOperationsConstants.CREATE_BADREQUEST,
       badRequestResponseJson
     };
   }
@@ -315,7 +319,7 @@ function update(projectId, project) {
   /** Update project request action creator */
   function request(projectId, project) {
     return {
-      type: projectListConstants.UPDATE_REQUEST,
+      type: projectOperationsConstants.UPDATE_REQUEST,
       projectId,
       project
     };
@@ -324,7 +328,7 @@ function update(projectId, project) {
   /** Update project success action creator */
   function success(projectId, project) {
     return {
-      type: projectListConstants.UPDATE_SUCCESS,
+      type: projectOperationsConstants.UPDATE_SUCCESS,
       projectId,
       project
     };
@@ -333,7 +337,7 @@ function update(projectId, project) {
   /** Update project error action creator */
   function error(error) {
     return {
-      type: projectListConstants.UPDATE_ERROR,
+      type: projectOperationsConstants.UPDATE_ERROR,
       error
     };
   }
@@ -341,7 +345,7 @@ function update(projectId, project) {
   /** Update project bad request action creator */
   function badRequest(badRequestResponseJson) {
     return {
-      type: projectListConstants.UPDATE_BADREQUEST,
+      type: projectOperationsConstants.UPDATE_BADREQUEST,
       badRequestResponseJson
     };
   }
@@ -416,7 +420,7 @@ function deleteProject(projectId) {
    */
   function request(projectId) {
     return {
-      type: projectListConstants.DELETE_REQUEST,
+      type: projectOperationsConstants.DELETE_REQUEST,
       projectId
     };
   }
@@ -427,7 +431,7 @@ function deleteProject(projectId) {
    */
   function success(deletedProject) {
     return {
-      type: projectListConstants.DELETE_SUCCESS,
+      type: projectOperationsConstants.DELETE_SUCCESS,
       deletedProject
     };
   }
@@ -438,7 +442,7 @@ function deleteProject(projectId) {
    */
   function error(error) {
     return {
-      type: projectListConstants.DELETE_ERROR,
+      type: projectOperationsConstants.DELETE_ERROR,
       error
     };
   }

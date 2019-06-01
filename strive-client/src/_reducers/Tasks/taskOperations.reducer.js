@@ -8,13 +8,9 @@ export const taskOperationsReducer = (state = {}, action) => {
         sendingTaskInfo: true
       };
     case taskOperationsConstants.CREATE_SUCCESS:
-      return {
-        taskCreated: true
-      };
+      return {};
     case taskOperationsConstants.CREATE_ERROR:
-      return {
-        failedToCreateTask: true
-      };
+      return {};
     case taskOperationsConstants.CREATE_BADREQUEST:
       return {
         badRequestResponseJson: action.badRequestResponseJson
@@ -26,13 +22,9 @@ export const taskOperationsReducer = (state = {}, action) => {
         sendingTaskInfo: true
       };
     case taskOperationsConstants.UPDATE_SUCCESS:
-      return {
-        taskUpdated: true
-      };
+      return {};
     case taskOperationsConstants.UPDATE_ERROR:
-      return {
-        failedToUpdateTask: true
-      };
+      return {};
     case taskOperationsConstants.UPDATE_BADREQUEST:
       return {
         badRequestResponseJson: action.badRequestResponseJson

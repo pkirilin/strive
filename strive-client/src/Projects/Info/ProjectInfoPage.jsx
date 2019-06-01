@@ -18,7 +18,7 @@ const mapStateToProps = state => {
     notFound: notFoundProjectData
   } = state.projectsReducer.projectInfoReducer;
   let { deleteProjectModal } = state.modalReducer;
-  let { deletingProject } = state.projectsReducer.projectListReducer;
+  let { deletingProject } = state.projectsReducer.projectOperationsReducer;
   return {
     notFoundProjectData,
     deleteProjectModal,

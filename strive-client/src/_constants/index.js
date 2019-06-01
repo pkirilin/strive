@@ -1,5 +1,9 @@
 export { registerConstants, loginConstants } from "./Account";
-export { projectInfoConstants, projectListConstants } from "./Projects";
+export {
+  projectInfoConstants,
+  projectListConstants,
+  projectOperationsConstants
+} from "./Projects";
 export { taskListConstants, taskOperationsConstants } from "./Tasks";
 export { alertConstants } from "./alert.constants";
 export { modalConstants } from "./modal.constants";

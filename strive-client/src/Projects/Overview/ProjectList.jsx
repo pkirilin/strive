@@ -11,9 +11,9 @@ const mapStateToProps = state => {
     loadingProjectList,
     failedToFetch,
     internalServerError,
-    deletingProject,
     projects
   } = state.projectsReducer.projectListReducer;
+  let { deletingProject } = state.projectsReducer.projectOperationsReducer;
   let { deleteProjectModal } = state.modalReducer;
   return {
     loadingProjectList,

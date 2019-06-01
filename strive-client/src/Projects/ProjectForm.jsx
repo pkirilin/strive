@@ -16,7 +16,7 @@ const mapStateToProps = state => {
     sendingProjectInfo,
     badRequestResponseJson,
     internalServerError
-  } = state.projectsReducer.projectListReducer;
+  } = state.projectsReducer.projectOperationsReducer;
 
   let {
     gettingProject,
