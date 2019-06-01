@@ -33,7 +33,7 @@ namespace Strive.Tests.Services.Account
         {
             User user = new User();
             string password = "password";
-            _userRepositoryMock.Setup(repo => repo.Add(user))
+            _userRepositoryMock.Setup(repo => repo.Insert(user))
                 .Throws<Exception>();
 
             Assert.Throws<StriveDatabaseException>(() =>

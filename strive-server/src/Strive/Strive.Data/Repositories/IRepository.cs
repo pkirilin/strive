@@ -1,17 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Strive.Data.Repositories
 {
-    public interface IRepository<TEntity> where TEntity : class
+    /// <summary>
+    /// Base app repository abstraction
+    /// </summary>
+    /// <typeparam name="TEntity">Entity type</typeparam>
+    public interface IRepository<TEntity> where TEntity : StriveEntity
     {
         IEnumerable<TEntity> GetAll();
 
+        //IQueryable<TEntity> Get();
+
+        TEntity GetSingleOrDefault(Func<TEntity, bool> condition);
+
         TEntity GetById(object id);
 
-        TEntity Add(TEntity newEntity);
+        void Insert(TEntity entity);
 
-        TEntity Update(TEntity updatedEntity);
+        void Update(TEntity entity);
 
-        TEntity Remove(TEntity entityForDelete);
+        void Delete(TEntity entity);
     }
 }

@@ -21,22 +21,10 @@ namespace Strive.Tests.Services.Tasks
         public void CreateThrowsDatabaseExceptionWhenRepoFailed()
         {
             Task task = TestValuesProvider.GetTasks().FirstOrDefault();
-            _taskRepositoryMock.Setup(repo => repo.Add(task))
+            _taskRepositoryMock.Setup(repo => repo.Insert(task))
                 .Throws<Exception>();
 
             Assert.Throws<StriveDatabaseException>(() => { this.TaskServiceInstance.Create(task); });
-        }
-
-        [Fact]
-        public void CreateReturnsTaskOnSuccess()
-        {
-            Task task = TestValuesProvider.GetTasks().FirstOrDefault();
-            _taskRepositoryMock.Setup(repo => repo.Add(task))
-                .Returns(task);
-
-            Task result = this.TaskServiceInstance.Create(task);
-
-            Assert.Equal(task, result);
         }
     }
 }

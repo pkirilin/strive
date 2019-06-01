@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Strive.Data.Repositories.Classes;
-using Strive.Data.Repositories.Interfaces;
+using Strive.Data.Entities;
+using Strive.Data.Repositories;
 using Strive.Data.Services.Classes;
 using Strive.Data.Services.Interfaces;
 
@@ -26,9 +26,9 @@ namespace Strive.Extensions.NetCore
         /// </summary>
         public static void AddAppRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IProjectRepository, ProjectRepository>();
-            services.AddScoped<ITaskRepository, TaskRepository>();
+            services.AddScoped<IRepository<User>, StriveRepository<User>>();
+            services.AddScoped<IRepository<Project>, StriveRepository<Project>>();
+            services.AddScoped<IRepository<Task>, StriveRepository<Task>>();
         }
     }
 }

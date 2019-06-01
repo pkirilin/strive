@@ -21,22 +21,10 @@ namespace Strive.Tests.Services.Projects
         public void DeleteThrowsDatabaseExceptionWhenRepoFailed()
         {
             Project project = TestValuesProvider.GetProjects().FirstOrDefault();
-            _projectRepositoryMock.Setup(repo => repo.Remove(project))
+            _projectRepositoryMock.Setup(repo => repo.Delete(project))
                 .Throws<Exception>();
 
             Assert.Throws<StriveDatabaseException>(() => { this.ProjectServiceInstance.Delete(project); });
-        }
-
-        [Fact]
-        public void DeleteReturnsProjectOnSuccess()
-        {
-            Project project = TestValuesProvider.GetProjects().FirstOrDefault();
-            _projectRepositoryMock.Setup(repo => repo.Remove(project))
-                .Returns(project);
-
-            Project result = this.ProjectServiceInstance.Delete(project);
-
-            Assert.Equal(project, result);
         }
     }
 }

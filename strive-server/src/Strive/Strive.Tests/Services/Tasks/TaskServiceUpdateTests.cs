@@ -26,17 +26,5 @@ namespace Strive.Tests.Services.Tasks
 
             Assert.Throws<StriveDatabaseException>(() => { this.TaskServiceInstance.Update(task); });
         }
-
-        [Fact]
-        public void UpdateReturnsTaskOnSuccess()
-        {
-            Task task = TestValuesProvider.GetTasks().FirstOrDefault();
-            _taskRepositoryMock.Setup(repo => repo.Update(task))
-                .Returns(task);
-
-            Task result = this.TaskServiceInstance.Update(task);
-
-            Assert.Equal(task, result);
-        }
     }
 }

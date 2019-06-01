@@ -10,14 +10,7 @@ namespace Strive.Data.EntityConfigurations
         {
             builder.ToTable("User");
 
-            builder.HasKey(user => user.Id)
-                .HasName("PK_User");
-
-            builder.HasAlternateKey(user => user.Email)
-                .HasName("UN_User_Email");
-
-            builder.HasAlternateKey(user => user.Username)
-                .HasName("UN_User_Username");
+            #region Properties
 
             builder.Property(user => user.Id)
                 .HasColumnName("Id")
@@ -41,6 +34,21 @@ namespace Strive.Data.EntityConfigurations
             builder.Property(user => user.PasswordSalt)
                 .HasColumnName("PasswordSalt")
                 .IsRequired(true);
+
+            #endregion
+
+            #region Constraints
+
+            builder.HasKey(user => user.Id)
+                .HasName("PK_User");
+
+            builder.HasAlternateKey(user => user.Email)
+                .HasName("UN_User_Email");
+
+            builder.HasAlternateKey(user => user.Username)
+                .HasName("UN_User_Username");
+
+            #endregion
         }
     }
 }

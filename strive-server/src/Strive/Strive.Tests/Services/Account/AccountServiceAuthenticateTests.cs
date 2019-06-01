@@ -1,4 +1,5 @@
 ﻿using System;
+using Moq;
 using Strive.Data.Entities;
 using Strive.Data.Services.Classes;
 using Strive.Exceptions;
@@ -20,10 +21,25 @@ namespace Strive.Tests.Services.Account
         }
 
         [Fact]
+        public void AuthenticateThrowsDatabaseExceptionWhenRepoFails()
+        {
+            _userRepositoryMock.Setup(repo => repo.GetSingleOrDefault(It.IsAny<Func<User, bool>>()))
+                .Throws<Exception>();
+
+            Assert.Throws<StriveDatabaseException>(() =>
+            {
+                this.AccountServiceInstance.Authenticate("email", "password");
+            });
+
+            _userRepositoryMock.Verify(repo =>
+                repo.GetSingleOrDefault(It.IsAny<Func<User, bool>>()), Times.Once);
+        }
+
+        [Fact]
         public void AuthenticationFailsOnNotExistingUser()
         {
             string username = "username";
-            _userRepositoryMock.Setup(repo => repo.GetByUsername(username))
+            _userRepositoryMock.Setup(repo => repo.GetSingleOrDefault(It.IsAny<Func<User, bool>>()))
                 .Returns(null as User);
             AccountService accountService = this.AccountServiceInstance;
 
@@ -35,9 +51,12 @@ namespace Strive.Tests.Services.Account
         {
             string email = "email@email.com";
             string password = "password";
-            _userRepositoryMock.Setup(repo => repo.GetByEmail(email))
+            _userRepositoryMock.Setup(repo => repo.GetSingleOrDefault(It.IsAny<Func<User, bool>>()))
                 .Returns(new User()
                 {
+                    Id = 1,
+                    Email = email,
+                    Username = "username",
                     PasswordSalt = new byte[128],
                     PasswordHash = new byte[64]
                 });
@@ -51,7 +70,7 @@ namespace Strive.Tests.Services.Account
         {
             string email = "email@email.com";
             string password = "password";
-            _userRepositoryMock.Setup(repo => repo.GetByEmail(email))
+            _userRepositoryMock.Setup(repo => repo.GetSingleOrDefault(It.IsAny<Func<User, bool>>()))
                 .Returns(new User()
                 {
                     PasswordSalt = new byte[1],

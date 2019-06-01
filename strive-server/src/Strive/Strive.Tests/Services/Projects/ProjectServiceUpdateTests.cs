@@ -26,17 +26,5 @@ namespace Strive.Tests.Services.Projects
 
             Assert.Throws<StriveDatabaseException>(() => { this.ProjectServiceInstance.Update(project); });
         }
-
-        [Fact]
-        public void UpdateReturnsProjectOnSuccess()
-        {
-            Project project = TestValuesProvider.GetProjects().FirstOrDefault();
-            _projectRepositoryMock.Setup(repo => repo.Update(project))
-                .Returns(project);
-
-            Project result = this.ProjectServiceInstance.Update(project);
-
-            Assert.Equal(project, result);
-        }
     }
 }

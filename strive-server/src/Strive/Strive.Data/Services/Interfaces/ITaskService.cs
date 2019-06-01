@@ -24,21 +24,21 @@ namespace Strive.Data.Services.Interfaces
         /// </summary>
         /// <param name="task">Task data</param>
         /// <returns>Created task</returns>
-        Task Create(Task task);
+        void Create(Task task);
 
         /// <summary>
         /// Updates specified task
         /// </summary>
         /// <param name="task">Task for update</param>
         /// <returns>Updated task</returns>
-        Task Update(Task task);
+        void Update(Task task);
 
         /// <summary>
         /// Deletes specified task
         /// </summary>
         /// <param name="task">Task for delete</param>
         /// <returns>Deleted task</returns>
-        Task Delete(Task task);
+        void Delete(Task task);
 
         /// <summary>
         /// Checks if task with specified name for specified project is already exists

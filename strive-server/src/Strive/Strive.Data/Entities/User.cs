@@ -5,10 +5,8 @@ namespace Strive.Data.Entities
     /// <summary>
     /// Contains application user data
     /// </summary>
-    public class User
+    public class User : StriveEntity
     {
-        public int Id { get; set; }
-
         public string Email { get; set; }
 
         public string Username { get; set; }

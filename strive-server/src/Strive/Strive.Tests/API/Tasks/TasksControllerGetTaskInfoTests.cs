@@ -39,10 +39,10 @@ namespace Strive.Tests.API.Tasks
         public void GetTaskInfoReturnsOkIfTaskExists()
         {
             Task testTask = TestValuesProvider.GetTasks().FirstOrDefault();
-            _taskServiceMock.Setup(service => service.GetTaskById(testTask.Id))
+            _taskServiceMock.Setup(service => service.GetTaskById((int)testTask.Id))
                 .Returns(testTask);
 
-            IActionResult result = this.TasksControllerInstance.GetTaskInfo(testTask.Id);
+            IActionResult result = this.TasksControllerInstance.GetTaskInfo((int)testTask.Id);
 
             Assert.IsType<OkObjectResult>(result);
         }

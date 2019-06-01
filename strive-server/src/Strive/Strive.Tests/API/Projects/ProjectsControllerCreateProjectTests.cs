@@ -45,7 +45,7 @@ namespace Strive.Tests.API.Projects
 
             IActionResult result = controller.CreateProject(projectData);
 
-            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<OkResult>(result);
         }
     }
 }

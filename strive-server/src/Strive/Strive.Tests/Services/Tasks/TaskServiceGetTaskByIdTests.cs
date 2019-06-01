@@ -39,7 +39,7 @@ namespace Strive.Tests.Services.Tasks
             _taskRepositoryMock.Setup(repo => repo.GetById(expectedTask.Id))
                 .Returns(expectedTask);
 
-            Task resultTask = this.TaskServiceInstance.GetTaskById(expectedTask.Id);
+            Task resultTask = this.TaskServiceInstance.GetTaskById((int)expectedTask.Id);
 
             Assert.Equal(expectedTask.Id, resultTask.Id);
         }

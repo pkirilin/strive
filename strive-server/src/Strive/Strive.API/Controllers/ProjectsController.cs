@@ -86,7 +86,8 @@ namespace Strive.API.Controllers
                 try
                 {
                     Project project = _mapper.Map<Project>(projectData);
-                    return Ok(_projectService.Create(project));
+                    _projectService.Create(project);
+                    return Ok();
                 }
                 catch (Exception e)
                 {
@@ -121,7 +122,8 @@ namespace Strive.API.Controllers
                     {
                         // Returns projectForUpdate object with fields rewritten according to DTO object
                         projectForUpdate = _mapper.Map(updatedProjectData, projectForUpdate);
-                        return Ok(_projectService.Update(projectForUpdate));
+                        _projectService.Update(projectForUpdate);
+                        return Ok();
                     }
 
                     return NotFound(projectId);
@@ -145,13 +147,11 @@ namespace Strive.API.Controllers
             try
             {
                 Project projectForDelete = _projectService.GetProjectById(projectId);
-
                 if (projectForDelete != null)
                 {
-                    // Project was found and can be deleted
-                    return Ok(_projectService.Delete(projectForDelete));
+                    _projectService.Delete(projectForDelete);
+                    return Ok();
                 }
-
                 return NotFound(projectId);
             }
             catch (Exception e)

@@ -60,7 +60,7 @@ namespace Strive.Tests.API.Tasks
 
             IActionResult result = this.TasksControllerInstance.DeleteTask(taskId);
 
-            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<OkResult>(result);
         }
     }
 }

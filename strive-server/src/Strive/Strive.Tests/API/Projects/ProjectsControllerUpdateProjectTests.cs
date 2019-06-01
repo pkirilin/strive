@@ -104,7 +104,7 @@ namespace Strive.Tests.API.Projects
 
             IActionResult result = this.ProjectsControllerInstance.UpdateProject(projectId, projectData);
 
-            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<OkResult>(result);
         }
     }
 }

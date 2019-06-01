@@ -35,7 +35,7 @@ namespace Strive.Data.EntityConfigurations
             builder.HasKey(task => task.Id)
                 .HasName("PK_Task");
 
-            builder.HasIndex(task => new {task.Name, task.ProjectId})
+            builder.HasIndex(task => new { task.Name, task.ProjectId })
                 .HasName("IN_Task_Name_ProjectId")
                 .IsUnique(true);
 
@@ -46,7 +46,7 @@ namespace Strive.Data.EntityConfigurations
             builder.HasOne(task => task.Project)
                 .WithMany(project => project.Tasks)
                 .HasForeignKey(task => task.ProjectId)
-                .HasConstraintName("FK_Task_User")
+                .HasConstraintName("FK_Task_Project")
                 .OnDelete(DeleteBehavior.Cascade);
 
             #endregion

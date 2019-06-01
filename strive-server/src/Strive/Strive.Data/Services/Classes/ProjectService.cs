@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Strive.Data.Entities;
-using Strive.Data.Repositories.Interfaces;
+using Strive.Data.Repositories;
 using Strive.Data.Services.Interfaces;
 using Strive.Exceptions;
 
@@ -10,9 +10,11 @@ namespace Strive.Data.Services.Classes
 {
     public class ProjectService : IProjectService
     {
-        private readonly IProjectRepository _projectRepo;
+        //private readonly IProjectRepository _projectRepo;
 
-        public ProjectService(IProjectRepository projectRepo)
+        private readonly IRepository<Project> _projectRepo;
+
+        public ProjectService(IRepository<Project> projectRepo)
         {
             _projectRepo = projectRepo;
         }
@@ -58,14 +60,14 @@ namespace Strive.Data.Services.Classes
         /// </summary>
         /// <param name="project">Project data</param>
         /// <returns>Added project</returns>
-        public Project Create(Project project)
+        public void Create(Project project)
         {
             if (project == null)
                 throw new ArgumentNullException("Failed to add project. Project cannot be null");
 
             try
             {
-                return _projectRepo.Add(project);
+                _projectRepo.Insert(project);
             }
             catch (Exception e)
             {
@@ -78,14 +80,14 @@ namespace Strive.Data.Services.Classes
         /// </summary>
         /// <param name="project">Project for update</param>
         /// <returns>Updated project</returns>
-        public Project Update(Project project)
+        public void Update(Project project)
         {
             if (project == null)
                 throw new ArgumentNullException("Failed to update project. Updated project cannot be null");
 
             try
             {
-                return _projectRepo.Update(project);
+                _projectRepo.Update(project);
             }
             catch (Exception e)
             {
@@ -98,14 +100,14 @@ namespace Strive.Data.Services.Classes
         /// </summary>
         /// <param name="project">Project for delete</param>
         /// <returns>Deleted project</returns>
-        public Project Delete(Project project)
+        public void Delete(Project project)
         {
             if (project == null)
                 throw new ArgumentNullException("Failed to delete project. Project cannot be null");
 
             try
             {
-                return _projectRepo.Remove(project);
+                _projectRepo.Delete(project);
             }
             catch (Exception e)
             {

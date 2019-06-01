@@ -21,22 +21,10 @@ namespace Strive.Tests.Services.Projects
         public void CreateThrowsDatabaseExceptionWhenRepoFailed()
         {
             Project project = TestValuesProvider.GetProjects().FirstOrDefault();
-            _projectRepositoryMock.Setup(repo => repo.Add(project))
+            _projectRepositoryMock.Setup(repo => repo.Insert(project))
                 .Throws<Exception>();
 
             Assert.Throws<StriveDatabaseException>(() => { this.ProjectServiceInstance.Create(project); });
-        }
-
-        [Fact]
-        public void CreateReturnsProjectOnSuccess()
-        {
-            Project project = TestValuesProvider.GetProjects().FirstOrDefault();
-            _projectRepositoryMock.Setup(repo => repo.Add(project))
-                .Returns(project);
-
-            Project result = this.ProjectServiceInstance.Create(project);
-
-            Assert.Equal(project, result);
         }
     }
 }

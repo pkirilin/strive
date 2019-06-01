@@ -40,7 +40,7 @@ namespace Strive.Tests.API.Tasks
         {
             IActionResult result = this.TasksControllerInstance.CreateTask(new TaskDto());
 
-            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<OkResult>(result);
         }
     }
 }

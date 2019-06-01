@@ -95,7 +95,7 @@ namespace Strive.Tests.API.Tasks
 
             IActionResult result = this.TasksControllerInstance.UpdateTask(taskId, taskData);
 
-            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<OkResult>(result);
         }
     }
 }

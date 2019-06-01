@@ -362,18 +362,13 @@ function deleteProject(projectId) {
       deleteProjectResponse => {
         switch (deleteProjectResponse.status) {
           case httpStatuses.ok:
-            deleteProjectResponse.json().then(deletedProject => {
-              actionHelper.redirectToProjects();
-              dispatch(success(deletedProject));
-              dispatch(
-                alertActions.success(
-                  <div>
-                    Project <b>{deletedProject.name}</b> has been successfully
-                    deleted
-                  </div>
-                )
-              );
-            });
+            actionHelper.redirectToProjects();
+            dispatch(success(projectId));
+            dispatch(
+              alertActions.success(
+                <div>Project has been successfully deleted</div>
+              )
+            );
             break;
           case httpStatuses.unauthorized:
             actionHelper.redirectToLogin();
@@ -429,10 +424,10 @@ function deleteProject(projectId) {
    * Delete project success action creator
    * @param {object} deletedProject Deleted project data
    */
-  function success(deletedProject) {
+  function success(deletedProjectId) {
     return {
       type: projectOperationsConstants.DELETE_SUCCESS,
-      deletedProject
+      deletedProjectId
     };
   }
 

@@ -24,21 +24,21 @@ namespace Strive.Data.Services.Interfaces
         /// </summary>
         /// <param name="project">Project to create</param>
         /// <returns>Added project</returns>
-        Project Create(Project project);
+        void Create(Project project);
 
         /// <summary>
         /// Updates specified project
         /// </summary>
         /// <param name="project">Project for update</param>
         /// <returns>Updated project</returns>
-        Project Update(Project project);
+        void Update(Project project);
 
         /// <summary>
         /// Deletes specified project
         /// </summary>
         /// <param name="project">Project for delete</param>
         /// <returns>Deleted project</returns>
-        Project Delete(Project project);
+        void Delete(Project project);
 
         /// <summary>
         /// Checks if project with specified name for specified user is already exists

@@ -1,6 +1,6 @@
 ﻿using System;
 using Strive.Data.Entities;
-using Strive.Data.Repositories.Interfaces;
+using Strive.Data.Repositories;
 using Strive.Data.Services.Interfaces;
 using Strive.Exceptions;
 using Strive.Helpers;
@@ -9,9 +9,9 @@ namespace Strive.Data.Services.Classes
 {
     public class AccountService : IAccountService
     {
-        private readonly IUserRepository _userRepo;
+        private readonly IRepository<User> _userRepo;
 
-        public AccountService(IUserRepository userRepo)
+        public AccountService(IRepository<User> userRepo)
         {
             _userRepo = userRepo;
         }
@@ -26,7 +26,16 @@ namespace Strive.Data.Services.Classes
             if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))
                 throw new ArgumentException("Authentication failed: username and/or password is empty");
 
-            User user = _userRepo.GetByEmail(email);
+            User user;
+
+            try
+            {
+                user = _userRepo.GetSingleOrDefault(u => u.Email == email);
+            }
+            catch (Exception e)
+            {
+                throw new StriveDatabaseException($"Failed to get user by email. Error message: {e.Message}");
+            }
 
             // Checking if user exists in db
             if (user == null)
@@ -73,11 +82,11 @@ namespace Strive.Data.Services.Classes
 
             try
             {
-                _userRepo.Add(user);
+                _userRepo.Insert(user);
             }
             catch (Exception e)
             {
-                throw new StriveDatabaseException($"Failed to add user. Error message: {e.Message}");
+                throw new StriveDatabaseException($"Failed to create user. Error message: {e.Message}");
             }
 
             return user;
@@ -85,16 +94,32 @@ namespace Strive.Data.Services.Classes
 
         public bool IsEmailExists(string email)
         {
-            if (_userRepo.GetByEmail(email) == null)
-                return false;
-            return true;
+            try
+            {
+                User user = _userRepo.GetSingleOrDefault(u => u.Email == email);
+                if (user == null)
+                    return false;
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw new StriveDatabaseException($"Failed to check if user's account email exists. Error message: {e.Message}");
+            }
         }
 
         public bool IsUsernameExists(string username)
         {
-            if (_userRepo.GetByUsername(username) == null)
-                return false;
-            return true;
+            try
+            {
+                User user = _userRepo.GetSingleOrDefault(u => u.Username == username);
+                if (user == null)
+                    return false;
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw new StriveDatabaseException($"Failed to check if user's account username exists. Error message: {e.Message}");
+            }
         }
     }
 }

@@ -58,7 +58,12 @@ namespace Strive.Tests.API.Account
 
             _accountServiceMock
                 .Setup(service => service.Authenticate(loginRequest.Email, loginRequest.Password))
-                .Returns(() => new User());
+                .Returns(new User()
+                {
+                    Id = 1,
+                    Email = "email",
+                    Username = "username"
+                });
 
             IActionResult result = this.AccountControllerInstance.Authenticate(loginRequest);
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Strive.Data.Entities;
-using Strive.Data.Repositories.Interfaces;
+using Strive.Data.Repositories;
 using Strive.Data.Services.Interfaces;
 using Strive.Exceptions;
 
@@ -10,9 +10,9 @@ namespace Strive.Data.Services.Classes
 {
     public class TaskService : ITaskService
     {
-        private readonly ITaskRepository _taskRepo;
+        private readonly IRepository<Task> _taskRepo;
 
-        public TaskService(ITaskRepository taskRepo)
+        public TaskService(IRepository<Task> taskRepo)
         {
             _taskRepo = taskRepo;
         }
@@ -58,14 +58,14 @@ namespace Strive.Data.Services.Classes
         /// </summary>
         /// <param name="task">Task data</param>
         /// <returns>Created task</returns>
-        public Task Create(Task task)
+        public void Create(Task task)
         {
             if (task == null)
                 throw new ArgumentNullException("Failed to create task. Task cannot be null");
 
             try
             {
-                return _taskRepo.Add(task);
+                _taskRepo.Insert(task);
             }
             catch (Exception e)
             {
@@ -78,14 +78,14 @@ namespace Strive.Data.Services.Classes
         /// </summary>
         /// <param name="task">Task for update</param>
         /// <returns>Updated task</returns>
-        public Task Update(Task task)
+        public void Update(Task task)
         {
             if (task == null)
                 throw new ArgumentNullException("Failed to update task. Updated task cannot be null");
 
             try
             {
-                return _taskRepo.Update(task);
+                _taskRepo.Update(task);
             }
             catch (Exception e)
             {
@@ -98,14 +98,14 @@ namespace Strive.Data.Services.Classes
         /// </summary>
         /// <param name="task">Task for delete</param>
         /// <returns>Deleted task</returns>
-        public Task Delete(Task task)
+        public void Delete(Task task)
         {
             if (task == null)
                 throw new ArgumentNullException("Failed to delete task. Task cannot be null");
 
             try
             {
-                return _taskRepo.Remove(task);
+                _taskRepo.Delete(task);
             }
             catch (Exception e)
             {

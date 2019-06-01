@@ -275,18 +275,15 @@ function update(taskId, task) {
       updateTaskResponse => {
         switch (updateTaskResponse.status) {
           case httpStatuses.ok:
-            updateTaskResponse.json().then(updatedTask => {
-              dispatch(success(taskId, updatedTask));
-              actionHelper.goBack(() => {
-                dispatch(
-                  alertActions.success(
-                    <div>
-                      Task <b>{updatedTask.name}</b> has been successfully
-                      updated
-                    </div>
-                  )
-                );
-              });
+            dispatch(success(taskId, task));
+            actionHelper.goBack(() => {
+              dispatch(
+                alertActions.success(
+                  <div>
+                    Task <b>{task.name}</b> has been successfully updated
+                  </div>
+                )
+              );
             });
             break;
           case httpStatuses.unauthorized:
@@ -377,17 +374,15 @@ function deleteTask(taskId) {
       deleteTaskResponse => {
         switch (deleteTaskResponse.status) {
           case httpStatuses.ok:
-            deleteTaskResponse.json().then(deletedTask => {
-              actionHelper.redirectToProjectInfo(deletedTask.projectId);
-              dispatch(success(deletedTask));
+            actionHelper.goBack(() => {
+              dispatch(success(taskId));
               dispatch(
                 alertActions.success(
-                  <div>
-                    Task <b>{deletedTask.name}</b> has been successfully deleted
-                  </div>
+                  <div>Task has been successfully deleted</div>
                 )
               );
             });
+
             break;
           case httpStatuses.unauthorized:
             actionHelper.redirectToLogin();

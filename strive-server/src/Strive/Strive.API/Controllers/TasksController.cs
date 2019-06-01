@@ -87,7 +87,8 @@ namespace Strive.API.Controllers
                 try
                 {
                     Task task = _mapper.Map<Task>(taskData);
-                    return Ok(_taskService.Create(task));
+                    _taskService.Create(task);
+                    return Ok();
                 }
                 catch (Exception e)
                 {
@@ -121,9 +122,9 @@ namespace Strive.API.Controllers
                     if (taskForUpdate != null)
                     {
                         taskForUpdate = _mapper.Map(updatedTaskData, taskForUpdate);
-                        return Ok(_taskService.Update(taskForUpdate));
+                        _taskService.Update(taskForUpdate);
+                        return Ok();
                     }
-
                     return NotFound(taskId);
                 }
                 catch (Exception e)
@@ -145,10 +146,11 @@ namespace Strive.API.Controllers
             try
             {
                 Task taskForDelete = _taskService.GetTaskById(taskId);
-
                 if (taskForDelete != null)
-                    return Ok(_taskService.Delete(taskForDelete));
-
+                {
+                    _taskService.Delete(taskForDelete);
+                    return Ok();
+                }
                 return NotFound(taskId);
             }
             catch (Exception e)
