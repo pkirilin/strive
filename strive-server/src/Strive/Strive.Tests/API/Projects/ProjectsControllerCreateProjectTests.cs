@@ -12,11 +12,25 @@ namespace Strive.Tests.API.Projects
     public class ProjectControllerCreateProjectTests : ProjectsControllerTests
     {
         [Fact]
-        public void CreateProjectReturnsStatus500OnServiceException()
+        public void CreateProjectReturnsStatus500OnServiceCreateException()
         {
             ProjectDto projectData = new ProjectDto();
             ProjectsController controller = this.ProjectsControllerInstance;
             _projectServiceMock.Setup(service => service.Create(It.IsAny<Project>()))
+                .Throws<Exception>();
+
+            ObjectResult result = controller.CreateProject(projectData) as ObjectResult;
+
+            Assert.NotNull(result);
+            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
+        }
+
+        [Fact]
+        public void CreateProjectReturnsStatus500OnServiceIsProjectExistsException()
+        {
+            ProjectDto projectData = new ProjectDto();
+            ProjectsController controller = this.ProjectsControllerInstance;
+            _projectServiceMock.Setup(service => service.IsProjectExists(It.IsAny<string>(), It.IsAny<int>()))
                 .Throws<Exception>();
 
             ObjectResult result = controller.CreateProject(projectData) as ObjectResult;

@@ -96,29 +96,29 @@ namespace Strive.API.Controllers
         [HttpPost("register")]
         public IActionResult Register([FromBody] UserRegisterRequestDto userRegisterRequestData)
         {
-            // Validates data from form
-            if (ModelState.IsValid)
+            try
             {
-                if (_accountService.IsEmailExists(userRegisterRequestData.Email))
-                    ModelState.AddModelError("emailRemote", "Such email is already exists");
+                // Validates data from form
+                if (ModelState.IsValid)
+                {
+                    if (_accountService.IsEmailExists(userRegisterRequestData.Email))
+                        ModelState.AddModelError("emailRemote", "Such email is already exists");
 
-                if (_accountService.IsUsernameExists(userRegisterRequestData.Username))
-                    ModelState.AddModelError("usernameRemote", "Such username is already in use");
-            }
+                    if (_accountService.IsUsernameExists(userRegisterRequestData.Username))
+                        ModelState.AddModelError("usernameRemote", "Such username is already in use");
+                }
 
-            // Validates all data including business logic
-            if (ModelState.IsValid)
-            {
-                try
+                // Validates all data including business logic
+                if (ModelState.IsValid)
                 {
                     User user = _mapper.Map<User>(userRegisterRequestData);
                     _accountService.Create(user, userRegisterRequestData.Password);
                     return Ok();
                 }
-                catch (Exception e)
-                {
-                    return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-                }
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
 
             return BadRequest(ModelState);

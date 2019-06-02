@@ -74,25 +74,24 @@ namespace Strive.API.Controllers
         [HttpPost("create")]
         public IActionResult CreateProject([FromBody] ProjectDto projectData)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (_projectService.IsProjectExists(projectData.Name, projectData.UserId))
-                    ModelState.AddModelError("projectNameRemote",
-                        "Project for target user with specified name is already exists");
-            }
+                if (ModelState.IsValid)
+                {
+                    if (_projectService.IsProjectExists(projectData.Name, projectData.UserId))
+                        ModelState.AddModelError("projectNameRemote", "Project for target user with specified name is already exists");
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (ModelState.IsValid)
                 {
                     Project project = _mapper.Map<Project>(projectData);
                     _projectService.Create(project);
                     return Ok();
                 }
-                catch (Exception e)
-                {
-                    return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-                }
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
 
             return BadRequest(ModelState);
@@ -106,16 +105,16 @@ namespace Strive.API.Controllers
         [HttpPut("update/{projectId}")]
         public IActionResult UpdateProject(int projectId, [FromBody] ProjectDto updatedProjectData)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (_projectService.IsProjectExists(updatedProjectData.Name, updatedProjectData.UserId))
-                    ModelState.AddModelError("projectNameRemote",
-                        "Project for target user with specified name is already exists");
-            }
+                if (ModelState.IsValid)
+                {
+                    if (_projectService.IsProjectExists(updatedProjectData.Name, updatedProjectData.UserId))
+                        ModelState.AddModelError("projectNameRemote",
+                            "Project for target user with specified name is already exists");
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (ModelState.IsValid)
                 {
                     Project projectForUpdate = _projectService.GetProjectById(projectId);
                     if (projectForUpdate != null)
@@ -125,13 +124,12 @@ namespace Strive.API.Controllers
                         _projectService.Update(projectForUpdate);
                         return Ok();
                     }
-
                     return NotFound(projectId);
                 }
-                catch (Exception e)
-                {
-                    return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-                }
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
 
             return BadRequest(ModelState);

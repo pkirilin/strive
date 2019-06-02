@@ -75,25 +75,25 @@ namespace Strive.API.Controllers
         [HttpPost("create")]
         public IActionResult CreateTask([FromBody] TaskDto taskData)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (_taskService.IsTaskExists(taskData.Name, taskData.ProjectId))
-                    ModelState.AddModelError("taskNameRemote",
-                        "Task with specified name is already exists in specified project");
-            }
+                if (ModelState.IsValid)
+                {
+                    if (_taskService.IsTaskExists(taskData.Name, taskData.ProjectId))
+                        ModelState.AddModelError("taskNameRemote",
+                            "Task with specified name is already exists in specified project");
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (ModelState.IsValid)
                 {
                     Task task = _mapper.Map<Task>(taskData);
                     _taskService.Create(task);
                     return Ok();
                 }
-                catch (Exception e)
-                {
-                    return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-                }
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
 
             return BadRequest(ModelState);
@@ -107,16 +107,16 @@ namespace Strive.API.Controllers
         [HttpPut("update/{taskId}")]
         public IActionResult UpdateTask(int taskId, [FromBody] TaskDto updatedTaskData)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (_taskService.IsTaskExists(updatedTaskData.Name, updatedTaskData.ProjectId))
-                    ModelState.AddModelError("taskNameRemote",
-                        "Task with specified name is already exists in specified project");
-            }
+                if (ModelState.IsValid)
+                {
+                    if (_taskService.IsTaskExists(updatedTaskData.Name, updatedTaskData.ProjectId))
+                        ModelState.AddModelError("taskNameRemote",
+                            "Task with specified name is already exists in specified project");
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (ModelState.IsValid)
                 {
                     Task taskForUpdate = _taskService.GetTaskById(taskId);
                     if (taskForUpdate != null)
@@ -127,10 +127,10 @@ namespace Strive.API.Controllers
                     }
                     return NotFound(taskId);
                 }
-                catch (Exception e)
-                {
-                    return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-                }
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
 
             return BadRequest(ModelState);

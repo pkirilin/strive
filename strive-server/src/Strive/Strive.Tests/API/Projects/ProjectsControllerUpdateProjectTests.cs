@@ -54,6 +54,25 @@ namespace Strive.Tests.API.Projects
         }
 
         [Fact]
+        public void UpdateProjectReturnsStatus500IfRepoProjectExistsCheckFailed()
+        {
+            int projectId = 1;
+            ProjectDto projectData = new ProjectDto()
+            {
+                Name = "Test",
+                Description = "Test",
+                UserId = 1
+            };
+            _projectServiceMock.Setup(service => service.IsProjectExists(It.IsAny<string>(), It.IsAny<int>()))
+                .Throws<Exception>();
+
+            ObjectResult result = this.ProjectsControllerInstance.UpdateProject(projectId, projectData) as ObjectResult;
+
+            Assert.NotNull(result);
+            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
+        }
+
+        [Fact]
         public void UpdateProjectReturnsNotFoundIfProjectNotFoundById()
         {
             int projectId = 1;

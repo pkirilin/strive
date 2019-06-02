@@ -30,7 +30,7 @@ namespace Strive.Tests.API.Account
         }
 
         [Fact]
-        public void RegisterReturnsStatus500OnServiceException()
+        public void RegisterReturnsStatus500OnServiceCreateException()
         {
             var registerRequest = new UserRegisterRequestDto()
             {
@@ -44,6 +44,52 @@ namespace Strive.Tests.API.Account
                 .Throws<Exception>();
 
             ObjectResult result = this.AccountControllerInstance.Register(registerRequest) as ObjectResult;
+
+            Assert.NotNull(result);
+            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
+        }
+
+        [Fact]
+        public void RegisterReturnsStatus500OnServiceIsEmailExistsException()
+        {
+            var registerRequest = new UserRegisterRequestDto()
+            {
+                Email = "test@gmail.com",
+                Username = "username",
+                Password = "password",
+                PasswordConfirm = "password"
+            };
+            _accountServiceMock
+                .Setup(service => service.IsEmailExists(It.IsAny<string>()))
+                .Throws<Exception>();
+
+            ObjectResult result = this.AccountControllerInstance.Register(registerRequest) as ObjectResult;
+
+            _accountServiceMock.Verify(service => service.IsEmailExists(It.IsAny<string>()), Times.Once);
+            _accountServiceMock.Verify(service => service.IsUsernameExists(It.IsAny<string>()), Times.Never);
+
+            Assert.NotNull(result);
+            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
+        }
+
+        [Fact]
+        public void RegisterReturnsStatus500OnServiceIsUsernameExistsException()
+        {
+            var registerRequest = new UserRegisterRequestDto()
+            {
+                Email = "test@gmail.com",
+                Username = "username",
+                Password = "password",
+                PasswordConfirm = "password"
+            };
+            _accountServiceMock
+                .Setup(service => service.IsUsernameExists(It.IsAny<string>()))
+                .Throws<Exception>();
+
+            ObjectResult result = this.AccountControllerInstance.Register(registerRequest) as ObjectResult;
+
+            _accountServiceMock.Verify(service => service.IsEmailExists(It.IsAny<string>()), Times.Once);
+            _accountServiceMock.Verify(service => service.IsUsernameExists(It.IsAny<string>()), Times.Once);
 
             Assert.NotNull(result);
             Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);

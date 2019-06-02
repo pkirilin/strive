@@ -12,10 +12,23 @@ namespace Strive.Tests.API.Tasks
     public class TasksControllerCreateTaskTests : TasksControllerTests
     {
         [Fact]
-        public void CreateTaskReturnsStatus500OnServiceException()
+        public void CreateTaskReturnsStatus500OnServiceCreateException()
         {
             TaskDto taskData = new TaskDto();
             _taskServiceMock.Setup(service => service.Create(It.IsAny<Task>()))
+                .Throws<Exception>();
+
+            ObjectResult result = this.TasksControllerInstance.CreateTask(taskData) as ObjectResult;
+
+            Assert.NotNull(result);
+            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
+        }
+
+        [Fact]
+        public void CreateTaskReturnsStatus500OnServiceIsTaskExistsException()
+        {
+            TaskDto taskData = new TaskDto();
+            _taskServiceMock.Setup(service => service.IsTaskExists(It.IsAny<string>(), It.IsAny<int>()))
                 .Throws<Exception>();
 
             ObjectResult result = this.TasksControllerInstance.CreateTask(taskData) as ObjectResult;
