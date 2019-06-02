@@ -19,7 +19,7 @@ const mapStateToProps = state => {
   } = state.projectsReducer.projectOperationsReducer;
 
   let {
-    gettingProject,
+    loading,
     project,
     notFound,
     failedToFetch
@@ -28,7 +28,7 @@ const mapStateToProps = state => {
   return {
     sendingProjectInfo,
     badRequestResponseJson,
-    gettingProjectForUpdate: gettingProject,
+    gettingProjectForUpdate: loading,
     projectFetched: project,
     notFoundProjectForUpdate: notFound,
     failedToFetchProjectForUpdate: failedToFetch,
