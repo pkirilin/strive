@@ -10,7 +10,7 @@ import {
   AppSpinner
 } from "../../_components";
 import { TaskData } from "./TaskData";
-import { TaskActions } from "./TaskActions";
+import { TaskActionsDropdown } from "./TaskActionsDropdown";
 
 const mapStateToProps = state => {
   let { notFound: notFoundTaskData } = state.tasksReducer.taskInfoReducer;
@@ -52,7 +52,7 @@ class TaskInfoPage extends React.Component {
             <TaskData taskId={this.taskId} />
           </Col>
           <Col>
-            <TaskActions taskId={this.taskId} />
+            <TaskActionsDropdown taskId={this.taskId} />
           </Col>
         </Row>
       </div>

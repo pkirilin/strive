@@ -16,9 +16,12 @@ const mapStateToProps = state => {
   return { task };
 };
 
-class TaskActions extends React.Component {
+class TaskActionsDropdown extends React.Component {
   static propTypes = {
-    taskId: PropTypes.number.isRequired
+    taskId: PropTypes.number.isRequired,
+    task: PropTypes.shape({
+      name: PropTypes.string.isRequired
+    })
   };
 
   constructor(props) {
@@ -73,5 +76,7 @@ class TaskActions extends React.Component {
   }
 }
 
-const connectedTaskActions = connect(mapStateToProps)(TaskActions);
-export { connectedTaskActions as TaskActions };
+const connectedTaskActionsDropdown = connect(mapStateToProps)(
+  TaskActionsDropdown
+);
+export { connectedTaskActionsDropdown as TaskActionsDropdown };

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Row, Col } from "reactstrap";
 import {
   DocumentTitleSetter,
   PrivateLayout,
@@ -13,6 +14,7 @@ import { TaskFilter } from "./TaskFilter";
 import { TaskChoosePanel } from "./TaskChoosePanel";
 import { TaskList } from "./TaskList";
 import { projectsActions } from "../../_actions";
+import { ProjectActionsDropdown } from "./ProjectActionsDropdown";
 
 const mapStateToProps = state => {
   const {
@@ -81,7 +83,14 @@ class ProjectInfoPage extends React.Component {
       content = (
         <div>
           <AppConfirmationModal {...deleteProjectModal} />
-          <ProjectData />
+          <Row>
+            <Col>
+              <ProjectData />
+            </Col>
+            <Col>
+              <ProjectActionsDropdown />
+            </Col>
+          </Row>
           <TaskStatusTabsPanel projectId={this.projectId} />
           <TaskFilter />
           <TaskChoosePanel />
