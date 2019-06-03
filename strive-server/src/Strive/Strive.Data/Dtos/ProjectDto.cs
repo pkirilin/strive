@@ -4,6 +4,8 @@ namespace Strive.Data.Dtos
 {
     public class ProjectDto
     {
+        public int Id { get; set; }
+
         [Required]
         [MinLength(3)]
         [MaxLength(255)]

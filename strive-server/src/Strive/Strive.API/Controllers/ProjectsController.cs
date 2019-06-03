@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -37,7 +38,9 @@ namespace Strive.API.Controllers
         {
             try
             {
-                return Ok(_projectService.GetProjects(userId));
+                List<Project> projectEntities = _projectService.GetProjects(userId);
+                List<ProjectDto> projectDtos = _mapper.Map<List<Project>, List<ProjectDto>>(projectEntities);
+                return Ok(projectDtos);
             }
             catch (Exception e)
             {
@@ -59,7 +62,7 @@ namespace Strive.API.Controllers
                     return NotFound(projectId);
                 if (project.UserId != userId)
                     return Unauthorized();
-                return Ok(project);
+                return Ok(_mapper.Map<Project, ProjectDto>(project));
             }
             catch (Exception e)
             {

@@ -229,6 +229,7 @@ class ProjectForm extends React.Component {
         // Checking whether projectId needs to be assigned (for update request)
         if (projectId) {
           // Update project action
+          projectDto["id"] = projectId;
           this.props.dispatch(projectsAction(projectId, projectDto));
         } else {
           // Create project action
