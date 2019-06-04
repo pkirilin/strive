@@ -8,7 +8,7 @@ import {
   DropdownItem
 } from "reactstrap";
 import { projectsActions, alertActions, modalActions } from "../../_actions";
-import { actionHelper } from "../../_helpers";
+import { historyHelper } from "../../_helpers";
 import { modalConstants } from "../../_constants";
 
 const mapStateToProps = state => {
@@ -32,11 +32,11 @@ class ProjectActionsDropdown extends Component {
   }
 
   onNewTask() {
-    actionHelper.redirectToCreateTask(this.props.project.id);
+    historyHelper.redirectToCreateTask(this.props.project.id);
   }
 
   onEditProject() {
-    actionHelper.redirectToEditProject(this.props.project.id);
+    historyHelper.redirectToEditProject(this.props.project.id);
   }
 
   onDeleteProject() {

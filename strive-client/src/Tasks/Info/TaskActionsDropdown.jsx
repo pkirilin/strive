@@ -7,7 +7,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
-import { actionHelper } from "../../_helpers";
+import { historyHelper } from "../../_helpers";
 import { modalActions, tasksActions } from "../../_actions";
 import { modalConstants } from "../../_constants";
 
@@ -32,7 +32,7 @@ class TaskActionsDropdown extends React.Component {
   }
 
   onEditTask() {
-    actionHelper.redirectToEditTask(this.props.taskId);
+    historyHelper.redirectToEditTask(this.props.taskId);
   }
 
   onDeleteTask() {

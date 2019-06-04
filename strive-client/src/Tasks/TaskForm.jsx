@@ -5,7 +5,7 @@ import { Form, FormGroup, Row, Col, Button } from "reactstrap";
 import { alertActions, tasksActions } from "../_actions";
 import { AppTextBox, AppTextArea, AppSpinner } from "../_components";
 import { validationStatuses } from "../_constants";
-import { actionHelper } from "../_helpers";
+import { historyHelper } from "../_helpers";
 import {
   validationUtils,
   validationRulesSetters
@@ -175,7 +175,7 @@ class TaskForm extends React.Component {
     // Project id for update operation is received from reducer with task data
     let { projectId, taskId } = this.props;
     if (!taskId && !projectId) {
-      actionHelper.redirectToProjects();
+      historyHelper.redirectToProjects();
       this.props.dispatch(
         alertActions.error(
           "Unable to determine project id. Redirected to your project list"
@@ -209,7 +209,7 @@ class TaskForm extends React.Component {
   }
 
   onCancel() {
-    actionHelper.goBack();
+    historyHelper.goBack();
   }
 
   onSubmit() {

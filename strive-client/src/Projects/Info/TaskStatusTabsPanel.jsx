@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Nav, NavItem, NavLink, Badge } from "reactstrap";
-import { actionHelper } from "../../_helpers";
+import { historyHelper } from "../../_helpers";
 
 export class TaskStatusTabsPanel extends React.Component {
   static propTypes = {
@@ -18,7 +18,7 @@ export class TaskStatusTabsPanel extends React.Component {
     // Each task should belong to its project, so id of a project needs to be "remembered"
     // both for adding a new task and redirecting user back to project info page
     // Id is remembered in browser history state inside this helper method
-    actionHelper.redirectToCreateTask(this.props.projectId);
+    historyHelper.redirectToCreateTask(this.props.projectId);
   }
 
   render() {

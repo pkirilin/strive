@@ -5,7 +5,7 @@ import {
   projectListConstants,
   projectOperationsConstants
 } from "../_constants";
-import { httpStatuses, actionHelper } from "../_helpers";
+import { httpStatuses, actionHelper, historyHelper } from "../_helpers";
 import { projectsService } from "../_services";
 
 /** Contains Redux action creators for actions related to projects */
@@ -39,7 +39,7 @@ function getList() {
             });
             break;
           case httpStatuses.unauthorized:
-            actionHelper.redirectToLogin();
+            historyHelper.redirectToLogin();
             break;
           case httpStatuses.internalServerError:
             actionHelper.handleInternalServerErrorResponse(
@@ -104,7 +104,7 @@ function getInfo(projectId) {
             });
             break;
           case httpStatuses.unauthorized:
-            actionHelper.redirectToProjects();
+            historyHelper.redirectToProjects();
             break;
           case httpStatuses.notFound:
             dispatch(
@@ -171,7 +171,7 @@ function create(project) {
         switch (createProjectResponse.status) {
           case httpStatuses.ok:
             dispatch(success(project));
-            actionHelper.redirectToProjects();
+            historyHelper.redirectToProjects();
             dispatch(
               alertActions.success(
                 <div>
@@ -181,7 +181,7 @@ function create(project) {
             );
             break;
           case httpStatuses.unauthorized:
-            actionHelper.redirectToLogin();
+            historyHelper.redirectToLogin();
             break;
           case httpStatuses.badRequest:
             createProjectResponse.json().then(badRequestData => {
@@ -257,19 +257,18 @@ function update(projectId, project) {
       updateProjectResponse => {
         switch (updateProjectResponse.status) {
           case httpStatuses.ok:
+            historyHelper.redirectToProjectInfo(projectId);
             dispatch(success(projectId, project));
-            actionHelper.goBack(() => {
-              dispatch(
-                alertActions.success(
-                  <div>
-                    Project <b>{project.name}</b> has been successfully updated
-                  </div>
-                )
-              );
-            });
+            dispatch(
+              alertActions.success(
+                <div>
+                  Project <b>{project.name}</b> has been successfully updated
+                </div>
+              )
+            );
             break;
           case httpStatuses.unauthorized:
-            actionHelper.redirectToLogin();
+            historyHelper.redirectToLogin();
             break;
           case httpStatuses.badRequest:
             updateProjectResponse
@@ -362,7 +361,7 @@ function deleteProject(projectId) {
       deleteProjectResponse => {
         switch (deleteProjectResponse.status) {
           case httpStatuses.ok:
-            actionHelper.redirectToProjects();
+            historyHelper.redirectToProjects();
             dispatch(success(projectId));
             dispatch(
               alertActions.success(
@@ -371,7 +370,7 @@ function deleteProject(projectId) {
             );
             break;
           case httpStatuses.unauthorized:
-            actionHelper.redirectToLogin();
+            historyHelper.redirectToLogin();
             break;
           case httpStatuses.notFound:
             deleteProjectResponse.json().then(notFoundProjectId => {

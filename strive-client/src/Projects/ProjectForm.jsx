@@ -5,7 +5,7 @@ import { Form, FormGroup, Button, Row, Col } from "reactstrap";
 import { projectsActions } from "../_actions";
 import { AppTextBox, AppTextArea, AppSpinner } from "../_components";
 import { validationStatuses } from "../_constants";
-import { actionHelper } from "../_helpers";
+import { historyHelper } from "../_helpers";
 import {
   validationRulesSetters,
   validationUtils
@@ -193,7 +193,7 @@ class ProjectForm extends React.Component {
   }
 
   onCancel() {
-    actionHelper.goBack();
+    historyHelper.goBack();
   }
 
   onSubmit() {

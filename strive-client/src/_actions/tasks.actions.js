@@ -1,7 +1,7 @@
 import React from "react";
 import { alertActions } from "./alert.actions";
 import { taskListConstants, taskOperationsConstants } from "../_constants";
-import { httpStatuses, actionHelper } from "../_helpers";
+import { httpStatuses, actionHelper, historyHelper } from "../_helpers";
 import { tasksService } from "../_services";
 import { taskInfoConstants } from "../_constants/Tasks";
 
@@ -45,7 +45,7 @@ function getList(projectId) {
             });
             break;
           case httpStatuses.unauthorized:
-            actionHelper.redirectToLogin();
+            historyHelper.redirectToLogin();
             break;
           case httpStatuses.internalServerError:
             actionHelper.handleInternalServerErrorResponse(
@@ -109,7 +109,7 @@ function getInfo(taskId) {
             });
             break;
           case httpStatuses.unauthorized:
-            actionHelper.redirectToProjects();
+            historyHelper.redirectToProjects();
             break;
           case httpStatuses.notFound:
             dispatch(
@@ -191,7 +191,7 @@ function create(task) {
         switch (createTaskResponse.status) {
           case httpStatuses.ok:
             dispatch(success(task));
-            actionHelper.redirectToProjectInfo(task.projectId);
+            historyHelper.redirectToProjectInfo(task.projectId);
             dispatch(
               alertActions.success(
                 <div>
@@ -201,7 +201,7 @@ function create(task) {
             );
             break;
           case httpStatuses.unauthorized:
-            actionHelper.redirectToLogin();
+            historyHelper.redirectToLogin();
             break;
           case httpStatuses.badRequest:
             createTaskResponse.json().then(badRequestData => {
@@ -275,19 +275,18 @@ function update(taskId, task) {
       updateTaskResponse => {
         switch (updateTaskResponse.status) {
           case httpStatuses.ok:
+            historyHelper.redirectToTaskInfo(taskId);
             dispatch(success(taskId, task));
-            actionHelper.goBack(() => {
-              dispatch(
-                alertActions.success(
-                  <div>
-                    Task <b>{task.name}</b> has been successfully updated
-                  </div>
-                )
-              );
-            });
+            dispatch(
+              alertActions.success(
+                <div>
+                  Task <b>{task.name}</b> has been successfully updated
+                </div>
+              )
+            );
             break;
           case httpStatuses.unauthorized:
-            actionHelper.redirectToLogin();
+            historyHelper.redirectToLogin();
             break;
           case httpStatuses.badRequest:
             updateTaskResponse.json().then(updateTaskBadRequestJsonData => {
@@ -374,18 +373,16 @@ function deleteTask(taskId) {
       deleteTaskResponse => {
         switch (deleteTaskResponse.status) {
           case httpStatuses.ok:
-            actionHelper.goBack(() => {
-              dispatch(success(taskId));
-              dispatch(
-                alertActions.success(
-                  <div>Task has been successfully deleted</div>
-                )
-              );
-            });
-
+            historyHelper.redirectToRoot();
+            dispatch(success(taskId));
+            dispatch(
+              alertActions.success(
+                <div>Task has been successfully deleted</div>
+              )
+            );
             break;
           case httpStatuses.unauthorized:
-            actionHelper.redirectToLogin();
+            historyHelper.redirectToLogin();
             break;
           case httpStatuses.notFound:
             deleteTaskResponse.json().then(notFoundTaskId => {
