@@ -66,10 +66,9 @@ function create(task) {
 
 /**
  * Performs API call to API method responsible for updating a task
- * @param {number} taskId Id of task to be updated
  * @param {object} task Updated task data
  */
-function update(taskId, task) {
+function update(task) {
   const requestOptions = {
     method: "PUT",
     headers: {
@@ -78,7 +77,7 @@ function update(taskId, task) {
     },
     body: JSON.stringify(task)
   };
-  return fetch(`${config.apiUrl}/tasks/update/${taskId}`, requestOptions);
+  return fetch(`${config.apiUrl}/tasks/update/${task.id}`, requestOptions);
 }
 
 /**

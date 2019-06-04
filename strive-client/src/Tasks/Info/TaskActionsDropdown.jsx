@@ -20,7 +20,10 @@ class TaskActionsDropdown extends React.Component {
   static propTypes = {
     taskId: PropTypes.number.isRequired,
     task: PropTypes.shape({
-      name: PropTypes.string.isRequired
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      projectId: PropTypes.number.isRequired
     })
   };
 
@@ -51,7 +54,7 @@ class TaskActionsDropdown extends React.Component {
         },
         onConfirm: () => {
           closeModal();
-          this.props.dispatch(tasksActions.delete(task.id));
+          this.props.dispatch(tasksActions.delete(task));
         }
       })
     );

@@ -265,18 +265,17 @@ function create(task) {
 
 /**
  * Redux action creator, updates an existing task
- * @param {number} taskId Id of task to be updated
  * @param {object} task Updated task data
  */
-function update(taskId, task) {
+function update(task) {
   return dispatch => {
-    dispatch(request(taskId, task));
-    tasksService.update(taskId, task).then(
+    dispatch(request(task));
+    tasksService.update(task).then(
       updateTaskResponse => {
         switch (updateTaskResponse.status) {
           case httpStatuses.ok:
-            historyHelper.redirectToTaskInfo(taskId);
-            dispatch(success(taskId, task));
+            historyHelper.redirectToTaskInfo(task.id);
+            dispatch(success(task));
             dispatch(
               alertActions.success(
                 <div>
@@ -328,19 +327,17 @@ function update(taskId, task) {
   };
 
   /** Update task request action creator */
-  function request(taskId, task) {
+  function request(task) {
     return {
       type: taskOperationsConstants.UPDATE_REQUEST,
-      taskId,
       task
     };
   }
 
   /** Update task success action creator */
-  function success(taskId, task) {
+  function success(task) {
     return {
       type: taskOperationsConstants.UPDATE_SUCCESS,
-      taskId,
       task
     };
   }
@@ -364,17 +361,17 @@ function update(taskId, task) {
 
 /**
  * Redux action creator, deletes an existing task
- * @param {number} taskId Id of task to be deleted
+ * @param {Object} task Task data for delete
  */
-function deleteTask(taskId) {
+function deleteTask(task) {
   return dispatch => {
-    dispatch(request(taskId));
-    tasksService.delete(taskId).then(
+    dispatch(request(task));
+    tasksService.delete(task.id).then(
       deleteTaskResponse => {
         switch (deleteTaskResponse.status) {
           case httpStatuses.ok:
-            historyHelper.redirectToRoot();
-            dispatch(success(taskId));
+            historyHelper.redirectToProjectInfo(task.projectId);
+            dispatch(success(task));
             dispatch(
               alertActions.success(
                 <div>Task has been successfully deleted</div>
@@ -416,24 +413,24 @@ function deleteTask(taskId) {
     );
   };
 
-  function request(taskId) {
+  function request(task) {
     return {
       type: taskOperationsConstants.DELETE_REQUEST,
-      taskId
+      task
     };
   }
 
-  function success(deletedTask) {
+  function success(task) {
     return {
       type: taskOperationsConstants.DELETE_SUCCESS,
-      deletedTask
+      task
     };
   }
 
-  function error(taskId) {
+  function error(errorData) {
     return {
       type: taskOperationsConstants.DELETE_ERROR,
-      taskId
+      errorData
     };
   }
 }

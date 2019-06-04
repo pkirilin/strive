@@ -246,7 +246,7 @@ class TaskForm extends React.Component {
             // Update task action
             taskDto["id"] = taskId;
             taskDto["projectId"] = taskFetched.projectId;
-            this.props.dispatch(tasksAction(taskId, taskDto));
+            this.props.dispatch(tasksAction(taskDto));
           }
         } else {
           // Create task action
