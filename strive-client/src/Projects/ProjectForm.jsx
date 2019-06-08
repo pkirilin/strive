@@ -230,7 +230,7 @@ class ProjectForm extends React.Component {
         if (projectId) {
           // Update project action
           projectDto["id"] = projectId;
-          this.props.dispatch(projectsAction(projectId, projectDto));
+          this.props.dispatch(projectsAction(projectDto));
         } else {
           // Create project action
           this.props.dispatch(projectsAction(projectDto));

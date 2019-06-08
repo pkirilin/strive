@@ -72,10 +72,9 @@ function create(project) {
 
 /**
  * Performs API call to API method responsible for updating a project
- * @param {number} projectId Id of project to be updated
  * @param {object} project Modified project data
  */
-function update(projectId, project) {
+function update(project) {
   let userFromCookies = Cookies.getJSON(config.cookies.user.keyName);
   // Setting userId explicitly as it is not entered in create form
   project["userId"] = userFromCookies.id;
@@ -88,7 +87,10 @@ function update(projectId, project) {
     },
     body: JSON.stringify(project)
   };
-  return fetch(`${config.apiUrl}/projects/update/${projectId}`, requestOptions);
+  return fetch(
+    `${config.apiUrl}/projects/update/${project.id}`,
+    requestOptions
+  );
 }
 
 /**

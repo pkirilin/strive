@@ -247,18 +247,17 @@ function create(project) {
 
 /**
  * Redux action creator, updates project for current user
- * @param {number} projectId Id of project to be updated
  * @param {object} project Modified project data
  */
-function update(projectId, project) {
+function update(project) {
   return dispatch => {
-    dispatch(request(projectId, project));
-    projectsService.update(projectId, project).then(
+    dispatch(request(project));
+    projectsService.update(project).then(
       updateProjectResponse => {
         switch (updateProjectResponse.status) {
           case httpStatuses.ok:
-            historyHelper.redirectToProjectInfo(projectId);
-            dispatch(success(projectId, project));
+            historyHelper.redirectToProjectInfo(project.id);
+            dispatch(success(project));
             dispatch(
               alertActions.success(
                 <div>
@@ -316,19 +315,17 @@ function update(projectId, project) {
   };
 
   /** Update project request action creator */
-  function request(projectId, project) {
+  function request(project) {
     return {
       type: projectOperationsConstants.UPDATE_REQUEST,
-      projectId,
       project
     };
   }
 
   /** Update project success action creator */
-  function success(projectId, project) {
+  function success(project) {
     return {
       type: projectOperationsConstants.UPDATE_SUCCESS,
-      projectId,
       project
     };
   }
