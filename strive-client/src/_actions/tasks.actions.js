@@ -370,7 +370,7 @@ function deleteTask(task) {
       deleteTaskResponse => {
         switch (deleteTaskResponse.status) {
           case httpStatuses.ok:
-            historyHelper.redirectToProjectInfo(task.projectId);
+            historyHelper.redirectToProjectInfo(task.project.id);
             dispatch(success(task));
             dispatch(
               alertActions.success(

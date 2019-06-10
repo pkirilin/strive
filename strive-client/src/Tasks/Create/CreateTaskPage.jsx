@@ -1,21 +1,30 @@
 import React from "react";
-
+import { connect } from "react-redux";
 import {
   PrivateLayout,
   AppHeader,
   DocumentTitleSetter
 } from "../../_components";
-import { TaskForm } from "../TaskForm";
-import { tasksActions } from "../../_actions";
+import { CreateTaskForm } from "./CreateTaskForm";
+import { alertActions } from "../../_actions";
+import { historyHelper } from "../../_helpers";
 
-export class CreateTaskPage extends React.Component {
+class CreateTaskPage extends React.Component {
   constructor(props) {
     super(props);
 
-    // Getting projectId for task from browser history state
-    let { state: historyState } = this.props.history.location;
-    if (historyState && historyState.projectId) {
-      this.projectId = Number(historyState.projectId);
+    // If project id is not set, it's unable to create task, because it should be bound to specific project
+    // Checking this if only create task is in process (where taskId is not defined)
+    // Project id for update operation is received from reducer with task data
+    const { projectId: projectIdStr } = this.props.match.params;
+    this.projectId = Number(projectIdStr);
+    if (isNaN(this.projectId)) {
+      historyHelper.redirectToProjects();
+      this.props.dispatch(
+        alertActions.error(
+          "Unable to determine project id. Redirected to your project list"
+        )
+      );
     }
   }
 
@@ -24,15 +33,12 @@ export class CreateTaskPage extends React.Component {
       <DocumentTitleSetter values={["Create task"]}>
         <PrivateLayout>
           <AppHeader>Create task</AppHeader>
-          <TaskForm
-            id="createTaskForm"
-            loadingText="Creating task"
-            submitButtonText="Create"
-            projectId={this.projectId}
-            tasksAction={tasksActions.create}
-          />
+          <CreateTaskForm projectId={this.projectId} />
         </PrivateLayout>
       </DocumentTitleSetter>
     );
   }
 }
+
+const connectedCreateTaskPage = connect()(CreateTaskPage);
+export { connectedCreateTaskPage as CreateTaskPage };

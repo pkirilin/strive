@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Form, FormGroup, Row, Col, Button } from "reactstrap";
-import { alertActions, tasksActions } from "../_actions";
+import { tasksActions } from "../_actions";
 import { AppTextBox, AppTextArea, AppSpinner } from "../_components";
 import { validationStatuses } from "../_constants";
 import { historyHelper } from "../_helpers";
@@ -12,25 +12,30 @@ import {
 } from "../_helpers/validation";
 
 const mapStateToProps = state => {
-  let {
+  const {
     sendingTaskInfo,
     badRequestResponseJson,
     internalServerError
   } = state.tasksReducer.taskOperationsReducer;
 
-  let {
+  const {
     gettingTask,
     task,
     notFound,
     failedToFetch
   } = state.tasksReducer.taskInfoReducer;
 
+  const { project } = state.projectsReducer.projectInfoReducer;
+
   return {
     sendingTaskInfo,
     badRequestResponseJson,
     internalServerError,
     gettingTaskForUpdate: gettingTask,
-    taskFetched: task,
+
+    task,
+    project,
+
     notFoundTaskForUpdate: notFound,
     failedToFetchTaskForUpdate: failedToFetch
   };
@@ -38,12 +43,11 @@ const mapStateToProps = state => {
 
 class TaskForm extends React.Component {
   static propTypes = {
+    purpose: PropTypes.oneOf(["create", "update"]),
     id: PropTypes.string,
     loadingText: PropTypes.string,
     submitButtonText: PropTypes.string,
     projectId: PropTypes.number,
-    taskId: PropTypes.number,
-    tasksAction: PropTypes.func.isRequired,
 
     sendingTaskInfo: PropTypes.bool,
     internalServerError: PropTypes.string,
@@ -53,7 +57,7 @@ class TaskForm extends React.Component {
     }),
 
     gettingTaskForUpdate: PropTypes.bool,
-    taskFetched: PropTypes.shape({
+    task: PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired
@@ -107,12 +111,6 @@ class TaskForm extends React.Component {
         onChange: this.onTaskDescriptionValueChanged
       }
     };
-
-    // If taskId is set, it means that update task needs to be executed
-    if (this.props.taskId) {
-      // Dispatching action to get info for task to load it into update form
-      this.props.dispatch(tasksActions.getInfo(this.props.taskId));
-    }
   }
 
   trackTaskNameBadRequestResponse() {
@@ -134,15 +132,15 @@ class TaskForm extends React.Component {
   }
 
   trackTaskForUpdateFetchedFromServer() {
-    let { taskFetched } = this.props;
+    let { task } = this.props;
     this.setState({
       taskName: {
-        value: taskFetched.name,
+        value: task.name,
         validationState: validationRulesSetters.resetAll(),
         onChange: this.onTaskNameValueChanged
       },
       taskDescription: {
-        value: taskFetched.description,
+        value: task.description,
         validationState: validationRulesSetters.resetAll(),
         onChange: this.onTaskDescriptionValueChanged
       }
@@ -160,27 +158,9 @@ class TaskForm extends React.Component {
 
     // Tracks if current form state values must be replaced by fetched from server ones
     // This happens when user clicked "Edit task" button and server found task with requested id
-    if (
-      prevProps.taskFetched === undefined &&
-      this.props.taskFetched !== undefined
-    ) {
+    if (prevProps.task === undefined && this.props.task !== undefined) {
       this.trackTaskForUpdateFetchedFromServer();
       return true;
-    }
-  }
-
-  componentWillMount() {
-    // If project id is not set, it's unable to create task, because it should be bound to specific project
-    // Checking this if only create task is in process (where taskId is not defined)
-    // Project id for update operation is received from reducer with task data
-    let { projectId, taskId } = this.props;
-    if (!taskId && !projectId) {
-      historyHelper.redirectToProjects();
-      this.props.dispatch(
-        alertActions.error(
-          "Unable to determine project id. Redirected to your project list"
-        )
-      );
     }
   }
 
@@ -234,25 +214,26 @@ class TaskForm extends React.Component {
 
   onSubmitValidationCompleted() {
     if (validationUtils.focusFirstInvalidField(`#${this.props.id}`) === false) {
-      let { tasksAction, taskId, taskFetched } = this.props;
-      let taskDto = {
+      const { purpose } = this.props;
+
+      let taskData = {
         name: this.state.taskName.value,
-        description: this.state.taskDescription.value
+        description: this.state.taskDescription.value,
+        projectId: null
       };
 
-      if (tasksAction) {
-        if (taskId) {
-          if (taskFetched) {
-            // Update task action
-            taskDto["id"] = taskId;
-            taskDto["projectId"] = taskFetched.projectId;
-            this.props.dispatch(tasksAction(taskDto));
-          }
-        } else {
-          // Create task action
-          taskDto["projectId"] = this.props.projectId;
-          this.props.dispatch(tasksAction(taskDto));
-        }
+      switch (purpose) {
+        case "create":
+          taskData.projectId = this.props.projectId;
+          this.props.dispatch(tasksActions.create(taskData));
+          break;
+        case "update":
+          taskData.id = this.props.task.id;
+          taskData.projectId = this.props.task.project.id;
+          this.props.dispatch(tasksActions.update(taskData));
+          break;
+        default:
+          break;
       }
     }
   }

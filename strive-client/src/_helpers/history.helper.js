@@ -73,10 +73,10 @@ function redirectToProjectInfo(projectId) {
 
 /**
  * Redirects user to create task page
- * @param {number} projectId Id of project created task belongs to
+ * @param {number} projectId Id of project for request string
  */
 function redirectToCreateTask(projectId) {
-  history.push("/tasks/create", { projectId });
+  history.push(`/tasks/create/${projectId}`);
 }
 
 /**

@@ -39,7 +39,7 @@ namespace Strive.API.Controllers
             try
             {
                 List<Project> projectEntities = _projectService.GetProjects(userId);
-                List<ProjectDto> projectDtos = _mapper.Map<List<Project>, List<ProjectDto>>(projectEntities);
+                List<ProjectListItemDto> projectDtos = _mapper.Map<List<Project>, List<ProjectListItemDto>>(projectEntities);
                 return Ok(projectDtos);
             }
             catch (Exception e)
@@ -62,7 +62,7 @@ namespace Strive.API.Controllers
                     return NotFound(projectId);
                 if (project.UserId != userId)
                     return Unauthorized();
-                return Ok(_mapper.Map<Project, ProjectDto>(project));
+                return Ok(_mapper.Map<Project, ProjectInfoDto>(project));
             }
             catch (Exception e)
             {
@@ -75,7 +75,7 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="projectData">Project data received from form</param>
         [HttpPost("create")]
-        public IActionResult CreateProject([FromBody] ProjectDto projectData)
+        public IActionResult CreateProject([FromBody] ProjectListItemDto projectData)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace Strive.API.Controllers
         /// <param name="projectId">Existing project id</param>
         /// <param name="updatedProjectData">New project data</param>
         [HttpPut("update/{projectId}")]
-        public IActionResult UpdateProject(int projectId, [FromBody] ProjectDto updatedProjectData)
+        public IActionResult UpdateProject(int projectId, [FromBody] ProjectListItemDto updatedProjectData)
         {
             try
             {

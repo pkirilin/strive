@@ -14,7 +14,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void CreateTaskReturnsStatus500OnServiceCreateException()
         {
-            TaskDto taskData = new TaskDto();
+            var taskData = new TaskCreateUpdateDto();
             _taskServiceMock.Setup(service => service.Create(It.IsAny<Task>()))
                 .Throws<Exception>();
 
@@ -27,7 +27,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void CreateTaskReturnsStatus500OnServiceIsTaskExistsException()
         {
-            TaskDto taskData = new TaskDto();
+            var taskData = new TaskCreateUpdateDto();
             _taskServiceMock.Setup(service => service.IsTaskExists(It.IsAny<string>(), It.IsAny<int>()))
                 .Throws<Exception>();
 
@@ -43,7 +43,7 @@ namespace Strive.Tests.API.Tasks
             TasksController controller = this.TasksControllerInstance;
             controller.ModelState.AddModelError("error", "error");
 
-            IActionResult result = controller.CreateTask(new TaskDto());
+            IActionResult result = controller.CreateTask(new TaskCreateUpdateDto());
 
             Assert.IsType<BadRequestObjectResult>(result);
         }
@@ -51,7 +51,9 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void CreateTaskReturnsOkOnCorrectData()
         {
-            IActionResult result = this.TasksControllerInstance.CreateTask(new TaskDto());
+            var taskData = new TaskCreateUpdateDto();
+
+            IActionResult result = this.TasksControllerInstance.CreateTask(taskData);
 
             Assert.IsType<OkResult>(result);
         }

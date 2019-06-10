@@ -21,8 +21,7 @@ class TaskData extends Component {
     failedToFetch: PropTypes.bool,
     task: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      checked: PropTypes.bool.isRequired
+      description: PropTypes.string.isRequired
     })
   };
 

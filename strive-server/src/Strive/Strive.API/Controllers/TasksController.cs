@@ -39,7 +39,7 @@ namespace Strive.API.Controllers
             try
             {
                 List<Task> taskEntities = _taskService.GetTasks(projectId);
-                List<TaskDto> taskDtos = _mapper.Map<List<Task>, List<TaskDto>>(taskEntities);
+                List<TaskListItemDto> taskDtos = _mapper.Map<List<Task>, List<TaskListItemDto>>(taskEntities);
                 return Ok(taskDtos);
             }
             catch (Exception e)
@@ -60,7 +60,7 @@ namespace Strive.API.Controllers
                 Task task = _taskService.GetTaskById(taskId);
                 if (task == null)
                     return NotFound(taskId);
-                return Ok(_mapper.Map<Task, TaskDto>(task));
+                return Ok(_mapper.Map<Task, TaskInfoDto>(task));
             }
             catch (Exception e)
             {
@@ -73,7 +73,7 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="taskData">Task data received from form</param>
         [HttpPost("create")]
-        public IActionResult CreateTask([FromBody] TaskDto taskData)
+        public IActionResult CreateTask([FromBody] TaskCreateUpdateDto taskData)
         {
             try
             {
@@ -104,8 +104,8 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="taskId">Existing task id</param>
         /// <param name="updatedTaskData">New task data</param>
-        [HttpPut("update/{taskId}")]
-        public IActionResult UpdateTask(int taskId, [FromBody] TaskDto updatedTaskData)
+        [HttpPut("update")]
+        public IActionResult UpdateTask([FromBody] TaskCreateUpdateDto updatedTaskData)
         {
             try
             {
@@ -118,14 +118,14 @@ namespace Strive.API.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    Task taskForUpdate = _taskService.GetTaskById(taskId);
+                    Task taskForUpdate = _taskService.GetTaskById(updatedTaskData.Id);
                     if (taskForUpdate != null)
                     {
                         taskForUpdate = _mapper.Map(updatedTaskData, taskForUpdate);
                         _taskService.Update(taskForUpdate);
                         return Ok();
                     }
-                    return NotFound(taskId);
+                    return NotFound(updatedTaskData.Id);
                 }
             }
             catch (Exception e)

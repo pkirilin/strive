@@ -22,8 +22,7 @@ class TaskActionsDropdown extends React.Component {
     task: PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
-      description: PropTypes.string,
-      projectId: PropTypes.number.isRequired
+      description: PropTypes.string
     })
   };
 

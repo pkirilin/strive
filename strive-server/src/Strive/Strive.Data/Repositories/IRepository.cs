@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Strive.Data.Repositories
 {
@@ -11,7 +12,7 @@ namespace Strive.Data.Repositories
     {
         IEnumerable<TEntity> GetAll();
 
-        //IQueryable<TEntity> Get();
+        IQueryable<TEntity> GetAllAsIQueryable();
 
         TEntity GetSingleOrDefault(Func<TEntity, bool> condition);
 

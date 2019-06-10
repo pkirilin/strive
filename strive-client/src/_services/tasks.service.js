@@ -77,7 +77,7 @@ function update(task) {
     },
     body: JSON.stringify(task)
   };
-  return fetch(`${config.apiUrl}/tasks/update/${task.id}`, requestOptions);
+  return fetch(`${config.apiUrl}/tasks/update`, requestOptions);
 }
 
 /**

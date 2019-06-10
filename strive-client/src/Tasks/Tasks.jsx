@@ -9,7 +9,11 @@ export class Tasks extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/tasks/create" component={CreateTaskPage} />
+        <Route
+          exact
+          path="/tasks/create/:projectId"
+          component={CreateTaskPage}
+        />
         <Route exact path="/tasks/info/:taskId" component={TaskInfoPage} />
         <Route exact path="/tasks/edit/:taskId" component={EditTaskPage} />
         <Route component={NotFoundPage} />

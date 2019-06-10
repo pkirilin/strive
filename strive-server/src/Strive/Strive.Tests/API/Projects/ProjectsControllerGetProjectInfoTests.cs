@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Strive.Data.Dtos;
 using Strive.Data.Entities;
 using Strive.Tests.TestValues;
 using Xunit;
@@ -57,14 +58,23 @@ namespace Strive.Tests.API.Projects
         {
             int projectId = 1;
             int userId = 1;
-            Project expectedProject = TestValuesProvider.GetProjects().FirstOrDefault();
+            Project project = TestValuesProvider.GetProjects().FirstOrDefault();
+            ProjectInfoDto expectedResult = new ProjectInfoDto()
+            {
+                Id = project.Id,
+                Description = project.Description,
+                Name = project.Name,
+                UserId = project.UserId
+            };
             _projectServiceMock.Setup(service => service.GetProjectById(projectId))
-                .Returns(expectedProject);
+                .Returns(project);
+            _mapperMock.Setup(mapper => mapper.Map<Project, ProjectInfoDto>(It.IsAny<Project>()))
+                .Returns(expectedResult);
 
             IActionResult result = this.ProjectsControllerInstance.GetProjectInfo(projectId, userId);
 
             Assert.IsType<OkObjectResult>(result);
-            Assert.Equal(expectedProject, (result as OkObjectResult)?.Value);
+            Assert.Equal(expectedResult, (result as OkObjectResult)?.Value);
         }
     }
 }

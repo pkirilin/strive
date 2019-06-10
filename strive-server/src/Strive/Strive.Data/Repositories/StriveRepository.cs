@@ -40,10 +40,14 @@ namespace Strive.Data.Repositories
             return this.Entities;
         }
 
-        //public IQueryable<TEntity> Get()
-        //{
-        //    return this.Entities;
-        //}
+        /// <summary>
+        /// Gets all entities from the existing collection as IQueryable
+        /// </summary>
+        /// <returns>Full collection of entities as IQueryable</returns>
+        public IQueryable<TEntity> GetAllAsIQueryable()
+        {
+            return this.Entities;
+        }
 
         /// <summary>
         /// Gets single entity by condition (SingleOrDefault wrapper)

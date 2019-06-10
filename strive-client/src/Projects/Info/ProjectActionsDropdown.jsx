@@ -19,6 +19,7 @@ const mapStateToProps = state => {
 class ProjectActionsDropdown extends Component {
   static propTypes = {
     project: PropTypes.shape({
+      id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired
     })
   };

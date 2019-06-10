@@ -17,7 +17,7 @@ namespace Strive.Tests.API.Projects
         public void UpdateProjectReturnsStatus500IfRepoSearchFailed()
         {
             int projectId = 1;
-            ProjectDto projectData = new ProjectDto()
+            ProjectListItemDto projectData = new ProjectListItemDto()
             {
                 Name = "Test",
                 Description = "Test",
@@ -36,7 +36,7 @@ namespace Strive.Tests.API.Projects
         public void UpdateProjectReturnsStatus500IfRepoUpdateFailed()
         {
             int projectId = 1;
-            ProjectDto projectData = new ProjectDto()
+            ProjectListItemDto projectData = new ProjectListItemDto()
             {
                 Name = "Test",
                 Description = "Test",
@@ -57,7 +57,7 @@ namespace Strive.Tests.API.Projects
         public void UpdateProjectReturnsStatus500IfRepoProjectExistsCheckFailed()
         {
             int projectId = 1;
-            ProjectDto projectData = new ProjectDto()
+            ProjectListItemDto projectData = new ProjectListItemDto()
             {
                 Name = "Test",
                 Description = "Test",
@@ -76,7 +76,7 @@ namespace Strive.Tests.API.Projects
         public void UpdateProjectReturnsNotFoundIfProjectNotFoundById()
         {
             int projectId = 1;
-            ProjectDto projectData = new ProjectDto()
+            ProjectListItemDto projectData = new ProjectListItemDto()
             {
                 Name = "Test",
                 Description = "Test",
@@ -94,7 +94,7 @@ namespace Strive.Tests.API.Projects
         public void UpdateProjectReturnsBadRequestOnInvalidData()
         {
             int projectId = 1;
-            ProjectDto projectData = new ProjectDto()
+            ProjectListItemDto projectData = new ProjectListItemDto()
             {
                 Name = "Test",
                 Description = "Test",
@@ -112,7 +112,7 @@ namespace Strive.Tests.API.Projects
         public void UpdateProjectReturnsOkOnSuccessfulUpdate()
         {
             int projectId = 1;
-            ProjectDto projectData = new ProjectDto()
+            ProjectListItemDto projectData = new ProjectListItemDto()
             {
                 Name = "Test",
                 Description = "Test",

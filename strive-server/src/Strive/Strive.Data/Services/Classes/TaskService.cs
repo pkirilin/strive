@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Strive.Data.Entities;
 using Strive.Data.Repositories;
 using Strive.Data.Services.Interfaces;
@@ -45,7 +46,9 @@ namespace Strive.Data.Services.Classes
         {
             try
             {
-                return _taskRepo.GetById(taskId);
+                return _taskRepo.GetAllAsIQueryable()
+                    .Include(task => task.Project)
+                    .SingleOrDefault(task => task.Id == taskId);
             }
             catch (Exception e)
             {

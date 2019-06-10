@@ -2,7 +2,7 @@
 
 namespace Strive.Data.Dtos
 {
-    public class TaskDto
+    public class TaskInfoDto
     {
         public int Id { get; set; }
 
@@ -11,10 +11,9 @@ namespace Strive.Data.Dtos
         [MaxLength(255)]
         public string Name { get; set; }
 
-        [MaxLength(511)] public string Description { get; set; }
+        [MaxLength(511)]
+        public string Description { get; set; }
 
-        public bool Checked { get; set; } = false;
-
-        public int ProjectId { get; set; }
+        public ProjectInfoDto Project { get; set; }
     }
 }

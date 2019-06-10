@@ -16,12 +16,11 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void UpdateTaskReturnsStatus500IfRepoSearchFailed()
         {
-            int taskId = 1;
-            TaskDto taskData = new TaskDto();
+            var taskData = new TaskCreateUpdateDto();
             _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))
                 .Throws<Exception>();
 
-            ObjectResult result = this.TasksControllerInstance.UpdateTask(taskId, taskData) as ObjectResult;
+            ObjectResult result = this.TasksControllerInstance.UpdateTask(taskData) as ObjectResult;
 
             Assert.NotNull(result);
             Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
@@ -30,8 +29,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void UpdateTaskReturnsStatus500IfRepoUpdateFailed()
         {
-            int taskId = 1;
-            TaskDto taskData = new TaskDto()
+            var taskData = new TaskCreateUpdateDto()
             {
                 Name = "test",
                 Description = "test"
@@ -41,7 +39,7 @@ namespace Strive.Tests.API.Tasks
             _taskServiceMock.Setup(service => service.Update(It.IsAny<Task>()))
                 .Throws<Exception>();
 
-            ObjectResult result = this.TasksControllerInstance.UpdateTask(taskId, taskData) as ObjectResult;
+            ObjectResult result = this.TasksControllerInstance.UpdateTask(taskData) as ObjectResult;
 
             Assert.NotNull(result);
             Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
@@ -50,8 +48,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void UpdateTaskReturnsStatus500IfRepoIsTaskExistsFailed()
         {
-            int taskId = 1;
-            TaskDto taskData = new TaskDto()
+            var taskData = new TaskCreateUpdateDto()
             {
                 Name = "test",
                 Description = "test"
@@ -59,7 +56,7 @@ namespace Strive.Tests.API.Tasks
             _taskServiceMock.Setup(service => service.IsTaskExists(It.IsAny<string>(), It.IsAny<int>()))
                 .Throws<Exception>();
 
-            ObjectResult result = this.TasksControllerInstance.UpdateTask(taskId, taskData) as ObjectResult;
+            ObjectResult result = this.TasksControllerInstance.UpdateTask(taskData) as ObjectResult;
 
             Assert.NotNull(result);
             Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
@@ -68,16 +65,16 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void UpdateTaskReturnsNotFoundIfTaskNotFoundById()
         {
-            int taskId = 1;
-            TaskDto taskData = new TaskDto()
+            var taskData = new TaskCreateUpdateDto()
             {
+                Id = 1,
                 Name = "test",
-                Description = "test"
+                Description = "test",
             };
-            _taskServiceMock.Setup(service => service.GetTaskById(taskId))
+            _taskServiceMock.Setup(service => service.GetTaskById(taskData.Id))
                 .Returns(null as Task);
 
-            IActionResult result = this.TasksControllerInstance.UpdateTask(taskId, taskData);
+            IActionResult result = this.TasksControllerInstance.UpdateTask(taskData);
 
             Assert.IsType<NotFoundObjectResult>(result);
         }
@@ -85,8 +82,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void UpdateTaskReturnsBadRequestOnInvalidData()
         {
-            int taskId = 1;
-            TaskDto taskData = new TaskDto()
+            var taskData = new TaskCreateUpdateDto()
             {
                 Name = "test",
                 Description = "test"
@@ -94,7 +90,7 @@ namespace Strive.Tests.API.Tasks
             TasksController controller = this.TasksControllerInstance;
             controller.ModelState.AddModelError("error", "error");
 
-            IActionResult result = controller.UpdateTask(taskId, taskData);
+            IActionResult result = controller.UpdateTask(taskData);
 
             Assert.IsType<BadRequestObjectResult>(result);
         }
@@ -102,16 +98,16 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void UpdateTaskReturnsOkOnSuccessfulUpdate()
         {
-            int taskId = 1;
-            TaskDto taskData = new TaskDto()
+            var taskData = new TaskCreateUpdateDto()
             {
+                Id = 1,
                 Name = "test",
                 Description = "test"
             };
-            _taskServiceMock.Setup(service => service.GetTaskById(taskId))
+            _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))
                 .Returns(TestValuesProvider.GetTasks().FirstOrDefault());
 
-            IActionResult result = this.TasksControllerInstance.UpdateTask(taskId, taskData);
+            IActionResult result = this.TasksControllerInstance.UpdateTask(taskData);
 
             Assert.IsType<OkResult>(result);
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Moq;
 using Strive.Data.Entities;
@@ -14,7 +15,7 @@ namespace Strive.Tests.Services.Tasks
         public void GetTaskByIdThrowsDatabaseExceptionWhenRepoFails()
         {
             int taskId = 1;
-            _taskRepositoryMock.Setup(repo => repo.GetById(taskId))
+            _taskRepositoryMock.Setup(repo => repo.GetAllAsIQueryable())
                 .Throws<Exception>();
 
             Assert.Throws<StriveDatabaseException>(() => { this.TaskServiceInstance.GetTaskById(taskId); });
@@ -36,8 +37,9 @@ namespace Strive.Tests.Services.Tasks
         public void GetTaskByIdReturnsTargetTaskWhenTaskExists()
         {
             Task expectedTask = TestValuesProvider.GetTasks().FirstOrDefault();
-            _taskRepositoryMock.Setup(repo => repo.GetById(expectedTask.Id))
-                .Returns(expectedTask);
+            IQueryable<Task> expectedTaskIQueryable = new List<Task>() { expectedTask }.AsQueryable();
+            _taskRepositoryMock.Setup(repo => repo.GetAllAsIQueryable())
+                .Returns(expectedTaskIQueryable);
 
             Task resultTask = this.TaskServiceInstance.GetTaskById((int)expectedTask.Id);
 
