@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Strive.Data.Dtos
+namespace Strive.Data.Dtos.Account
 {
     /// <summary>
     /// Contains application user login request transfer data
     /// </summary>
-    public class UserLoginRequestDto
+    public class LoginRequestDto
     {
         [Required]
         [RegularExpression(

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Strive.Data.Dtos;
+using Strive.Data.Dtos.Account;
 using Strive.Data.Entities;
 using Strive.Helpers.Settings;
 using Xunit;
@@ -14,7 +14,7 @@ namespace Strive.Tests.API.Account
         [Fact]
         public void AuthenticateReturnsStatus500IfTokenCreatedWithException()
         {
-            var loginRequest = new UserLoginRequestDto()
+            var loginRequest = new LoginRequestDto()
             {
                 Email = "username",
                 Password = "password"
@@ -32,7 +32,7 @@ namespace Strive.Tests.API.Account
         [Fact]
         public void AuthenticateReturnsUnauthorizedIfServiceFailed()
         {
-            var loginRequest = new UserLoginRequestDto()
+            var loginRequest = new LoginRequestDto()
             {
                 Email = "username",
                 Password = "password"
@@ -50,7 +50,7 @@ namespace Strive.Tests.API.Account
         [Fact]
         public void AuthenticateReturnsOkIfTokenCreatedWithoutException()
         {
-            var loginRequest = new UserLoginRequestDto()
+            var loginRequest = new LoginRequestDto()
             {
                 Email = "username",
                 Password = "password"

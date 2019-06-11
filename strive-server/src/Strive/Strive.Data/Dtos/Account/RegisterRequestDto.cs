@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Strive.Data.Dtos
+namespace Strive.Data.Dtos.Account
 {
     /// <summary>
     /// Contains application user register request transfer data
     /// </summary>
-    public class UserRegisterRequestDto
+    public class RegisterRequestDto
     {
         [Required]
         [MinLength(4)]

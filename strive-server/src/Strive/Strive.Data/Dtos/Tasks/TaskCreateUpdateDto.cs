@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Strive.Data.Dtos
+namespace Strive.Data.Dtos.Tasks
 {
     public class TaskCreateUpdateDto
     {

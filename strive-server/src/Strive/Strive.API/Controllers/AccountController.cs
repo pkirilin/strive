@@ -1,7 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Strive.Data.Dtos;
 using Strive.Data.Entities;
 using System.Text;
 using Microsoft.Extensions.Options;
@@ -11,6 +10,7 @@ using System.Security.Claims;
 using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Strive.Data.Dtos.Account;
 using Strive.Data.Services.Interfaces;
 
 namespace Strive.API.Controllers
@@ -41,7 +41,7 @@ namespace Strive.API.Controllers
         /// <param name="userLoginRequestData">Data received from login form</param>
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] UserLoginRequestDto userLoginRequestData)
+        public IActionResult Authenticate([FromBody] LoginRequestDto userLoginRequestData)
         {
             User user;
 
@@ -94,7 +94,7 @@ namespace Strive.API.Controllers
         /// <param name="userRegisterRequestData">Data received from register form</param>
         [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register([FromBody] UserRegisterRequestDto userRegisterRequestData)
+        public IActionResult Register([FromBody] RegisterRequestDto userRegisterRequestData)
         {
             try
             {

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
-using Strive.Data.Dtos;
+using Strive.Data.Dtos.Account;
+using Strive.Data.Dtos.Projects;
+using Strive.Data.Dtos.Tasks;
 using Strive.Data.Entities;
 
 namespace Strive.API
@@ -8,7 +10,7 @@ namespace Strive.API
     {
         public AutoMapperProfile()
         {
-            CreateMap<UserRegisterRequestDto, User>();
+            CreateMap<RegisterRequestDto, User>();
 
             CreateMap<Project, ProjectListItemDto>();
             CreateMap<Project, ProjectInfoDto>();

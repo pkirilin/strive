@@ -4,7 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Strive.Data.Dtos;
+using Strive.Data.Dtos.Projects;
 using Strive.Data.Entities;
 using Strive.Data.Services.Interfaces;
 

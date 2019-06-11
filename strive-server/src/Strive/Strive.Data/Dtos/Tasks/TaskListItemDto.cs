@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Strive.Data.Dtos
+namespace Strive.Data.Dtos.Tasks
 {
-    public class ProjectInfoDto
+    public class TaskListItemDto
     {
         public int Id { get; set; }
 
@@ -14,6 +14,8 @@ namespace Strive.Data.Dtos
         [MaxLength(511)]
         public string Description { get; set; }
 
-        public int UserId { get; set; }
+        public bool Checked { get; set; } = false;
+
+        public int ProjectId { get; set; }
     }
 }

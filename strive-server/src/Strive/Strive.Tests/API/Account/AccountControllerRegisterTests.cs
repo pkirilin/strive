@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Strive.API.Controllers;
-using Strive.Data.Dtos;
+using Strive.Data.Dtos.Account;
 using Strive.Data.Entities;
 using Xunit;
 
@@ -14,7 +14,7 @@ namespace Strive.Tests.API.Account
         [Fact]
         public void RegisterReturnsBadRequestOnInvalidData()
         {
-            var registerRequest = new UserRegisterRequestDto()
+            var registerRequest = new RegisterRequestDto()
             {
                 Email = "test@gmail.com",
                 Username = "username",
@@ -32,7 +32,7 @@ namespace Strive.Tests.API.Account
         [Fact]
         public void RegisterReturnsStatus500OnServiceCreateException()
         {
-            var registerRequest = new UserRegisterRequestDto()
+            var registerRequest = new RegisterRequestDto()
             {
                 Email = "test@gmail.com",
                 Username = "username",
@@ -52,7 +52,7 @@ namespace Strive.Tests.API.Account
         [Fact]
         public void RegisterReturnsStatus500OnServiceIsEmailExistsException()
         {
-            var registerRequest = new UserRegisterRequestDto()
+            var registerRequest = new RegisterRequestDto()
             {
                 Email = "test@gmail.com",
                 Username = "username",
@@ -75,7 +75,7 @@ namespace Strive.Tests.API.Account
         [Fact]
         public void RegisterReturnsStatus500OnServiceIsUsernameExistsException()
         {
-            var registerRequest = new UserRegisterRequestDto()
+            var registerRequest = new RegisterRequestDto()
             {
                 Email = "test@gmail.com",
                 Username = "username",
@@ -98,7 +98,7 @@ namespace Strive.Tests.API.Account
         [Fact]
         public void RegisterReturnsOkOnCorrectData()
         {
-            var registerRequest = new UserRegisterRequestDto()
+            var registerRequest = new RegisterRequestDto()
             {
                 Email = "test@gmail.com",
                 Username = "username",

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Strive.API.Controllers;
-using Strive.Data.Dtos;
+using Strive.Data.Dtos.Tasks;
 using Strive.Data.Entities;
 using Xunit;
 

@@ -1,4 +1,6 @@
-﻿namespace Strive.Data.Dtos
+﻿using Strive.Data.Dtos.Projects;
+
+namespace Strive.Data.Dtos.Tasks
 {
     public class TaskInfoDto
     {
