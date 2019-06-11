@@ -25,19 +25,6 @@ namespace Strive.Tests.API.Tasks
         }
 
         [Fact]
-        public void CreateTaskReturnsStatus500OnServiceIsTaskExistsException()
-        {
-            var taskData = new TaskCreateUpdateDto();
-            _taskServiceMock.Setup(service => service.IsTaskExists(It.IsAny<string>(), It.IsAny<int>()))
-                .Throws<Exception>();
-
-            ObjectResult result = this.TasksControllerInstance.CreateTask(taskData) as ObjectResult;
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
-
-        [Fact]
         public void CreateTaskReturnsBadRequestOnInvalidData()
         {
             TasksController controller = this.TasksControllerInstance;

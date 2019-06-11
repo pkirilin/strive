@@ -46,23 +46,6 @@ namespace Strive.Tests.API.Tasks
         }
 
         [Fact]
-        public void UpdateTaskReturnsStatus500IfRepoIsTaskExistsFailed()
-        {
-            var taskData = new TaskCreateUpdateDto()
-            {
-                Name = "test",
-                Description = "test"
-            };
-            _taskServiceMock.Setup(service => service.IsTaskExists(It.IsAny<string>(), It.IsAny<int>()))
-                .Throws<Exception>();
-
-            ObjectResult result = this.TasksControllerInstance.UpdateTask(taskData) as ObjectResult;
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
-
-        [Fact]
         public void UpdateTaskReturnsNotFoundIfTaskNotFoundById()
         {
             var taskData = new TaskCreateUpdateDto()

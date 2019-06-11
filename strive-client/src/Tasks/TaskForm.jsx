@@ -52,10 +52,6 @@ class TaskForm extends React.Component {
     sendingTaskInfo: PropTypes.bool,
     internalServerError: PropTypes.string,
 
-    badRequestResponseJson: PropTypes.shape({
-      taskNameRemote: PropTypes.arrayOf(PropTypes.string)
-    }),
-
     gettingTaskForUpdate: PropTypes.bool,
     task: PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -86,9 +82,6 @@ class TaskForm extends React.Component {
       this
     );
 
-    this.trackTaskNameBadRequestResponse = this.trackTaskNameBadRequestResponse.bind(
-      this
-    );
     this.trackTaskForUpdateFetchedFromServer = this.trackTaskForUpdateFetchedFromServer.bind(
       this
     );
@@ -113,24 +106,6 @@ class TaskForm extends React.Component {
     };
   }
 
-  trackTaskNameBadRequestResponse() {
-    if (
-      this.props.badRequestResponseJson &&
-      this.props.badRequestResponseJson.taskNameRemote
-    ) {
-      this.setState({
-        ...this.state,
-        taskName: {
-          ...this.state.taskName,
-          validationState: {
-            status: validationStatuses.invalid,
-            message: this.props.badRequestResponseJson.taskNameRemote.join(". ")
-          }
-        }
-      });
-    }
-  }
-
   trackTaskForUpdateFetchedFromServer() {
     let { task } = this.props;
     this.setState({
@@ -148,14 +123,6 @@ class TaskForm extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    // Tracks if any bad request (validation error) received from API
-    if (
-      prevProps.badRequestResponseJson !== this.props.badRequestResponseJson
-    ) {
-      this.trackTaskNameBadRequestResponse();
-      return true;
-    }
-
     // Tracks if current form state values must be replaced by fetched from server ones
     // This happens when user clicked "Edit task" button and server found task with requested id
     if (prevProps.task === undefined && this.props.task !== undefined) {

@@ -79,13 +79,6 @@ namespace Strive.API.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (_taskService.IsTaskExists(taskData.Name, taskData.ProjectId))
-                        ModelState.AddModelError("taskNameRemote",
-                            "Task with specified name is already exists in specified project");
-                }
-
-                if (ModelState.IsValid)
-                {
                     Task task = _mapper.Map<Task>(taskData);
                     _taskService.Create(task);
                     return Ok();
@@ -109,13 +102,6 @@ namespace Strive.API.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    if (_taskService.IsTaskExists(updatedTaskData.Name, updatedTaskData.ProjectId))
-                        ModelState.AddModelError("taskNameRemote",
-                            "Task with specified name is already exists in specified project");
-                }
-
                 if (ModelState.IsValid)
                 {
                     Task taskForUpdate = _taskService.GetTaskById(updatedTaskData.Id);
