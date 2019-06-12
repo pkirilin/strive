@@ -1,36 +1,33 @@
 import React from "react";
+import { connect } from "react-redux";
 import {
   PrivateLayout,
   AppHeader,
   DocumentTitleSetter
 } from "../../_components";
-import { ProjectForm } from "../ProjectForm";
+import { EditProjectForm } from "./EditProjectForm";
 import { projectsActions } from "../../_actions";
 
-export class EditProjectPage extends React.Component {
-  render() {
+class EditProjectPage extends React.Component {
+  constructor(props) {
+    super(props);
+
     // Getting projectId for editing from request string
-    let { projectId } = this.props.match.params;
-    projectId = Number(projectId);
+    const { projectId } = this.props.match.params;
+    this.props.dispatch(projectsActions.getInfo(projectId));
+  }
+
+  render() {
     return (
       <DocumentTitleSetter values={["Edit project"]}>
         <PrivateLayout>
           <AppHeader>Edit project</AppHeader>
-          {Number.isNaN(projectId) ? (
-            <div className="mt-4 mb-4 text-center text-danger">
-              Wrong request string: parameter "projectId" is not a number
-            </div>
-          ) : (
-            <ProjectForm
-              id="editProjectForm"
-              loadingText="Updating project"
-              submitButtonText="Save"
-              projectsAction={projectsActions.update}
-              projectId={projectId}
-            />
-          )}
+          <EditProjectForm />
         </PrivateLayout>
       </DocumentTitleSetter>
     );
   }
 }
+
+const connectedEditProjectPage = connect()(EditProjectPage);
+export { connectedEditProjectPage as EditProjectPage };

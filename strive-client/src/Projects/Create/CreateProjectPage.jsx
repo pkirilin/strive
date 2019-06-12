@@ -1,11 +1,10 @@
 import React from "react";
-import { projectsActions } from "../../_actions";
 import {
   PrivateLayout,
   AppHeader,
   DocumentTitleSetter
 } from "../../_components";
-import { ProjectForm } from "../ProjectForm";
+import { CreateProjectForm } from "./CreateProjectForm";
 
 export class CreateProjectPage extends React.Component {
   render() {
@@ -13,12 +12,7 @@ export class CreateProjectPage extends React.Component {
       <DocumentTitleSetter values={["Create project"]}>
         <PrivateLayout>
           <AppHeader>Create project</AppHeader>
-          <ProjectForm
-            id="createProjectForm"
-            loadingText="Creating project"
-            submitButtonText="Create"
-            projectsAction={projectsActions.create}
-          />
+          <CreateProjectForm />
         </PrivateLayout>
       </DocumentTitleSetter>
     );

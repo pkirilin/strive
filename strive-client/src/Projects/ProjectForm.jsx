@@ -29,7 +29,7 @@ const mapStateToProps = state => {
     sendingProjectInfo,
     badRequestResponseJson,
     gettingProjectForUpdate: loading,
-    projectFetched: project,
+    project,
     notFoundProjectForUpdate: notFound,
     failedToFetchProjectForUpdate: failedToFetch,
     internalServerError
@@ -38,11 +38,10 @@ const mapStateToProps = state => {
 
 class ProjectForm extends React.Component {
   static propTypes = {
+    purpose: PropTypes.oneOf(["create", "update"]).isRequired,
     id: PropTypes.string,
     loadingText: PropTypes.string,
     submitButtonText: PropTypes.string,
-    projectId: PropTypes.number,
-    projectsAction: PropTypes.func.isRequired,
 
     sendingProjectInfo: PropTypes.bool,
     gettingProjectForUpdate: PropTypes.bool,
@@ -53,7 +52,7 @@ class ProjectForm extends React.Component {
       projectNameRemote: PropTypes.arrayOf(PropTypes.string)
     }),
 
-    projectFetched: PropTypes.shape({
+    project: PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       description: PropTypes.string
@@ -104,12 +103,6 @@ class ProjectForm extends React.Component {
         onChange: this.onProjectDescriptionValueChanged
       }
     };
-
-    // If projectId is set, it means that update project needs to be executed
-    if (this.props.projectId) {
-      // Dispatching action to get info for project to load it into update form
-      this.props.dispatch(projectsActions.getInfo(this.props.projectId));
-    }
   }
 
   trackProjectNameBadRequestResponse() {
@@ -133,15 +126,15 @@ class ProjectForm extends React.Component {
   }
 
   trackProjectForUpdateFetchedFromServer() {
-    let { projectFetched } = this.props;
+    let { project } = this.props;
     this.setState({
       projectName: {
-        value: projectFetched.name,
+        value: project.name,
         validationState: validationRulesSetters.resetAll(),
         onChange: this.onProjectNameValueChanged
       },
       projectDescription: {
-        value: projectFetched.description,
+        value: project.description,
         validationState: validationRulesSetters.resetAll(),
         onChange: this.onProjectDescriptionValueChanged
       }
@@ -159,10 +152,7 @@ class ProjectForm extends React.Component {
 
     // Tracks if current form state values must be replaced by fetched from server ones
     // This happens when user clicked "Edit project" button and server found project with requested id
-    if (
-      prevProps.projectFetched === undefined &&
-      this.props.projectFetched !== undefined
-    ) {
+    if (prevProps.project === undefined && this.props.project !== undefined) {
       this.trackProjectForUpdateFetchedFromServer();
       return true;
     }
@@ -218,23 +208,21 @@ class ProjectForm extends React.Component {
 
   onSubmitValidationCompleted() {
     if (validationUtils.focusFirstInvalidField(`#${this.props.id}`) === false) {
-      let { projectsAction, projectId } = this.props;
-
-      if (projectsAction) {
-        let projectDto = {
-          name: this.state.projectName.value,
-          description: this.state.projectDescription.value
-        };
-
-        // Checking whether projectId needs to be assigned (for update request)
-        if (projectId) {
-          // Update project action
-          projectDto["id"] = projectId;
-          this.props.dispatch(projectsAction(projectDto));
-        } else {
-          // Create project action
-          this.props.dispatch(projectsAction(projectDto));
-        }
+      const { purpose, project } = this.props;
+      let projectData = {
+        name: this.state.projectName.value,
+        description: this.state.projectDescription.value
+      };
+      switch (purpose) {
+        case "create":
+          this.props.dispatch(projectsActions.create(projectData));
+          break;
+        case "update":
+          projectData.id = project.id;
+          this.props.dispatch(projectsActions.update(projectData));
+          break;
+        default:
+          break;
       }
     }
   }

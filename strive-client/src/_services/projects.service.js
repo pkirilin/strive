@@ -87,10 +87,7 @@ function update(project) {
     },
     body: JSON.stringify(project)
   };
-  return fetch(
-    `${config.apiUrl}/projects/update/${project.id}`,
-    requestOptions
-  );
+  return fetch(`${config.apiUrl}/projects/update`, requestOptions);
 }
 
 /**

@@ -75,7 +75,7 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="projectData">Project data received from form</param>
         [HttpPost("create")]
-        public IActionResult CreateProject([FromBody] ProjectListItemDto projectData)
+        public IActionResult CreateProject([FromBody] ProjectCreateUpdateDto projectData)
         {
             try
             {
@@ -105,8 +105,8 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="projectId">Existing project id</param>
         /// <param name="updatedProjectData">New project data</param>
-        [HttpPut("update/{projectId}")]
-        public IActionResult UpdateProject(int projectId, [FromBody] ProjectListItemDto updatedProjectData)
+        [HttpPut("update")]
+        public IActionResult UpdateProject([FromBody] ProjectCreateUpdateDto updatedProjectData)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace Strive.API.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    Project projectForUpdate = _projectService.GetProjectById(projectId);
+                    Project projectForUpdate = _projectService.GetProjectById(updatedProjectData.Id);
                     if (projectForUpdate != null)
                     {
                         // Returns projectForUpdate object with fields rewritten according to DTO object
@@ -127,7 +127,7 @@ namespace Strive.API.Controllers
                         _projectService.Update(projectForUpdate);
                         return Ok();
                     }
-                    return NotFound(projectId);
+                    return NotFound(updatedProjectData.Id);
                 }
             }
             catch (Exception e)

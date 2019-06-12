@@ -14,12 +14,10 @@ namespace Strive.API
 
             CreateMap<Project, ProjectListItemDto>();
             CreateMap<Project, ProjectInfoDto>();
+            CreateMap<ProjectCreateUpdateDto, Project>();
 
-            CreateMap<ProjectListItemDto, Project>();
-
-            CreateMap<Task, TaskInfoDto>();
             CreateMap<Task, TaskListItemDto>();
-
+            CreateMap<Task, TaskInfoDto>();
             CreateMap<TaskCreateUpdateDto, Task>();
         }
     }

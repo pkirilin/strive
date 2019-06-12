@@ -43,7 +43,7 @@ const mapStateToProps = state => {
 
 class TaskForm extends React.Component {
   static propTypes = {
-    purpose: PropTypes.oneOf(["create", "update"]),
+    purpose: PropTypes.oneOf(["create", "update"]).isRequired,
     id: PropTypes.string,
     loadingText: PropTypes.string,
     submitButtonText: PropTypes.string,
