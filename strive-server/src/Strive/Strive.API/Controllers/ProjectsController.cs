@@ -110,24 +110,30 @@ namespace Strive.API.Controllers
         {
             try
             {
+                Project projectForUpdate = _projectService.GetProjectById(updatedProjectData.Id);
+
+                if (projectForUpdate == null)
+                {
+                    return NotFound(updatedProjectData.Id);
+                }
+
                 if (ModelState.IsValid)
                 {
-                    if (_projectService.IsProjectExists(updatedProjectData.Name, updatedProjectData.UserId))
+                    // Adding validation error for project name only if it's really changed
+                    // Otherwise user will not be able to edit project without changing its name
+                    if (projectForUpdate.Name != updatedProjectData.Name
+                        && _projectService.IsProjectExists
+                            (updatedProjectData.Name, updatedProjectData.UserId))
                         ModelState.AddModelError("projectNameRemote",
                             "Project for target user with specified name is already exists");
                 }
 
                 if (ModelState.IsValid)
                 {
-                    Project projectForUpdate = _projectService.GetProjectById(updatedProjectData.Id);
-                    if (projectForUpdate != null)
-                    {
-                        // Returns projectForUpdate object with fields rewritten according to DTO object
-                        projectForUpdate = _mapper.Map(updatedProjectData, projectForUpdate);
-                        _projectService.Update(projectForUpdate);
-                        return Ok();
-                    }
-                    return NotFound(updatedProjectData.Id);
+                    // Returns projectForUpdate object with fields rewritten according to DTO object
+                    projectForUpdate = _mapper.Map(updatedProjectData, projectForUpdate);
+                    _projectService.Update(projectForUpdate);
+                    return Ok();
                 }
             }
             catch (Exception e)

@@ -36,16 +36,23 @@ namespace Strive.Tests.API.Projects
         {
             var projectData = new ProjectCreateUpdateDto()
             {
+                Id = 1,
                 Name = "Test",
                 Description = "Test",
                 UserId = 1
             };
-            _projectServiceMock.Setup(service => service.GetProjectById(It.IsAny<int>()))
+            _projectServiceMock.Setup(service => service.GetProjectById(projectData.Id))
                 .Returns(TestValuesProvider.GetProjects().FirstOrDefault());
+            _projectServiceMock.Setup(service => service.IsProjectExists(projectData.Name, projectData.UserId))
+                .Returns(false);
             _projectServiceMock.Setup(service => service.Update(It.IsAny<Project>()))
                 .Throws<Exception>();
 
             ObjectResult result = this.ProjectsControllerInstance.UpdateProject(projectData) as ObjectResult;
+
+            _projectServiceMock.Verify(service => service.GetProjectById(projectData.Id), Times.Once);
+            _projectServiceMock.Verify(service => service.IsProjectExists(projectData.Name, projectData.UserId), Times.Once);
+            _projectServiceMock.Verify(service => service.Update(It.IsAny<Project>()), Times.Once);
 
             Assert.NotNull(result);
             Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
@@ -56,14 +63,20 @@ namespace Strive.Tests.API.Projects
         {
             var projectData = new ProjectCreateUpdateDto()
             {
+                Id = 1,
                 Name = "Test",
                 Description = "Test",
                 UserId = 1
             };
+            _projectServiceMock.Setup(service => service.GetProjectById(projectData.Id))
+                .Returns(TestValuesProvider.GetProjects().FirstOrDefault());
             _projectServiceMock.Setup(service => service.IsProjectExists(It.IsAny<string>(), It.IsAny<int>()))
                 .Throws<Exception>();
 
             ObjectResult result = this.ProjectsControllerInstance.UpdateProject(projectData) as ObjectResult;
+
+            _projectServiceMock.Verify(service => service.GetProjectById(projectData.Id), Times.Once);
+            _projectServiceMock.Verify(service => service.IsProjectExists(projectData.Name, projectData.UserId), Times.Once);
 
             Assert.NotNull(result);
             Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
@@ -74,6 +87,7 @@ namespace Strive.Tests.API.Projects
         {
             var projectData = new ProjectCreateUpdateDto()
             {
+                Id = 1,
                 Name = "Test",
                 Description = "Test",
                 UserId = 1
@@ -83,6 +97,10 @@ namespace Strive.Tests.API.Projects
 
             IActionResult result = this.ProjectsControllerInstance.UpdateProject(projectData);
 
+            _projectServiceMock.Verify(service => service.GetProjectById(projectData.Id), Times.Once);
+            _projectServiceMock.Verify(service => service.IsProjectExists(projectData.Name, projectData.UserId), Times.Never);
+            _projectServiceMock.Verify(service => service.Update(It.IsAny<Project>()), Times.Never);
+
             Assert.IsType<NotFoundObjectResult>(result);
         }
 
@@ -91,14 +109,21 @@ namespace Strive.Tests.API.Projects
         {
             var projectData = new ProjectCreateUpdateDto()
             {
+                Id = 1,
                 Name = "Test",
                 Description = "Test",
                 UserId = 1
             };
             ProjectsController controller = this.ProjectsControllerInstance;
             controller.ModelState.AddModelError("error", "error");
+            _projectServiceMock.Setup(service => service.GetProjectById(projectData.Id))
+                .Returns(TestValuesProvider.GetProjects().FirstOrDefault());
 
             IActionResult result = controller.UpdateProject(projectData);
+
+            _projectServiceMock.Verify(service => service.GetProjectById(projectData.Id), Times.Once);
+            _projectServiceMock.Verify(service => service.IsProjectExists(projectData.Name, projectData.UserId), Times.Never);
+            _projectServiceMock.Verify(service => service.Update(It.IsAny<Project>()), Times.Never);
 
             Assert.IsType<BadRequestObjectResult>(result);
         }
@@ -116,6 +141,10 @@ namespace Strive.Tests.API.Projects
                 .Returns(TestValuesProvider.GetProjects().FirstOrDefault());
 
             IActionResult result = this.ProjectsControllerInstance.UpdateProject(projectData);
+
+            _projectServiceMock.Verify(service => service.GetProjectById(projectData.Id), Times.Once);
+            _projectServiceMock.Verify(service => service.IsProjectExists(projectData.Name, projectData.UserId), Times.Once);
+            _projectServiceMock.Verify(service => service.Update(It.IsAny<Project>()), Times.Once);
 
             Assert.IsType<OkResult>(result);
         }
