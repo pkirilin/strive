@@ -195,7 +195,7 @@ function create(task) {
             dispatch(
               alertActions.success(
                 <div>
-                  Task <b>{task.name}</b> has been successfully created
+                  Task <b>{task.title}</b> has been successfully created
                 </div>
               )
             );
@@ -279,7 +279,7 @@ function update(task) {
             dispatch(
               alertActions.success(
                 <div>
-                  Task <b>{task.name}</b> has been successfully updated
+                  Task <b>{task.title}</b> has been successfully updated
                 </div>
               )
             );

@@ -13,25 +13,25 @@ namespace Strive.Tests.Services.Tasks
         [Fact]
         public void IsTaskExistsThrowsDatabaseExceptionWhenRepoFails()
         {
-            string taskName = "test";
+            string taskTitle = "test";
             int projectId = 1;
             _taskRepositoryMock.Setup(repo => repo.GetAll())
                 .Throws<Exception>();
 
             Assert.Throws<StriveDatabaseException>(
-                () => { this.TaskServiceInstance.IsTaskExists(taskName, projectId); });
+                () => { this.TaskServiceInstance.IsTaskExists(taskTitle, projectId); });
         }
 
         [Fact]
-        public void IsTaskExistsReturnsFalseWhenTaskNameNotFound()
+        public void IsTaskExistsReturnsFalseWhenTaskTitleNotFound()
         {
             List<Task> testTasks = TestValuesProvider.GetTasks();
-            string taskName = "This task doesn't exists";
+            string taskTitle = "This task doesn't exists";
             int projectId = testTasks.FirstOrDefault().ProjectId;
             _taskRepositoryMock.Setup(repo => repo.GetAll())
                 .Returns(testTasks);
 
-            bool result = this.TaskServiceInstance.IsTaskExists(taskName, projectId);
+            bool result = this.TaskServiceInstance.IsTaskExists(taskTitle, projectId);
 
             Assert.False(result);
         }
@@ -40,25 +40,25 @@ namespace Strive.Tests.Services.Tasks
         public void IsTaskExistsReturnsFalseWhenProjectIdNotFound()
         {
             List<Task> testTasks = TestValuesProvider.GetTasks();
-            string taskName = testTasks.FirstOrDefault().Name;
+            string taskTitle = testTasks.FirstOrDefault().Title;
             int projectId = -1;
             _taskRepositoryMock.Setup(repo => repo.GetAll())
                 .Returns(testTasks);
 
-            bool result = this.TaskServiceInstance.IsTaskExists(taskName, projectId);
+            bool result = this.TaskServiceInstance.IsTaskExists(taskTitle, projectId);
 
             Assert.False(result);
         }
 
         [Fact]
-        public void IsTaskExistsReturnsFalseWhenTaskNameAndProjectIdNotFound()
+        public void IsTaskExistsReturnsFalseWhenTaskTitleAndProjectIdNotFound()
         {
-            string taskName = "This task doesn't exists";
+            string taskTitle = "This task doesn't exists";
             int projectId = -1;
             _taskRepositoryMock.Setup(repo => repo.GetAll())
                 .Returns(TestValuesProvider.GetTasks());
 
-            bool result = this.TaskServiceInstance.IsTaskExists(taskName, projectId);
+            bool result = this.TaskServiceInstance.IsTaskExists(taskTitle, projectId);
 
             Assert.False(result);
         }
@@ -71,7 +71,7 @@ namespace Strive.Tests.Services.Tasks
             _taskRepositoryMock.Setup(repo => repo.GetAll())
                 .Returns(testTasks);
 
-            bool result = this.TaskServiceInstance.IsTaskExists(testTask.Name, testTask.ProjectId);
+            bool result = this.TaskServiceInstance.IsTaskExists(testTask.Title, testTask.ProjectId);
 
             Assert.True(result);
         }

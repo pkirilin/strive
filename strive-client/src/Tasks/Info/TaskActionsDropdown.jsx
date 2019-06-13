@@ -21,7 +21,7 @@ class TaskActionsDropdown extends React.Component {
     taskId: PropTypes.number.isRequired,
     task: PropTypes.shape({
       id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
       description: PropTypes.string
     })
   };
@@ -45,7 +45,7 @@ class TaskActionsDropdown extends React.Component {
         title: "Delete task confirmation",
         message: (
           <div>
-            Delete task <b>{task.name}</b>?
+            Delete task <b>{task.title}</b>?
           </div>
         ),
         onClose: () => {

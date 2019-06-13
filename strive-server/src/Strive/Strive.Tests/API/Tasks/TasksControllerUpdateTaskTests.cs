@@ -31,7 +31,7 @@ namespace Strive.Tests.API.Tasks
         {
             var taskData = new TaskCreateUpdateDto()
             {
-                Name = "test",
+                Title = "test",
                 Description = "test"
             };
             _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))
@@ -51,7 +51,7 @@ namespace Strive.Tests.API.Tasks
             var taskData = new TaskCreateUpdateDto()
             {
                 Id = 1,
-                Name = "test",
+                Title = "test",
                 Description = "test",
             };
             _taskServiceMock.Setup(service => service.GetTaskById(taskData.Id))
@@ -67,7 +67,7 @@ namespace Strive.Tests.API.Tasks
         {
             var taskData = new TaskCreateUpdateDto()
             {
-                Name = "test",
+                Title = "test",
                 Description = "test"
             };
             TasksController controller = this.TasksControllerInstance;
@@ -84,7 +84,7 @@ namespace Strive.Tests.API.Tasks
             var taskData = new TaskCreateUpdateDto()
             {
                 Id = 1,
-                Name = "test",
+                Title = "test",
                 Description = "test"
             };
             _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))

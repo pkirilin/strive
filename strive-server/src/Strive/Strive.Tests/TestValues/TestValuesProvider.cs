@@ -33,14 +33,14 @@ namespace Strive.Tests.TestValues
                 new Task()
                 {
                     Id = 1,
-                    Name = "Test task name 1",
+                    Title = "Test task title 1",
                     Description = "Test task description 1",
                     ProjectId = 1
                 },
                 new Task()
                 {
                     Id = 2,
-                    Name = "Test task name 2",
+                    Title = "Test task title 2",
                     Description = "Test task description 2",
                     ProjectId = 1
                 }

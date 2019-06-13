@@ -29,7 +29,7 @@ class TaskList extends React.Component {
     tasks: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
         checked: PropTypes.bool
       })
     ).isRequired

@@ -17,7 +17,7 @@ namespace Strive.Data.EntityConfigurations
                 .IsRequired(true)
                 .ValueGeneratedOnAdd();
 
-            builder.Property(task => task.Name)
+            builder.Property(task => task.Title)
                 .HasColumnName("Name")
                 .IsRequired(true)
                 .HasMaxLength(255);

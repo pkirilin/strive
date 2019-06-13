@@ -20,7 +20,7 @@ class TaskData extends Component {
     gettingTask: PropTypes.bool,
     failedToFetch: PropTypes.bool,
     task: PropTypes.shape({
-      name: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired
     })
   };
@@ -38,7 +38,7 @@ class TaskData extends Component {
     if (task) {
       return (
         <div>
-          <div>Name: {task.name}</div>
+          <div>Name: {task.title}</div>
           <div>Description: {task.description}</div>
         </div>
       );

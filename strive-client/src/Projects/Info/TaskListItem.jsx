@@ -10,7 +10,7 @@ class TaskListItem extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       checked: PropTypes.bool.isRequired
     })
@@ -28,7 +28,7 @@ class TaskListItem extends React.Component {
   }
 
   render() {
-    let { id, name, description, checked } = this.props.data;
+    let { id, title, description, checked } = this.props.data;
     return (
       <div className="mt-2 d-flex align-items-center">
         <AppCheckBox checked={checked} onChange={this.onSelectTask} />
@@ -40,7 +40,7 @@ class TaskListItem extends React.Component {
                 to={`/tasks/info/${id}`}
               >
                 <AppHeader level="6" centered={false}>
-                  {name}
+                  {title}
                 </AppHeader>
               </Link>
             </Col>

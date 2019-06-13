@@ -43,8 +43,8 @@ namespace Strive.Data.Services.Interfaces
         /// <summary>
         /// Checks if task with specified name for specified project is already exists
         /// </summary>
-        /// <param name="taskName">Task name</param>
+        /// <param name="taskTitle">Task title</param>
         /// <param name="userId">Specified project id</param>
-        bool IsTaskExists(string taskName, int projectId);
+        bool IsTaskExists(string taskTitle, int projectId);
     }
 }

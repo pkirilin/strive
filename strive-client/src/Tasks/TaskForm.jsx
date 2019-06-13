@@ -55,7 +55,7 @@ class TaskForm extends React.Component {
     gettingTaskForUpdate: PropTypes.bool,
     task: PropTypes.shape({
       id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired
     }),
     notFoundTaskForUpdate: PropTypes.bool,
@@ -95,7 +95,7 @@ class TaskForm extends React.Component {
     };
 
     this.state = {
-      taskName: {
+      taskTitle: {
         ...initFieldObj,
         onChange: this.onTaskNameValueChanged
       },
@@ -109,8 +109,8 @@ class TaskForm extends React.Component {
   trackTaskForUpdateFetchedFromServer() {
     let { task } = this.props;
     this.setState({
-      taskName: {
-        value: task.name,
+      taskTitle: {
+        value: task.title,
         validationState: validationRulesSetters.resetAll(),
         onChange: this.onTaskNameValueChanged
       },
@@ -133,8 +133,8 @@ class TaskForm extends React.Component {
 
   onTaskNameValueChanged(event) {
     this.setState({
-      taskName: {
-        ...this.state.taskName,
+      taskTitle: {
+        ...this.state.taskTitle,
         value: event.target.value,
         validationState: validationRulesSetters.validateTaskName(
           event.target.value
@@ -162,10 +162,10 @@ class TaskForm extends React.Component {
   onSubmit() {
     this.setState(
       {
-        taskName: {
-          ...this.state.taskName,
+        taskTitle: {
+          ...this.state.taskTitle,
           validationState: validationRulesSetters.validateTaskName(
-            this.state.taskName.value
+            this.state.taskTitle.value
           )
         },
         taskDescription: {
@@ -184,7 +184,7 @@ class TaskForm extends React.Component {
       const { purpose } = this.props;
 
       let taskData = {
-        name: this.state.taskName.value,
+        title: this.state.taskTitle.value,
         description: this.state.taskDescription.value,
         projectId: null
       };
@@ -249,7 +249,7 @@ class TaskForm extends React.Component {
         {sendingTaskInfo && <AppSpinner text={loadingText} />}
         <FormGroup>
           <AppTextBox
-            {...this.state.taskName}
+            {...this.state.taskTitle}
             label="Name"
             placeholder="Enter general task info"
           />

@@ -119,14 +119,14 @@ namespace Strive.Data.Services.Classes
         /// <summary>
         /// Checks if task with specified name for specified project is already exists
         /// </summary>
-        /// <param name="taskName">Task name</param>
+        /// <param name="taskTitle">Task title</param>
         /// <param name="userId">Specified project id</param>
-        public bool IsTaskExists(string taskName, int projectId)
+        public bool IsTaskExists(string taskTitle, int projectId)
         {
             try
             {
                 Task targetTask = _taskRepo.GetAll()
-                    .Where(task => task.Name == taskName && task.ProjectId == projectId)
+                    .Where(task => task.Title == taskTitle && task.ProjectId == projectId)
                     .FirstOrDefault();
 
                 if (targetTask == null)
