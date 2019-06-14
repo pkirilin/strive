@@ -43,13 +43,15 @@ namespace Strive.Data.EntityConfigurations
                 .WithMany(project => project.Tasks)
                 .HasForeignKey(task => task.ProjectId)
                 .HasConstraintName("FK_Task_Project")
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired(true);
 
             builder.HasOne(task => task.Status)
                 .WithMany(status => status.Tasks)
                 .HasForeignKey(task => task.StatusId)
                 .HasConstraintName("FK_Task_Status")
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired(true);
 
             #endregion
         }

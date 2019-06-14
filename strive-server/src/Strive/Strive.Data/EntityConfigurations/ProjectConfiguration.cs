@@ -47,7 +47,8 @@ namespace Strive.Data.EntityConfigurations
                 .WithMany(user => user.Projects)
                 .HasForeignKey(project => project.UserId)
                 .HasConstraintName("FK_Project_User")
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired(true);
 
             #endregion
         }
