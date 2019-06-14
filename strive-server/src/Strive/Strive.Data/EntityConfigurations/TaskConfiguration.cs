@@ -45,6 +45,12 @@ namespace Strive.Data.EntityConfigurations
                 .HasConstraintName("FK_Task_Project")
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasOne(task => task.Status)
+                .WithMany(status => status.Tasks)
+                .HasForeignKey(task => task.StatusId)
+                .HasConstraintName("FK_Task_Status")
+                .OnDelete(DeleteBehavior.Cascade);
+
             #endregion
         }
     }

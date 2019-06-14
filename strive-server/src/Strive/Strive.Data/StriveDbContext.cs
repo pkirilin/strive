@@ -24,10 +24,11 @@ namespace Strive.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectConfiguration());
             modelBuilder.ApplyConfiguration(new TaskConfiguration());
+            modelBuilder.ApplyConfiguration(new TaskStatusConfiguration());
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<User> Users { get; set; }
@@ -35,5 +36,7 @@ namespace Strive.Data
         public DbSet<Project> Projects { get; set; }
 
         public DbSet<Task> Tasks { get; set; }
+
+        public DbSet<TaskStatus> TaskStatuses { get; set; }
     }
 }

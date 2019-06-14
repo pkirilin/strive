@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Strive.Data;
@@ -9,9 +10,10 @@ using Strive.Data;
 namespace Strive.API.Migrations
 {
     [DbContext(typeof(StriveDbContext))]
-    partial class StriveDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190614072908_CreatedTaskStatusTable")]
+    partial class CreatedTaskStatusTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
