@@ -29,6 +29,10 @@ namespace Strive.Data.EntityConfigurations
             builder.HasKey(status => status.Id)
                 .HasName("PK_TaskStatus");
 
+            builder.HasIndex(status => status.Label)
+                .HasName("IN_TaskStatus_Label")
+                .IsUnique(true);
+
             #endregion
 
             #region Init data
