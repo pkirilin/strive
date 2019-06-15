@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Strive.Data.Dtos.Tasks;
 using Strive.Data.Entities;
 
 namespace Strive.Tests.TestValues
@@ -35,14 +36,39 @@ namespace Strive.Tests.TestValues
                     Id = 1,
                     Title = "Test task title 1",
                     Description = "Test task description 1",
-                    ProjectId = 1
+                    ProjectId = 1,
+                    StatusId = 1
                 },
                 new Task()
                 {
                     Id = 2,
                     Title = "Test task title 2",
                     Description = "Test task description 2",
-                    ProjectId = 1
+                    ProjectId = 1,
+                    StatusId = 1
+                }
+            };
+        }
+
+        public static List<TaskListItemDto> GetTaskListItems()
+        {
+            return new List<TaskListItemDto>()
+            {
+                new TaskListItemDto()
+                {
+                    Id = 1,
+                    Title = "Test task title 1",
+                    Description = "Test task description 1",
+                    ProjectId = 1,
+                    Checked = true
+                },
+                new TaskListItemDto()
+                {
+                    Id = 2,
+                    Title = "Test task title 2",
+                    Description = "Test task description 2",
+                    ProjectId = 1,
+                    Checked = true
                 }
             };
         }

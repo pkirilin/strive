@@ -29,6 +29,7 @@ namespace Strive.Extensions.NetCore
             services.AddScoped<IRepository<User>, StriveRepository<User>>();
             services.AddScoped<IRepository<Project>, StriveRepository<Project>>();
             services.AddScoped<IRepository<Task>, StriveRepository<Task>>();
+            services.AddScoped<IRepository<TaskStatus>, StriveRepository<TaskStatus>>();
         }
     }
 }

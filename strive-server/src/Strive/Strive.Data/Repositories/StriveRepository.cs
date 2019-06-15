@@ -90,6 +90,16 @@ namespace Strive.Data.Repositories
         }
 
         /// <summary>
+        /// Updates multiple entities in the existing collection 
+        /// </summary>
+        /// <param name="entities">Entities for update</param>
+        public void Update(IEnumerable<TEntity> entities)
+        {
+            this.Entities.UpdateRange(entities);
+            _context.SaveChanges();
+        }
+
+        /// <summary>
         /// Deletes specified entity from the existing collection
         /// </summary>
         /// <param name="entity"></param>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -138,6 +139,29 @@ namespace Strive.API.Controllers
                     return Ok();
                 }
                 return NotFound(taskId);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
+
+        [HttpPut("set-status")]
+        public IActionResult SetStatus([FromBody] SetTaskStatusDto setStatusData)
+        {
+            try
+            {
+                IEnumerable<int> taskIdsForUpdate = setStatusData.Tasks
+                    .Where(task => task.Checked == true)
+                    .Select(task => task.Id);
+                IEnumerable<Task> taskEntitiesForUpdate = _taskService.GetTasks(taskIdsForUpdate);
+
+                TaskStatus status = _taskService.GetStatusByLabel(setStatusData.Status);
+
+                if (status == null)
+                    return NotFound(setStatusData.Status);
+
+                return Ok(_taskService.ChangeStatus(taskEntitiesForUpdate, status));
             }
             catch (Exception e)
             {

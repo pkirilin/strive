@@ -22,6 +22,8 @@ namespace Strive.Data.Repositories
 
         void Update(TEntity entity);
 
+        void Update(IEnumerable<TEntity> entities);
+
         void Delete(TEntity entity);
     }
 }

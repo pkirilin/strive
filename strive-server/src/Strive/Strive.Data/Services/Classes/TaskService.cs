@@ -13,9 +13,12 @@ namespace Strive.Data.Services.Classes
     {
         private readonly IRepository<Task> _taskRepo;
 
-        public TaskService(IRepository<Task> taskRepo)
+        private readonly IRepository<TaskStatus> _taskStatusRepo;
+
+        public TaskService(IRepository<Task> taskRepo, IRepository<TaskStatus> taskStatusRepo)
         {
             _taskRepo = taskRepo;
+            _taskStatusRepo = taskStatusRepo;
         }
 
         /// <summary>
@@ -30,6 +33,25 @@ namespace Strive.Data.Services.Classes
                 return _taskRepo.GetAll()
                     .Where(task => task.ProjectId == projectId)
                     .ToList();
+            }
+            catch (Exception e)
+            {
+                throw new StriveDatabaseException($"Failed to get tasks from database. Error message: {e.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Gets task entities mapped to specified IDs
+        /// </summary>
+        /// <param name="taskIds">A collection of IDs</param>
+        /// <returns>Fetched tasks</returns>
+        public IEnumerable<Task> GetTasks(IEnumerable<int> taskIds)
+        {
+            try
+            {
+                return _taskRepo.GetAllAsIQueryable()
+                    .Where(task => taskIds.Contains(task.Id))
+                    .AsEnumerable();
             }
             catch (Exception e)
             {
@@ -136,6 +158,44 @@ namespace Strive.Data.Services.Classes
             catch (Exception e)
             {
                 throw new StriveDatabaseException($"Cannot check if task is exists. Error message: {e.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Gets a status entity by its label
+        /// </summary>
+        /// <param name="label">Status label</param>
+        /// <returns>Status entity</returns>
+        public TaskStatus GetStatusByLabel(string label)
+        {
+            try
+            {
+                return _taskStatusRepo.GetSingleOrDefault(status => status.Label == label);
+            }
+            catch (Exception e)
+            {
+                throw new StriveDatabaseException($"Failed to get task status. Error message: {e.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Changes status for a collection of tasks
+        /// </summary>
+        /// <param name="tasks">Tasks marked for status change</param>
+        /// <param name="status">New status</param>
+        /// <returns>Tasks with changed status</returns>
+        public IEnumerable<Task> ChangeStatus(IEnumerable<Task> tasks, TaskStatus status)
+        {
+            try
+            {
+                foreach (Task task in tasks)
+                    task.Status = status;
+                _taskRepo.Update(tasks);
+                return tasks;
+            }
+            catch (Exception e)
+            {
+                throw new StriveDatabaseException($"Failed to change task status. Error message: {e.Message}");
             }
         }
     }
