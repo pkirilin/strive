@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { AppSpinner } from "../../_components";
+import { AppSpinner, TaskStatusBadge } from "../../_components";
 import { tasksActions } from "../../_actions";
 
 const mapStateToProps = state => {
@@ -21,7 +21,11 @@ class TaskData extends Component {
     failedToFetch: PropTypes.bool,
     task: PropTypes.shape({
       title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired
+      description: PropTypes.string.isRequired,
+      status: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        label: PropTypes.string.isRequired
+      })
     })
   };
 
@@ -40,6 +44,9 @@ class TaskData extends Component {
         <div>
           <div>Name: {task.title}</div>
           <div>Description: {task.description}</div>
+          <div>
+            Status: <TaskStatusBadge>{task.status.label}</TaskStatusBadge>
+          </div>
         </div>
       );
     }

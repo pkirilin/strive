@@ -1,4 +1,5 @@
 export { AppAlert } from "./Alerts";
+export { TaskStatusBadge } from "./Badges";
 export { AppSpinner } from "./Effects";
 export { AppFooter } from "./Footer";
 export { AppTextBox, AppTextArea, AppCheckBox } from "./FormControls";

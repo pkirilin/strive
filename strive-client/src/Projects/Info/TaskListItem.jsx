@@ -4,14 +4,14 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ListGroupItem, Row, Col } from "reactstrap";
 import { tasksActions } from "../../_actions";
-import { AppCheckBox, AppHeader } from "../../_components";
+import { AppCheckBox, AppHeader, TaskStatusBadge } from "../../_components";
 
 class TaskListItem extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
       checked: PropTypes.bool.isRequired
     })
   };
@@ -28,13 +28,13 @@ class TaskListItem extends React.Component {
   }
 
   render() {
-    let { id, title, description, checked } = this.props.data;
+    const { id, title, status, checked } = this.props.data;
     return (
       <div className="mt-2 d-flex align-items-center">
         <AppCheckBox checked={checked} onChange={this.onSelectTask} />
         <ListGroupItem action>
           <Row>
-            <Col xs="auto">
+            <Col>
               <Link
                 className="text-body text-decoration-none"
                 to={`/tasks/info/${id}`}
@@ -46,7 +46,9 @@ class TaskListItem extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col className="text-secondary">{description}</Col>
+            <Col>
+              <TaskStatusBadge>{status}</TaskStatusBadge>
+            </Col>
           </Row>
         </ListGroupItem>
       </div>
