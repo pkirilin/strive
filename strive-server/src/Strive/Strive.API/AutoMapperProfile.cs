@@ -16,7 +16,8 @@ namespace Strive.API
             CreateMap<Project, ProjectInfoDto>();
             CreateMap<ProjectCreateUpdateDto, Project>();
 
-            CreateMap<Task, TaskListItemDto>();
+            CreateMap<Task, TaskListItemDto>()
+                .ForMember(dto => dto.Status, opts => opts.MapFrom(entity => entity.Status.Label));
             CreateMap<Task, TaskInfoDto>();
             CreateMap<TaskCreateUpdateDto, Task>();
         }

@@ -30,7 +30,8 @@ namespace Strive.Data.Services.Classes
         {
             try
             {
-                return _taskRepo.GetAll()
+                return _taskRepo.GetAllAsIQueryable()
+                    .Include(task => task.Status)
                     .Where(task => task.ProjectId == projectId)
                     .ToList();
             }
@@ -70,6 +71,7 @@ namespace Strive.Data.Services.Classes
             {
                 return _taskRepo.GetAllAsIQueryable()
                     .Include(task => task.Project)
+                    .Include(task => task.Status)
                     .SingleOrDefault(task => task.Id == taskId);
             }
             catch (Exception e)
@@ -147,7 +149,7 @@ namespace Strive.Data.Services.Classes
         {
             try
             {
-                Task targetTask = _taskRepo.GetAll()
+                Task targetTask = _taskRepo.GetAllAsIQueryable()
                     .Where(task => task.Title == taskTitle && task.ProjectId == projectId)
                     .FirstOrDefault();
 

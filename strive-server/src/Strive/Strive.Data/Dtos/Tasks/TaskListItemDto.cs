@@ -10,6 +10,8 @@
 
         public bool Checked { get; set; } = false;
 
+        public string Status { get; set; }
+
         public int ProjectId { get; set; }
     }
 }

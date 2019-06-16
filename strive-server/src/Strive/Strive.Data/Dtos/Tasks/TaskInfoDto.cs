@@ -1,4 +1,5 @@
 ﻿using Strive.Data.Dtos.Projects;
+using Strive.Data.Entities;
 
 namespace Strive.Data.Dtos.Tasks
 {
@@ -11,5 +12,7 @@ namespace Strive.Data.Dtos.Tasks
         public string Description { get; set; }
 
         public ProjectInfoDto Project { get; set; }
+
+        public TaskStatus Status { get; set; }
     }
 }

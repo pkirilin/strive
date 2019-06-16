@@ -15,7 +15,7 @@ namespace Strive.Tests.Services.Tasks
         {
             string taskTitle = "test";
             int projectId = 1;
-            _taskRepositoryMock.Setup(repo => repo.GetAll())
+            _taskRepositoryMock.Setup(repo => repo.GetAllAsIQueryable())
                 .Throws<Exception>();
 
             Assert.Throws<StriveDatabaseException>(
@@ -28,8 +28,8 @@ namespace Strive.Tests.Services.Tasks
             List<Task> testTasks = TestValuesProvider.GetTasks();
             string taskTitle = "This task doesn't exists";
             int projectId = testTasks.FirstOrDefault().ProjectId;
-            _taskRepositoryMock.Setup(repo => repo.GetAll())
-                .Returns(testTasks);
+            _taskRepositoryMock.Setup(repo => repo.GetAllAsIQueryable())
+                .Returns(testTasks.AsQueryable());
 
             bool result = this.TaskServiceInstance.IsTaskExists(taskTitle, projectId);
 
@@ -42,8 +42,8 @@ namespace Strive.Tests.Services.Tasks
             List<Task> testTasks = TestValuesProvider.GetTasks();
             string taskTitle = testTasks.FirstOrDefault().Title;
             int projectId = -1;
-            _taskRepositoryMock.Setup(repo => repo.GetAll())
-                .Returns(testTasks);
+            _taskRepositoryMock.Setup(repo => repo.GetAllAsIQueryable())
+                .Returns(testTasks.AsQueryable());
 
             bool result = this.TaskServiceInstance.IsTaskExists(taskTitle, projectId);
 
@@ -55,8 +55,8 @@ namespace Strive.Tests.Services.Tasks
         {
             string taskTitle = "This task doesn't exists";
             int projectId = -1;
-            _taskRepositoryMock.Setup(repo => repo.GetAll())
-                .Returns(TestValuesProvider.GetTasks());
+            _taskRepositoryMock.Setup(repo => repo.GetAllAsIQueryable())
+                .Returns(TestValuesProvider.GetTasks().AsQueryable());
 
             bool result = this.TaskServiceInstance.IsTaskExists(taskTitle, projectId);
 
@@ -68,8 +68,8 @@ namespace Strive.Tests.Services.Tasks
         {
             List<Task> testTasks = TestValuesProvider.GetTasks();
             Task testTask = testTasks.FirstOrDefault();
-            _taskRepositoryMock.Setup(repo => repo.GetAll())
-                .Returns(testTasks);
+            _taskRepositoryMock.Setup(repo => repo.GetAllAsIQueryable())
+                .Returns(testTasks.AsQueryable());
 
             bool result = this.TaskServiceInstance.IsTaskExists(testTask.Title, testTask.ProjectId);
 
