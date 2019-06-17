@@ -16,7 +16,7 @@ export const taskOperationsReducer = (state = {}, action) => {
         badRequestResponseJson: action.badRequestResponseJson
       };
 
-    // Update project
+    // Update task
     case taskOperationsConstants.UPDATE_REQUEST:
       return {
         sendingTaskInfo: true
@@ -30,7 +30,7 @@ export const taskOperationsReducer = (state = {}, action) => {
         badRequestResponseJson: action.badRequestResponseJson
       };
 
-    // Delete project
+    // Delete task
     case taskOperationsConstants.DELETE_REQUEST:
       return {
         deletingTask: true
@@ -39,6 +39,17 @@ export const taskOperationsReducer = (state = {}, action) => {
       return {};
     case taskOperationsConstants.DELETE_ERROR:
       return {};
+
+    // Set task status
+    case taskOperationsConstants.SET_STATUS_REQUEST:
+      return {};
+    case taskOperationsConstants.SET_STATUS_SUCCESS:
+      return {
+        setStatusSuccess: true
+      };
+    case taskOperationsConstants.SET_STATUS_ERROR:
+      return {};
+
     default:
       return state;
   }

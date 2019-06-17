@@ -93,7 +93,7 @@ class ProjectInfoPage extends React.Component {
           </Row>
           <TaskStatusTabsPanel projectId={this.projectId} />
           <TaskFilter />
-          <TaskChoosePanel />
+          <TaskChoosePanel projectId={this.projectId} />
           <div className="mt-4">
             <TaskList projectId={this.projectId} />
           </div>

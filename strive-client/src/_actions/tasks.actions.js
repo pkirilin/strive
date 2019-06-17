@@ -26,7 +26,10 @@ export const tasksActions = {
   update,
 
   /** Redux action creator, deletes an existing task */
-  delete: deleteTask
+  delete: deleteTask,
+
+  /** Redux action creator, sets status for one or multiple tasks */
+  setStatus
 };
 
 /**
@@ -431,6 +434,79 @@ function deleteTask(task) {
     return {
       type: taskOperationsConstants.DELETE_ERROR,
       errorData
+    };
+  }
+}
+
+/**
+ * Redux action creator, sets status for one or multiple tasks
+ * @param {Object} setStatusData Data for setting status: tasks and status label
+ */
+function setStatus(setStatusData) {
+  return dispatch => {
+    dispatch(request());
+    tasksService.setStatus(setStatusData).then(
+      setStatusResponse => {
+        switch (setStatusResponse.status) {
+          case httpStatuses.ok:
+            dispatch(success());
+            break;
+          case httpStatuses.unauthorized:
+            dispatch(error());
+            historyHelper.redirectToLogin();
+            break;
+          case httpStatuses.notFound:
+            setStatusResponse.json().then(notFoundStatusLabel => {
+              dispatch(error());
+              dispatch(
+                alertActions.error(
+                  <div>
+                    Failed to set status: server could not find a status label
+                    named
+                    <b>{notFoundStatusLabel}</b>
+                  </div>
+                )
+              );
+            });
+            break;
+          case httpStatuses.internalServerError:
+            actionHelper.handleInternalServerErrorResponse(
+              setStatusResponse,
+              dispatch,
+              error
+            );
+            break;
+          default:
+            break;
+        }
+      },
+      () => {
+        dispatch(error());
+        dispatch(
+          alertActions.error("Failed to set status: server is not available")
+        );
+      }
+    );
+  };
+
+  /** Set task status request action creator */
+  function request() {
+    return {
+      type: taskOperationsConstants.SET_STATUS_REQUEST
+    };
+  }
+
+  /** Set task status success action creator */
+  function success() {
+    return {
+      type: taskOperationsConstants.SET_STATUS_SUCCESS
+    };
+  }
+
+  /** Set task status error action creator */
+  function error() {
+    return {
+      type: taskOperationsConstants.SET_STATUS_ERROR
     };
   }
 }

@@ -15,7 +15,10 @@ export const tasksService = {
   update,
 
   /** Performs API call to API method responsible for deleting a task */
-  delete: deleteTask
+  delete: deleteTask,
+
+  /** Performs API call to API method responsible for setting status for one or multiple tasks */
+  setStatus
 };
 
 /**
@@ -90,4 +93,20 @@ function deleteTask(taskId) {
     headers: httpHeaders.authorization()
   };
   return fetch(`${config.apiUrl}/tasks/delete/${taskId}`, requestOptions);
+}
+
+/**
+ * Performs API call to API method responsible for setting status for one or multiple tasks
+ * @param {object} setStatusData Data object for setting task status: tasks collection and status label
+ */
+function setStatus(setStatusData) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      ...httpHeaders.contentTypeJson,
+      ...httpHeaders.authorization()
+    },
+    body: JSON.stringify(setStatusData)
+  };
+  return fetch(`${config.apiUrl}/tasks/set-status`, requestOptions);
 }

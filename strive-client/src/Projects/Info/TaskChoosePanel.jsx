@@ -11,15 +11,18 @@ import { tasksActions } from "../../_actions";
 import { AppCheckBox } from "../../_components";
 
 const mapStateToProps = state => {
-  let { tasks } = state.tasksReducer.taskListReducer;
+  const { tasks } = state.tasksReducer.taskListReducer;
+  const { setStatusSuccess } = state.tasksReducer.taskOperationsReducer;
   return {
-    tasks
+    tasks,
+    setStatusSuccess
   };
 };
 
 class TaskChoosePanel extends React.Component {
   static propTypes = {
-    className: PropTypes.string
+    className: PropTypes.string,
+    projectId: PropTypes.number.isRequired
   };
 
   constructor(props) {
@@ -30,10 +33,14 @@ class TaskChoosePanel extends React.Component {
     };
 
     this.onChooseAllCheck = this.onChooseAllCheck.bind(this);
+    this.onStatusDropdownItemClicked = this.onStatusDropdownItemClicked.bind(
+      this
+    );
   }
 
   componentWillReceiveProps(nextProps) {
-    let { tasks } = this.props;
+    const { tasks, setStatusSuccess, projectId } = this.props;
+
     // If there's a task collection received
     if (tasks !== nextProps.tasks && tasks.length > 0) {
       if (tasks.every(task => task.checked === true)) {
@@ -50,6 +57,23 @@ class TaskChoosePanel extends React.Component {
         }
       }
     }
+
+    // "Set status" clicked, status successfully changed
+    if (!setStatusSuccess && nextProps.setStatusSuccess === true) {
+      // Clearing all checkboxes
+      this.setState(
+        {
+          chooseAllChecked: false
+        },
+        () => {
+          this.props.dispatch(
+            tasksActions.checkAll(this.state.chooseAllChecked)
+          );
+        }
+      );
+      // Refreshing task list to show actual statuses
+      this.props.dispatch(tasksActions.getList(projectId));
+    }
   }
 
   onChooseAllCheck() {
@@ -61,6 +85,14 @@ class TaskChoosePanel extends React.Component {
         this.props.dispatch(tasksActions.checkAll(this.state.chooseAllChecked));
       }
     );
+  }
+
+  onStatusDropdownItemClicked(event) {
+    const setStatusData = {
+      tasks: this.props.tasks,
+      status: event.target.innerText
+    };
+    this.props.dispatch(tasksActions.setStatus(setStatusData));
   }
 
   render() {
@@ -81,7 +113,7 @@ class TaskChoosePanel extends React.Component {
           <DropdownToggle color="light border" caret>
             Set status
           </DropdownToggle>
-          <DropdownMenu right>
+          <DropdownMenu right onClick={this.onStatusDropdownItemClicked}>
             <DropdownItem>Planned</DropdownItem>
             <DropdownItem>In process</DropdownItem>
             <DropdownItem>Completed</DropdownItem>
