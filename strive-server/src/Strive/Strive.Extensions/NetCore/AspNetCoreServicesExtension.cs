@@ -19,6 +19,7 @@ namespace Strive.Extensions.NetCore
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<ITaskStatusService, TaskStatusService>();
         }
 
         /// <summary>
