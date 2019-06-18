@@ -10,8 +10,6 @@ namespace Strive.Data.Services.Classes
 {
     public class ProjectService : IProjectService
     {
-        //private readonly IProjectRepository _projectRepo;
-
         private readonly IRepository<Project> _projectRepo;
 
         public ProjectService(IRepository<Project> projectRepo)
@@ -30,6 +28,7 @@ namespace Strive.Data.Services.Classes
             {
                 return _projectRepo.GetAll()
                     .Where(project => project.UserId == userId)
+                    .OrderBy(project => project.Name)
                     .ToList();
             }
             catch (Exception e)

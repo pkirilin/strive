@@ -33,6 +33,7 @@ namespace Strive.Data.Services.Classes
                 return _taskRepo.GetAllAsIQueryable()
                     .Include(task => task.Status)
                     .Where(task => task.ProjectId == projectId)
+                    .OrderBy(task => task.Title)
                     .ToList();
             }
             catch (Exception e)
