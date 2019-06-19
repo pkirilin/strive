@@ -26,7 +26,18 @@ class TaskStatusTabsPanel extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {};
+
     this.createTask = this.createTask.bind(this);
+    //this.clickTab = this.clickTab.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.state.activeTabIndex && nextProps.statusTabsData) {
+      this.setState({
+        activeTabIndex: nextProps.statusTabsData.length - 1
+      });
+    }
   }
 
   createTask() {
@@ -34,6 +45,14 @@ class TaskStatusTabsPanel extends React.Component {
     // both for adding a new task and redirecting user back to project info page
     // Id is remembered in browser history state inside this helper method
     historyHelper.redirectToCreateTask(this.props.projectId);
+  }
+
+  clickTab() {
+    const statusTab = this;
+    this.setState({
+      activeTabIndex: statusTab.index
+    });
+    console.log(this);
   }
 
   render() {
@@ -56,29 +75,27 @@ class TaskStatusTabsPanel extends React.Component {
     }
 
     if (statusTabsData) {
-      let index = -1;
       return (
         <Nav className="mt-4" tabs>
           {statusTabsData.map(statusTab => (
-            <NavItem key={++index}>
-              <NavLink className="text-body" href="#" active={false}>
+            <NavItem
+              key={statusTab.index}
+              onClick={() => {
+                this.setState({
+                  activeTabIndex: statusTab.index
+                });
+              }}
+            >
+              <NavLink
+                className="text-body"
+                href="#"
+                active={this.state.activeTabIndex === statusTab.index}
+              >
                 {statusTab.status}{" "}
                 <Badge color="light">{statusTab.countTasks}</Badge>
               </NavLink>
             </NavItem>
           ))}
-          <NavItem key={++index}>
-            <NavLink className="text-body" href="#" active={true}>
-              All{" "}
-              <Badge color="light">
-                {statusTabsData.reduce(
-                  (countTasksSum, statusTab) =>
-                    countTasksSum + statusTab.countTasks,
-                  0
-                )}
-              </Badge>
-            </NavLink>
-          </NavItem>
         </Nav>
       );
     }
