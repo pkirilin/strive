@@ -38,7 +38,8 @@ class TaskList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.props.dispatch(tasksActions.getList(this.props.projectId));
+    const { projectId } = this.props;
+    this.props.dispatch(tasksActions.getList({ projectId }));
   }
 
   render() {

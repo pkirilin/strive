@@ -23,13 +23,14 @@ export const tasksService = {
 
 /**
  * Performs API call to API method responsible for getting a task list for specified project
- * @param {number} projectId Specified project id
+ * @param {Object} requestParams Parameters for filtering tasks
  */
-function getList(projectId) {
+function getList(requestParams) {
   const requestOptions = {
     method: "GET",
     headers: httpHeaders.authorization()
   };
+  const { projectId } = requestParams;
   return fetch(
     `${config.apiUrl}/tasks/get-list?projectId=${projectId}`,
     requestOptions

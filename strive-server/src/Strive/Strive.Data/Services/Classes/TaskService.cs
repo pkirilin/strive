@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Strive.Data.Dtos.Tasks;
 using Strive.Data.Entities;
 using Strive.Data.Repositories;
 using Strive.Data.Services.Interfaces;
@@ -24,15 +25,15 @@ namespace Strive.Data.Services.Classes
         /// <summary>
         /// Gets tasks by specified parameters
         /// </summary>
-        /// <param name="projectId">Project id</param>
+        /// <param name="requestParams">Specified parameters</param>
         /// <returns>Fetched tasks</returns>
-        public List<Task> GetTasks(int projectId)
+        public List<Task> GetTasks(GetTaskListRequestDto requestParams)
         {
             try
             {
                 return _taskRepo.GetAllAsIQueryable()
                     .Include(task => task.Status)
-                    .Where(task => task.ProjectId == projectId)
+                    .Where(task => task.ProjectId == requestParams.ProjectId)
                     .OrderBy(task => task.Title)
                     .ToList();
             }

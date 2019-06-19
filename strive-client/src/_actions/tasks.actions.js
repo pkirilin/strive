@@ -33,13 +33,13 @@ export const tasksActions = {
 };
 
 /**
- * Redux action creator, gets tasks list for current user and project from server
- * @param {number} projectId Specified project id
+ * Redux action creator, gets tasks list from server
+ * @param {Object} requestParams Parameters for filtering tasks
  */
-function getList(projectId) {
+function getList(requestParams) {
   return dispatch => {
-    dispatch(request(projectId));
-    tasksService.getList(projectId).then(
+    dispatch(request(requestParams));
+    tasksService.getList(requestParams).then(
       taskListResponse => {
         switch (taskListResponse.status) {
           case httpStatuses.ok:
@@ -72,10 +72,10 @@ function getList(projectId) {
   };
 
   /** Get tasks list request action creator */
-  function request(projectId) {
+  function request(requestParams) {
     return {
       type: taskListConstants.GET_LIST_REQUEST,
-      projectId
+      requestParams
     };
   }
 

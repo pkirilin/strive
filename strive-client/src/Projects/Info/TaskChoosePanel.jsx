@@ -72,7 +72,7 @@ class TaskChoosePanel extends React.Component {
         }
       );
       // Refreshing task list to show actual statuses
-      this.props.dispatch(tasksActions.getList(projectId));
+      this.props.dispatch(tasksActions.getList({ projectId }));
       // Refreshing task status tabs info
       this.props.dispatch(taskStatusesActions.getStatusTabs(projectId));
     }

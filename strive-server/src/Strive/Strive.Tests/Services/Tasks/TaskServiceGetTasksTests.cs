@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Strive.Data.Dtos.Tasks;
 using Strive.Data.Entities;
 using Strive.Exceptions;
 using Strive.Tests.TestValues;
@@ -13,14 +14,17 @@ namespace Strive.Tests.Services.Tasks
         [Fact]
         public void GetTasksThrowsExceptionWhenDbExceptionOccurs()
         {
-            int projectId = 1;
+            var requestParams = new GetTaskListRequestDto()
+            {
+                ProjectId = 1
+            };
             var taskTestIds = new List<int>();
             _taskRepositoryMock.Setup(repo => repo.GetAllAsIQueryable())
                 .Throws<Exception>();
 
             Assert.Throws<StriveDatabaseException>(() =>
             {
-                this.TaskServiceInstance.GetTasks(projectId);
+                this.TaskServiceInstance.GetTasks(requestParams);
             });
             Assert.Throws<StriveDatabaseException>(() =>
             {
@@ -31,12 +35,15 @@ namespace Strive.Tests.Services.Tasks
         [Fact]
         public void GetTasksReturnsEntitiesForProject()
         {
-            int projectId = 1;
+            var requestParams = new GetTaskListRequestDto()
+            {
+                ProjectId = 1
+            };
             List<Task> testTasks = TestValuesProvider.GetTasks();
             _taskRepositoryMock.Setup(repo => repo.GetAllAsIQueryable())
                 .Returns(testTasks.AsQueryable());
 
-            List<Task> result = this.TaskServiceInstance.GetTasks(projectId);
+            List<Task> result = this.TaskServiceInstance.GetTasks(requestParams);
 
             Assert.Equal(testTasks, result);
         }

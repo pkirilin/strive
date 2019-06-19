@@ -35,11 +35,17 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="projectId">Project id</param>
         [HttpGet("get-list")]
-        public IActionResult GetTaskList(int projectId)
+        public IActionResult GetTaskList([FromQuery] GetTaskListRequestDto requestParams)
         {
             try
             {
-                List<Task> taskEntities = _taskService.GetTasks(projectId);
+                if (requestParams.ProjectId == null)
+                {
+                    ModelState.AddModelError("projectId", "Incorrect value of ProjectId parameter was specified");
+                    return BadRequest(ModelState);
+                }
+
+                List<Task> taskEntities = _taskService.GetTasks(requestParams);
                 List<TaskListItemDto> taskDtos = _mapper.Map<List<Task>, List<TaskListItemDto>>(taskEntities);
                 return Ok(taskDtos);
             }

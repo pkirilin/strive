@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Strive.Data.Dtos.Tasks;
 using Strive.Data.Entities;
 
 namespace Strive.Data.Services.Interfaces
@@ -8,9 +9,9 @@ namespace Strive.Data.Services.Interfaces
         /// <summary>
         /// Gets tasks by specified parameters
         /// </summary>
-        /// <param name="projectId">Project id</param>
+        /// <param name="requestParams">Specified parameters</param>
         /// <returns>Fetched tasks</returns>
-        List<Task> GetTasks(int projectId);
+        List<Task> GetTasks(GetTaskListRequestDto requestParams);
 
         /// <summary>
         /// Gets task entities mapped to specified IDs
