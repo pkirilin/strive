@@ -65,10 +65,19 @@ namespace Strive.Tests.Services.TaskStatuses
                 .Returns(testData.AsQueryable());
 
             List<TaskStatusTabDto> result = this.TaskStatusServiceInstance.GetStatusTabs(projectId).ToList();
+            List<TaskStatusTabDto> resultWithoutAllStatusesTabInfo = new List<TaskStatusTabDto>(result);
+            resultWithoutAllStatusesTabInfo.RemoveAt(resultWithoutAllStatusesTabInfo.Count - 1);
+            TaskStatusTabDto allStatusesTabInfoExpected = new TaskStatusTabDto()
+            {
+                Index = 3,
+                Status = "All",
+                CountTasks = 3
+            };
+            TaskStatusTabDto allStatusesTabInfoActual = result[result.Count - 1];
 
             _taskStatusRepoMock.Verify(repo => repo.GetAllAsIQueryable(), Times.Once);
 
-            Assert.All(result, statusTabDto =>
+            Assert.All(resultWithoutAllStatusesTabInfo, statusTabDto =>
             {
                 Assert.Contains(testData,
                     status => status.Label == statusTabDto.Status
@@ -76,6 +85,9 @@ namespace Strive.Tests.Services.TaskStatuses
                                   .Count(task => task.ProjectId == projectId) 
                               == statusTabDto.CountTasks);
             });
+            Assert.Equal(allStatusesTabInfoExpected.Index, allStatusesTabInfoActual.Index);
+            Assert.Equal(allStatusesTabInfoExpected.Status, allStatusesTabInfoActual.Status);
+            Assert.Equal(allStatusesTabInfoExpected.CountTasks, allStatusesTabInfoActual.CountTasks);
         }
     }
 }

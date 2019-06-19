@@ -34,14 +34,27 @@ namespace Strive.Data.Services.Classes
                     .Include(status => status.Tasks)
                     .OrderBy(status => status.Id);
 
+                int curIndex = -1;
+                int allTasksCount = 0;
+
                 foreach (var status in statuses)
                 {
+                    int countTasksForCurStatus = status.Tasks.Count(task => task.ProjectId == projectId);
                     statusTabsInfo.Add(new TaskStatusTabDto()
                     {
+                        Index = ++curIndex,
                         Status = status.Label,
-                        CountTasks = status.Tasks.Count(task => task.ProjectId == projectId)
+                        CountTasks = countTasksForCurStatus
                     });
+                    allTasksCount += countTasksForCurStatus;
                 }
+
+                statusTabsInfo.Add(new TaskStatusTabDto()
+                {
+                    Index = ++curIndex,
+                    Status = "All",
+                    CountTasks = allTasksCount
+                });
 
                 return statusTabsInfo;
             }
