@@ -13,7 +13,7 @@ import { TaskStatusTabsPanel } from "./TaskStatusTabsPanel";
 import { TaskFilter } from "./TaskFilter";
 import { TaskChoosePanel } from "./TaskChoosePanel";
 import { TaskList } from "./TaskList";
-import { projectsActions } from "../../_actions";
+import { projectsActions, taskStatusesActions } from "../../_actions";
 import { ProjectActionsDropdown } from "./ProjectActionsDropdown";
 
 const mapStateToProps = state => {
@@ -60,6 +60,7 @@ class ProjectInfoPage extends React.Component {
 
     this.projectId = Number(this.props.match.params.projectId);
     this.props.dispatch(projectsActions.getInfo(this.projectId));
+    this.props.dispatch(taskStatusesActions.getStatusTabs(this.projectId));
   }
 
   render() {

@@ -7,7 +7,7 @@ import {
   DropdownMenu,
   DropdownToggle
 } from "reactstrap";
-import { tasksActions } from "../../_actions";
+import { tasksActions, taskStatusesActions } from "../../_actions";
 import { AppCheckBox } from "../../_components";
 
 const mapStateToProps = state => {
@@ -73,6 +73,8 @@ class TaskChoosePanel extends React.Component {
       );
       // Refreshing task list to show actual statuses
       this.props.dispatch(tasksActions.getList(projectId));
+      // Refreshing task status tabs info
+      this.props.dispatch(taskStatusesActions.getStatusTabs(projectId));
     }
   }
 
