@@ -13,9 +13,11 @@ import { AppCheckBox } from "../../_components";
 const mapStateToProps = state => {
   const { tasks } = state.tasksReducer.taskListReducer;
   const { setStatusSuccess } = state.tasksReducer.taskOperationsReducer;
+  const { taskFilterReducer } = state.tasksReducer;
   return {
     tasks,
-    setStatusSuccess
+    setStatusSuccess,
+    taskFilterData: taskFilterReducer
   };
 };
 
@@ -72,7 +74,12 @@ class TaskChoosePanel extends React.Component {
         }
       );
       // Refreshing task list to show actual statuses
-      this.props.dispatch(tasksActions.getList({ projectId }));
+      this.props.dispatch(
+        tasksActions.getList({
+          ...this.props.taskFilterData,
+          projectId
+        })
+      );
       // Refreshing task status tabs info
       this.props.dispatch(taskStatusesActions.getStatusTabs(projectId));
     }

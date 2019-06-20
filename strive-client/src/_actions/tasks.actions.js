@@ -3,7 +3,7 @@ import { alertActions } from "./alert.actions";
 import { taskListConstants, taskOperationsConstants } from "../_constants";
 import { httpStatuses, actionHelper, historyHelper } from "../_helpers";
 import { tasksService } from "../_services";
-import { taskInfoConstants } from "../_constants/Tasks";
+import { taskInfoConstants, taskFilterConstants } from "../_constants/Tasks";
 
 /** Contains Redux action creators for actions related to tasks */
 export const tasksActions = {
@@ -29,7 +29,10 @@ export const tasksActions = {
   delete: deleteTask,
 
   /** Redux action creator, sets status for one or multiple tasks */
-  setStatus
+  setStatus,
+
+  /** Redux action creator, updates task filter */
+  updateFilter
 };
 
 /**
@@ -509,4 +512,15 @@ function setStatus(setStatusData) {
       type: taskOperationsConstants.SET_STATUS_ERROR
     };
   }
+}
+
+/**
+ * Redux action creator, updates task filter
+ * @param {Object} filterValues Object containing parameters for filtering tasks
+ */
+function updateFilter(filterValues) {
+  return {
+    type: taskFilterConstants.UPDATE,
+    filterValues
+  };
 }

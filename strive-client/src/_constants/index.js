@@ -4,7 +4,11 @@ export {
   projectListConstants,
   projectOperationsConstants
 } from "./Projects";
-export { taskListConstants, taskOperationsConstants } from "./Tasks";
+export {
+  taskFilterConstants,
+  taskListConstants,
+  taskOperationsConstants
+} from "./Tasks";
 export { taskStatusesInfoConstants } from "./TaskStatuses";
 export { alertConstants } from "./alert.constants";
 export { modalConstants } from "./modal.constants";

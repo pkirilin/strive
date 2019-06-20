@@ -12,10 +12,14 @@ const mapStateToProps = state => {
     statusTabsData,
     internalServerError
   } = state.taskStatusesReducer.taskStatusesInfoReducer;
+
+  const { taskFilterReducer } = state.tasksReducer;
+
   return {
     loadingStatusTabs,
     statusTabsData,
-    internalServerError
+    internalServerError,
+    taskFilterData: taskFilterReducer
   };
 };
 
@@ -30,15 +34,31 @@ class TaskStatusTabsPanel extends React.Component {
     this.state = {};
 
     this.createTask = this.createTask.bind(this);
-    //this.clickTab = this.clickTab.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.state.activeTabIndex && nextProps.statusTabsData) {
+    // Tracks any change of status in filter data
+    // If the status was changed, it means that status tab has been clicked
+    if (this.props.taskFilterData.status !== nextProps.taskFilterData.status) {
+      // Fething new task list with the updated filter
+      this.props.dispatch(
+        tasksActions.getList({
+          ...nextProps.taskFilterData,
+          projectId: this.props.projectId
+        })
+      );
+    }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    // Tracking the first fetch, when activeTabIndex is not initialized
+    // and statusTabsData was received, so setting last tab ("All") to active by default
+    if (this.state.activeTabIndex === undefined && nextProps.statusTabsData) {
       this.setState({
         activeTabIndex: nextProps.statusTabsData.length - 1
       });
     }
+    return true;
   }
 
   createTask() {
@@ -46,14 +66,6 @@ class TaskStatusTabsPanel extends React.Component {
     // both for adding a new task and redirecting user back to project info page
     // Id is remembered in browser history state inside this helper method
     historyHelper.redirectToCreateTask(this.props.projectId);
-  }
-
-  clickTab() {
-    const statusTab = this;
-    this.setState({
-      activeTabIndex: statusTab.index
-    });
-    console.log(this);
   }
 
   render() {
@@ -88,8 +100,7 @@ class TaskStatusTabsPanel extends React.Component {
                   },
                   () => {
                     this.props.dispatch(
-                      tasksActions.getList({
-                        projectId: this.props.projectId,
+                      tasksActions.updateFilter({
                         status: statusTab.status
                       })
                     );
