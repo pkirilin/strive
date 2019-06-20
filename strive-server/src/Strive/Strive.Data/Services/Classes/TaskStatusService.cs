@@ -20,6 +20,24 @@ namespace Strive.Data.Services.Classes
         }
 
         /// <summary>
+        /// Gets task statuses ordered by label from database
+        /// </summary>
+        /// <returns>Statuses collection</returns>
+        public IEnumerable<TaskStatus> GetStatuses()
+        {
+            try
+            {
+                return _taskStatusRepo.GetAllAsIQueryable()
+                    .OrderBy(status => status.Label)
+                    .AsEnumerable();
+            }
+            catch (Exception e)
+            {
+                throw new StriveDatabaseException($"Failed to get task statuses from database. Error message: {e.Message}");
+            }
+        }
+
+        /// <summary>
         /// Gets status label and tasks count for each status inside one project
         /// </summary>
         /// <param name="projectId">Id of project for counting tasks</param>

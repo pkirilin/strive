@@ -80,5 +80,27 @@ namespace Strive.Tests.TestValues
                 }
             };
         }
+
+        public static List<TaskStatus> GetTaskStatuses()
+        {
+            return new List<TaskStatus>()
+            {
+                new TaskStatus()
+                {
+                    Id = 1,
+                    Label = "Status 1"
+                },
+                new TaskStatus()
+                {
+                    Id = 2,
+                    Label = "Status 2"
+                },
+                new TaskStatus()
+                {
+                    Id = 3,
+                    Label = "Status 3"
+                }
+            };
+        }
     }
 }
