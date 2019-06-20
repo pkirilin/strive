@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Moq;
 using Strive.Data.Dtos.Tasks;
 using Strive.Data.Entities;
 using Strive.Exceptions;
@@ -62,6 +63,46 @@ namespace Strive.Tests.Services.Tasks
                 .ToList();
 
             Assert.Equal(testTasks, result);
+        }
+
+        [Fact]
+        public void GetTasksReturnsFullCollectionWhenStatusAllSpecified()
+        {
+            var requestParams = new GetTaskListRequestDto()
+            {
+                ProjectId = 1,
+                Status = "All"
+            };
+            List<Task> testTasks = TestValuesProvider.GetTasks();
+
+            _taskRepositoryMock.Setup(repo => repo.GetAllAsIQueryable())
+                .Returns(testTasks.AsQueryable());
+
+            List<Task> result = this.TaskServiceInstance.GetTasks(requestParams);
+
+            _taskRepositoryMock.Verify(repo => repo.GetAllAsIQueryable(), Times.Once);
+
+            Assert.Equal(testTasks.Count, result.Count);
+        }
+
+        [Fact]
+        public void GetTasksReturnsFullCollectionWhenStatusIsNull()
+        {
+            var requestParams = new GetTaskListRequestDto()
+            {
+                ProjectId = 1,
+                Status = null
+            };
+            List<Task> testTasks = TestValuesProvider.GetTasks();
+
+            _taskRepositoryMock.Setup(repo => repo.GetAllAsIQueryable())
+                .Returns(testTasks.AsQueryable());
+
+            List<Task> result = this.TaskServiceInstance.GetTasks(requestParams);
+
+            _taskRepositoryMock.Verify(repo => repo.GetAllAsIQueryable(), Times.Once);
+
+            Assert.Equal(testTasks.Count, result.Count);
         }
     }
 }

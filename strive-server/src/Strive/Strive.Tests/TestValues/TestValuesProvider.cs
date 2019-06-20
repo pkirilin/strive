@@ -46,6 +46,14 @@ namespace Strive.Tests.TestValues
                     Description = "Test task description 2",
                     ProjectId = 1,
                     StatusId = 1
+                },
+                new Task()
+                {
+                    Id = 3,
+                    Title = "Test task title 3",
+                    Description = "Test task description 3",
+                    ProjectId = 1,
+                    StatusId = 2
                 }
             };
         }

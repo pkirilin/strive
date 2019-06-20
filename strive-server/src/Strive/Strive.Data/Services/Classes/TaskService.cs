@@ -31,11 +31,16 @@ namespace Strive.Data.Services.Classes
         {
             try
             {
-                return _taskRepo.GetAllAsIQueryable()
+                var tasks = _taskRepo.GetAllAsIQueryable()
                     .Include(task => task.Status)
-                    .Where(task => task.ProjectId == requestParams.ProjectId)
-                    .OrderBy(task => task.Title)
-                    .ToList();
+                    .Where(task => task.ProjectId == requestParams.ProjectId);
+
+                tasks = requestParams.Status == null || requestParams.Status == "All" ? tasks : 
+                    tasks.Where(task => task.Status.Label == requestParams.Status);
+
+                tasks = tasks.OrderBy(task => task.Title);
+
+                return tasks.ToList();
             }
             catch (Exception e)
             {

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Nav, NavItem, NavLink, Badge } from "reactstrap";
 import { historyHelper } from "../../_helpers";
 import { AppSpinner } from "../../_components";
+import { tasksActions } from "../../_actions";
 
 const mapStateToProps = state => {
   const {
@@ -81,9 +82,19 @@ class TaskStatusTabsPanel extends React.Component {
             <NavItem
               key={statusTab.index}
               onClick={() => {
-                this.setState({
-                  activeTabIndex: statusTab.index
-                });
+                this.setState(
+                  {
+                    activeTabIndex: statusTab.index
+                  },
+                  () => {
+                    this.props.dispatch(
+                      tasksActions.getList({
+                        projectId: this.props.projectId,
+                        status: statusTab.status
+                      })
+                    );
+                  }
+                );
               }}
             >
               <NavLink

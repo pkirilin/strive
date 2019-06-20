@@ -30,11 +30,23 @@ function getList(requestParams) {
     method: "GET",
     headers: httpHeaders.authorization()
   };
-  const { projectId } = requestParams;
+  const { projectId, ...requestParamsWithoutProjectId } = requestParams;
   return fetch(
-    `${config.apiUrl}/tasks/get-list?projectId=${projectId}`,
+    `${
+      config.apiUrl
+    }/tasks/get-list?projectId=${projectId}${getRequestParamsString(
+      requestParamsWithoutProjectId
+    )}`,
     requestOptions
   );
+
+  function getRequestParamsString(requestParams) {
+    let res = "";
+    if (requestParams.status) {
+      res += `&status=${requestParams.status}`;
+    }
+    return res;
+  }
 }
 
 /**
