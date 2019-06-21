@@ -1,4 +1,4 @@
-import { taskStatusesInfoConstants } from "../_constants";
+import { taskStatusTabsConstants } from "../_constants";
 import { taskStatusesService } from "../_services";
 import { httpStatuses, historyHelper, actionHelper } from "../_helpers";
 
@@ -47,7 +47,7 @@ function getStatusTabs(projectId) {
   /** Get status tabs request action creator */
   function request(projectId) {
     return {
-      type: taskStatusesInfoConstants.GET_STATUS_TABS_REQUEST,
+      type: taskStatusTabsConstants.GET_STATUS_TABS_REQUEST,
       projectId
     };
   }
@@ -55,7 +55,7 @@ function getStatusTabs(projectId) {
   /** Get status tabs success action creator */
   function success(statusTabsData) {
     return {
-      type: taskStatusesInfoConstants.GET_STATUS_TABS_SUCCESS,
+      type: taskStatusTabsConstants.GET_STATUS_TABS_SUCCESS,
       statusTabsData
     };
   }
@@ -63,7 +63,7 @@ function getStatusTabs(projectId) {
   /** Get status tabs error action creator */
   function error(errorData) {
     return {
-      type: taskStatusesInfoConstants.GET_STATUS_TABS_ERROR,
+      type: taskStatusTabsConstants.GET_STATUS_TABS_ERROR,
       errorData
     };
   }

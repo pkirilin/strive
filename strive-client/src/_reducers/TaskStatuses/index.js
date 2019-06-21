@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { taskStatusesInfoReducer } from "./taskStatusesInfo.reducer";
+import { taskStatusTabsReducer } from "./taskStatusTabs.reducer";
 
 export const taskStatusesReducer = combineReducers({
-  taskStatusesInfoReducer
+  taskStatusTabsReducer
 });

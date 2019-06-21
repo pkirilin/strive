@@ -11,7 +11,7 @@ const mapStateToProps = state => {
     loadingStatusTabs,
     statusTabsData,
     internalServerError
-  } = state.taskStatusesReducer.taskStatusesInfoReducer;
+  } = state.taskStatusesReducer.taskStatusTabsReducer;
 
   const { taskFilterReducer } = state.tasksReducer;
 

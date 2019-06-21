@@ -1,1 +1,1 @@
-export { taskStatusesInfoConstants } from "./taskStatusesInfo.constants";
+export { taskStatusTabsConstants } from "./taskStatusTabs.constants";
