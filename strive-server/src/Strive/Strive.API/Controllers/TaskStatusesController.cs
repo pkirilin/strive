@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Strive.Data.Dtos.TaskStatuses;
 using Strive.Data.Services.Interfaces;
 
 namespace Strive.API.Controllers
@@ -12,9 +15,30 @@ namespace Strive.API.Controllers
     {
         private readonly ITaskStatusService _taskStatusService;
 
-        public TaskStatusesController(ITaskStatusService taskStatusService)
+        private readonly IMapper _mapper;
+
+        public TaskStatusesController(ITaskStatusService taskStatusService, IMapper mapper)
         {
             _taskStatusService = taskStatusService;
+            _mapper = mapper;
+        }
+
+        /// <summary>
+        /// Gets all task statuses
+        /// </summary>
+        [HttpGet("get-statuses")]
+        public IActionResult GetStatuses()
+        {
+            try
+            {
+                var statusEntities = _taskStatusService.GetStatuses();
+                var statusDtos = _mapper.Map<IEnumerable<TaskStatusSelectItemDto>>(statusEntities);
+                return Ok(statusDtos);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
 
         /// <summary>
