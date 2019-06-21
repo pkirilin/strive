@@ -8,16 +8,24 @@ import {
   DropdownToggle
 } from "reactstrap";
 import { tasksActions, taskStatusesActions } from "../../_actions";
-import { AppCheckBox } from "../../_components";
+import { AppCheckBox, AppSpinner } from "../../_components";
 
 const mapStateToProps = state => {
   const { tasks } = state.tasksReducer.taskListReducer;
   const { setStatusSuccess } = state.tasksReducer.taskOperationsReducer;
   const { taskFilterReducer } = state.tasksReducer;
+  const {
+    loadingStatusList,
+    taskStatuses,
+    failedToFetch: failedToFetchTaskStatuses
+  } = state.taskStatusesReducer.taskStatusListReducer;
   return {
     tasks,
     setStatusSuccess,
-    taskFilterData: taskFilterReducer
+    taskFilterData: taskFilterReducer,
+    loadingStatusList,
+    taskStatuses,
+    failedToFetchTaskStatuses
   };
 };
 
@@ -105,11 +113,39 @@ class TaskChoosePanel extends React.Component {
   }
 
   render() {
-    let { tasks } = this.props;
+    const { tasks } = this.props;
+
     if (!tasks || (tasks && tasks.length === 0)) {
       // If task collection is empty or not exists, there's no point to show this panel
       return <div />;
     }
+
+    const {
+      loadingStatusList,
+      taskStatuses,
+      failedToFetchTaskStatuses
+    } = this.props;
+
+    let statusesDropdownMenuContent = <div />;
+
+    if (loadingStatusList) {
+      statusesDropdownMenuContent = <AppSpinner text="Loading task statuses" />;
+    }
+
+    if (failedToFetchTaskStatuses) {
+      statusesDropdownMenuContent = (
+        <div className="mt-4 mb-4 text-danger text-center">
+          Failed to load statuses
+        </div>
+      );
+    }
+
+    if (taskStatuses) {
+      statusesDropdownMenuContent = taskStatuses.map(status => (
+        <DropdownItem key={status.id}>{status.label}</DropdownItem>
+      ));
+    }
+
     return (
       <div className="mt-4 d-flex justify-content-between align-items-baseline">
         <AppCheckBox
@@ -123,9 +159,10 @@ class TaskChoosePanel extends React.Component {
             Set status
           </DropdownToggle>
           <DropdownMenu right onClick={this.onStatusDropdownItemClicked}>
-            <DropdownItem>Planned</DropdownItem>
+            {statusesDropdownMenuContent}
+            {/* <DropdownItem>Planned</DropdownItem>
             <DropdownItem>In process</DropdownItem>
-            <DropdownItem>Completed</DropdownItem>
+            <DropdownItem>Completed</DropdownItem> */}
           </DropdownMenu>
         </UncontrolledDropdown>
       </div>

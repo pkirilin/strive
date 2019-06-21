@@ -61,6 +61,7 @@ class ProjectInfoPage extends React.Component {
     this.projectId = Number(this.props.match.params.projectId);
     this.props.dispatch(projectsActions.getInfo(this.projectId));
     this.props.dispatch(taskStatusesActions.getStatusTabs(this.projectId));
+    this.props.dispatch(taskStatusesActions.getStatusList());
   }
 
   render() {

@@ -1,11 +1,17 @@
-import { taskStatusTabsConstants } from "../_constants";
+import {
+  taskStatusTabsConstants,
+  taskStatusListConstants
+} from "../_constants";
 import { taskStatusesService } from "../_services";
 import { httpStatuses, historyHelper, actionHelper } from "../_helpers";
 
 /** Contains Redux action creators for actions related to task statuses */
 export const taskStatusesActions = {
   /** Redux action creator, gets status tabs info for target project */
-  getStatusTabs
+  getStatusTabs,
+
+  /** Redux action creator, gets status list */
+  getStatusList
 };
 
 /**
@@ -64,6 +70,61 @@ function getStatusTabs(projectId) {
   function error(errorData) {
     return {
       type: taskStatusTabsConstants.GET_STATUS_TABS_ERROR,
+      errorData
+    };
+  }
+}
+
+/**
+ * Redux action creator, gets status list
+ */
+function getStatusList() {
+  return dispatch => {
+    dispatch(request());
+    taskStatusesService.getStatusList().then(
+      statusListResponse => {
+        switch (statusListResponse.status) {
+          case httpStatuses.ok:
+            statusListResponse.json().then(taskStatuses => {
+              dispatch(success(taskStatuses));
+            });
+            break;
+          case httpStatuses.unauthorized:
+            historyHelper.redirectToLogin();
+            break;
+          case httpStatuses.internalServerError:
+            actionHelper.handleInternalServerErrorResponse(
+              statusListResponse,
+              dispatch,
+              error
+            );
+            break;
+          default:
+            break;
+        }
+      },
+      () => {
+        dispatch(error({ failedToFetch: true }));
+      }
+    );
+  };
+
+  function request() {
+    return {
+      type: taskStatusListConstants.GET_STATUSES_REQUEST
+    };
+  }
+
+  function success(taskStatuses) {
+    return {
+      type: taskStatusListConstants.GET_STATUSES_SUCCESS,
+      taskStatuses
+    };
+  }
+
+  function error(errorData) {
+    return {
+      type: taskStatusListConstants.GET_STATUSES_REQUEST,
       errorData
     };
   }
