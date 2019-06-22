@@ -5,8 +5,13 @@ import {
   NavbarBrand,
   NavbarToggler,
   Collapse,
-  Button
+  Nav,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
 } from "reactstrap";
+import Cookies from "js-cookie";
 import { accountActions } from "../../_actions";
 import { config } from "../../_helpers";
 
@@ -33,16 +38,22 @@ class AppNavbar extends React.Component {
   }
 
   render() {
+    const userDetails = Cookies.getJSON(config.cookies.user.keyName);
     return (
       <Navbar color="light" light expand="sm">
         <NavbarBrand href="/">{config.brandName}</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
-          <div className="d-flex flex-fill justify-content-sm-end">
-            <Button color="light border" onClick={this.onLogoutClick}>
-              Logout
-            </Button>
-          </div>
+          <Nav navbar className="ml-auto">
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                {userDetails.username}
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem onClick={this.onLogoutClick}>Logout</DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </Nav>
         </Collapse>
       </Navbar>
     );
