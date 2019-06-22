@@ -12,17 +12,26 @@ namespace Strive.Tests.API.Tasks
 
         protected readonly Mock<ITaskService> _taskServiceMock;
 
+        protected readonly Mock<ITaskStatusService> _taskStatusServiceMock;
+
         public TasksControllerTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => { cfg.AddProfile(new AutoMapperProfile()); });
 
             _mapperMock = new Mock<IMapper>();
             _taskServiceMock = new Mock<ITaskService>();
+            _taskStatusServiceMock = new Mock<ITaskStatusService>();
         }
 
         public TasksController TasksControllerInstance
         {
-            get { return new TasksController(_taskServiceMock.Object, _mapperMock.Object); }
+            get
+            {
+                return new TasksController(
+                    _taskServiceMock.Object,
+                    _taskStatusServiceMock.Object,
+                    _mapperMock.Object);
+            }
         }
     }
 }

@@ -81,5 +81,22 @@ namespace Strive.Data.Services.Classes
                 throw new StriveDatabaseException($"Failed to get data for task status tabs. Error message: {e.Message}");
             }
         }
+
+        /// <summary>
+        /// Gets task status entity by its label
+        /// </summary>
+        /// <param name="statusLabel">Task status entity label</param>
+        /// <returns>Task status entity</returns>
+        public TaskStatus GetStatus(string label)
+        {
+            try
+            {
+                return _taskStatusRepo.GetSingleOrDefault(status => status.Label == label);
+            }
+            catch (Exception e)
+            {
+                throw new StriveDatabaseException($"Failed to get task status. Error message: {e.Message}");
+            }
+        }
     }
 }

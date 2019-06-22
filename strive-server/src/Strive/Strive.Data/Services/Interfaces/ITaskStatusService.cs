@@ -18,5 +18,12 @@ namespace Strive.Data.Services.Interfaces
         /// <param name="projectId">Id of project for counting tasks</param>
         /// <returns>A collection of status labels and their task amounts</returns>
         IEnumerable<TaskStatusTabDto> GetStatusTabs(int projectId);
+
+        /// <summary>
+        /// Gets task status entity by its label
+        /// </summary>
+        /// <param name="statusLabel">Task status entity label</param>
+        /// <returns>Task status entity</returns>
+        TaskStatus GetStatus(string statusLabel);
     }
 }

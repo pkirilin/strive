@@ -20,13 +20,17 @@ namespace Strive.API.Controllers
     {
         private readonly ITaskService _taskService;
 
+        private readonly ITaskStatusService _taskStatusService;
+
         private readonly IMapper _mapper;
 
         public TasksController(
             ITaskService taskService,
+            ITaskStatusService taskStatusService,
             IMapper mapper)
         {
             _taskService = taskService;
+            _taskStatusService = taskStatusService;
             _mapper = mapper;
         }
 
@@ -87,6 +91,12 @@ namespace Strive.API.Controllers
                 if (ModelState.IsValid)
                 {
                     Task task = _mapper.Map<Task>(taskData);
+
+                    TaskStatus newTaskStatus = _taskStatusService.GetStatus(taskData.Status);
+                    if (newTaskStatus == null)
+                        return NotFound(taskData.Status);
+
+                    task.Status = newTaskStatus;
                     _taskService.Create(task);
                     return Ok();
                 }
@@ -115,6 +125,15 @@ namespace Strive.API.Controllers
                     if (taskForUpdate != null)
                     {
                         taskForUpdate = _mapper.Map(updatedTaskData, taskForUpdate);
+
+                        if (updatedTaskData.Status != taskForUpdate.Status.Label)
+                        {
+                            TaskStatus newTaskStatus = _taskStatusService.GetStatus(updatedTaskData.Status);
+                            if (newTaskStatus == null)
+                                return NotFound(updatedTaskData.Status);
+                            taskForUpdate.Status = newTaskStatus;
+                        }
+
                         _taskService.Update(taskForUpdate);
                         return Ok();
                     }
