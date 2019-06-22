@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import {
   PrivateLayout,
   AppHeader,
-  DocumentTitleSetter
+  DocumentTitleSetter,
+  AppSectionSeparator
 } from "../../_components";
 import { CreateTaskForm } from "./CreateTaskForm";
 import { alertActions } from "../../_actions";
@@ -32,8 +33,12 @@ class CreateTaskPage extends React.Component {
     return (
       <DocumentTitleSetter values={["Create task"]}>
         <PrivateLayout>
-          <AppHeader>Create task</AppHeader>
-          <CreateTaskForm projectId={this.projectId} />
+          <AppSectionSeparator>
+            <AppHeader>Create task</AppHeader>
+          </AppSectionSeparator>
+          <AppSectionSeparator>
+            <CreateTaskForm projectId={this.projectId} />
+          </AppSectionSeparator>
         </PrivateLayout>
       </DocumentTitleSetter>
     );

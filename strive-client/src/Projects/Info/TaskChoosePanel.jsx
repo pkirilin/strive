@@ -5,10 +5,16 @@ import {
   UncontrolledDropdown,
   DropdownItem,
   DropdownMenu,
-  DropdownToggle
+  DropdownToggle,
+  Row,
+  Col
 } from "reactstrap";
 import { tasksActions, taskStatusesActions } from "../../_actions";
-import { AppCheckBox, AppSpinner } from "../../_components";
+import {
+  AppCheckBox,
+  AppSpinner,
+  AppSectionSeparator
+} from "../../_components";
 
 const mapStateToProps = state => {
   const { tasks } = state.tasksReducer.taskListReducer;
@@ -147,25 +153,28 @@ class TaskChoosePanel extends React.Component {
     }
 
     return (
-      <div className="mt-4 d-flex justify-content-between align-items-baseline">
-        <AppCheckBox
-          id="chkChooseAllTasks"
-          label="Choose all"
-          checked={this.state.chooseAllChecked}
-          onChange={this.onChooseAllCheck}
-        />
-        <UncontrolledDropdown>
-          <DropdownToggle color="light border" caret>
-            Set status
-          </DropdownToggle>
-          <DropdownMenu right onClick={this.onStatusDropdownItemClicked}>
-            {statusesDropdownMenuContent}
-            {/* <DropdownItem>Planned</DropdownItem>
-            <DropdownItem>In process</DropdownItem>
-            <DropdownItem>Completed</DropdownItem> */}
-          </DropdownMenu>
-        </UncontrolledDropdown>
-      </div>
+      <AppSectionSeparator>
+        <Row className="d-flex justify-content-between align-items-baseline">
+          <Col xs="auto">
+            <AppCheckBox
+              id="chkChooseAllTasks"
+              label="Choose all"
+              checked={this.state.chooseAllChecked}
+              onChange={this.onChooseAllCheck}
+            />
+          </Col>
+          <Col xs="auto">
+            <UncontrolledDropdown>
+              <DropdownToggle color="light border" caret>
+                Set status
+              </DropdownToggle>
+              <DropdownMenu right onClick={this.onStatusDropdownItemClicked}>
+                {statusesDropdownMenuContent}
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </Col>
+        </Row>
+      </AppSectionSeparator>
     );
   }
 }

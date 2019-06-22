@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { AppHeader } from "../../_components";
+import { AppHeader, AppSectionSeparator } from "../../_components";
 
 const mapStateToProps = state => {
   let { project } = state.projectsReducer.projectInfoReducer;
@@ -26,14 +26,12 @@ class ProjectData extends React.Component {
 
     // Server is working and some project data was received
     return (
-      <div className="d-flex justify-content-between align-items-center">
-        <div>
-          <AppHeader level="4" centered={false}>
-            {project.name}
-          </AppHeader>
-          <div>{project.description}</div>
-        </div>
-      </div>
+      <AppSectionSeparator>
+        <AppHeader level="4" centered={false}>
+          {project.name}
+        </AppHeader>
+        <div className="font-weight-light">{project.description}</div>
+      </AppSectionSeparator>
     );
   }
 }

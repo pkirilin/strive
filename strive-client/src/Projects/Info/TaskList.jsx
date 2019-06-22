@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { TaskListItem } from "./TaskListItem";
-import { AppSpinner } from "../../_components";
+import { AppSpinner, AppSectionSeparator } from "../../_components";
 import { tasksActions } from "../../_actions";
 
 const mapStateToProps = state => {
@@ -72,7 +72,11 @@ class TaskList extends React.Component {
     }
 
     if (tasks.length === 0) {
-      return <div className="text-center text-muted">Task list is empty</div>;
+      return (
+        <AppSectionSeparator>
+          <div className="text-center text-muted">Task list is empty</div>
+        </AppSectionSeparator>
+      );
     }
 
     // Task's key is not only id because it is nessesary to render and refresh task checkbox checked value

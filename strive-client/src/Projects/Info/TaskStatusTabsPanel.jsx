@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Nav, NavItem, NavLink, Badge } from "reactstrap";
 import { historyHelper } from "../../_helpers";
-import { AppSpinner } from "../../_components";
+import { AppSpinner, AppSectionSeparator } from "../../_components";
 import { tasksActions } from "../../_actions";
 
 const mapStateToProps = state => {
@@ -89,36 +89,38 @@ class TaskStatusTabsPanel extends React.Component {
 
     if (statusTabsData) {
       return (
-        <Nav className="mt-4" tabs>
-          {statusTabsData.map(statusTab => (
-            <NavItem
-              key={statusTab.index}
-              onClick={() => {
-                this.setState(
-                  {
-                    activeTabIndex: statusTab.index
-                  },
-                  () => {
-                    this.props.dispatch(
-                      tasksActions.updateFilter({
-                        status: statusTab.status
-                      })
-                    );
-                  }
-                );
-              }}
-            >
-              <NavLink
-                className="text-body"
-                href="#"
-                active={this.state.activeTabIndex === statusTab.index}
+        <AppSectionSeparator>
+          <Nav tabs>
+            {statusTabsData.map(statusTab => (
+              <NavItem
+                key={statusTab.index}
+                onClick={() => {
+                  this.setState(
+                    {
+                      activeTabIndex: statusTab.index
+                    },
+                    () => {
+                      this.props.dispatch(
+                        tasksActions.updateFilter({
+                          status: statusTab.status
+                        })
+                      );
+                    }
+                  );
+                }}
               >
-                {statusTab.status}{" "}
-                <Badge color="light">{statusTab.countTasks}</Badge>
-              </NavLink>
-            </NavItem>
-          ))}
-        </Nav>
+                <NavLink
+                  className="text-body"
+                  href="#"
+                  active={this.state.activeTabIndex === statusTab.index}
+                >
+                  {statusTab.status}{" "}
+                  <Badge color="light">{statusTab.countTasks}</Badge>
+                </NavLink>
+              </NavItem>
+            ))}
+          </Nav>
+        </AppSectionSeparator>
       );
     }
 

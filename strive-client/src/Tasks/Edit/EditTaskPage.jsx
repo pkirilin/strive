@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import {
   PrivateLayout,
   AppHeader,
-  DocumentTitleSetter
+  DocumentTitleSetter,
+  AppSectionSeparator
 } from "../../_components";
 import { tasksActions } from "../../_actions";
 import { EditTaskForm } from "./EditTaskForm";
@@ -20,8 +21,12 @@ class EditTaskPage extends React.Component {
     return (
       <DocumentTitleSetter values={["Edit task"]}>
         <PrivateLayout>
-          <AppHeader>Edit task</AppHeader>
-          <EditTaskForm />
+          <AppSectionSeparator>
+            <AppHeader>Edit task</AppHeader>
+          </AppSectionSeparator>
+          <AppSectionSeparator>
+            <EditTaskForm />
+          </AppSectionSeparator>
         </PrivateLayout>
       </DocumentTitleSetter>
     );

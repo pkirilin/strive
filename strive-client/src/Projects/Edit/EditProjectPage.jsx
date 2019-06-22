@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import {
   PrivateLayout,
   AppHeader,
-  DocumentTitleSetter
+  DocumentTitleSetter,
+  AppSectionSeparator
 } from "../../_components";
 import { EditProjectForm } from "./EditProjectForm";
 import { projectsActions } from "../../_actions";
@@ -21,8 +22,12 @@ class EditProjectPage extends React.Component {
     return (
       <DocumentTitleSetter values={["Edit project"]}>
         <PrivateLayout>
-          <AppHeader>Edit project</AppHeader>
-          <EditProjectForm />
+          <AppSectionSeparator>
+            <AppHeader>Edit project</AppHeader>
+          </AppSectionSeparator>
+          <AppSectionSeparator>
+            <EditProjectForm />
+          </AppSectionSeparator>
         </PrivateLayout>
       </DocumentTitleSetter>
     );

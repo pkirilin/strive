@@ -5,18 +5,22 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Row,
+  Col,
+  Button
 } from "reactstrap";
 import { projectsActions, alertActions, modalActions } from "../../_actions";
 import { historyHelper } from "../../_helpers";
 import { modalConstants } from "../../_constants";
+import { AppSectionSeparator } from "../../_components";
 
 const mapStateToProps = state => {
   let { project } = state.projectsReducer.projectInfoReducer;
   return { project };
 };
 
-class ProjectActionsDropdown extends Component {
+class ProjectActions extends Component {
   static propTypes = {
     project: PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -70,26 +74,35 @@ class ProjectActionsDropdown extends Component {
 
   render() {
     return (
-      <UncontrolledDropdown>
-        <DropdownToggle color="light border" caret>
-          Actions
-        </DropdownToggle>
-        <DropdownMenu right>
-          <DropdownItem header>Tasks</DropdownItem>
-          <DropdownItem onClick={this.onNewTask}>New task</DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem header>Project</DropdownItem>
-          <DropdownItem onClick={this.onEditProject}>Edit project</DropdownItem>
-          <DropdownItem onClick={this.onDeleteProject}>
-            Delete project
-          </DropdownItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
+      <Row className="d-flex justify-content-between">
+        <Col xs="auto">
+          <AppSectionSeparator>
+            <Button color="light border" onClick={this.onNewTask}>
+              New task
+            </Button>
+          </AppSectionSeparator>
+        </Col>
+        <Col xs="auto">
+          <AppSectionSeparator>
+            <UncontrolledDropdown>
+              <DropdownToggle color="light border" caret>
+                Actions
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem onClick={this.onEditProject}>
+                  Edit project
+                </DropdownItem>
+                <DropdownItem onClick={this.onDeleteProject}>
+                  Delete project
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </AppSectionSeparator>
+        </Col>
+      </Row>
     );
   }
 }
 
-const connectedProjectActionsDropdown = connect(mapStateToProps)(
-  ProjectActionsDropdown
-);
-export { connectedProjectActionsDropdown as ProjectActionsDropdown };
+const connectedProjectActions = connect(mapStateToProps)(ProjectActions);
+export { connectedProjectActions as ProjectActions };

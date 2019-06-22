@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { ListGroupItem, Row, Col } from "reactstrap";
-import { AppHeader } from "../../_components";
+import { AppSectionSeparator } from "../../_components";
 
 export class ProjectListItem extends React.Component {
   static propTypes = {
@@ -15,25 +15,25 @@ export class ProjectListItem extends React.Component {
 
   render() {
     return (
-      <ListGroupItem action>
-        <Row>
-          <Col xs="auto">
-            <Link
-              className="text-body text-decoration-none"
-              to={`/projects/info/${this.props.data.id}`}
-            >
-              <AppHeader level="4" centered={false}>
+      <AppSectionSeparator separatorValue="2">
+        <ListGroupItem action>
+          <Row>
+            <Col xs="auto">
+              <Link
+                className="text-body"
+                to={`/projects/info/${this.props.data.id}`}
+              >
                 {this.props.data.name}
-              </AppHeader>
-            </Link>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <div className="text-secondary">{this.props.data.description}</div>
-          </Col>
-        </Row>
-      </ListGroupItem>
+              </Link>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="font-weight-light">
+              {this.props.data.description}
+            </Col>
+          </Row>
+        </ListGroupItem>
+      </AppSectionSeparator>
     );
   }
 }

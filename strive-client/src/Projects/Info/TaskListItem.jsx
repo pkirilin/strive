@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ListGroupItem, Row, Col } from "reactstrap";
 import { tasksActions } from "../../_actions";
-import { AppCheckBox, AppHeader, TaskStatusBadge } from "../../_components";
+import { AppCheckBox, TaskStatusBadge } from "../../_components";
 
 class TaskListItem extends React.Component {
   static propTypes = {
@@ -35,13 +35,8 @@ class TaskListItem extends React.Component {
         <ListGroupItem action>
           <Row>
             <Col>
-              <Link
-                className="text-body text-decoration-none"
-                to={`/tasks/info/${id}`}
-              >
-                <AppHeader level="6" centered={false}>
-                  {title}
-                </AppHeader>
+              <Link className="text-body" to={`/tasks/info/${id}`}>
+                {title}
               </Link>
             </Col>
           </Row>

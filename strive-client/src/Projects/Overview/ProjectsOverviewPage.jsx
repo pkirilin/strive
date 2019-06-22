@@ -2,10 +2,10 @@ import React from "react";
 import {
   PrivateLayout,
   DocumentTitleSetter,
-  AppHeader
+  AppHeader,
+  AppSectionSeparator
 } from "../../_components";
 import { ProjectsOverviewHeadline } from "./ProjectsOverviewHeadline";
-import { ProjectsFilter } from "./ProjectsFilter";
 import { ProjectList } from "./ProjectList";
 
 export class ProjectsOverviewPage extends React.Component {
@@ -13,9 +13,12 @@ export class ProjectsOverviewPage extends React.Component {
     return (
       <DocumentTitleSetter values={["Projects"]}>
         <PrivateLayout>
-          <AppHeader>Projects</AppHeader>
-          <ProjectsOverviewHeadline />
-          <ProjectsFilter />
+          <AppSectionSeparator>
+            <AppHeader>Projects overview</AppHeader>
+          </AppSectionSeparator>
+          <AppSectionSeparator>
+            <ProjectsOverviewHeadline />
+          </AppSectionSeparator>
           <ProjectList />
         </PrivateLayout>
       </DocumentTitleSetter>
