@@ -8,3 +8,4 @@ export { AppConfirmationModal } from "./Modals";
 export { AppNavbar } from "./Navbar";
 export { PrivateRoute } from "./Routes";
 export { DocumentTitleSetter, AppHeader } from "./Titles";
+export { AppSectionSeparator } from "./Utilities";

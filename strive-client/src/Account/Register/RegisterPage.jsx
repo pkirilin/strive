@@ -2,7 +2,8 @@ import React from "react";
 import {
   AppHeader,
   PublicLayout,
-  DocumentTitleSetter
+  DocumentTitleSetter,
+  AppSectionSeparator
 } from "../../_components";
 import { config } from "../../_helpers";
 import { RegisterForm } from "./RegisterForm";
@@ -12,8 +13,16 @@ export class RegisterPage extends React.Component {
     return (
       <DocumentTitleSetter values={["Register"]}>
         <PublicLayout>
-          <AppHeader>Sign up to {config.brandName}</AppHeader>
-          <RegisterForm />
+          <AppSectionSeparator>
+            <AppHeader>Sign up to {config.brandName}</AppHeader>
+          </AppSectionSeparator>
+          <AppSectionSeparator separatorValue="5">
+            <div className="row d-flex justify-content-center">
+              <div className="col-md-6 col-sm-8 col">
+                <RegisterForm />
+              </div>
+            </div>
+          </AppSectionSeparator>
         </PublicLayout>
       </DocumentTitleSetter>
     );
