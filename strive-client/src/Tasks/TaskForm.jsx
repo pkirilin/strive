@@ -1,8 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Form, FormGroup, Row, Col, Button } from "reactstrap";
-import { tasksActions } from "../_actions";
+import {
+  Form,
+  FormGroup,
+  Row,
+  Col,
+  Button,
+  Label,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap";
+import { tasksActions, taskStatusesActions } from "../_actions";
 import { AppTextBox, AppTextArea, AppSpinner } from "../_components";
 import { validationStatuses } from "../_constants";
 import { historyHelper } from "../_helpers";
@@ -27,6 +38,8 @@ const mapStateToProps = state => {
 
   const { project } = state.projectsReducer.projectInfoReducer;
 
+  const { taskStatuses } = state.taskStatusesReducer.taskStatusListReducer;
+
   return {
     sendingTaskInfo,
     badRequestResponseJson,
@@ -37,7 +50,9 @@ const mapStateToProps = state => {
     project,
 
     notFoundTaskForUpdate: notFound,
-    failedToFetchTaskForUpdate: failedToFetch
+    failedToFetchTaskForUpdate: failedToFetch,
+
+    taskStatuses
   };
 };
 
@@ -85,6 +100,9 @@ class TaskForm extends React.Component {
     this.trackTaskForUpdateFetchedFromServer = this.trackTaskForUpdateFetchedFromServer.bind(
       this
     );
+    this.trackTaskStatusListFetchedFromServer = this.trackTaskStatusListFetchedFromServer.bind(
+      this
+    );
 
     let initFieldObj = {
       value: "",
@@ -102,12 +120,15 @@ class TaskForm extends React.Component {
       taskDescription: {
         ...initFieldObj,
         onChange: this.onTaskDescriptionValueChanged
-      }
+      },
+      taskStatus: ""
     };
+
+    this.props.dispatch(taskStatusesActions.getStatusList());
   }
 
   trackTaskForUpdateFetchedFromServer() {
-    let { task } = this.props;
+    const { task } = this.props;
     this.setState({
       taskTitle: {
         value: task.title,
@@ -118,8 +139,26 @@ class TaskForm extends React.Component {
         value: task.description,
         validationState: validationRulesSetters.resetAll(),
         onChange: this.onTaskDescriptionValueChanged
-      }
+      },
+      taskStatus: task.status.label
     });
+  }
+
+  trackTaskStatusListFetchedFromServer() {
+    const { purpose } = this.props;
+
+    switch (purpose) {
+      case "create":
+        this.setState({
+          taskStatus:
+            this.props.taskStatuses.length === 0
+              ? ""
+              : this.props.taskStatuses[0].label
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -127,6 +166,15 @@ class TaskForm extends React.Component {
     // This happens when user clicked "Edit task" button and server found task with requested id
     if (prevProps.task === undefined && this.props.task !== undefined) {
       this.trackTaskForUpdateFetchedFromServer();
+      return true;
+    }
+
+    // Tracks whether task statuses list was fetched from server or not
+    if (
+      prevProps.taskStatuses === undefined &&
+      this.props.taskStatuses !== undefined
+    ) {
+      this.trackTaskStatusListFetchedFromServer();
       return true;
     }
   }
@@ -186,6 +234,7 @@ class TaskForm extends React.Component {
       let taskData = {
         title: this.state.taskTitle.value,
         description: this.state.taskDescription.value,
+        status: this.state.taskStatus,
         projectId: null
       };
 
@@ -206,13 +255,14 @@ class TaskForm extends React.Component {
   }
 
   render() {
-    let {
+    const {
       sendingTaskInfo,
       loadingText,
       internalServerError,
       gettingTaskForUpdate,
       failedToFetchTaskForUpdate,
-      notFoundTaskForUpdate
+      notFoundTaskForUpdate,
+      taskStatuses
     } = this.props;
 
     // Showing loading task info spinner while data is fetching (for update)
@@ -262,6 +312,34 @@ class TaskForm extends React.Component {
             placeholder="Enter additional task info"
           />
         </FormGroup>
+
+        {!taskStatuses ? (
+          <AppSpinner text="Loading statuses list" />
+        ) : (
+          <FormGroup>
+            <Label className="font-weight-bold">Status</Label>
+            <UncontrolledDropdown>
+              <DropdownToggle
+                color="light"
+                className="col text-left border"
+                caret
+              >
+                {this.state.taskStatus}
+              </DropdownToggle>
+              <DropdownMenu
+                onClick={event => {
+                  this.setState({
+                    taskStatus: event.target.innerText
+                  });
+                }}
+              >
+                {taskStatuses.map(status => (
+                  <DropdownItem key={status.id}>{status.label}</DropdownItem>
+                ))}
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </FormGroup>
+        )}
 
         <FormGroup>
           <Row>
