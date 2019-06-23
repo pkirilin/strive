@@ -1,8 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { AppSpinner, TaskStatusBadge } from "../../_components";
+import { Link } from "react-router-dom";
+import { Row, Col } from "reactstrap";
+import {
+  AppSpinner,
+  TaskStatusBadge,
+  AppHeader,
+  AppSectionSeparator
+} from "../../_components";
 import { tasksActions } from "../../_actions";
+import { TaskActionsDropdown } from "./TaskActionsDropdown";
 
 const mapStateToProps = state => {
   let { gettingTask, task, failedToFetch } = state.tasksReducer.taskInfoReducer;
@@ -42,11 +50,41 @@ class TaskData extends Component {
     if (task) {
       return (
         <div>
-          <div>Name: {task.title}</div>
-          <div>Description: {task.description}</div>
-          <div>
-            Status: <TaskStatusBadge>{task.status.label}</TaskStatusBadge>
-          </div>
+          <AppSectionSeparator>
+            <AppHeader level="2" centered={false}>
+              {task.title}
+            </AppHeader>
+          </AppSectionSeparator>
+          <Row className="d-flex justify-content-between align-items-baseline">
+            <Col xs="auto">
+              <span className="font-weight-light">Status:</span>
+              <span className="ml-1">
+                <TaskStatusBadge>{task.status.label}</TaskStatusBadge>
+              </span>
+            </Col>
+            <Col xs="auto">
+              <span className="font-weight-light">Project:</span>
+              <Link
+                className="ml-1 text-body"
+                to={`/projects/info/${task.project.id}`}
+              >
+                {task.project.name}
+              </Link>
+            </Col>
+            <Col xs="auto">
+              <TaskActionsDropdown taskId={task.id} />
+            </Col>
+          </Row>
+          {task.description !== "" && task.description !== undefined ? (
+            <AppSectionSeparator>
+              <span className="font-weight-light">Description:</span>
+              <span className="ml-1">{task.description}</span>
+            </AppSectionSeparator>
+          ) : (
+            <AppSectionSeparator>
+              <span className="text-black-50">No description provided</span>
+            </AppSectionSeparator>
+          )}
         </div>
       );
     }

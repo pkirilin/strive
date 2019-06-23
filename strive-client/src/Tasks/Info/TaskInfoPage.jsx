@@ -1,16 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Row, Col } from "reactstrap";
 import {
   DocumentTitleSetter,
   PrivateLayout,
-  AppHeader,
   AppConfirmationModal,
   AppSpinner
 } from "../../_components";
 import { TaskData } from "./TaskData";
-import { TaskActionsDropdown } from "./TaskActionsDropdown";
 
 const mapStateToProps = state => {
   let { notFound: notFoundTaskData } = state.tasksReducer.taskInfoReducer;
@@ -46,15 +43,7 @@ class TaskInfoPage extends React.Component {
     let content = (
       <div>
         <AppConfirmationModal {...deleteTaskModal} />
-        <AppHeader>Task info (test)</AppHeader>
-        <Row>
-          <Col>
-            <TaskData taskId={this.taskId} />
-          </Col>
-          <Col>
-            <TaskActionsDropdown taskId={this.taskId} />
-          </Col>
-        </Row>
+        <TaskData taskId={this.taskId} />
       </div>
     );
 

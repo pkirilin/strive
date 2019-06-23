@@ -10,6 +10,7 @@ import {
 import { historyHelper } from "../../_helpers";
 import { modalActions, tasksActions } from "../../_actions";
 import { modalConstants } from "../../_constants";
+import { AppSectionSeparator } from "../../_components";
 
 const mapStateToProps = state => {
   let { task } = state.tasksReducer.taskInfoReducer;
@@ -65,15 +66,17 @@ class TaskActionsDropdown extends React.Component {
 
   render() {
     return (
-      <UncontrolledDropdown>
-        <DropdownToggle color="light border" caret>
-          Actions
-        </DropdownToggle>
-        <DropdownMenu right>
-          <DropdownItem onClick={this.onEditTask}>Edit task</DropdownItem>
-          <DropdownItem onClick={this.onDeleteTask}>Delete task</DropdownItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
+      <AppSectionSeparator>
+        <UncontrolledDropdown>
+          <DropdownToggle color="light border" caret>
+            Actions
+          </DropdownToggle>
+          <DropdownMenu right>
+            <DropdownItem onClick={this.onEditTask}>Edit task</DropdownItem>
+            <DropdownItem onClick={this.onDeleteTask}>Delete task</DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      </AppSectionSeparator>
     );
   }
 }
