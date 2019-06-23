@@ -56,13 +56,14 @@ class AppAlert extends React.Component {
     const { alertReducer } = this.props;
 
     return (
-      <div className="sticky-top">
+      <div
+        className="position-fixed"
+        style={{
+          zIndex: 2000
+        }}
+      >
         {alertReducer.message && (
-          <Alert
-            className="mt-3"
-            color={alertReducer.type}
-            toggle={this.onDismiss}
-          >
+          <Alert color={alertReducer.type} toggle={this.onDismiss}>
             {alertReducer.message}
           </Alert>
         )}
