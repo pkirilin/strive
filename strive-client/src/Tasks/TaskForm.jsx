@@ -300,7 +300,7 @@ class TaskForm extends React.Component {
         <FormGroup>
           <AppTextBox
             {...this.state.taskTitle}
-            label="Name"
+            label="Title"
             placeholder="Enter general task info"
           />
         </FormGroup>
