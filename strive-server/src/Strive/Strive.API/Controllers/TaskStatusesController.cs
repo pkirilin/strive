@@ -9,6 +9,9 @@ using Strive.Data.Services.Interfaces;
 
 namespace Strive.API.Controllers
 {
+    /// <summary>
+    /// Provides API methods for getting info about task statuses
+    /// </summary>
     [Authorize]
     [Route("task-statuses")]
     public class TaskStatusesController : Controller

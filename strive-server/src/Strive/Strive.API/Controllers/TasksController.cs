@@ -171,6 +171,10 @@ namespace Strive.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Sets status for one or multiple tasks
+        /// </summary>
+        /// <param name="setStatusData">Data from request for setting status</param>
         [HttpPut("set-status")]
         public IActionResult SetStatus([FromBody] SetTaskStatusDto setStatusData)
         {

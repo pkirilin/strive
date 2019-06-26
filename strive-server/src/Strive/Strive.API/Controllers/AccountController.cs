@@ -15,6 +15,9 @@ using Strive.Data.Services.Interfaces;
 
 namespace Strive.API.Controllers
 {
+    /// <summary>
+    /// Provides API methods related to user account
+    /// </summary>
     [Authorize]
     [Route("account")]
     public class AccountController : Controller
