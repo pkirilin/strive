@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Moq;
 using Strive.Data.Entities;
 using Strive.Exceptions;
@@ -10,7 +8,7 @@ using Xunit;
 
 namespace Strive.Tests.Services.TaskStatuses
 {
-    public class GetStatusTests : TaskStatusServiceTests
+	public class GetStatusTests : TaskStatusServiceTests
     {
         [Fact]
         public void ThrowsExceptionOnServiceFail()

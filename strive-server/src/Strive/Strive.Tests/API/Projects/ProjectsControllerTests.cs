@@ -14,7 +14,10 @@ namespace Strive.Tests.API.Projects
 
         public ProjectsControllerTests()
         {
-            var mapperConfig = new MapperConfiguration(cfg => { cfg.AddProfile(new AutoMapperProfile()); });
+            var mapperConfig = new MapperConfiguration(cfg =>
+            {
+				cfg.AddProfiles("Strive.API");
+			});
 
             _mapperMock = new Mock<IMapper>();
 

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -8,7 +6,7 @@ using Xunit;
 
 namespace Strive.Tests.API.TaskStatuses
 {
-    public class GetStatusesTests : TaskStatusesControllerTests
+	public class GetStatusesTests : TaskStatusesControllerTests
     {
         [Fact]
         public void ReturnsStatus500IfServiceFailed()
