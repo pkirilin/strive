@@ -15,17 +15,31 @@ namespace Strive.API.AutoMapperProfiles
 
 		private void MapFromProjectToProjectListItemDto()
 		{
-			CreateMap<Project, ProjectListItemDto>();
+			CreateMap<Project, ProjectListItemDto>()
+				.ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
+				.ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
+				.ForMember(dest => dest.Description, opts => opts.MapFrom(src => src.Description))
+				.ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.UserId));
 		}
 
 		private void MapFromProjectToProjectInfoDto()
 		{
-			CreateMap<Project, ProjectInfoDto>();
+			CreateMap<Project, ProjectInfoDto>()
+				.ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
+				.ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
+				.ForMember(dest => dest.Description, opts => opts.MapFrom(src => src.Description))
+				.ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.UserId));
 		}
 
 		private void MapFromProjectCreateUpdateDtoToProject()
 		{
-			CreateMap<ProjectCreateUpdateDto, Project>();
+			CreateMap<ProjectCreateUpdateDto, Project>()
+				.ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
+				.ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
+				.ForMember(dest => dest.Description, opts => opts.MapFrom(src => src.Description))
+				.ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.UserId))
+				.ForMember(dest => dest.User, opts => opts.Ignore())
+				.ForMember(dest => dest.Tasks, opts => opts.Ignore());
 		}
 	}
 }
