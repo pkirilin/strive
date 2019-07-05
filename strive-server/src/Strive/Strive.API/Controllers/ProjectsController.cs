@@ -34,11 +34,14 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="userId">Projects owner id</param>
         [HttpGet("get-list")]
-        public IActionResult GetProjectList(int userId)
+        public IActionResult GetProjectList([FromQuery] ProjectListRequestDto requestDto)
         {
             try
             {
-                List<Project> projectEntities = _projectService.GetProjects(userId);
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                List<Project> projectEntities = _projectService.GetProjects(requestDto.UserId.Value);
                 List<ProjectListItemDto> projectDtos = _mapper.Map<List<Project>, List<ProjectListItemDto>>(projectEntities);
                 return Ok(projectDtos);
             }
@@ -53,14 +56,17 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="projectId">Target project id</param>
         [HttpGet("get-info")]
-        public IActionResult GetProjectInfo(int projectId, int userId)
+        public IActionResult GetProjectInfo([FromQuery] ProjectInfoRequestDto requestDto)
         {
             try
             {
-                Project project = _projectService.GetProjectById(projectId);
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                Project project = _projectService.GetProjectById(requestDto.ProjectId.Value);
                 if (project == null)
-                    return NotFound(projectId);
-                if (project.UserId != userId)
+                    return NotFound(requestDto.ProjectId.Value);
+                if (project.UserId != requestDto.UserId.Value)
                     return Unauthorized();
                 return Ok(_mapper.Map<Project, ProjectInfoDto>(project));
             }
@@ -81,7 +87,7 @@ namespace Strive.API.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (_projectService.IsProjectExists(projectData.Name, projectData.UserId))
+                    if (_projectService.IsProjectExists(projectData.Name, projectData.UserId.Value))
                         ModelState.AddModelError("projectNameRemote", "Project for target user with specified name is already exists");
                 }
 
@@ -110,12 +116,10 @@ namespace Strive.API.Controllers
         {
             try
             {
-                Project projectForUpdate = _projectService.GetProjectById(updatedProjectData.Id);
+                Project projectForUpdate = _projectService.GetProjectById(updatedProjectData.Id.Value);
 
                 if (projectForUpdate == null)
-                {
                     return NotFound(updatedProjectData.Id);
-                }
 
                 if (ModelState.IsValid)
                 {
@@ -123,7 +127,7 @@ namespace Strive.API.Controllers
                     // Otherwise user will not be able to edit project without changing its name
                     if (projectForUpdate.Name != updatedProjectData.Name
                         && _projectService.IsProjectExists
-                            (updatedProjectData.Name, updatedProjectData.UserId))
+                            (updatedProjectData.Name, updatedProjectData.UserId.Value))
                         ModelState.AddModelError("projectNameRemote",
                             "Project for target user with specified name is already exists");
                 }
@@ -149,11 +153,17 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="projectId">Specified project id</param>
         [HttpDelete("delete/{projectId}")]
-        public IActionResult DeleteProject(int projectId)
+        public IActionResult DeleteProject(int? projectId)
         {
             try
             {
-                Project projectForDelete = _projectService.GetProjectById(projectId);
+                if (!projectId.HasValue)
+                    ModelState.AddModelError("projectId", "Project ID is not specified");
+
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                Project projectForDelete = _projectService.GetProjectById(projectId.Value);
                 if (projectForDelete != null)
                 {
                     _projectService.Delete(projectForDelete);

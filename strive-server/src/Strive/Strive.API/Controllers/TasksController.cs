@@ -43,11 +43,8 @@ namespace Strive.API.Controllers
         {
             try
             {
-                if (requestParams.ProjectId == null)
-                {
-                    ModelState.AddModelError("projectId", "Incorrect value of ProjectId parameter was specified");
+                if (!ModelState.IsValid)
                     return BadRequest(ModelState);
-                }
 
                 List<Task> taskEntities = _taskService.GetTasks(requestParams);
                 List<TaskListItemDto> taskDtos = _mapper.Map<List<Task>, List<TaskListItemDto>>(taskEntities);
@@ -64,13 +61,19 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="taskId">Target task id</param>
         [HttpGet("get-info")]
-        public IActionResult GetTaskInfo(int taskId)
+        public IActionResult GetTaskInfo(int? taskId)
         {
             try
             {
-                Task task = _taskService.GetTaskById(taskId);
+                if (!taskId.HasValue)
+                    ModelState.AddModelError("taskId", "Task ID is not specified");
+
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                Task task = _taskService.GetTaskById(taskId.Value);
                 if (task == null)
-                    return NotFound(taskId);
+                    return NotFound(taskId.Value);
                 return Ok(_mapper.Map<Task, TaskInfoDto>(task));
             }
             catch (Exception e)
@@ -121,7 +124,7 @@ namespace Strive.API.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Task taskForUpdate = _taskService.GetTaskById(updatedTaskData.Id);
+                    Task taskForUpdate = _taskService.GetTaskById(updatedTaskData.Id.Value);
                     if (taskForUpdate != null)
                     {
                         taskForUpdate = _mapper.Map(updatedTaskData, taskForUpdate);
@@ -153,17 +156,23 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="taskId">Specified task id</param>
         [HttpDelete("delete/{taskId}")]
-        public IActionResult DeleteTask(int taskId)
+        public IActionResult DeleteTask(int? taskId)
         {
             try
             {
-                Task taskForDelete = _taskService.GetTaskById(taskId);
+                if (!taskId.HasValue)
+                    ModelState.AddModelError("taskId", "Task ID is not specified");
+
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                Task taskForDelete = _taskService.GetTaskById(taskId.Value);
                 if (taskForDelete != null)
                 {
                     _taskService.Delete(taskForDelete);
                     return Ok();
                 }
-                return NotFound(taskId);
+                return NotFound(taskId.Value);
             }
             catch (Exception e)
             {
@@ -180,6 +189,9 @@ namespace Strive.API.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
                 IEnumerable<int> taskIdsForUpdate = setStatusData.Tasks
                     .Where(task => task.Checked == true)
                     .Select(task => task.Id);
@@ -189,7 +201,6 @@ namespace Strive.API.Controllers
 
                 if (status == null)
                     return NotFound(setStatusData.Status);
-
                 return Ok(_taskService.ChangeStatus(taskEntitiesForUpdate, status));
             }
             catch (Exception e)

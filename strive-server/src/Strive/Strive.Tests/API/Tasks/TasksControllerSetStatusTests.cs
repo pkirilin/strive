@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Strive.API.Controllers;
 using Strive.Data.Dtos.Tasks;
 using Strive.Data.Entities;
 using Strive.Tests.TestValues;
@@ -112,6 +113,22 @@ namespace Strive.Tests.API.Tasks
 
             Assert.IsType<NotFoundObjectResult>(result);
             Assert.Equal(setStatusData.Status, (result as NotFoundObjectResult)?.Value);
+        }
+
+        [Fact]
+        public void SetStatusReturnsBadRequestIfModelStateHasErrors()
+        {
+            var setStatusData = new SetTaskStatusDto()
+            {
+                Status = "test status",
+                Tasks = TestValuesProvider.GetTaskListItems()
+            };
+            TasksController controller = this.TasksControllerInstance;
+            controller.ModelState.AddModelError("error", "error");
+
+            IActionResult result = controller.SetStatus(setStatusData);
+
+            Assert.IsType<BadRequestObjectResult>(result);
         }
 
         [Fact]

@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Strive.API.Controllers;
 using Strive.Data.Entities;
 using Strive.Tests.TestValues;
 using Xunit;
@@ -49,6 +50,19 @@ namespace Strive.Tests.API.Projects
             IActionResult result = this.ProjectsControllerInstance.DeleteProject(projectId);
 
             Assert.IsType<NotFoundObjectResult>(result);
+        }
+
+        [Fact]
+        public void DeleteProjectReturnsBadRequestIfModelStateHasErrors()
+        {
+            int projectId = 1;
+
+            ProjectsController controller = this.ProjectsControllerInstance;
+            controller.ModelState.AddModelError("error", "error");
+
+            IActionResult result = controller.DeleteProject(projectId);
+
+            Assert.IsType<BadRequestObjectResult>(result);
         }
 
         [Fact]

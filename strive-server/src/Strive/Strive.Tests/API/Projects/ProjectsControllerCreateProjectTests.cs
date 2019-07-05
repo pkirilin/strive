@@ -54,10 +54,13 @@ namespace Strive.Tests.API.Projects
         [Fact]
         public void CreateProjectReturnsOkOnCorrectData()
         {
-            var projectData = new ProjectCreateUpdateDto();
-            ProjectsController controller = this.ProjectsControllerInstance;
+            var projectData = new ProjectCreateUpdateDto()
+            {
+                Id = 1,
+                UserId = 1
+            };
 
-            IActionResult result = controller.CreateProject(projectData);
+            IActionResult result = this.ProjectsControllerInstance.CreateProject(projectData);
 
             Assert.IsType<OkResult>(result);
         }

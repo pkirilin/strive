@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Strive.API.Controllers;
 using Strive.Data.Dtos.Tasks;
 using Strive.Data.Entities;
 using Strive.Exceptions;
@@ -29,14 +30,14 @@ namespace Strive.Tests.API.Tasks
         }
 
         [Fact]
-        public void TasksControllerReturnsBadRequestIfProjectIdIsNull()
+        public void TasksControllerReturnsBadRequestIfModelStateHasErrors()
         {
-            var requestParams = new GetTaskListRequestDto()
-            {
-                ProjectId = null
-            };
+            var requestParams = new GetTaskListRequestDto();
 
-            IActionResult result = this.TasksControllerInstance.GetTaskList(requestParams);
+            TasksController controller = this.TasksControllerInstance;
+            controller.ModelState.AddModelError("error", "error");
+
+            IActionResult result = controller.GetTaskList(requestParams);
 
             Assert.IsType<BadRequestObjectResult>(result);
         }

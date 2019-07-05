@@ -4,7 +4,7 @@ namespace Strive.Data.Dtos.Projects
 {
     public class ProjectCreateUpdateDto
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required]
         [MinLength(3)]
@@ -14,6 +14,7 @@ namespace Strive.Data.Dtos.Projects
         [MaxLength(511)]
         public string Description { get; set; }
 
-        public int UserId { get; set; }
+        [Required]
+        public int? UserId { get; set; }
     }
 }

@@ -75,7 +75,7 @@ namespace Strive.Tests.API.Tasks
                 Title = "test",
                 Description = "test",
             };
-            _taskServiceMock.Setup(service => service.GetTaskById(taskData.Id))
+            _taskServiceMock.Setup(service => service.GetTaskById(taskData.Id.Value))
                 .Returns(null as Task);
 
             IActionResult result = this.TasksControllerInstance.UpdateTask(taskData);
@@ -88,7 +88,12 @@ namespace Strive.Tests.API.Tasks
         {
             var oldStatus = new TaskStatus() { Label = "old status" };
             var newStatus = new TaskStatus() { Label = "new status" };
-            var taskData = new TaskCreateUpdateDto() { Status = newStatus.Label };
+            var taskData = new TaskCreateUpdateDto()
+            {
+                Id = 1,
+                Status = newStatus.Label,
+                ProjectId = 1
+            };
             var mappedTask = new Task() { Status = oldStatus };
 
             _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Options;
 using Moq;
-using Strive.API;
 using Strive.API.Controllers;
 using Strive.Data.Services.Interfaces;
 using Strive.Helpers.Settings;

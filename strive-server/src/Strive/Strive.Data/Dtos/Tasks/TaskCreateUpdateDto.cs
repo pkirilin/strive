@@ -4,7 +4,7 @@ namespace Strive.Data.Dtos.Tasks
 {
     public class TaskCreateUpdateDto
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required]
         [MinLength(3)]
@@ -14,8 +14,10 @@ namespace Strive.Data.Dtos.Tasks
         [MaxLength(511)]
         public string Description { get; set; }
 
+        [Required]
         public string Status { get; set; }
 
-        public int ProjectId { get; set; }
+        [Required]
+        public int? ProjectId { get; set; }
     }
 }

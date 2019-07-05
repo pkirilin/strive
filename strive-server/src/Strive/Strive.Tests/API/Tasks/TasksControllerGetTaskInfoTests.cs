@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Strive.API.Controllers;
 using Strive.Data.Entities;
 using Strive.Tests.TestValues;
 using Xunit;
@@ -21,6 +22,17 @@ namespace Strive.Tests.API.Tasks
 
             Assert.NotNull(result);
             Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
+        }
+
+        [Fact]
+        public void ReturnsBadRequestIfModelStateHasErrors()
+        {
+            TasksController controller = this.TasksControllerInstance;
+            controller.ModelState.AddModelError("error", "error");
+
+            IActionResult result = controller.GetTaskInfo(null);
+
+            Assert.IsType<BadRequestObjectResult>(result);
         }
 
         [Fact]

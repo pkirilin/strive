@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Moq;
-using Strive.API;
 using Strive.API.Controllers;
 using Strive.Data.Services.Interfaces;
 
