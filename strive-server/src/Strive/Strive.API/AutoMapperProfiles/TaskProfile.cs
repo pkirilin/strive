@@ -45,7 +45,7 @@ namespace Strive.API.AutoMapperProfiles
 
 		private void MapTaskCreateUpdateDtoToTask()
 		{
-			CreateMap<TaskCreateUpdateDto, Task>()
+			CreateMap<TaskCreateUpdateRequestDto, Task>()
 				.ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
 				.ForMember(dest => dest.Title, opts => opts.MapFrom(src => src.Title))
 				.ForMember(dest => dest.Description, opts => opts.MapFrom(src => src.Description))

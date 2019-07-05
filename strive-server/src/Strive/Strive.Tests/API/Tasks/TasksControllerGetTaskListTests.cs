@@ -15,7 +15,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void TasksControllerReturnsStatus500IfServiceThrewException()
         {
-            var requestParams = new GetTaskListRequestDto()
+            var requestParams = new TaskListRequestDto()
             {
                 ProjectId = 1
             };
@@ -32,7 +32,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void TasksControllerReturnsBadRequestIfModelStateHasErrors()
         {
-            var requestParams = new GetTaskListRequestDto();
+            var requestParams = new TaskListRequestDto();
 
             TasksController controller = this.TasksControllerInstance;
             controller.ModelState.AddModelError("error", "error");
@@ -45,7 +45,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void TasksControllerReturnsOkResultIfNoExceptionThrown()
         {
-            var requestParams = new GetTaskListRequestDto()
+            var requestParams = new TaskListRequestDto()
             {
                 ProjectId = 1
             };

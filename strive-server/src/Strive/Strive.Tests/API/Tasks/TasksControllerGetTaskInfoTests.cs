@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Strive.API.Controllers;
+using Strive.Data.Dtos.Tasks;
 using Strive.Data.Entities;
 using Strive.Tests.TestValues;
 using Xunit;
@@ -14,11 +15,14 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void GetTaskInfoReturnsStatus500IfServiceFailed()
         {
-            int taskId = 1;
-            _taskServiceMock.Setup(service => service.GetTaskById(taskId))
+            var request = new TaskInfoRequestDto()
+            {
+                TaskId = 1
+            };
+            _taskServiceMock.Setup(service => service.GetTaskById(request.TaskId.Value))
                 .Throws<Exception>();
 
-            ObjectResult result = this.TasksControllerInstance.GetTaskInfo(taskId) as ObjectResult;
+            ObjectResult result = this.TasksControllerInstance.GetTaskInfo(request) as ObjectResult;
 
             Assert.NotNull(result);
             Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
@@ -38,11 +42,14 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void GetTaskInfoReturnsNotFoundIfServiceReturnedNull()
         {
-            int taskId = -1;
-            _taskServiceMock.Setup(service => service.GetTaskById(taskId))
+            var request = new TaskInfoRequestDto()
+            {
+                TaskId = -1
+            };
+            _taskServiceMock.Setup(service => service.GetTaskById(request.TaskId.Value))
                 .Returns(null as Task);
 
-            IActionResult result = this.TasksControllerInstance.GetTaskInfo(taskId);
+            IActionResult result = this.TasksControllerInstance.GetTaskInfo(request);
 
             Assert.IsType<NotFoundObjectResult>(result);
         }
@@ -51,10 +58,14 @@ namespace Strive.Tests.API.Tasks
         public void GetTaskInfoReturnsOkIfTaskExists()
         {
             Task testTask = TestValuesProvider.GetTasks().FirstOrDefault();
-            _taskServiceMock.Setup(service => service.GetTaskById((int)testTask.Id))
+            var request = new TaskInfoRequestDto()
+            {
+                TaskId = (int)testTask.Id
+            };
+            _taskServiceMock.Setup(service => service.GetTaskById(request.TaskId.Value))
                 .Returns(testTask);
 
-            IActionResult result = this.TasksControllerInstance.GetTaskInfo((int)testTask.Id);
+            IActionResult result = this.TasksControllerInstance.GetTaskInfo(request);
 
             Assert.IsType<OkObjectResult>(result);
         }

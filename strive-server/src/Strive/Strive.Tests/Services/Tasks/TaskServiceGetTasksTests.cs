@@ -15,7 +15,7 @@ namespace Strive.Tests.Services.Tasks
         [Fact]
         public void GetTasksThrowsExceptionWhenDbExceptionOccurs()
         {
-            var requestParams = new GetTaskListRequestDto()
+            var requestParams = new TaskListRequestDto()
             {
                 ProjectId = 1
             };
@@ -36,7 +36,7 @@ namespace Strive.Tests.Services.Tasks
         [Fact]
         public void GetTasksReturnsEntitiesForProject()
         {
-            var requestParams = new GetTaskListRequestDto()
+            var requestParams = new TaskListRequestDto()
             {
                 ProjectId = 1
             };
@@ -68,7 +68,7 @@ namespace Strive.Tests.Services.Tasks
         [Fact]
         public void GetTasksReturnsFullCollectionWhenStatusAllSpecified()
         {
-            var requestParams = new GetTaskListRequestDto()
+            var requestParams = new TaskListRequestDto()
             {
                 ProjectId = 1,
                 Status = "All"
@@ -88,7 +88,7 @@ namespace Strive.Tests.Services.Tasks
         [Fact]
         public void GetTasksReturnsFullCollectionWhenStatusIsNull()
         {
-            var requestParams = new GetTaskListRequestDto()
+            var requestParams = new TaskListRequestDto()
             {
                 ProjectId = 1,
                 Status = null

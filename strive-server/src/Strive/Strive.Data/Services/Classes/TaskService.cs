@@ -27,7 +27,7 @@ namespace Strive.Data.Services.Classes
         /// </summary>
         /// <param name="requestParams">Specified parameters</param>
         /// <returns>Fetched tasks</returns>
-        public List<Task> GetTasks(GetTaskListRequestDto requestParams)
+        public List<Task> GetTasks(TaskListRequestDto requestParams)
         {
             try
             {

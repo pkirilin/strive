@@ -14,7 +14,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void CreateTaskReturnsStatus500OnServiceGetStatusException()
         {
-            var taskData = new TaskCreateUpdateDto();
+            var taskData = new TaskCreateUpdateRequestDto();
 
             _taskStatusServiceMock.Setup(service => service.GetStatus(It.IsAny<string>()))
                 .Throws<Exception>();
@@ -30,7 +30,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void CreateTaskReturnsNotFoundIfStatusNotFound()
         {
-            var taskData = new TaskCreateUpdateDto() { Status = "status"};
+            var taskData = new TaskCreateUpdateRequestDto() { Status = "status"};
 
             _taskStatusServiceMock.Setup(service => service.GetStatus(It.IsAny<string>()))
                 .Returns(null as TaskStatus);
@@ -46,7 +46,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void CreateTaskReturnsStatus500OnServiceCreateException()
         {
-            var taskData = new TaskCreateUpdateDto();
+            var taskData = new TaskCreateUpdateRequestDto();
             var foundStatus = new TaskStatus();
 
             _taskStatusServiceMock.Setup(service => service.GetStatus(It.IsAny<string>()))
@@ -68,7 +68,7 @@ namespace Strive.Tests.API.Tasks
             TasksController controller = this.TasksControllerInstance;
             controller.ModelState.AddModelError("error", "error");
 
-            IActionResult result = controller.CreateTask(new TaskCreateUpdateDto());
+            IActionResult result = controller.CreateTask(new TaskCreateUpdateRequestDto());
 
             Assert.IsType<BadRequestObjectResult>(result);
         }
@@ -76,7 +76,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void CreateTaskReturnsOkOnCorrectData()
         {
-            var taskData = new TaskCreateUpdateDto();
+            var taskData = new TaskCreateUpdateRequestDto();
             var foundStatus = new TaskStatus();
             var taskEntity = new Task();
 

@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Strive.Data.Dtos.Tasks
+namespace Strive.Data.Dtos.Projects
 {
-    public class GetTaskListRequestDto
+    public class ProjectDeleteRequestDto
     {
         [Required]
         public int? ProjectId { get; set; }
-
-        public string Status { get; set; }
     }
 }

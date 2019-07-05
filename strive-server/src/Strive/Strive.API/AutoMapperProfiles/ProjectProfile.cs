@@ -33,7 +33,7 @@ namespace Strive.API.AutoMapperProfiles
 
 		private void MapFromProjectCreateUpdateDtoToProject()
 		{
-			CreateMap<ProjectCreateUpdateDto, Project>()
+			CreateMap<ProjectCreateUpdateRequestDto, Project>()
 				.ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
 				.ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
 				.ForMember(dest => dest.Description, opts => opts.MapFrom(src => src.Description))

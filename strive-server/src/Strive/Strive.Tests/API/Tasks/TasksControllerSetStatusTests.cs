@@ -16,7 +16,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void SetStatusReturnsStatus500OnGetTasksException()
         {
-            var setStatusData = new SetTaskStatusDto()
+            var setStatusData = new TaskSetStatusRequestDto()
             {
                 Status = "test status",
                 Tasks = TestValuesProvider.GetTaskListItems()
@@ -38,7 +38,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void SetStatusReturnsStatus500OnGetStatusByLabelException()
         {
-            var setStatusData = new SetTaskStatusDto()
+            var setStatusData = new TaskSetStatusRequestDto()
             {
                 Status = "test status",
                 Tasks = TestValuesProvider.GetTaskListItems()
@@ -62,7 +62,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void SetStatusReturnsStatus500OnChangeStatusException()
         {
-            var setStatusData = new SetTaskStatusDto()
+            var setStatusData = new TaskSetStatusRequestDto()
             {
                 Status = "test status",
                 Tasks = TestValuesProvider.GetTaskListItems()
@@ -93,7 +93,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void SetStatusReturnsNotFoundWhenStatusNotExists()
         {
-            var setStatusData = new SetTaskStatusDto()
+            var setStatusData = new TaskSetStatusRequestDto()
             {
                 Status = "test status",
                 Tasks = TestValuesProvider.GetTaskListItems()
@@ -118,7 +118,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void SetStatusReturnsBadRequestIfModelStateHasErrors()
         {
-            var setStatusData = new SetTaskStatusDto()
+            var setStatusData = new TaskSetStatusRequestDto()
             {
                 Status = "test status",
                 Tasks = TestValuesProvider.GetTaskListItems()
@@ -134,7 +134,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void SetStatusReturnsOkOnChangeStatusSuccess()
         {
-            var setStatusData = new SetTaskStatusDto()
+            var setStatusData = new TaskSetStatusRequestDto()
             {
                 Status = "test status",
                 Tasks = TestValuesProvider.GetTaskListItems()

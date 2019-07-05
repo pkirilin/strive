@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Strive.Data.Dtos.Tasks;
 using Strive.Data.Entities;
 using Strive.Tests.TestValues;
 using Xunit;
@@ -14,11 +15,14 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void DeleteTaskReturnsStatus500IfRepoSearchFailed()
         {
-            int taskId = 1;
+            var request = new TaskDeleteRequestDto()
+            {
+                TaskId = 1
+            };
             _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))
                 .Throws<Exception>();
 
-            ObjectResult result = this.TasksControllerInstance.DeleteTask(taskId) as ObjectResult;
+            ObjectResult result = this.TasksControllerInstance.DeleteTask(request) as ObjectResult;
 
             Assert.NotNull(result);
             Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
@@ -27,13 +31,16 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void DeleteTaskReturnsStatus500IfRepoDeleteFailed()
         {
-            int taskId = 1;
+            var request = new TaskDeleteRequestDto()
+            {
+                TaskId = 1
+            };
             _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))
                 .Returns(TestValuesProvider.GetTasks().FirstOrDefault());
             _taskServiceMock.Setup(service => service.Delete(It.IsAny<Task>()))
                 .Throws<Exception>();
 
-            ObjectResult result = this.TasksControllerInstance.DeleteTask(taskId) as ObjectResult;
+            ObjectResult result = this.TasksControllerInstance.DeleteTask(request) as ObjectResult;
 
             Assert.NotNull(result);
             Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
@@ -42,11 +49,14 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void DeleteTaskReturnsNotFoundIfTaskNotFoundById()
         {
-            int taskId = 1;
+            var request = new TaskDeleteRequestDto()
+            {
+                TaskId = 1
+            };
             _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))
                 .Returns(null as Task);
 
-            IActionResult result = this.TasksControllerInstance.DeleteTask(taskId);
+            IActionResult result = this.TasksControllerInstance.DeleteTask(request);
 
             Assert.IsType<NotFoundObjectResult>(result);
         }
@@ -54,11 +64,14 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void DeleteTaskReturnsOkOnSuccessfulDelete()
         {
-            int taskId = 1;
+            var request = new TaskDeleteRequestDto()
+            {
+                TaskId = 1
+            };
             _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))
                 .Returns(TestValuesProvider.GetTasks().FirstOrDefault());
 
-            IActionResult result = this.TasksControllerInstance.DeleteTask(taskId);
+            IActionResult result = this.TasksControllerInstance.DeleteTask(request);
 
             Assert.IsType<OkResult>(result);
         }

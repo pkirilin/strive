@@ -16,7 +16,7 @@ namespace Strive.Tests.API.Projects
         [Fact]
         public void UpdateProjectReturnsStatus500IfRepoSearchFailed()
         {
-            var projectData = new ProjectCreateUpdateDto()
+            var projectData = new ProjectCreateUpdateRequestDto()
             {
                 Name = "Test",
                 Description = "Test",
@@ -34,7 +34,7 @@ namespace Strive.Tests.API.Projects
         [Fact]
         public void UpdateProjectReturnsStatus500IfRepoUpdateFailed()
         {
-            var projectData = new ProjectCreateUpdateDto()
+            var projectData = new ProjectCreateUpdateRequestDto()
             {
                 Id = 1,
                 Name = "Test",
@@ -61,7 +61,7 @@ namespace Strive.Tests.API.Projects
         [Fact]
         public void UpdateProjectReturnsStatus500IfRepoProjectExistsCheckFailed()
         {
-            var projectData = new ProjectCreateUpdateDto()
+            var projectData = new ProjectCreateUpdateRequestDto()
             {
                 Id = 1,
                 Name = "Test",
@@ -85,7 +85,7 @@ namespace Strive.Tests.API.Projects
         [Fact]
         public void UpdateProjectReturnsNotFoundIfProjectNotFoundById()
         {
-            var projectData = new ProjectCreateUpdateDto()
+            var projectData = new ProjectCreateUpdateRequestDto()
             {
                 Id = 1,
                 Name = "Test",
@@ -107,7 +107,7 @@ namespace Strive.Tests.API.Projects
         [Fact]
         public void UpdateProjectReturnsBadRequestOnInvalidData()
         {
-            var projectData = new ProjectCreateUpdateDto()
+            var projectData = new ProjectCreateUpdateRequestDto()
             {
                 Id = 1,
                 Name = "Test",
@@ -131,7 +131,7 @@ namespace Strive.Tests.API.Projects
         [Fact]
         public void UpdateProjectReturnsOkOnSuccessfulUpdate()
         {
-            var projectData = new ProjectCreateUpdateDto()
+            var projectData = new ProjectCreateUpdateRequestDto()
             {
                 Id = 1,
                 Name = "Test",

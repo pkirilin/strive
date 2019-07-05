@@ -2,7 +2,7 @@
 
 namespace Strive.Data.Dtos.Tasks
 {
-    public class TaskCreateUpdateDto
+    public class TaskCreateUpdateRequestDto
     {
         public int? Id { get; set; }
 

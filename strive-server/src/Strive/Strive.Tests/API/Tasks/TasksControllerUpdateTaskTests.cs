@@ -16,7 +16,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void UpdateTaskReturnsStatus500IfRepoSearchFailed()
         {
-            var taskData = new TaskCreateUpdateDto();
+            var taskData = new TaskCreateUpdateRequestDto();
             _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))
                 .Throws<Exception>();
 
@@ -29,7 +29,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void UpdateTaskReturnsStatus500IfRepoUpdateFailed()
         {
-            var taskData = new TaskCreateUpdateDto()
+            var taskData = new TaskCreateUpdateRequestDto()
             {
                 Title = "test",
                 Description = "test"
@@ -50,12 +50,12 @@ namespace Strive.Tests.API.Tasks
         {
             var oldStatus = new TaskStatus() { Label = "old status" };
             var newStatus = new TaskStatus() { Label = "new status" };
-            var taskData = new TaskCreateUpdateDto() { Status = newStatus.Label };
+            var taskData = new TaskCreateUpdateRequestDto() { Status = newStatus.Label };
             var mappedTask = new Task() { Status = oldStatus };
 
             _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))
                 .Returns(TestValuesProvider.GetTasks().FirstOrDefault());
-            _mapperMock.Setup(mapper => mapper.Map(It.IsAny<TaskCreateUpdateDto>(), It.IsAny<Task>()))
+            _mapperMock.Setup(mapper => mapper.Map(It.IsAny<TaskCreateUpdateRequestDto>(), It.IsAny<Task>()))
                 .Returns(mappedTask);
             _taskStatusServiceMock.Setup(service => service.GetStatus(taskData.Status))
                 .Throws<Exception>();
@@ -69,7 +69,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void UpdateTaskReturnsNotFoundIfTaskNotFoundById()
         {
-            var taskData = new TaskCreateUpdateDto()
+            var taskData = new TaskCreateUpdateRequestDto()
             {
                 Id = 1,
                 Title = "test",
@@ -88,7 +88,7 @@ namespace Strive.Tests.API.Tasks
         {
             var oldStatus = new TaskStatus() { Label = "old status" };
             var newStatus = new TaskStatus() { Label = "new status" };
-            var taskData = new TaskCreateUpdateDto()
+            var taskData = new TaskCreateUpdateRequestDto()
             {
                 Id = 1,
                 Status = newStatus.Label,
@@ -98,7 +98,7 @@ namespace Strive.Tests.API.Tasks
 
             _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))
                 .Returns(TestValuesProvider.GetTasks().FirstOrDefault());
-            _mapperMock.Setup(mapper => mapper.Map(It.IsAny<TaskCreateUpdateDto>(), It.IsAny<Task>()))
+            _mapperMock.Setup(mapper => mapper.Map(It.IsAny<TaskCreateUpdateRequestDto>(), It.IsAny<Task>()))
                 .Returns(mappedTask);
             _taskStatusServiceMock.Setup(service => service.GetStatus(taskData.Status))
                 .Returns(null as TaskStatus);
@@ -111,7 +111,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void UpdateTaskReturnsBadRequestOnInvalidData()
         {
-            var taskData = new TaskCreateUpdateDto()
+            var taskData = new TaskCreateUpdateRequestDto()
             {
                 Title = "test",
                 Description = "test"
@@ -127,7 +127,7 @@ namespace Strive.Tests.API.Tasks
         [Fact]
         public void UpdateTaskReturnsOkOnSuccessfulUpdate()
         {
-            var taskData = new TaskCreateUpdateDto()
+            var taskData = new TaskCreateUpdateRequestDto()
             {
                 Id = 1,
                 Title = "test",
@@ -141,7 +141,7 @@ namespace Strive.Tests.API.Tasks
 
             _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))
                 .Returns(TestValuesProvider.GetTasks().FirstOrDefault());
-            _mapperMock.Setup(mapper => mapper.Map(It.IsAny<TaskCreateUpdateDto>(), It.IsAny<Task>()))
+            _mapperMock.Setup(mapper => mapper.Map(It.IsAny<TaskCreateUpdateRequestDto>(), It.IsAny<Task>()))
                 .Returns(mappedTask);
 
             IActionResult result = this.TasksControllerInstance.UpdateTask(taskData);
@@ -155,7 +155,7 @@ namespace Strive.Tests.API.Tasks
             var oldStatus = new TaskStatus() { Label = "old status" };
             var newStatus = new TaskStatus() { Label = "newStatus" };
 
-            var taskData = new TaskCreateUpdateDto()
+            var taskData = new TaskCreateUpdateRequestDto()
             {
                 Id = 1,
                 Title = "test",
@@ -166,7 +166,7 @@ namespace Strive.Tests.API.Tasks
             var mappedTask = new Task() { Status = oldStatus };
             var taskWithUpdatedStatus = new Task() { Status = newStatus };
 
-            _mapperMock.Setup(mapper => mapper.Map(It.IsAny<TaskCreateUpdateDto>(), It.IsAny<Task>()))
+            _mapperMock.Setup(mapper => mapper.Map(It.IsAny<TaskCreateUpdateRequestDto>(), It.IsAny<Task>()))
                 .Returns(mappedTask);
             _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))
                 .Returns(TestValuesProvider.GetTasks().FirstOrDefault());

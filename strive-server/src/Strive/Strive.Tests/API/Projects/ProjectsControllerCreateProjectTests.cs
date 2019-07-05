@@ -14,7 +14,7 @@ namespace Strive.Tests.API.Projects
         [Fact]
         public void CreateProjectReturnsStatus500OnServiceCreateException()
         {
-            var projectData = new ProjectCreateUpdateDto();
+            var projectData = new ProjectCreateUpdateRequestDto();
             ProjectsController controller = this.ProjectsControllerInstance;
             _projectServiceMock.Setup(service => service.Create(It.IsAny<Project>()))
                 .Throws<Exception>();
@@ -28,7 +28,7 @@ namespace Strive.Tests.API.Projects
         [Fact]
         public void CreateProjectReturnsStatus500OnServiceIsProjectExistsException()
         {
-            var projectData = new ProjectCreateUpdateDto();
+            var projectData = new ProjectCreateUpdateRequestDto();
             ProjectsController controller = this.ProjectsControllerInstance;
             _projectServiceMock.Setup(service => service.IsProjectExists(It.IsAny<string>(), It.IsAny<int>()))
                 .Throws<Exception>();
@@ -42,7 +42,7 @@ namespace Strive.Tests.API.Projects
         [Fact]
         public void CreateProjectReturnsBadRequestOnInvalidData()
         {
-            var projectData = new ProjectCreateUpdateDto();
+            var projectData = new ProjectCreateUpdateRequestDto();
             ProjectsController controller = this.ProjectsControllerInstance;
             controller.ModelState.AddModelError("error", "error");
 
@@ -54,7 +54,7 @@ namespace Strive.Tests.API.Projects
         [Fact]
         public void CreateProjectReturnsOkOnCorrectData()
         {
-            var projectData = new ProjectCreateUpdateDto()
+            var projectData = new ProjectCreateUpdateRequestDto()
             {
                 Id = 1,
                 UserId = 1

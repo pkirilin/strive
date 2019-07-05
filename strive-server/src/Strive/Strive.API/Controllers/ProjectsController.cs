@@ -34,14 +34,14 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="userId">Projects owner id</param>
         [HttpGet("get-list")]
-        public IActionResult GetProjectList([FromQuery] ProjectListRequestDto requestDto)
+        public IActionResult GetProjectList([FromQuery] ProjectListRequestDto request)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                List<Project> projectEntities = _projectService.GetProjects(requestDto.UserId.Value);
+                List<Project> projectEntities = _projectService.GetProjects(request.UserId.Value);
                 List<ProjectListItemDto> projectDtos = _mapper.Map<List<Project>, List<ProjectListItemDto>>(projectEntities);
                 return Ok(projectDtos);
             }
@@ -56,17 +56,17 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="projectId">Target project id</param>
         [HttpGet("get-info")]
-        public IActionResult GetProjectInfo([FromQuery] ProjectInfoRequestDto requestDto)
+        public IActionResult GetProjectInfo([FromQuery] ProjectInfoRequestDto request)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                Project project = _projectService.GetProjectById(requestDto.ProjectId.Value);
+                Project project = _projectService.GetProjectById(request.ProjectId.Value);
                 if (project == null)
-                    return NotFound(requestDto.ProjectId.Value);
-                if (project.UserId != requestDto.UserId.Value)
+                    return NotFound(request.ProjectId.Value);
+                if (project.UserId != request.UserId.Value)
                     return Unauthorized();
                 return Ok(_mapper.Map<Project, ProjectInfoDto>(project));
             }
@@ -81,7 +81,7 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="projectData">Project data received from form</param>
         [HttpPost("create")]
-        public IActionResult CreateProject([FromBody] ProjectCreateUpdateDto projectData)
+        public IActionResult CreateProject([FromBody] ProjectCreateUpdateRequestDto projectData)
         {
             try
             {
@@ -112,7 +112,7 @@ namespace Strive.API.Controllers
         /// <param name="projectId">Existing project id</param>
         /// <param name="updatedProjectData">New project data</param>
         [HttpPut("update")]
-        public IActionResult UpdateProject([FromBody] ProjectCreateUpdateDto updatedProjectData)
+        public IActionResult UpdateProject([FromBody] ProjectCreateUpdateRequestDto updatedProjectData)
         {
             try
             {
@@ -152,24 +152,21 @@ namespace Strive.API.Controllers
         /// Searches project by specified id. If project is found, deletes it
         /// </summary>
         /// <param name="projectId">Specified project id</param>
-        [HttpDelete("delete/{projectId}")]
-        public IActionResult DeleteProject(int? projectId)
+        [HttpDelete("delete/{request.ProjectId}")]
+        public IActionResult DeleteProject(ProjectDeleteRequestDto request)
         {
             try
             {
-                if (!projectId.HasValue)
-                    ModelState.AddModelError("projectId", "Project ID is not specified");
-
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                Project projectForDelete = _projectService.GetProjectById(projectId.Value);
+                Project projectForDelete = _projectService.GetProjectById(request.ProjectId.Value);
                 if (projectForDelete != null)
                 {
                     _projectService.Delete(projectForDelete);
                     return Ok();
                 }
-                return NotFound(projectId);
+                return NotFound(request.ProjectId.Value);
             }
             catch (Exception e)
             {

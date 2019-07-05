@@ -39,7 +39,7 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="projectId">Project id</param>
         [HttpGet("get-list")]
-        public IActionResult GetTaskList([FromQuery] GetTaskListRequestDto requestParams)
+        public IActionResult GetTaskList([FromQuery] TaskListRequestDto requestParams)
         {
             try
             {
@@ -61,19 +61,16 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="taskId">Target task id</param>
         [HttpGet("get-info")]
-        public IActionResult GetTaskInfo(int? taskId)
+        public IActionResult GetTaskInfo([FromQuery] TaskInfoRequestDto request)
         {
             try
             {
-                if (!taskId.HasValue)
-                    ModelState.AddModelError("taskId", "Task ID is not specified");
-
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                Task task = _taskService.GetTaskById(taskId.Value);
+                Task task = _taskService.GetTaskById(request.TaskId.Value);
                 if (task == null)
-                    return NotFound(taskId.Value);
+                    return NotFound(request.TaskId.Value);
                 return Ok(_mapper.Map<Task, TaskInfoDto>(task));
             }
             catch (Exception e)
@@ -87,7 +84,7 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="taskData">Task data received from form</param>
         [HttpPost("create")]
-        public IActionResult CreateTask([FromBody] TaskCreateUpdateDto taskData)
+        public IActionResult CreateTask([FromBody] TaskCreateUpdateRequestDto taskData)
         {
             try
             {
@@ -118,7 +115,7 @@ namespace Strive.API.Controllers
         /// <param name="taskId">Existing task id</param>
         /// <param name="updatedTaskData">New task data</param>
         [HttpPut("update")]
-        public IActionResult UpdateTask([FromBody] TaskCreateUpdateDto updatedTaskData)
+        public IActionResult UpdateTask([FromBody] TaskCreateUpdateRequestDto updatedTaskData)
         {
             try
             {
@@ -155,24 +152,21 @@ namespace Strive.API.Controllers
         /// Searches task by specified id. If task is found, deletes it
         /// </summary>
         /// <param name="taskId">Specified task id</param>
-        [HttpDelete("delete/{taskId}")]
-        public IActionResult DeleteTask(int? taskId)
+        [HttpDelete("delete/{request.TaskId}")]
+        public IActionResult DeleteTask(TaskDeleteRequestDto request)
         {
             try
             {
-                if (!taskId.HasValue)
-                    ModelState.AddModelError("taskId", "Task ID is not specified");
-
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                Task taskForDelete = _taskService.GetTaskById(taskId.Value);
+                Task taskForDelete = _taskService.GetTaskById(request.TaskId.Value);
                 if (taskForDelete != null)
                 {
                     _taskService.Delete(taskForDelete);
                     return Ok();
                 }
-                return NotFound(taskId.Value);
+                return NotFound(request.TaskId.Value);
             }
             catch (Exception e)
             {
@@ -185,7 +179,7 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="setStatusData">Data from request for setting status</param>
         [HttpPut("set-status")]
-        public IActionResult SetStatus([FromBody] SetTaskStatusDto setStatusData)
+        public IActionResult SetStatus([FromBody] TaskSetStatusRequestDto setStatusData)
         {
             try
             {

@@ -11,7 +11,7 @@ namespace Strive.Data.Services.Interfaces
         /// </summary>
         /// <param name="requestParams">Specified parameters</param>
         /// <returns>Fetched tasks</returns>
-        List<Task> GetTasks(GetTaskListRequestDto requestParams);
+        List<Task> GetTasks(TaskListRequestDto requestParams);
 
         /// <summary>
         /// Gets task entities mapped to specified IDs

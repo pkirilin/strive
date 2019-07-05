@@ -2,7 +2,7 @@
 
 namespace Strive.Data.Dtos.Projects
 {
-    public class ProjectCreateUpdateDto
+    public class ProjectCreateUpdateRequestDto
     {
         public int? Id { get; set; }
 

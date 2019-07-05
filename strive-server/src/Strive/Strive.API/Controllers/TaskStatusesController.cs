@@ -49,17 +49,14 @@ namespace Strive.API.Controllers
         /// </summary>
         /// <param name="projectId">Specified project id</param>
         [HttpGet("get-status-tabs")]
-        public IActionResult GetStatusTabs(int? projectId)
+        public IActionResult GetStatusTabs([FromQuery] TaskStatusGetTabsRequestDto request)
         {
             try
             {
-                if (!projectId.HasValue)
-                    ModelState.AddModelError("projectId", "Project ID is not specified");
-
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                return Ok(_taskStatusService.GetStatusTabs(projectId.Value));
+                return Ok(_taskStatusService.GetStatusTabs(request.ProjectId.Value));
             }
             catch (Exception e)
             {
