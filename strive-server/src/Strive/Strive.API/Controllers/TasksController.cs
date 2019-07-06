@@ -100,13 +100,13 @@ namespace Strive.API.Controllers
                     _taskService.Create(task);
                     return Ok();
                 }
+
+                return BadRequest(ModelState);
             }
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
-
-            return BadRequest(ModelState);
         }
 
         /// <summary>
@@ -139,13 +139,13 @@ namespace Strive.API.Controllers
                     }
                     return NotFound(updatedTaskData.Id);
                 }
+
+                return BadRequest(ModelState);
             }
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
-
-            return BadRequest(ModelState);
         }
 
         /// <summary>

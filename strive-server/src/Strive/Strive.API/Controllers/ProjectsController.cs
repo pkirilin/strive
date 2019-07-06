@@ -97,13 +97,13 @@ namespace Strive.API.Controllers
                     _projectService.Create(project);
                     return Ok();
                 }
+
+                return BadRequest(ModelState);
             }
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
-
-            return BadRequest(ModelState);
         }
 
         /// <summary>
@@ -139,13 +139,13 @@ namespace Strive.API.Controllers
                     _projectService.Update(projectForUpdate);
                     return Ok();
                 }
+
+                return BadRequest(ModelState);
             }
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
-
-            return BadRequest(ModelState);
         }
 
         /// <summary>
