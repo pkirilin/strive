@@ -7,28 +7,28 @@ using Xunit;
 
 namespace Strive.Tests.Services.Account
 {
-    public class AccountServiceAuthenticateTests : AccountServiceTests
+    public class AccountServiceAuthorizeTests : AccountServiceTests
     {
         [Fact]
         public void AuthenticationFailsOnIncorrectArguments()
         {
             AccountService accountService = this.AccountServiceInstance;
 
-            Assert.Throws<ArgumentException>(() => accountService.Authenticate("", "password"));
-            Assert.Throws<ArgumentException>(() => accountService.Authenticate(null, "password"));
-            Assert.Throws<ArgumentException>(() => accountService.Authenticate("username", ""));
-            Assert.Throws<ArgumentException>(() => accountService.Authenticate("username", null));
+            Assert.Throws<ArgumentException>(() => accountService.Authorize("", "password"));
+            Assert.Throws<ArgumentException>(() => accountService.Authorize(null, "password"));
+            Assert.Throws<ArgumentException>(() => accountService.Authorize("username", ""));
+            Assert.Throws<ArgumentException>(() => accountService.Authorize("username", null));
         }
 
         [Fact]
-        public void AuthenticateThrowsDatabaseExceptionWhenRepoFails()
+        public void AuthorizeThrowsDatabaseExceptionWhenRepoFails()
         {
             _userRepositoryMock.Setup(repo => repo.GetSingleOrDefault(It.IsAny<Func<User, bool>>()))
                 .Throws<Exception>();
 
             Assert.Throws<StriveDatabaseException>(() =>
             {
-                this.AccountServiceInstance.Authenticate("email", "password");
+                this.AccountServiceInstance.Authorize("email", "password");
             });
 
             _userRepositoryMock.Verify(repo =>
@@ -43,7 +43,7 @@ namespace Strive.Tests.Services.Account
                 .Returns(null as User);
             AccountService accountService = this.AccountServiceInstance;
 
-            Assert.Throws<StriveDatabaseException>(() => accountService.Authenticate(username, "password"));
+            Assert.Throws<StriveDatabaseException>(() => accountService.Authorize(username, "password"));
         }
 
         [Fact]
@@ -62,7 +62,7 @@ namespace Strive.Tests.Services.Account
                 });
             AccountService accountService = this.AccountServiceInstance;
 
-            Assert.Throws<StriveSecurityException>(() => accountService.Authenticate(email, password));
+            Assert.Throws<StriveSecurityException>(() => accountService.Authorize(email, password));
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace Strive.Tests.Services.Account
                 });
             AccountService accountService = this.AccountServiceInstance;
 
-            Assert.Throws<StriveSecurityException>(() => accountService.Authenticate(email, password));
+            Assert.Throws<StriveSecurityException>(() => accountService.Authorize(email, password));
         }
     }
 }

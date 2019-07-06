@@ -5,10 +5,10 @@ namespace Strive.Data.Services.Interfaces
     public interface IAccountService
     {
         /// <summary>
-        /// Authenticates user by username and password
+        /// Authorizes user by username and password
         /// </summary>
-        /// <returns>Authenticated user if authentication successful, if not returns null</returns>
-        User Authenticate(string username, string password);
+        /// <returns>Authorized user if authentication successful, if not returns null</returns>
+        User Authorize(string username, string password);
 
         /// <summary>
         /// Creates new user

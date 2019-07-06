@@ -5,7 +5,7 @@ namespace Strive.Data.Dtos.Account
     /// <summary>
     /// Contains application user login request transfer data
     /// </summary>
-    public class LoginRequestDto
+    public class AuthorizationRequestDto
     {
         [Required]
         [RegularExpression(

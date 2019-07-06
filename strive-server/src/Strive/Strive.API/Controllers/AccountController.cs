@@ -12,6 +12,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Strive.Data.Dtos.Account;
 using Strive.Data.Services.Interfaces;
+using Strive.Exceptions;
 
 namespace Strive.API.Controllers
 {
@@ -39,28 +40,17 @@ namespace Strive.API.Controllers
         }
 
         /// <summary>
-        /// Authenticates user, if authentication successful generates JWT-token
+        /// Authorizes user, if authentication successful generates JWT-token
         /// </summary>
         /// <param name="userLoginRequestData">Data received from login form</param>
         [AllowAnonymous]
-        [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] LoginRequestDto userLoginRequestData)
+        [HttpPost("authorize")]
+        public IActionResult Authorize([FromBody] AuthorizationRequestDto userLoginRequestData)
         {
-            User user;
-
             try
             {
-                user = _accountService.Authenticate(userLoginRequestData.Email, userLoginRequestData.Password);
-            }
-            catch (Exception)
-            {
-                return Unauthorized();
-            }
+                User user = _accountService.Authorize(userLoginRequestData.Email, userLoginRequestData.Password);
 
-            string tokenString;
-
-            try
-            {
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
 
@@ -75,20 +65,25 @@ namespace Strive.API.Controllers
                         SecurityAlgorithms.HmacSha256Signature)
                 };
                 var token = tokenHandler.CreateToken(tokenDescriptor);
-                tokenString = tokenHandler.WriteToken(token);
+                string tokenString = tokenHandler.WriteToken(token);
+
+                // Returning basic user info (without password) and token to store client side
+                var response = new AuthorizationResponseDto()
+                {
+                    Id = user.Id,
+                    Username = user.Username,
+                    Token = tokenString
+                };
+                return Ok(response);
+            }
+            catch (StriveException)
+            {
+                return Unauthorized();
             }
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
-
-            // Returning basic user info (without password) and token to store client side
-            return Ok(new
-            {
-                Id = user.Id,
-                Username = user.Username,
-                Token = tokenString
-            });
         }
 
         /// <summary>
@@ -118,13 +113,13 @@ namespace Strive.API.Controllers
                     _accountService.Create(user, userRegisterRequestData.Password);
                     return Ok();
                 }
+
+                return BadRequest(ModelState);
             }
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
-
-            return BadRequest(ModelState);
         }
     }
 }

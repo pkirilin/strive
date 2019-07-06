@@ -17,10 +17,10 @@ namespace Strive.Data.Services.Classes
         }
 
         /// <summary>
-        /// Authenticates user by username and password
+        /// Authorizes user by username and password
         /// </summary>
-        /// <returns>Authenticated user if authentication successful, if not returns null</returns>
-        public User Authenticate(string email, string password)
+        /// <returns>Authorized user if authentication successful, if not returns null</returns>
+        public User Authorize(string email, string password)
         {
             // Checking if username or password is filled
             if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))

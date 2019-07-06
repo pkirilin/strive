@@ -4,17 +4,18 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Strive.Data.Dtos.Account;
 using Strive.Data.Entities;
+using Strive.Exceptions;
 using Strive.Helpers.Settings;
 using Xunit;
 
 namespace Strive.Tests.API.Account
 {
-    public class AccountControllerAuthenticateTests : AccountControllerTests
+    public class AccountControllerAuthorizeTests : AccountControllerTests
     {
         [Fact]
-        public void AuthenticateReturnsStatus500IfTokenCreatedWithException()
+        public void AuthorizeReturnsStatus500IfTokenCreatedWithException()
         {
-            var loginRequest = new LoginRequestDto()
+            var loginRequest = new AuthorizationRequestDto()
             {
                 Email = "username",
                 Password = "password"
@@ -23,41 +24,60 @@ namespace Strive.Tests.API.Account
             _appSettingsMock.Setup(s => s.Value)
                 .Returns(null as AppSettings);
 
-            ObjectResult result = this.AccountControllerInstance.Authenticate(loginRequest) as ObjectResult;
+            ObjectResult result = this.AccountControllerInstance.Authorize(loginRequest) as ObjectResult;
 
             Assert.NotNull(result);
             Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
         }
 
         [Fact]
-        public void AuthenticateReturnsUnauthorizedIfServiceFailed()
+        public void AuthorizeReturnsStatus500IfServiceFailed()
         {
-            var loginRequest = new LoginRequestDto()
+            var loginRequest = new AuthorizationRequestDto()
             {
                 Email = "username",
                 Password = "password"
             };
 
             _accountServiceMock
-                .Setup(service => service.Authenticate(It.IsNotNull<string>(), It.IsNotNull<string>()))
+                .Setup(service => service.Authorize(It.IsNotNull<string>(), It.IsNotNull<string>()))
                 .Throws<Exception>();
 
-            IActionResult result = this.AccountControllerInstance.Authenticate(loginRequest);
+            ObjectResult result = this.AccountControllerInstance.Authorize(loginRequest) as ObjectResult;
+
+            Assert.NotNull(result);
+            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
+        }
+
+        [Fact]
+        public void AuthorizeReturnsUnauthorizedIfServiceFailedWithCustomException()
+        {
+            var loginRequest = new AuthorizationRequestDto()
+            {
+                Email = "username",
+                Password = "password"
+            };
+
+            _accountServiceMock
+                .Setup(service => service.Authorize(It.IsNotNull<string>(), It.IsNotNull<string>()))
+                .Throws<StriveException>();
+
+            IActionResult result = this.AccountControllerInstance.Authorize(loginRequest);
 
             Assert.IsType<UnauthorizedResult>(result);
         }
 
         [Fact]
-        public void AuthenticateReturnsOkIfTokenCreatedWithoutException()
+        public void AuthorizeReturnsOkIfTokenCreatedWithoutException()
         {
-            var loginRequest = new LoginRequestDto()
+            var loginRequest = new AuthorizationRequestDto()
             {
                 Email = "username",
                 Password = "password"
             };
 
             _accountServiceMock
-                .Setup(service => service.Authenticate(loginRequest.Email, loginRequest.Password))
+                .Setup(service => service.Authorize(loginRequest.Email, loginRequest.Password))
                 .Returns(new User()
                 {
                     Id = 1,
@@ -65,7 +85,7 @@ namespace Strive.Tests.API.Account
                     Username = "username"
                 });
 
-            IActionResult result = this.AccountControllerInstance.Authenticate(loginRequest);
+            IActionResult result = this.AccountControllerInstance.Authorize(loginRequest);
 
             Assert.IsType<OkObjectResult>(result);
         }

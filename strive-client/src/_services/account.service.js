@@ -36,7 +36,7 @@ function login(user) {
     headers: httpHeaders.contentTypeJson,
     body: JSON.stringify(user)
   };
-  return fetch(`${config.apiUrl}/account/authenticate`, requestOptions);
+  return fetch(`${config.apiUrl}/account/authorize`, requestOptions);
 }
 
 /**
