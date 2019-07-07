@@ -2,11 +2,16 @@
 {
     public class StriveDatabaseException : StriveException
     {
-        public StriveDatabaseException() : base("StriveDatabaseException")
+        public StriveDatabaseException() : base()
         {
         }
 
-        public StriveDatabaseException(string message) : base(message)
+        public StriveDatabaseException(string description) : base(description)
+        {
+        }
+
+        public StriveDatabaseException(string message, string description) 
+            : base(message, description)
         {
         }
     }
