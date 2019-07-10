@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Strive.Data.Dtos;
 using Strive.Exceptions;
 
@@ -42,12 +43,15 @@ namespace Strive.API.Middlewares
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
 
+            var settings = new JsonSerializerSettings();
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
             await context.Response.WriteAsync(JsonConvert.SerializeObject(
                 new ErrorResponseDto()
                 {
                     Message = exceptionMessage,
                     Description = exceptionDescription
-                }));
+                }, settings));
         }
     }
 }
