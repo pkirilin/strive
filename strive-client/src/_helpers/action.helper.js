@@ -1,4 +1,5 @@
 import { alertActions } from "../_actions";
+import { utils } from "./utils.helper";
 
 /** Contains helper functions for using in app actions */
 export const actionHelper = {
@@ -13,8 +14,15 @@ export const actionHelper = {
  * @param {Function} error Error action creator
  */
 function handleInternalServerErrorResponse(response, dispatch, error) {
-  response.text().then(internalServerErrorMessage => {
-    let errorMessage = `Internal server error. Error message: ${internalServerErrorMessage}`;
+  response.json().then(internalServerErrorData => {
+    const { message, description } = internalServerErrorData;
+    let errorMessage;
+    if (utils.isUndefinedOrEmpty(description)) {
+      errorMessage = message;
+    } else {
+      errorMessage = `${message}: ${description}`;
+    }
+
     dispatch(
       error({
         internalServerError: errorMessage

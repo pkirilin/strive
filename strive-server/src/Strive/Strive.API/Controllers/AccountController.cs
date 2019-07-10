@@ -9,10 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Strive.Data.Dtos.Account;
 using Strive.Data.Services.Interfaces;
-using Strive.Exceptions;
 
 namespace Strive.API.Controllers
 {
@@ -47,43 +45,32 @@ namespace Strive.API.Controllers
         [HttpPost("authorize")]
         public IActionResult Authorize([FromBody] AuthorizationRequestDto userLoginRequestData)
         {
-            try
+            User user = _accountService.Authorize(userLoginRequestData.Email, userLoginRequestData.Password);
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
-                User user = _accountService.Authorize(userLoginRequestData.Email, userLoginRequestData.Password);
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-
-                var tokenDescriptor = new SecurityTokenDescriptor
+                Subject = new ClaimsIdentity(new Claim[]
                 {
-                    Subject = new ClaimsIdentity(new Claim[]
-                    {
-                        new Claim(ClaimTypes.Name, user.Id.ToString())
-                    }),
-                    Expires = DateTime.UtcNow.AddDays(7),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
-                        SecurityAlgorithms.HmacSha256Signature)
-                };
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                string tokenString = tokenHandler.WriteToken(token);
+                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            string tokenString = tokenHandler.WriteToken(token);
 
-                // Returning basic user info (without password) and token to store client side
-                var response = new AuthorizationResponseDto()
-                {
-                    Id = user.Id,
-                    Username = user.Username,
-                    Token = tokenString
-                };
-                return Ok(response);
-            }
-            catch (StriveException)
+            // Returning basic user info (without password) and token to store client side
+            var response = new AuthorizationResponseDto()
             {
-                return Unauthorized();
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
+                Id = user.Id,
+                Username = user.Username,
+                Token = tokenString
+            };
+            return Ok(response);
         }
 
         /// <summary>
@@ -94,32 +81,25 @@ namespace Strive.API.Controllers
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterRequestDto userRegisterRequestData)
         {
-            try
+            // Validates data from form
+            if (ModelState.IsValid)
             {
-                // Validates data from form
-                if (ModelState.IsValid)
-                {
-                    if (_accountService.IsEmailExists(userRegisterRequestData.Email))
-                        ModelState.AddModelError("emailRemote", "Such email is already exists");
+                if (_accountService.IsEmailExists(userRegisterRequestData.Email))
+                    ModelState.AddModelError("emailRemote", "Such email is already exists");
 
-                    if (_accountService.IsUsernameExists(userRegisterRequestData.Username))
-                        ModelState.AddModelError("usernameRemote", "Such username is already in use");
-                }
-
-                // Validates all data including business logic
-                if (ModelState.IsValid)
-                {
-                    User user = _mapper.Map<User>(userRegisterRequestData);
-                    _accountService.Create(user, userRegisterRequestData.Password);
-                    return Ok();
-                }
-
-                return BadRequest(ModelState);
+                if (_accountService.IsUsernameExists(userRegisterRequestData.Username))
+                    ModelState.AddModelError("usernameRemote", "Such username is already in use");
             }
-            catch (Exception e)
+
+            // Validates all data including business logic
+            if (ModelState.IsValid)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+                User user = _mapper.Map<User>(userRegisterRequestData);
+                _accountService.Create(user, userRegisterRequestData.Password);
+                return Ok();
             }
+
+            return BadRequest(ModelState);
         }
     }
 }

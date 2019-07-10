@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Strive.API.Controllers;
@@ -13,59 +11,6 @@ namespace Strive.Tests.API.Tasks
 {
     public class TasksControllerUpdateTaskTests : TasksControllerTests
     {
-        [Fact]
-        public void UpdateTaskReturnsStatus500IfRepoSearchFailed()
-        {
-            var taskData = new TaskCreateUpdateRequestDto();
-            _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))
-                .Throws<Exception>();
-
-            ObjectResult result = this.TasksControllerInstance.UpdateTask(taskData) as ObjectResult;
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
-
-        [Fact]
-        public void UpdateTaskReturnsStatus500IfRepoUpdateFailed()
-        {
-            var taskData = new TaskCreateUpdateRequestDto()
-            {
-                Title = "test",
-                Description = "test"
-            };
-            _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))
-                .Returns(TestValuesProvider.GetTasks().FirstOrDefault());
-            _taskServiceMock.Setup(service => service.Update(It.IsAny<Task>()))
-                .Throws<Exception>();
-
-            ObjectResult result = this.TasksControllerInstance.UpdateTask(taskData) as ObjectResult;
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
-
-        [Fact]
-        public void UpdateTaskReturnsStatus500IfRepoGetStatusFailed()
-        {
-            var oldStatus = new TaskStatus() { Label = "old status" };
-            var newStatus = new TaskStatus() { Label = "new status" };
-            var taskData = new TaskCreateUpdateRequestDto() { Status = newStatus.Label };
-            var mappedTask = new Task() { Status = oldStatus };
-
-            _taskServiceMock.Setup(service => service.GetTaskById(It.IsAny<int>()))
-                .Returns(TestValuesProvider.GetTasks().FirstOrDefault());
-            _mapperMock.Setup(mapper => mapper.Map(It.IsAny<TaskCreateUpdateRequestDto>(), It.IsAny<Task>()))
-                .Returns(mappedTask);
-            _taskStatusServiceMock.Setup(service => service.GetStatus(taskData.Status))
-                .Throws<Exception>();
-
-            ObjectResult result = this.TasksControllerInstance.UpdateTask(taskData) as ObjectResult;
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
-
         [Fact]
         public void UpdateTaskReturnsNotFoundIfTaskNotFoundById()
         {

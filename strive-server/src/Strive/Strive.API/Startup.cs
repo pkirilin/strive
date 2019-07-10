@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Strive.API.Middlewares;
 using Strive.Data;
 using Strive.Extensions.NetCore;
 using Strive.Helpers.Settings;
@@ -81,10 +82,10 @@ namespace Strive.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseMiddleware<StriveExceptionHandlerMiddleware>();
+
             app.UseCors("AllowClientApp");
-
             app.UseAuthentication();
-
             app.UseMvc();
         }
     }

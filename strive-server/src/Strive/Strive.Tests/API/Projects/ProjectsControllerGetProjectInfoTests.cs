@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Strive.API.Controllers;
@@ -13,24 +11,6 @@ namespace Strive.Tests.API.Projects
 {
     public class ProjectsControllerGetProjectInfoTests : ProjectsControllerTests
     {
-        [Fact]
-        public void GetProjectInfoReturnsStatus500IfServiceFailed()
-        {
-            var requestData = new ProjectInfoRequestDto()
-            {
-                ProjectId = 1,
-                UserId = 1
-            };
-
-            _projectServiceMock.Setup(service => service.GetProjectById(It.IsAny<int>()))
-                .Throws<Exception>();
-
-            ObjectResult result = this.ProjectsControllerInstance.GetProjectInfo(requestData) as ObjectResult;
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
-
         [Fact]
         public void GetProjectInfoReturnsNotFoundIfServiceReturnedNull()
         {

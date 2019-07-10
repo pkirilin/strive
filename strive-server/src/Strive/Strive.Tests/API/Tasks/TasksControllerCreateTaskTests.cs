@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Strive.API.Controllers;
 using Strive.Data.Dtos.Tasks;
@@ -11,22 +9,6 @@ namespace Strive.Tests.API.Tasks
 {
     public class TasksControllerCreateTaskTests : TasksControllerTests
     {
-        [Fact]
-        public void CreateTaskReturnsStatus500OnServiceGetStatusException()
-        {
-            var taskData = new TaskCreateUpdateRequestDto();
-
-            _taskStatusServiceMock.Setup(service => service.GetStatus(It.IsAny<string>()))
-                .Throws<Exception>();
-
-            ObjectResult result = this.TasksControllerInstance.CreateTask(taskData) as ObjectResult;
-
-            _taskStatusServiceMock.Verify(service => service.GetStatus(It.IsAny<string>()), Times.Once);
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
-
         [Fact]
         public void CreateTaskReturnsNotFoundIfStatusNotFound()
         {
@@ -41,25 +23,6 @@ namespace Strive.Tests.API.Tasks
 
             Assert.IsType<NotFoundObjectResult>(result);
             Assert.Equal(taskData.Status, (result as NotFoundObjectResult)?.Value);
-        }
-
-        [Fact]
-        public void CreateTaskReturnsStatus500OnServiceCreateException()
-        {
-            var taskData = new TaskCreateUpdateRequestDto();
-            var foundStatus = new TaskStatus();
-
-            _taskStatusServiceMock.Setup(service => service.GetStatus(It.IsAny<string>()))
-                .Returns(foundStatus);
-            _taskServiceMock.Setup(service => service.Create(It.IsAny<Task>()))
-                .Throws<Exception>();
-
-            ObjectResult result = this.TasksControllerInstance.CreateTask(taskData) as ObjectResult;
-
-            _taskStatusServiceMock.Verify(service => service.GetStatus(It.IsAny<string>()), Times.Once);
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
         }
 
         [Fact]

@@ -12,60 +12,23 @@ namespace Strive.Tests.API.Account
 {
     public class AccountControllerAuthorizeTests : AccountControllerTests
     {
-        [Fact]
-        public void AuthorizeReturnsStatus500IfTokenCreatedWithException()
-        {
-            var loginRequest = new AuthorizationRequestDto()
-            {
-                Email = "username",
-                Password = "password"
-            };
-            // Configuring settings to return null to get exception for the test
-            _appSettingsMock.Setup(s => s.Value)
-                .Returns(null as AppSettings);
+        //[Fact]
+        //public void AuthorizeReturnsUnauthorizedIfServiceFailedWithCustomException()
+        //{
+        //    var loginRequest = new AuthorizationRequestDto()
+        //    {
+        //        Email = "username",
+        //        Password = "password"
+        //    };
 
-            ObjectResult result = this.AccountControllerInstance.Authorize(loginRequest) as ObjectResult;
+        //    _accountServiceMock
+        //        .Setup(service => service.Authorize(It.IsNotNull<string>(), It.IsNotNull<string>()))
+        //        .Throws<StriveException>();
 
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
+        //    IActionResult result = this.AccountControllerInstance.Authorize(loginRequest);
 
-        [Fact]
-        public void AuthorizeReturnsStatus500IfServiceFailed()
-        {
-            var loginRequest = new AuthorizationRequestDto()
-            {
-                Email = "username",
-                Password = "password"
-            };
-
-            _accountServiceMock
-                .Setup(service => service.Authorize(It.IsNotNull<string>(), It.IsNotNull<string>()))
-                .Throws<Exception>();
-
-            ObjectResult result = this.AccountControllerInstance.Authorize(loginRequest) as ObjectResult;
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
-
-        [Fact]
-        public void AuthorizeReturnsUnauthorizedIfServiceFailedWithCustomException()
-        {
-            var loginRequest = new AuthorizationRequestDto()
-            {
-                Email = "username",
-                Password = "password"
-            };
-
-            _accountServiceMock
-                .Setup(service => service.Authorize(It.IsNotNull<string>(), It.IsNotNull<string>()))
-                .Throws<StriveException>();
-
-            IActionResult result = this.AccountControllerInstance.Authorize(loginRequest);
-
-            Assert.IsType<UnauthorizedResult>(result);
-        }
+        //    Assert.IsType<UnauthorizedResult>(result);
+        //}
 
         [Fact]
         public void AuthorizeReturnsOkIfTokenCreatedWithoutException()

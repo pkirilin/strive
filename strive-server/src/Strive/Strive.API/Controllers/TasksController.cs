@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Strive.Data.Dtos.Tasks;
 using Strive.Data.Entities;
@@ -41,19 +39,12 @@ namespace Strive.API.Controllers
         [HttpGet("get-list")]
         public IActionResult GetTaskList([FromQuery] TaskListRequestDto requestParams)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                List<Task> taskEntities = _taskService.GetTasks(requestParams);
-                List<TaskListItemDto> taskDtos = _mapper.Map<List<Task>, List<TaskListItemDto>>(taskEntities);
-                return Ok(taskDtos);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
+            List<Task> taskEntities = _taskService.GetTasks(requestParams);
+            List<TaskListItemDto> taskDtos = _mapper.Map<List<Task>, List<TaskListItemDto>>(taskEntities);
+            return Ok(taskDtos);
         }
 
         /// <summary>
@@ -63,20 +54,13 @@ namespace Strive.API.Controllers
         [HttpGet("get-info")]
         public IActionResult GetTaskInfo([FromQuery] TaskInfoRequestDto request)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                Task task = _taskService.GetTaskById(request.TaskId.Value);
-                if (task == null)
-                    return NotFound(request.TaskId.Value);
-                return Ok(_mapper.Map<Task, TaskInfoDto>(task));
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
+            Task task = _taskService.GetTaskById(request.TaskId.Value);
+            if (task == null)
+                return NotFound(request.TaskId.Value);
+            return Ok(_mapper.Map<Task, TaskInfoDto>(task));
         }
 
         /// <summary>
@@ -86,27 +70,20 @@ namespace Strive.API.Controllers
         [HttpPost("create")]
         public IActionResult CreateTask([FromBody] TaskCreateUpdateRequestDto taskData)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    Task task = _mapper.Map<Task>(taskData);
+                Task task = _mapper.Map<Task>(taskData);
 
-                    TaskStatus newTaskStatus = _taskStatusService.GetStatus(taskData.Status);
-                    if (newTaskStatus == null)
-                        return NotFound(taskData.Status);
+                TaskStatus newTaskStatus = _taskStatusService.GetStatus(taskData.Status);
+                if (newTaskStatus == null)
+                    return NotFound(taskData.Status);
 
-                    task.Status = newTaskStatus;
-                    _taskService.Create(task);
-                    return Ok();
-                }
-
-                return BadRequest(ModelState);
+                task.Status = newTaskStatus;
+                _taskService.Create(task);
+                return Ok();
             }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
+
+            return BadRequest(ModelState);
         }
 
         /// <summary>
@@ -117,35 +94,28 @@ namespace Strive.API.Controllers
         [HttpPut("update")]
         public IActionResult UpdateTask([FromBody] TaskCreateUpdateRequestDto updatedTaskData)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                Task taskForUpdate = _taskService.GetTaskById(updatedTaskData.Id.Value);
+                if (taskForUpdate != null)
                 {
-                    Task taskForUpdate = _taskService.GetTaskById(updatedTaskData.Id.Value);
-                    if (taskForUpdate != null)
+                    taskForUpdate = _mapper.Map(updatedTaskData, taskForUpdate);
+
+                    if (updatedTaskData.Status != taskForUpdate.Status.Label)
                     {
-                        taskForUpdate = _mapper.Map(updatedTaskData, taskForUpdate);
-
-                        if (updatedTaskData.Status != taskForUpdate.Status.Label)
-                        {
-                            TaskStatus newTaskStatus = _taskStatusService.GetStatus(updatedTaskData.Status);
-                            if (newTaskStatus == null)
-                                return NotFound(updatedTaskData.Status);
-                            taskForUpdate.Status = newTaskStatus;
-                        }
-
-                        _taskService.Update(taskForUpdate);
-                        return Ok();
+                        TaskStatus newTaskStatus = _taskStatusService.GetStatus(updatedTaskData.Status);
+                        if (newTaskStatus == null)
+                            return NotFound(updatedTaskData.Status);
+                        taskForUpdate.Status = newTaskStatus;
                     }
-                    return NotFound(updatedTaskData.Id);
-                }
 
-                return BadRequest(ModelState);
+                    _taskService.Update(taskForUpdate);
+                    return Ok();
+                }
+                return NotFound(updatedTaskData.Id);
             }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
+
+            return BadRequest(ModelState);
         }
 
         /// <summary>
@@ -155,23 +125,16 @@ namespace Strive.API.Controllers
         [HttpDelete("delete/{request.TaskId}")]
         public IActionResult DeleteTask(TaskDeleteRequestDto request)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                Task taskForDelete = _taskService.GetTaskById(request.TaskId.Value);
-                if (taskForDelete != null)
-                {
-                    _taskService.Delete(taskForDelete);
-                    return Ok();
-                }
-                return NotFound(request.TaskId.Value);
-            }
-            catch (Exception e)
+            Task taskForDelete = _taskService.GetTaskById(request.TaskId.Value);
+            if (taskForDelete != null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+                _taskService.Delete(taskForDelete);
+                return Ok();
             }
+            return NotFound(request.TaskId.Value);
         }
 
         /// <summary>
@@ -181,26 +144,19 @@ namespace Strive.API.Controllers
         [HttpPut("set-status")]
         public IActionResult SetStatus([FromBody] TaskSetStatusRequestDto setStatusData)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                IEnumerable<int> taskIdsForUpdate = setStatusData.Tasks
-                    .Where(task => task.Checked == true)
-                    .Select(task => task.Id);
-                IEnumerable<Task> taskEntitiesForUpdate = _taskService.GetTasks(taskIdsForUpdate);
+            IEnumerable<int> taskIdsForUpdate = setStatusData.Tasks
+                .Where(task => task.Checked == true)
+                .Select(task => task.Id);
+            IEnumerable<Task> taskEntitiesForUpdate = _taskService.GetTasks(taskIdsForUpdate);
 
-                TaskStatus status = _taskService.GetStatusByLabel(setStatusData.Status);
+            TaskStatus status = _taskService.GetStatusByLabel(setStatusData.Status);
 
-                if (status == null)
-                    return NotFound(setStatusData.Status);
-                return Ok(_taskService.ChangeStatus(taskEntitiesForUpdate, status));
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
+            if (status == null)
+                return NotFound(setStatusData.Status);
+            return Ok(_taskService.ChangeStatus(taskEntitiesForUpdate, status));
         }
     }
 }

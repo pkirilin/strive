@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Strive.Data.Dtos.Projects;
 using Strive.Data.Entities;
@@ -36,19 +34,12 @@ namespace Strive.API.Controllers
         [HttpGet("get-list")]
         public IActionResult GetProjectList([FromQuery] ProjectListRequestDto request)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                List<Project> projectEntities = _projectService.GetProjects(request.UserId.Value);
-                List<ProjectListItemDto> projectDtos = _mapper.Map<List<Project>, List<ProjectListItemDto>>(projectEntities);
-                return Ok(projectDtos);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
+            List<Project> projectEntities = _projectService.GetProjects(request.UserId.Value);
+            List<ProjectListItemDto> projectDtos = _mapper.Map<List<Project>, List<ProjectListItemDto>>(projectEntities);
+            return Ok(projectDtos);
         }
 
         /// <summary>
@@ -58,22 +49,15 @@ namespace Strive.API.Controllers
         [HttpGet("get-info")]
         public IActionResult GetProjectInfo([FromQuery] ProjectInfoRequestDto request)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                Project project = _projectService.GetProjectById(request.ProjectId.Value);
-                if (project == null)
-                    return NotFound(request.ProjectId.Value);
-                if (project.UserId != request.UserId.Value)
-                    return Unauthorized();
-                return Ok(_mapper.Map<Project, ProjectInfoDto>(project));
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
+            Project project = _projectService.GetProjectById(request.ProjectId.Value);
+            if (project == null)
+                return NotFound(request.ProjectId.Value);
+            if (project.UserId != request.UserId.Value)
+                return Unauthorized();
+            return Ok(_mapper.Map<Project, ProjectInfoDto>(project));
         }
 
         /// <summary>
@@ -83,27 +67,20 @@ namespace Strive.API.Controllers
         [HttpPost("create")]
         public IActionResult CreateProject([FromBody] ProjectCreateUpdateRequestDto projectData)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    if (_projectService.IsProjectExists(projectData.Name, projectData.UserId.Value))
-                        ModelState.AddModelError("projectNameRemote", "Project for target user with specified name is already exists");
-                }
-
-                if (ModelState.IsValid)
-                {
-                    Project project = _mapper.Map<Project>(projectData);
-                    _projectService.Create(project);
-                    return Ok();
-                }
-
-                return BadRequest(ModelState);
+                if (_projectService.IsProjectExists(projectData.Name, projectData.UserId.Value))
+                    ModelState.AddModelError("projectNameRemote", "Project for target user with specified name is already exists");
             }
-            catch (Exception e)
+
+            if (ModelState.IsValid)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+                Project project = _mapper.Map<Project>(projectData);
+                _projectService.Create(project);
+                return Ok();
             }
+
+            return BadRequest(ModelState);
         }
 
         /// <summary>
@@ -114,38 +91,31 @@ namespace Strive.API.Controllers
         [HttpPut("update")]
         public IActionResult UpdateProject([FromBody] ProjectCreateUpdateRequestDto updatedProjectData)
         {
-            try
+            Project projectForUpdate = _projectService.GetProjectById(updatedProjectData.Id.Value);
+
+            if (projectForUpdate == null)
+                return NotFound(updatedProjectData.Id);
+
+            if (ModelState.IsValid)
             {
-                Project projectForUpdate = _projectService.GetProjectById(updatedProjectData.Id.Value);
-
-                if (projectForUpdate == null)
-                    return NotFound(updatedProjectData.Id);
-
-                if (ModelState.IsValid)
-                {
-                    // Adding validation error for project name only if it's really changed
-                    // Otherwise user will not be able to edit project without changing its name
-                    if (projectForUpdate.Name != updatedProjectData.Name
-                        && _projectService.IsProjectExists
-                            (updatedProjectData.Name, updatedProjectData.UserId.Value))
-                        ModelState.AddModelError("projectNameRemote",
-                            "Project for target user with specified name is already exists");
-                }
-
-                if (ModelState.IsValid)
-                {
-                    // Returns projectForUpdate object with fields rewritten according to DTO object
-                    projectForUpdate = _mapper.Map(updatedProjectData, projectForUpdate);
-                    _projectService.Update(projectForUpdate);
-                    return Ok();
-                }
-
-                return BadRequest(ModelState);
+                // Adding validation error for project name only if it's really changed
+                // Otherwise user will not be able to edit project without changing its name
+                if (projectForUpdate.Name != updatedProjectData.Name
+                    && _projectService.IsProjectExists
+                        (updatedProjectData.Name, updatedProjectData.UserId.Value))
+                    ModelState.AddModelError("projectNameRemote",
+                        "Project for target user with specified name is already exists");
             }
-            catch (Exception e)
+
+            if (ModelState.IsValid)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+                // Returns projectForUpdate object with fields rewritten according to DTO object
+                projectForUpdate = _mapper.Map(updatedProjectData, projectForUpdate);
+                _projectService.Update(projectForUpdate);
+                return Ok();
             }
+
+            return BadRequest(ModelState);
         }
 
         /// <summary>
@@ -155,23 +125,16 @@ namespace Strive.API.Controllers
         [HttpDelete("delete/{request.ProjectId}")]
         public IActionResult DeleteProject(ProjectDeleteRequestDto request)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                Project projectForDelete = _projectService.GetProjectById(request.ProjectId.Value);
-                if (projectForDelete != null)
-                {
-                    _projectService.Delete(projectForDelete);
-                    return Ok();
-                }
-                return NotFound(request.ProjectId.Value);
-            }
-            catch (Exception e)
+            Project projectForDelete = _projectService.GetProjectById(request.ProjectId.Value);
+            if (projectForDelete != null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+                _projectService.Delete(projectForDelete);
+                return Ok();
             }
+            return NotFound(request.ProjectId.Value);
         }
     }
 }

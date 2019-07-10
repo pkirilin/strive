@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Strive.API.Controllers;
@@ -13,40 +11,6 @@ namespace Strive.Tests.API.Projects
 {
     public class ProjectsControllerDeleteProjectTests : ProjectsControllerTests
     {
-        [Fact]
-        public void DeleteProjectReturnsStatus500IfRepoSearchFailed()
-        {
-            var request = new ProjectDeleteRequestDto()
-            {
-                ProjectId = 1
-            };
-            _projectServiceMock.Setup(service => service.GetProjectById(It.IsAny<int>()))
-                .Throws<Exception>();
-
-            ObjectResult result = this.ProjectsControllerInstance.DeleteProject(request) as ObjectResult;
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
-
-        [Fact]
-        public void DeleteProjectReturnsStatus500IfRepoDeleteFailed()
-        {
-            var request = new ProjectDeleteRequestDto()
-            {
-                ProjectId = 1
-            };
-            _projectServiceMock.Setup(service => service.GetProjectById(It.IsAny<int>()))
-                .Returns(TestValuesProvider.GetProjects().FirstOrDefault());
-            _projectServiceMock.Setup(service => service.Delete(It.IsNotNull<Project>()))
-                .Throws<Exception>();
-
-            ObjectResult result = this.ProjectsControllerInstance.DeleteProject(request) as ObjectResult;
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
-
         [Fact]
         public void DeleteProjectReturnsNotFoundIfProjectNotFoundById()
         {

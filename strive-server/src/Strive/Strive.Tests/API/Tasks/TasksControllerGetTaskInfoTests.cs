@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Strive.API.Controllers;
 using Strive.Data.Dtos.Tasks;
@@ -12,22 +10,6 @@ namespace Strive.Tests.API.Tasks
 {
     public class TasksControllerGetTaskInfoTests : TasksControllerTests
     {
-        [Fact]
-        public void GetTaskInfoReturnsStatus500IfServiceFailed()
-        {
-            var request = new TaskInfoRequestDto()
-            {
-                TaskId = 1
-            };
-            _taskServiceMock.Setup(service => service.GetTaskById(request.TaskId.Value))
-                .Throws<Exception>();
-
-            ObjectResult result = this.TasksControllerInstance.GetTaskInfo(request) as ObjectResult;
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
-
         [Fact]
         public void ReturnsBadRequestIfModelStateHasErrors()
         {

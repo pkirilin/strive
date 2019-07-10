@@ -11,25 +11,6 @@ namespace Strive.Tests.API.TaskStatuses
     public class GetStatusTabsTests : TaskStatusesControllerTests
     {
         [Fact]
-        public void ReturnsStatus500IfServiceFailed()
-        {
-            var request = new TaskStatusGetTabsRequestDto()
-            {
-                ProjectId = 1
-            };
-
-            _taskStatusServiceMock.Setup(service => service.GetStatusTabs(It.IsAny<int>()))
-                .Throws<Exception>();
-
-            ObjectResult result = this.TaskStatusesControllerInstance.GetStatusTabs(request) as ObjectResult;
-
-            _taskStatusServiceMock.Verify(service => service.GetStatusTabs(It.IsAny<int>()), Times.Once);
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
-
-        [Fact]
         public void ReturnsBadRequestIfModelStateHasErrors()
         {
             var request = new TaskStatusGetTabsRequestDto()

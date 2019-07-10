@@ -32,16 +32,9 @@ namespace Strive.API.Controllers
         [HttpGet("get-statuses")]
         public IActionResult GetStatuses()
         {
-            try
-            {
-                var statusEntities = _taskStatusService.GetStatuses();
-                var statusDtos = _mapper.Map<IEnumerable<TaskStatusSelectItemDto>>(statusEntities);
-                return Ok(statusDtos);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
+            var statusEntities = _taskStatusService.GetStatuses();
+            var statusDtos = _mapper.Map<IEnumerable<TaskStatusSelectItemDto>>(statusEntities);
+            return Ok(statusDtos);
         }
 
         /// <summary>
@@ -51,17 +44,10 @@ namespace Strive.API.Controllers
         [HttpGet("get-status-tabs")]
         public IActionResult GetStatusTabs([FromQuery] TaskStatusGetTabsRequestDto request)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                return Ok(_taskStatusService.GetStatusTabs(request.ProjectId.Value));
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
+            return Ok(_taskStatusService.GetStatusTabs(request.ProjectId.Value));
         }
     }
 }

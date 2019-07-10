@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Strive.API.Controllers;
 using Strive.Data.Dtos.Tasks;
 using Strive.Data.Entities;
-using Strive.Exceptions;
 using Strive.Tests.TestValues;
 using Xunit;
 
@@ -12,23 +10,6 @@ namespace Strive.Tests.API.Tasks
 {
     public class TasksControllerGetTaskListTests : TasksControllerTests
     {
-        [Fact]
-        public void TasksControllerReturnsStatus500IfServiceThrewException()
-        {
-            var requestParams = new TaskListRequestDto()
-            {
-                ProjectId = 1
-            };
-
-            _taskServiceMock.Setup(service => service.GetTasks(requestParams))
-                .Throws<StriveDatabaseException>();
-
-            ObjectResult result = this.TasksControllerInstance.GetTaskList(requestParams) as ObjectResult;
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
-
         [Fact]
         public void TasksControllerReturnsBadRequestIfModelStateHasErrors()
         {

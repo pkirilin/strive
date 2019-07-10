@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Strive.API.Controllers;
@@ -13,83 +11,6 @@ namespace Strive.Tests.API.Tasks
 {
     public class TasksControllerSetStatusTests : TasksControllerTests
     {
-        [Fact]
-        public void SetStatusReturnsStatus500OnGetTasksException()
-        {
-            var setStatusData = new TaskSetStatusRequestDto()
-            {
-                Status = "test status",
-                Tasks = TestValuesProvider.GetTaskListItems()
-            };
-
-            _taskServiceMock.Setup(service => service.GetTasks(It.IsAny<IEnumerable<int>>()))
-                .Throws<Exception>();
-
-            ObjectResult result = this.TasksControllerInstance.SetStatus(setStatusData) as ObjectResult;
-
-            _taskServiceMock.Verify(service => service.GetTasks(It.IsAny<IEnumerable<int>>()), Times.Once);
-            _taskServiceMock.Verify(service => service.GetStatusByLabel(It.IsAny<string>()), Times.Never);
-            _taskServiceMock.Verify(service => service.ChangeStatus(It.IsAny<IEnumerable<Task>>(), It.IsAny<TaskStatus>()), Times.Never);
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
-
-        [Fact]
-        public void SetStatusReturnsStatus500OnGetStatusByLabelException()
-        {
-            var setStatusData = new TaskSetStatusRequestDto()
-            {
-                Status = "test status",
-                Tasks = TestValuesProvider.GetTaskListItems()
-            };
-
-            _taskServiceMock.Setup(service => service.GetTasks(It.IsAny<IEnumerable<int>>()))
-                .Returns(TestValuesProvider.GetTasks());
-            _taskServiceMock.Setup(service => service.GetStatusByLabel(setStatusData.Status))
-                .Throws<Exception>();
-
-            ObjectResult result = this.TasksControllerInstance.SetStatus(setStatusData) as ObjectResult;
-
-            _taskServiceMock.Verify(service => service.GetTasks(It.IsAny<IEnumerable<int>>()), Times.Once);
-            _taskServiceMock.Verify(service => service.GetStatusByLabel(setStatusData.Status), Times.Once);
-            _taskServiceMock.Verify(service => service.ChangeStatus(It.IsAny<IEnumerable<Task>>(), It.IsAny<TaskStatus>()), Times.Never);
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
-
-        [Fact]
-        public void SetStatusReturnsStatus500OnChangeStatusException()
-        {
-            var setStatusData = new TaskSetStatusRequestDto()
-            {
-                Status = "test status",
-                Tasks = TestValuesProvider.GetTaskListItems()
-            };
-            List<Task> mappedTestTasks = TestValuesProvider.GetTasks();
-            var foundStatus = new TaskStatus()
-            {
-                Label = setStatusData.Status
-            };
-
-            _taskServiceMock.Setup(service => service.GetTasks(It.IsAny<IEnumerable<int>>()))
-                .Returns(mappedTestTasks);
-            _taskServiceMock.Setup(service => service.GetStatusByLabel(setStatusData.Status))
-                .Returns(foundStatus);
-            _taskServiceMock.Setup(service => service.ChangeStatus(mappedTestTasks, foundStatus))
-                .Throws<Exception>();
-
-            ObjectResult result = this.TasksControllerInstance.SetStatus(setStatusData) as ObjectResult;
-
-            _taskServiceMock.Verify(service => service.GetTasks(It.IsAny<IEnumerable<int>>()), Times.Once);
-            _taskServiceMock.Verify(service => service.GetStatusByLabel(setStatusData.Status), Times.Once);
-            _taskServiceMock.Verify(service => service.ChangeStatus(mappedTestTasks, foundStatus), Times.Once);
-
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status500InternalServerError, result.StatusCode);
-        }
-
         [Fact]
         public void SetStatusReturnsNotFoundWhenStatusNotExists()
         {
