@@ -24,7 +24,7 @@ namespace Strive.Data.Services.Classes
         {
             // Checking if username or password is filled
             if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))
-                throw new ArgumentException("Authentication failed: username and/or password is empty");
+                throw new StriveSecurityException("Authorization failed", "Username and/or password is empty");
 
             User user;
 
@@ -32,17 +32,17 @@ namespace Strive.Data.Services.Classes
             {
                 user = _userRepo.GetSingleOrDefault(u => u.Email == email);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to get user by email. Error message: {e.Message}");
+                throw new StriveDatabaseException("Authorization failed", "Failed to find user");
             }
 
             // Checking if user exists in db
             if (user == null)
-                throw new StriveDatabaseException("Authentication failed: user not found");
+                throw new StriveSecurityException("Authorization failed", "User not found");
 
             // Checking if password is correct
-            bool isPasswordCorrect;
+            bool isPasswordCorrect = false;
             try
             {
                 isPasswordCorrect = SecurityHelpers.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt);
@@ -50,11 +50,11 @@ namespace Strive.Data.Services.Classes
             catch (Exception)
             {
                 throw new StriveSecurityException(
-                    "Authentication failed: wrong data passed for verifying password hash");
+                    "Authorization failed", "Wrong data passed for verifying password hash");
             }
 
             if (isPasswordCorrect == false)
-                throw new StriveSecurityException("Authentication failed: incorrect password");
+                throw new StriveSecurityException("Authorization failed", "Incorrect password");
 
             // Authentication successful
             return user;
@@ -77,21 +77,25 @@ namespace Strive.Data.Services.Classes
             }
             catch (ArgumentException e)
             {
-                throw new StriveSecurityException(e.Message);
+                throw new StriveSecurityException("Failed to create password hash", e.Message);
             }
 
             try
             {
                 _userRepo.Insert(user);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to create user. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to create user");
             }
 
             return user;
         }
 
+        /// <summary>
+        /// Checks if user's account email exists
+        /// </summary>
+        /// <param name="email">Email</param>
         public bool IsEmailExists(string email)
         {
             try
@@ -101,12 +105,17 @@ namespace Strive.Data.Services.Classes
                     return false;
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to check if user's account email exists. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to check if user's account email exists");
             }
         }
 
+        /// <summary>
+        /// Checks if username exists
+        /// </summary>
+        /// <param name="username">Username</param>
+        /// <returns></returns>
         public bool IsUsernameExists(string username)
         {
             try
@@ -116,9 +125,9 @@ namespace Strive.Data.Services.Classes
                     return false;
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to check if user's account username exists. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to check if user's account username exists");
             }
         }
     }

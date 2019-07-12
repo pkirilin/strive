@@ -1,10 +1,6 @@
-﻿using System;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
+﻿using Microsoft.AspNetCore.Mvc;
 using Strive.API.Controllers;
 using Strive.Data.Dtos.Account;
-using Strive.Data.Entities;
 using Xunit;
 
 namespace Strive.Tests.API.Account

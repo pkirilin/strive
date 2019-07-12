@@ -39,12 +39,8 @@ namespace Strive.Helpers
         /// </summary>
         public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-            if (password == null)
-                throw new ArgumentNullException("Failed to create password hash: password is not set");
-
             if (String.IsNullOrWhiteSpace(password))
-                throw new ArgumentException("Failed to create password hash: password cannot be empty or whitespace",
-                    "password");
+                throw new ArgumentException("Password cannot be empty or whitespace");
 
             using (var hmac = new System.Security.Cryptography.HMACSHA512())
             {

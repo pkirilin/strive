@@ -14,10 +14,10 @@ namespace Strive.Tests.Services.Account
         {
             AccountService accountService = this.AccountServiceInstance;
 
-            Assert.Throws<ArgumentException>(() => accountService.Authorize("", "password"));
-            Assert.Throws<ArgumentException>(() => accountService.Authorize(null, "password"));
-            Assert.Throws<ArgumentException>(() => accountService.Authorize("username", ""));
-            Assert.Throws<ArgumentException>(() => accountService.Authorize("username", null));
+            Assert.Throws<StriveSecurityException>(() => accountService.Authorize("", "password"));
+            Assert.Throws<StriveSecurityException>(() => accountService.Authorize(null, "password"));
+            Assert.Throws<StriveSecurityException>(() => accountService.Authorize("username", ""));
+            Assert.Throws<StriveSecurityException>(() => accountService.Authorize("username", null));
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace Strive.Tests.Services.Account
                 .Returns(null as User);
             AccountService accountService = this.AccountServiceInstance;
 
-            Assert.Throws<StriveDatabaseException>(() => accountService.Authorize(username, "password"));
+            Assert.Throws<StriveSecurityException>(() => accountService.Authorize(username, "password"));
         }
 
         [Fact]

@@ -70,6 +70,7 @@ namespace Strive.API.Controllers
                 Username = user.Username,
                 Token = tokenString
             };
+
             return Ok(response);
         }
 
