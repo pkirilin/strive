@@ -1,34 +1,23 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Form, FormGroup, Button } from "reactstrap";
-import { AppSpinner, AppTextBox } from "../../_components";
-import { validationStatuses } from "../../_constants";
+import { AppSpinner, AppTextBox } from "../../../_components";
+import { validationStatuses } from "../../../_constants";
 import {
   validationRulesSetters,
   validationUtils
-} from "../../_helpers/validation";
-import { accountActions, alertActions } from "../../_actions";
+} from "../../../_helpers/validation";
 
-const mapStateToProps = state => {
-  const {
-    registering,
-    badRequestResponseJson
-  } = state.accountReducer.registerReducer;
-  return {
-    registering,
-    badRequestResponseJson
-  };
-};
-
-class RegisterForm extends React.Component {
+export default class RegisterForm extends Component {
   static propTypes = {
     registering: PropTypes.bool,
-    badRequestResponseJson: PropTypes.shape({
+    badRequestResponse: PropTypes.shape({
       emailRemote: PropTypes.arrayOf(PropTypes.string),
       usernameRemote: PropTypes.arrayOf(PropTypes.string)
-    })
+    }),
+    clearAlert: PropTypes.func,
+    performRegister: PropTypes.func
   };
 
   constructor(props) {
@@ -39,15 +28,14 @@ class RegisterForm extends React.Component {
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onPasswordConfirmChange = this.onPasswordConfirmChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-
     this.onSubmitValidationCompleted = this.onSubmitValidationCompleted.bind(
       this
     );
 
-    this.trackEmailBadRequestResponse = this.trackEmailBadRequestResponse.bind(
+    this.handleEmailBadRequestResponse = this.handleEmailBadRequestResponse.bind(
       this
     );
-    this.trackUsernameBadRequestResponse = this.trackUsernameBadRequestResponse.bind(
+    this.handleUsernameBadRequestResponse = this.handleUsernameBadRequestResponse.bind(
       this
     );
 
@@ -78,36 +66,30 @@ class RegisterForm extends React.Component {
     };
   }
 
-  trackEmailBadRequestResponse() {
-    if (
-      this.props.badRequestResponseJson &&
-      this.props.badRequestResponseJson.emailRemote
-    ) {
+  handleEmailBadRequestResponse(errors) {
+    if (errors && errors.emailRemote) {
       this.setState({
         ...this.state,
         email: {
           ...this.state.email,
           validationState: {
             status: validationStatuses.invalid,
-            message: this.props.badRequestResponseJson.emailRemote.join(". ")
+            message: errors.emailRemote.join(". ")
           }
         }
       });
     }
   }
 
-  trackUsernameBadRequestResponse() {
-    if (
-      this.props.badRequestResponseJson &&
-      this.props.badRequestResponseJson.usernameRemote
-    ) {
+  handleUsernameBadRequestResponse(errors) {
+    if (errors && errors.usernameRemote) {
       this.setState({
         ...this.state,
         username: {
           ...this.state.username,
           validationState: {
             status: validationStatuses.invalid,
-            message: this.props.badRequestResponseJson.usernameRemote.join(". ")
+            message: errors.usernameRemote.join(". ")
           }
         }
       });
@@ -116,11 +98,10 @@ class RegisterForm extends React.Component {
 
   componentDidUpdate(prevProps) {
     // Tracks if any bad request (validation error) received from API
-    if (
-      prevProps.badRequestResponseJson !== this.props.badRequestResponseJson
-    ) {
-      this.trackEmailBadRequestResponse();
-      this.trackUsernameBadRequestResponse();
+    if (prevProps.badRequestResponse !== this.props.badRequestResponse) {
+      const { badRequestResponse: errors } = this.props;
+      this.handleEmailBadRequestResponse(errors);
+      this.handleUsernameBadRequestResponse(errors);
       return true;
     }
     return false;
@@ -188,20 +169,21 @@ class RegisterForm extends React.Component {
   onSubmitValidationCompleted() {
     if (validationUtils.focusFirstInvalidField("#registerForm") === false) {
       // Registration data is valid
-      this.props.dispatch(
-        accountActions.register({
-          email: this.state.email.value,
-          username: this.state.username.value,
-          password: this.state.password.value,
-          passwordConfirm: this.state.passwordConfirm.value
-        })
-      );
+      const { performRegister } = this.props;
+      performRegister({
+        email: this.state.email.value,
+        username: this.state.username.value,
+        password: this.state.password.value,
+        passwordConfirm: this.state.passwordConfirm.value
+      });
     }
   }
 
   onSubmit(event) {
+    const { clearAlert } = this.props;
+
     event.preventDefault();
-    this.props.dispatch(alertActions.clear());
+    clearAlert();
 
     let passwordValidationState = validationRulesSetters.validatePassword(
       this.state.password.value
@@ -292,7 +274,3 @@ class RegisterForm extends React.Component {
     );
   }
 }
-
-const connectedRegisterForm = connect(mapStateToProps)(RegisterForm);
-export { connectedRegisterForm as RegisterForm };
-export { RegisterForm as RegisterFormUnconnected };

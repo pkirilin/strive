@@ -1,24 +1,19 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Form, FormGroup, Button } from "reactstrap";
-import { AppSpinner, AppTextBox, AppCheckBox } from "../../_components";
-import { validationStatuses } from "../../_constants";
+import { AppSpinner, AppTextBox, AppCheckBox } from "../../../_components";
+import { validationStatuses } from "../../../_constants";
 import {
   validationUtils,
   validationRulesSetters
-} from "../../_helpers/validation";
-import { accountActions, alertActions } from "../../_actions";
+} from "../../../_helpers/validation";
 
-const mapStateToProps = state => {
-  const { loggingIn } = state.accountReducer.loginReducer;
-  return { loggingIn };
-};
-
-class LoginForm extends React.Component {
+export default class LoginForm extends Component {
   static propTypes = {
-    loggingIn: PropTypes.bool
+    loggingIn: PropTypes.bool,
+    clearAlert: PropTypes.func.isRequired,
+    performLogin: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -28,12 +23,11 @@ class LoginForm extends React.Component {
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onRememberMeCheckedChange = this.onRememberMeCheckedChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-
     this.onSubmitValidationCompleted = this.onSubmitValidationCompleted.bind(
       this
     );
 
-    let initFieldObj = {
+    const initFieldObj = {
       value: "",
       validationState: {
         status: validationStatuses.default,
@@ -93,19 +87,20 @@ class LoginForm extends React.Component {
   onSubmitValidationCompleted() {
     if (validationUtils.focusFirstInvalidField("#loginForm") === false) {
       // Login data is valid
-      this.props.dispatch(
-        accountActions.login({
-          email: this.state.email.value,
-          password: this.state.password.value,
-          rememberMe: this.state.rememberMe.checked
-        })
-      );
+      const { performLogin } = this.props;
+      performLogin({
+        email: this.state.email.value,
+        password: this.state.password.value,
+        rememberMe: this.state.rememberMe.checked
+      });
     }
   }
 
   onSubmit(event) {
+    const { clearAlert } = this.props;
+
     event.preventDefault();
-    this.props.dispatch(alertActions.clear());
+    clearAlert();
 
     this.setState(
       {
@@ -171,7 +166,3 @@ class LoginForm extends React.Component {
     );
   }
 }
-
-const connectedLoginForm = connect(mapStateToProps)(LoginForm);
-export { connectedLoginForm as LoginForm };
-export { LoginForm as LoginFormUnconnected };

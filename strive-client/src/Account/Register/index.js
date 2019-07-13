@@ -1,2 +1,3 @@
-export { RegisterPage } from "./RegisterPage";
-export { RegisterForm } from "./RegisterForm";
+import RegisterPage from "./components/RegisterPage";
+
+export { RegisterPage };

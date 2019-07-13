@@ -1,25 +1,25 @@
 import React from "react";
 import {
-  DocumentTitleSetter,
   AppHeader,
   PublicLayout,
+  DocumentTitleSetter,
   AppSectionSeparator
-} from "../../_components";
-import { config } from "../../_helpers";
-import { LoginForm } from "./LoginForm";
+} from "../../../_components";
+import { config } from "../../../_helpers";
+import RegisterFormContainer from "../containers/RegisterFormContainer";
 
-export class LoginPage extends React.Component {
+export default class RegisterPage extends React.Component {
   render() {
     return (
-      <DocumentTitleSetter values={["Login"]}>
+      <DocumentTitleSetter values={["Register"]}>
         <PublicLayout>
           <AppSectionSeparator>
-            <AppHeader>Sign in to {config.brandName}</AppHeader>
+            <AppHeader>Sign up to {config.brandName}</AppHeader>
           </AppSectionSeparator>
           <AppSectionSeparator separatorValue="5">
             <div className="row d-flex justify-content-center">
               <div className="col-md-6 col-sm-8 col">
-                <LoginForm />
+                <RegisterFormContainer />
               </div>
             </div>
           </AppSectionSeparator>

@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { RegisterFormUnconnected } from "./RegisterForm";
+import { RegisterFormUnconnected } from "../components/RegisterForm";
 
 describe("RegisterForm React component", () => {
   it("Renders without crashing", () => {

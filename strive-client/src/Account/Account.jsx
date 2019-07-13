@@ -7,7 +7,7 @@ import {
 } from "./";
 import { NotFoundPage } from "../ErrorPages";
 
-export class Account extends React.Component {
+export default class Account extends React.Component {
   render() {
     return (
       <Switch>

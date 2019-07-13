@@ -1,2 +1,3 @@
-export { LoginPage } from "./LoginPage";
-export { LoginForm } from "./LoginForm";
+import LoginPage from "./components/LoginPage";
+
+export { LoginPage };
