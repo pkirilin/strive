@@ -45,7 +45,7 @@ namespace Strive.API.Controllers
         [HttpPost("authorize")]
         public IActionResult Authorize([FromBody] AuthorizationRequestDto userLoginRequestData)
         {
-            User user = _accountService.Authorize(userLoginRequestData.Email, userLoginRequestData.Password);
+            var user = _accountService.Authorize(userLoginRequestData.Email, userLoginRequestData.Password);
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -95,7 +95,7 @@ namespace Strive.API.Controllers
             // Validates all data including business logic
             if (ModelState.IsValid)
             {
-                User user = _mapper.Map<User>(userRegisterRequestData);
+                var user = _mapper.Map<User>(userRegisterRequestData);
                 _accountService.Create(user, userRegisterRequestData.Password);
                 return Ok();
             }

@@ -123,7 +123,7 @@ namespace Strive.Data.Services.Classes
         {
             try
             {
-                Project targetProject = _projectRepo.GetAll()
+                var targetProject = _projectRepo.GetAll()
                     .Where(project => project.Name == projectName && project.UserId == userId)
                     .FirstOrDefault();
 

@@ -37,8 +37,8 @@ namespace Strive.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            List<Project> projectEntities = _projectService.GetProjects(request.UserId.Value);
-            List<ProjectListItemDto> projectDtos = _mapper.Map<List<Project>, List<ProjectListItemDto>>(projectEntities);
+            var projectEntities = _projectService.GetProjects(request.UserId.Value);
+            var projectDtos = _mapper.Map<List<Project>, List<ProjectListItemDto>>(projectEntities);
             return Ok(projectDtos);
         }
 
@@ -52,12 +52,16 @@ namespace Strive.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            Project project = _projectService.GetProjectById(request.ProjectId.Value);
+            var project = _projectService.GetProjectById(request.ProjectId.Value);
+
             if (project == null)
                 return NotFound(request.ProjectId.Value);
+
             if (project.UserId != request.UserId.Value)
                 return Unauthorized();
-            return Ok(_mapper.Map<Project, ProjectInfoDto>(project));
+
+            var projectInfo = _mapper.Map<Project, ProjectInfoDto>(project);
+            return Ok(projectInfo);
         }
 
         /// <summary>
@@ -75,7 +79,7 @@ namespace Strive.API.Controllers
 
             if (ModelState.IsValid)
             {
-                Project project = _mapper.Map<Project>(projectData);
+                var project = _mapper.Map<Project>(projectData);
                 _projectService.Create(project);
                 return Ok();
             }
@@ -91,7 +95,7 @@ namespace Strive.API.Controllers
         [HttpPut("update")]
         public IActionResult UpdateProject([FromBody] ProjectCreateUpdateRequestDto updatedProjectData)
         {
-            Project projectForUpdate = _projectService.GetProjectById(updatedProjectData.Id.Value);
+            var projectForUpdate = _projectService.GetProjectById(updatedProjectData.Id.Value);
 
             if (projectForUpdate == null)
                 return NotFound(updatedProjectData.Id);
@@ -128,12 +132,14 @@ namespace Strive.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            Project projectForDelete = _projectService.GetProjectById(request.ProjectId.Value);
+            var projectForDelete = _projectService.GetProjectById(request.ProjectId.Value);
+
             if (projectForDelete != null)
             {
                 _projectService.Delete(projectForDelete);
                 return Ok();
             }
+
             return NotFound(request.ProjectId.Value);
         }
     }

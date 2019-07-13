@@ -156,7 +156,7 @@ namespace Strive.Data.Services.Classes
         {
             try
             {
-                Task targetTask = _taskRepo.GetAllAsIQueryable()
+                var targetTask = _taskRepo.GetAllAsIQueryable()
                     .Where(task => task.Title == taskTitle && task.ProjectId == projectId)
                     .FirstOrDefault();
 

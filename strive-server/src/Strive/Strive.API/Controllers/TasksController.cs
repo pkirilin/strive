@@ -42,8 +42,8 @@ namespace Strive.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            List<Task> taskEntities = _taskService.GetTasks(requestParams);
-            List<TaskListItemDto> taskDtos = _mapper.Map<List<Task>, List<TaskListItemDto>>(taskEntities);
+            var taskEntities = _taskService.GetTasks(requestParams);
+            var taskDtos = _mapper.Map<List<Task>, List<TaskListItemDto>>(taskEntities);
             return Ok(taskDtos);
         }
 
@@ -57,10 +57,14 @@ namespace Strive.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            Task task = _taskService.GetTaskById(request.TaskId.Value);
+            var task = _taskService.GetTaskById(request.TaskId.Value);
+
             if (task == null)
                 return NotFound(request.TaskId.Value);
-            return Ok(_mapper.Map<Task, TaskInfoDto>(task));
+
+            var taskInfo = _mapper.Map<Task, TaskInfoDto>(task);
+
+            return Ok(taskInfo);
         }
 
         /// <summary>
@@ -72,9 +76,9 @@ namespace Strive.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                Task task = _mapper.Map<Task>(taskData);
+                var task = _mapper.Map<Task>(taskData);
 
-                TaskStatus newTaskStatus = _taskStatusService.GetStatus(taskData.Status);
+                var newTaskStatus = _taskStatusService.GetStatus(taskData.Status);
                 if (newTaskStatus == null)
                     return NotFound(taskData.Status);
 
@@ -96,14 +100,15 @@ namespace Strive.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                Task taskForUpdate = _taskService.GetTaskById(updatedTaskData.Id.Value);
+                var taskForUpdate = _taskService.GetTaskById(updatedTaskData.Id.Value);
+
                 if (taskForUpdate != null)
                 {
                     taskForUpdate = _mapper.Map(updatedTaskData, taskForUpdate);
 
                     if (updatedTaskData.Status != taskForUpdate.Status.Label)
                     {
-                        TaskStatus newTaskStatus = _taskStatusService.GetStatus(updatedTaskData.Status);
+                        var newTaskStatus = _taskStatusService.GetStatus(updatedTaskData.Status);
                         if (newTaskStatus == null)
                             return NotFound(updatedTaskData.Status);
                         taskForUpdate.Status = newTaskStatus;
@@ -128,12 +133,14 @@ namespace Strive.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            Task taskForDelete = _taskService.GetTaskById(request.TaskId.Value);
+            var taskForDelete = _taskService.GetTaskById(request.TaskId.Value);
+
             if (taskForDelete != null)
             {
                 _taskService.Delete(taskForDelete);
                 return Ok();
             }
+
             return NotFound(request.TaskId.Value);
         }
 
@@ -147,15 +154,15 @@ namespace Strive.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            IEnumerable<int> taskIdsForUpdate = setStatusData.Tasks
+            var taskIdsForUpdate = setStatusData.Tasks
                 .Where(task => task.Checked == true)
                 .Select(task => task.Id);
-            IEnumerable<Task> taskEntitiesForUpdate = _taskService.GetTasks(taskIdsForUpdate);
-
-            TaskStatus status = _taskService.GetStatusByLabel(setStatusData.Status);
+            var taskEntitiesForUpdate = _taskService.GetTasks(taskIdsForUpdate);
+            var status = _taskService.GetStatusByLabel(setStatusData.Status);
 
             if (status == null)
                 return NotFound(setStatusData.Status);
+
             return Ok(_taskService.ChangeStatus(taskEntitiesForUpdate, status));
         }
     }
