@@ -42,9 +42,9 @@ namespace Strive.Data.Services.Classes
 
                 return tasks.ToList();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to get tasks from database. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to get task list from database");
             }
         }
 
@@ -61,9 +61,9 @@ namespace Strive.Data.Services.Classes
                     .Where(task => taskIds.Contains(task.Id))
                     .AsEnumerable();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to get tasks from database. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to get task list from database");
             }
         }
 
@@ -81,9 +81,9 @@ namespace Strive.Data.Services.Classes
                     .Include(task => task.Status)
                     .SingleOrDefault(task => task.Id == taskId);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to get task by id. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to get task from database");
             }
         }
 
@@ -101,9 +101,9 @@ namespace Strive.Data.Services.Classes
             {
                 _taskRepo.Insert(task);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to create task. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to create task");
             }
         }
 
@@ -121,9 +121,9 @@ namespace Strive.Data.Services.Classes
             {
                 _taskRepo.Update(task);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to update task. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to update task");
             }
         }
 
@@ -141,9 +141,9 @@ namespace Strive.Data.Services.Classes
             {
                 _taskRepo.Delete(task);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to delete task. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to delete task");
             }
         }
 
@@ -164,9 +164,9 @@ namespace Strive.Data.Services.Classes
                     return false;
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Cannot check if task is exists. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to check if task exists");
             }
         }
 
@@ -181,9 +181,9 @@ namespace Strive.Data.Services.Classes
             {
                 return _taskStatusRepo.GetSingleOrDefault(status => status.Label == label);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to get task status. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to get task status");
             }
         }
 
@@ -202,9 +202,9 @@ namespace Strive.Data.Services.Classes
                 _taskRepo.Update(tasks);
                 return tasks;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to change task status. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to change task status");
             }
         }
     }

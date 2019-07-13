@@ -31,9 +31,9 @@ namespace Strive.Data.Services.Classes
                     .OrderBy(status => status.Label)
                     .AsEnumerable();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to get task statuses from database. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to get task statuses from database");
             }
         }
 
@@ -76,9 +76,9 @@ namespace Strive.Data.Services.Classes
 
                 return statusTabsInfo;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to get data for task status tabs. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to get data for task status tabs");
             }
         }
 
@@ -93,9 +93,9 @@ namespace Strive.Data.Services.Classes
             {
                 return _taskStatusRepo.GetSingleOrDefault(status => status.Label == label);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to get task status. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to get task status");
             }
         }
     }

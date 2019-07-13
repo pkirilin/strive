@@ -31,9 +31,9 @@ namespace Strive.Data.Services.Classes
                     .OrderBy(project => project.Name)
                     .ToList();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to get projects from database. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to get project list from database");
             }
         }
 
@@ -48,9 +48,9 @@ namespace Strive.Data.Services.Classes
             {
                 return _projectRepo.GetById(projectId);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to get project by id. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to get project from database");
             }
         }
 
@@ -68,9 +68,9 @@ namespace Strive.Data.Services.Classes
             {
                 _projectRepo.Insert(project);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to add project. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to create project");
             }
         }
 
@@ -88,9 +88,9 @@ namespace Strive.Data.Services.Classes
             {
                 _projectRepo.Update(project);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to update project. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to update project");
             }
         }
 
@@ -108,9 +108,9 @@ namespace Strive.Data.Services.Classes
             {
                 _projectRepo.Delete(project);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Failed to delete project. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to delete project");
             }
         }
 
@@ -131,9 +131,9 @@ namespace Strive.Data.Services.Classes
                     return false;
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new StriveDatabaseException($"Cannot check if project is exists. Error message: {e.Message}");
+                throw new StriveDatabaseException("Failed to check if project exists");
             }
         }
     }
