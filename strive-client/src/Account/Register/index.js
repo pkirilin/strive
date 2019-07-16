@@ -1,3 +1,3 @@
 import RegisterPage from "./components/RegisterPage";
 
-export { RegisterPage };
+export default RegisterPage;

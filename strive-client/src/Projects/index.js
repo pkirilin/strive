@@ -1,2 +1,3 @@
-export { Projects } from "./Projects";
-export { ProjectsOverviewPage } from "./Overview/ProjectsOverviewPage";
+import Projects from "./Projects";
+
+export default Projects;

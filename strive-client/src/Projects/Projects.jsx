@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { Switch, Redirect, Route } from "react-router";
 import { NotFoundPage } from "../ErrorPages";
 import { ProjectsOverviewPage } from "./Overview/ProjectsOverviewPage";
@@ -6,7 +6,7 @@ import CreateProjectPage from "./Create";
 import EditProjectPage from "./Edit";
 import { ProjectInfoPage } from "./Info/ProjectInfoPage";
 
-export class Projects extends React.Component {
+export default class Projects extends Component {
   render() {
     return (
       <Switch>
