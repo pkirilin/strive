@@ -1,13 +1,13 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   PrivateLayout,
   AppHeader,
   DocumentTitleSetter,
   AppSectionSeparator
-} from "../../_components";
-import { CreateProjectForm } from "./CreateProjectForm";
+} from "../../../_components";
+import CreateProjectForm from "./CreateProjectForm";
 
-export class CreateProjectPage extends React.Component {
+export default class CreateProjectPage extends Component {
   render() {
     return (
       <DocumentTitleSetter values={["Create project"]}>

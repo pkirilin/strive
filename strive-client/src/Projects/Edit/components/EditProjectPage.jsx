@@ -1,24 +1,16 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { Component } from "react";
 import {
   PrivateLayout,
   AppHeader,
   DocumentTitleSetter,
   AppSectionSeparator
-} from "../../_components";
-import { EditProjectForm } from "./EditProjectForm";
-import { projectsActions } from "../../_actions";
+} from "../../../_components";
+import EditProjectForm from "./EditProjectForm";
 
-class EditProjectPage extends React.Component {
-  constructor(props) {
-    super(props);
-
+export default class EditProjectPage extends Component {
+  render() {
     // Getting projectId for editing from request string
     const { projectId } = this.props.match.params;
-    this.props.dispatch(projectsActions.getInfo(projectId));
-  }
-
-  render() {
     return (
       <DocumentTitleSetter values={["Edit project"]}>
         <PrivateLayout>
@@ -26,13 +18,10 @@ class EditProjectPage extends React.Component {
             <AppHeader>Edit project</AppHeader>
           </AppSectionSeparator>
           <AppSectionSeparator>
-            <EditProjectForm />
+            <EditProjectForm projectId={Number(projectId)} />
           </AppSectionSeparator>
         </PrivateLayout>
       </DocumentTitleSetter>
     );
   }
 }
-
-const connectedEditProjectPage = connect()(EditProjectPage);
-export { connectedEditProjectPage as EditProjectPage };

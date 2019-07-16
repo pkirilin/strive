@@ -1,62 +1,36 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { Form, FormGroup, Button, Row, Col } from "reactstrap";
-import { projectsActions } from "../_actions";
-import { AppTextBox, AppTextArea, AppSpinner } from "../_components";
-import { validationStatuses } from "../_constants";
-import { historyHelper } from "../_helpers";
+import { AppTextBox, AppTextArea, AppSpinner } from "../../../_components";
+import { validationStatuses } from "../../../_constants";
+import { historyHelper } from "../../../_helpers";
 import {
   validationRulesSetters,
   validationUtils
-} from "../_helpers/validation";
+} from "../../../_helpers/validation";
 
-const mapStateToProps = state => {
-  let {
-    sendingProjectInfo,
-    badRequestResponseJson,
-    internalServerError
-  } = state.projectsReducer.projectOperationsReducer;
-
-  let {
-    loading,
-    project,
-    notFound,
-    failedToFetch
-  } = state.projectsReducer.projectInfoReducer;
-
-  return {
-    sendingProjectInfo,
-    badRequestResponseJson,
-    gettingProjectForUpdate: loading,
-    project,
-    notFoundProjectForUpdate: notFound,
-    failedToFetchProjectForUpdate: failedToFetch,
-    internalServerError
-  };
-};
-
-class ProjectForm extends React.Component {
+export default class ProjectForm extends Component {
   static propTypes = {
     purpose: PropTypes.oneOf(["create", "update"]).isRequired,
     id: PropTypes.string,
     loadingText: PropTypes.string,
     submitButtonText: PropTypes.string,
-
     sendingProjectInfo: PropTypes.bool,
-    gettingProjectForUpdate: PropTypes.bool,
-    notFoundProjectForUpdate: PropTypes.bool,
-    internalServerError: PropTypes.string,
-
-    badRequestResponseJson: PropTypes.shape({
+    badRequestResponse: PropTypes.shape({
       projectNameRemote: PropTypes.arrayOf(PropTypes.string)
     }),
-
+    internalServerError: PropTypes.string,
+    gettingProjectForUpdate: PropTypes.bool,
     project: PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       description: PropTypes.string
-    })
+    }),
+    notFoundProjectForUpdate: PropTypes.bool,
+    failedToFetchProjectForUpdate: PropTypes.bool,
+    createProject: PropTypes.func.isRequired,
+    updateProject: PropTypes.func.isRequired,
+    getProjectInfo: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -78,14 +52,14 @@ class ProjectForm extends React.Component {
       this
     );
 
-    this.trackProjectNameBadRequestResponse = this.trackProjectNameBadRequestResponse.bind(
+    this.handleProjectNameBadRequestResponse = this.handleProjectNameBadRequestResponse.bind(
       this
     );
-    this.trackProjectForUpdateFetchedFromServer = this.trackProjectForUpdateFetchedFromServer.bind(
+    this.handleProjectForUpdateFetchedFromServer = this.handleProjectForUpdateFetchedFromServer.bind(
       this
     );
 
-    let initFieldObj = {
+    const initFieldObj = {
       value: "",
       validationState: {
         status: validationStatuses.default,
@@ -105,28 +79,24 @@ class ProjectForm extends React.Component {
     };
   }
 
-  trackProjectNameBadRequestResponse() {
-    if (
-      this.props.badRequestResponseJson &&
-      this.props.badRequestResponseJson.projectNameRemote
-    ) {
+  handleProjectNameBadRequestResponse() {
+    const { badRequestResponse: errors } = this.props;
+    if (errors && errors.projectNameRemote) {
       this.setState({
         ...this.state,
         projectName: {
           ...this.state.projectName,
           validationState: {
             status: validationStatuses.invalid,
-            message: this.props.badRequestResponseJson.projectNameRemote.join(
-              ". "
-            )
+            message: errors.projectNameRemote.join(". ")
           }
         }
       });
     }
   }
 
-  trackProjectForUpdateFetchedFromServer() {
-    let { project } = this.props;
+  handleProjectForUpdateFetchedFromServer() {
+    const { project } = this.props;
     this.setState({
       projectName: {
         value: project.name,
@@ -141,19 +111,24 @@ class ProjectForm extends React.Component {
     });
   }
 
+  componentDidMount() {
+    const { purpose, getProjectInfo, projectId } = this.props;
+    if (purpose === "update") {
+      getProjectInfo(projectId);
+    }
+  }
+
   componentDidUpdate(prevProps) {
     // Tracks if any bad request (validation error) received from API
-    if (
-      prevProps.badRequestResponseJson !== this.props.badRequestResponseJson
-    ) {
-      this.trackProjectNameBadRequestResponse();
+    if (prevProps.badRequestResponse !== this.props.badRequestResponse) {
+      this.handleProjectNameBadRequestResponse();
       return true;
     }
 
     // Tracks if current form state values must be replaced by fetched from server ones
     // This happens when user clicked "Edit project" button and server found project with requested id
     if (prevProps.project === undefined && this.props.project !== undefined) {
-      this.trackProjectForUpdateFetchedFromServer();
+      this.handleProjectForUpdateFetchedFromServer();
       return true;
     }
   }
@@ -208,18 +183,18 @@ class ProjectForm extends React.Component {
 
   onSubmitValidationCompleted() {
     if (validationUtils.focusFirstInvalidField(`#${this.props.id}`) === false) {
-      const { purpose, project } = this.props;
+      const { purpose, project, createProject, updateProject } = this.props;
       let projectData = {
         name: this.state.projectName.value,
         description: this.state.projectDescription.value
       };
       switch (purpose) {
         case "create":
-          this.props.dispatch(projectsActions.create(projectData));
+          createProject(projectData);
           break;
         case "update":
           projectData.id = project.id;
-          this.props.dispatch(projectsActions.update(projectData));
+          updateProject(projectData);
           break;
         default:
           break;
@@ -228,7 +203,7 @@ class ProjectForm extends React.Component {
   }
 
   render() {
-    let {
+    const {
       sendingProjectInfo,
       gettingProjectForUpdate,
       notFoundProjectForUpdate,
@@ -318,6 +293,3 @@ class ProjectForm extends React.Component {
     );
   }
 }
-
-const connectedCreateProjectForm = connect(mapStateToProps)(ProjectForm);
-export { connectedCreateProjectForm as ProjectForm };
