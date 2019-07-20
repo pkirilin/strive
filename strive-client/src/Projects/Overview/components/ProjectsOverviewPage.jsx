@@ -1,14 +1,14 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   PrivateLayout,
   DocumentTitleSetter,
   AppHeader,
   AppSectionSeparator
-} from "../../_components";
-import { ProjectsOverviewHeadline } from "./ProjectsOverviewHeadline";
-import { ProjectList } from "./ProjectList";
+} from "../../../_components";
+import ProjectsOverviewHeadline from "./ProjectsOverviewHeadline";
+import ProjectListContainer from "../containers/ProjectListContainer";
 
-export class ProjectsOverviewPage extends React.Component {
+export default class ProjectsOverviewPage extends Component {
   render() {
     return (
       <DocumentTitleSetter values={["Projects"]}>
@@ -19,7 +19,7 @@ export class ProjectsOverviewPage extends React.Component {
           <AppSectionSeparator>
             <ProjectsOverviewHeadline />
           </AppSectionSeparator>
-          <ProjectList />
+          <ProjectListContainer />
         </PrivateLayout>
       </DocumentTitleSetter>
     );

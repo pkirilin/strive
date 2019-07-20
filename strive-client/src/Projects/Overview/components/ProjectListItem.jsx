@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { ListGroupItem, Row, Col } from "reactstrap";
-import { AppSectionSeparator } from "../../_components";
+import { AppSectionSeparator } from "../../../_components";
 
-export class ProjectListItem extends React.Component {
+export default class ProjectListItem extends Component {
   static propTypes = {
     data: PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -14,23 +14,19 @@ export class ProjectListItem extends React.Component {
   };
 
   render() {
+    const { id, name, description } = this.props.data;
     return (
       <AppSectionSeparator separatorValue="2">
         <ListGroupItem action>
           <Row>
             <Col xs="auto">
-              <Link
-                className="text-body"
-                to={`/projects/info/${this.props.data.id}`}
-              >
-                {this.props.data.name}
+              <Link className="text-body" to={`/projects/info/${id}`}>
+                {name}
               </Link>
             </Col>
           </Row>
           <Row>
-            <Col className="font-weight-light">
-              {this.props.data.description}
-            </Col>
+            <Col className="font-weight-light">{description}</Col>
           </Row>
         </ListGroupItem>
       </AppSectionSeparator>

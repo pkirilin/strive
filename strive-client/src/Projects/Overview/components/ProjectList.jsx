@@ -1,37 +1,15 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { ListGroup } from "reactstrap";
-import { ProjectListItem } from "./ProjectListItem";
-import { projectsActions } from "../../_actions";
-import { AppSpinner, AppConfirmationModal } from "../../_components";
+import { AppSpinner, AppConfirmationModal } from "../../../_components";
+import ProjectListItem from "./ProjectListItem";
 
-const mapStateToProps = state => {
-  let {
-    loadingProjectList,
-    failedToFetch,
-    internalServerError,
-    projects
-  } = state.projectsReducer.projectListReducer;
-  let { deletingProject } = state.projectsReducer.projectOperationsReducer;
-  let { deleteProjectModal } = state.modalReducer;
-  return {
-    loadingProjectList,
-    failedToFetch,
-    internalServerError,
-    deletingProject,
-    projects,
-    deleteProjectModal
-  };
-};
-
-class ProjectList extends React.Component {
+export default class ProjectList extends Component {
   static propTypes = {
     loadingProjectList: PropTypes.bool,
     failedToFetch: PropTypes.bool,
     internalServerError: PropTypes.string,
     deletingProject: PropTypes.bool,
-
     projects: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
@@ -39,23 +17,23 @@ class ProjectList extends React.Component {
         description: PropTypes.string
       })
     ).isRequired,
-
     deleteProjectModal: PropTypes.shape({
       title: PropTypes.string,
       message: PropTypes.node,
       onClose: PropTypes.func,
       onConfirm: PropTypes.func
-    })
+    }),
+    getProjects: PropTypes.func
   };
 
   constructor(props) {
     super(props);
-
-    this.props.dispatch(projectsActions.getList());
+    const { getProjects } = this.props;
+    getProjects();
   }
 
   render() {
-    let {
+    const {
       loadingProjectList,
       failedToFetch,
       internalServerError,
@@ -97,13 +75,10 @@ class ProjectList extends React.Component {
       <ListGroup>
         <AppConfirmationModal {...deleteProjectModal} />
         {deletingProject && <AppSpinner text="Deleting project" />}
-        {this.props.projects.map(project => (
+        {projects.map(project => (
           <ProjectListItem key={project.id} data={project} />
         ))}
       </ListGroup>
     );
   }
 }
-
-const connectedProjectList = connect(mapStateToProps)(ProjectList);
-export { connectedProjectList as ProjectList };

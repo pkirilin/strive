@@ -1,19 +1,11 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { Component } from "react";
 import { Row, Col, Button } from "reactstrap";
-import { AppHeader } from "../../_components";
-import { historyHelper } from "../../_helpers";
+import { AppHeader } from "../../../_components";
+import { historyHelper } from "../../../_helpers";
 
-const mapStateToProps = state => {
-  return {
-    projects: state.projectsReducer.projectListReducer.projects
-  };
-};
-
-class ProjectsOverviewHeadline extends React.Component {
+export default class ProjectsOverviewHeadline extends Component {
   constructor(props) {
     super(props);
-
     this.createProject = this.createProject.bind(this);
   }
 
@@ -38,8 +30,3 @@ class ProjectsOverviewHeadline extends React.Component {
     );
   }
 }
-
-const connectedProjectsPageHeadline = connect(mapStateToProps)(
-  ProjectsOverviewHeadline
-);
-export { connectedProjectsPageHeadline as ProjectsOverviewHeadline };
