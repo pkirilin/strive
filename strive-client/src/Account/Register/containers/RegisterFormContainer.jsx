@@ -17,10 +17,7 @@ RegisterFormContainer.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const {
-    registering,
-    badRequestResponse
-  } = state.accountReducer.registerReducer;
+  const { registering, badRequestResponse } = state.account.register;
   return {
     registering,
     badRequestResponse

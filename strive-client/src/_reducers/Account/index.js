@@ -3,6 +3,6 @@ import { registerReducer } from "./register.reducer";
 import { loginReducer } from "./login.reducer";
 
 export const accountReducer = combineReducers({
-  registerReducer,
-  loginReducer
+  register: registerReducer,
+  login: loginReducer
 });

@@ -7,7 +7,7 @@ import { alertReducer } from "./alert.reducer";
 import { modalReducer } from "./modal.reducer";
 
 const rootReducer = combineReducers({
-  accountReducer,
+  account: accountReducer,
   projectsReducer,
   tasksReducer,
   taskStatusesReducer,

@@ -13,7 +13,7 @@ LoginFormContainer.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { loggingIn } = state.accountReducer.loginReducer;
+  const { loggingIn } = state.account.login;
   return { loggingIn };
 };
 
