@@ -4,7 +4,7 @@ import { NotFoundPage } from "../ErrorPages";
 import ProjectsOverviewPage from "./Overview";
 import CreateProjectPage from "./Create";
 import EditProjectPage from "./Edit";
-import { ProjectInfoPage } from "./Info/ProjectInfoPage";
+import ProjectInfoPage from "./Info";
 
 export default class Projects extends Component {
   render() {

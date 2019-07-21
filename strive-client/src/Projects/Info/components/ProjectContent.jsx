@@ -1,44 +1,15 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import {
-  DocumentTitleSetter,
-  PrivateLayout,
-  AppConfirmationModal,
-  AppSpinner
-} from "../../_components";
-import { ProjectData } from "./ProjectData";
-import { TaskStatusTabsPanel } from "./TaskStatusTabsPanel";
-import { TaskChoosePanel } from "./TaskChoosePanel";
-import { TaskList } from "./TaskList";
-import { projectsActions, taskStatusesActions } from "../../_actions";
-import { ProjectActions } from "./ProjectActions";
+import { AppConfirmationModal, AppSpinner } from "../../../_components";
+import { ProjectData } from "../ProjectData";
+import { TaskStatusTabsPanel } from "../TaskStatusTabsPanel";
+import { TaskChoosePanel } from "../TaskChoosePanel";
+import { TaskList } from "../TaskList";
+import { ProjectActions } from "../ProjectActions";
 
-const mapStateToProps = state => {
-  const {
-    loading: loadingProjectData,
-    loaded: projectDataLoaded,
-    notFound: notFoundProjectData,
-    failedToFetch: failedToFetchProjectData,
-    internalServerError: projectDataInternalServerError
-  } = state.projectsReducer.projectInfoReducer;
-
-  const { deleteProjectModal } = state.modalReducer;
-  const { deletingProject } = state.projectsReducer.projectOperationsReducer;
-
-  return {
-    loadingProjectData,
-    projectDataLoaded,
-    notFoundProjectData,
-    failedToFetchProjectData,
-    projectDataInternalServerError,
-    deleteProjectModal,
-    deletingProject
-  };
-};
-
-class ProjectInfoPage extends React.Component {
+export default class ProjectContent extends Component {
   static propTypes = {
+    projectId: PropTypes.number.isRequired,
     loadingProjectData: PropTypes.bool,
     projectDataLoaded: PropTypes.bool,
     notFoundProjectData: PropTypes.bool,
@@ -50,16 +21,14 @@ class ProjectInfoPage extends React.Component {
       onClose: PropTypes.func,
       onConfirm: PropTypes.func
     }),
-    deletingProject: PropTypes.bool
+    deletingProject: PropTypes.bool,
+    loadProjectContent: PropTypes.func
   };
 
   constructor(props) {
     super(props);
-
-    this.projectId = Number(this.props.match.params.projectId);
-    this.props.dispatch(projectsActions.getInfo(this.projectId));
-    this.props.dispatch(taskStatusesActions.getStatusTabs(this.projectId));
-    this.props.dispatch(taskStatusesActions.getStatusList());
+    const { projectId, loadProjectContent } = props;
+    loadProjectContent(projectId);
   }
 
   render() {
@@ -80,14 +49,15 @@ class ProjectInfoPage extends React.Component {
     }
 
     if (projectDataLoaded) {
+      const { projectId } = this.props;
       content = (
         <div>
           <AppConfirmationModal {...deleteProjectModal} />
           <ProjectData />
           <ProjectActions />
-          <TaskStatusTabsPanel projectId={this.projectId} />
-          <TaskChoosePanel projectId={this.projectId} />
-          <TaskList projectId={this.projectId} />
+          <TaskStatusTabsPanel projectId={projectId} />
+          <TaskChoosePanel projectId={projectId} />
+          <TaskList projectId={projectId} />
         </div>
       );
     }
@@ -124,13 +94,6 @@ class ProjectInfoPage extends React.Component {
       );
     }
 
-    return (
-      <DocumentTitleSetter values={["Project info"]}>
-        <PrivateLayout>{content}</PrivateLayout>
-      </DocumentTitleSetter>
-    );
+    return <div>{content}</div>;
   }
 }
-
-const connectedProjectInfoPage = connect(mapStateToProps)(ProjectInfoPage);
-export { connectedProjectInfoPage as ProjectInfoPage };
