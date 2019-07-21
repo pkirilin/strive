@@ -4,8 +4,8 @@ import { AppConfirmationModal, AppSpinner } from "../../../_components";
 import { ProjectData } from "../ProjectData";
 import { TaskStatusTabsPanel } from "../TaskStatusTabsPanel";
 import { TaskChoosePanel } from "../TaskChoosePanel";
-import { TaskList } from "../TaskList";
 import { ProjectActions } from "../ProjectActions";
+import TaskListContainer from "../containers/TaskListContainer";
 
 export default class ProjectContent extends Component {
   static propTypes = {
@@ -57,7 +57,7 @@ export default class ProjectContent extends Component {
           <ProjectActions />
           <TaskStatusTabsPanel projectId={projectId} />
           <TaskChoosePanel projectId={projectId} />
-          <TaskList projectId={projectId} />
+          <TaskListContainer projectId={projectId} />
         </div>
       );
     }

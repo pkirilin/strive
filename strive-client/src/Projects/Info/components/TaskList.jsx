@@ -1,26 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { TaskListItem } from "./TaskListItem";
-import { AppSpinner, AppSectionSeparator } from "../../_components";
-import { tasksActions } from "../../_actions";
+import { AppSpinner, AppSectionSeparator } from "../../../_components";
+import TaskListItemContainer from "../containers/TaskListItemContainer";
 
-const mapStateToProps = state => {
-  let {
-    loadingTasks,
-    failedToFetch,
-    internalServerError,
-    tasks
-  } = state.tasksReducer.taskListReducer;
-  return {
-    loadingTasks,
-    failedToFetch,
-    internalServerError,
-    tasks
-  };
-};
-
-class TaskList extends React.Component {
+export default class TaskList extends React.Component {
   static propTypes = {
     loadingTasks: PropTypes.bool,
     failedToFetch: PropTypes.bool,
@@ -32,14 +15,14 @@ class TaskList extends React.Component {
         title: PropTypes.string.isRequired,
         checked: PropTypes.bool
       })
-    ).isRequired
+    ).isRequired,
+    loadTasks: PropTypes.func
   };
 
   constructor(props) {
     super(props);
-
-    const { projectId } = this.props;
-    this.props.dispatch(tasksActions.getList({ projectId }));
+    const { projectId, loadTasks } = props;
+    loadTasks({ projectId });
   }
 
   render() {
@@ -83,12 +66,12 @@ class TaskList extends React.Component {
     return (
       <div>
         {tasks.map(task => (
-          <TaskListItem key={`${task.id}_${task.checked}`} data={task} />
+          <TaskListItemContainer
+            key={`${task.id}_${task.checked}`}
+            data={task}
+          />
         ))}
       </div>
     );
   }
 }
-
-const connectedTaskList = connect(mapStateToProps)(TaskList);
-export { connectedTaskList as TaskList };

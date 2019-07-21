@@ -1,30 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { ListGroupItem, Row, Col } from "reactstrap";
-import { tasksActions } from "../../_actions";
-import { AppCheckBox, TaskStatusBadge } from "../../_components";
+import { AppCheckBox, TaskStatusBadge } from "../../../_components";
 
-class TaskListItem extends React.Component {
+export default class TaskListItem extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
       status: PropTypes.string.isRequired,
       checked: PropTypes.bool.isRequired
-    })
+    }).isRequired,
+    selectTask: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
-
     this.onSelectTask = this.onSelectTask.bind(this);
   }
 
   onSelectTask() {
-    let { id: targetTaskId } = this.props.data;
-    this.props.dispatch(tasksActions.checkTarget(targetTaskId));
+    const { id, selectTask } = this.props.data;
+    selectTask(id);
   }
 
   render() {
@@ -50,6 +48,3 @@ class TaskListItem extends React.Component {
     );
   }
 }
-
-const connectedTaskListItem = connect()(TaskListItem);
-export { connectedTaskListItem as TaskListItem };
