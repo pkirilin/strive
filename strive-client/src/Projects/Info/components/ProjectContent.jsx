@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { AppConfirmationModal, AppSpinner } from "../../../_components";
-import { ProjectData } from "../ProjectData";
 import { TaskStatusTabsPanel } from "../TaskStatusTabsPanel";
 import { TaskChoosePanel } from "../TaskChoosePanel";
-import { ProjectActions } from "../ProjectActions";
 import TaskListContainer from "../containers/TaskListContainer";
+import ProjectDataContainer from "../containers/ProjectDataContainer";
+import ProjectActionsContainer from "../containers/ProjectActionsContainer";
 
 export default class ProjectContent extends Component {
   static propTypes = {
@@ -53,8 +53,8 @@ export default class ProjectContent extends Component {
       content = (
         <div>
           <AppConfirmationModal {...deleteProjectModal} />
-          <ProjectData />
-          <ProjectActions />
+          <ProjectDataContainer />
+          <ProjectActionsContainer />
           <TaskStatusTabsPanel projectId={projectId} />
           <TaskChoosePanel projectId={projectId} />
           <TaskListContainer projectId={projectId} />

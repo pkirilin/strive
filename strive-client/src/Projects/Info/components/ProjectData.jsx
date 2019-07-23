@@ -1,14 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { AppHeader, AppSectionSeparator } from "../../_components";
+import { AppHeader, AppSectionSeparator } from "../../../_components";
 
-const mapStateToProps = state => {
-  let { project } = state.projectsReducer.projectInfoReducer;
-  return { project };
-};
-
-class ProjectData extends React.Component {
+export default class ProjectData extends Component {
   static propTypes = {
     project: PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -35,6 +29,3 @@ class ProjectData extends React.Component {
     );
   }
 }
-
-const connectedProjectData = connect(mapStateToProps)(ProjectData);
-export { connectedProjectData as ProjectData };
