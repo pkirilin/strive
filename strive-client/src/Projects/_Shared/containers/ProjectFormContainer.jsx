@@ -35,14 +35,9 @@ const mapStateToProps = state => {
     sendingProjectInfo,
     badRequestResponse,
     internalServerError
-  } = state.projectsReducer.projectOperationsReducer;
+  } = state.projects.operations;
 
-  const {
-    loading,
-    project,
-    notFound,
-    failedToFetch
-  } = state.projectsReducer.projectInfoReducer;
+  const { loading, project, notFound, failedToFetch } = state.projects.info;
 
   return {
     sendingProjectInfo,

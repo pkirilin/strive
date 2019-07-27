@@ -9,10 +9,10 @@ const mapStateToProps = state => {
     notFound: notFoundProjectData,
     failedToFetch: failedToFetchProjectData,
     internalServerError: projectDataInternalServerError
-  } = state.projectsReducer.projectInfoReducer;
+  } = state.projects.info;
 
   const { deleteProjectModal } = state.modalReducer;
-  const { deletingProject } = state.projectsReducer.projectOperationsReducer;
+  const { deletingProject } = state.projects.operations;
 
   return {
     loadingProjectData,

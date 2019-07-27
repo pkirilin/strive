@@ -4,7 +4,7 @@ import { projectListReducer } from "./projectList.reducer";
 import { projectOperationsReducer } from "./projectOperations.reducer";
 
 export const projectsReducer = combineReducers({
-  projectInfoReducer,
-  projectListReducer,
-  projectOperationsReducer
+  info: projectInfoReducer,
+  list: projectListReducer,
+  operations: projectOperationsReducer
 });

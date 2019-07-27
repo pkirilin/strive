@@ -8,8 +8,8 @@ const mapStateToProps = state => {
     failedToFetch,
     internalServerError,
     projects
-  } = state.projectsReducer.projectListReducer;
-  const { deletingProject } = state.projectsReducer.projectOperationsReducer;
+  } = state.projects.list;
+  const { deletingProject } = state.projects.operations;
   const { deleteProjectModal } = state.modalReducer;
   return {
     loadingProjectList,

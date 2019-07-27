@@ -5,7 +5,7 @@ import ProjectActions from "../components/ProjectActions";
 import { modalConstants } from "../../../_constants";
 
 const mapStateToProps = state => {
-  const { project } = state.projectsReducer.projectInfoReducer;
+  const { project } = state.projects.info;
   return { project };
 };
 

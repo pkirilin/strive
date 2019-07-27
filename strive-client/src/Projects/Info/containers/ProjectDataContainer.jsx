@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import ProjectData from "../components/ProjectData";
 
 const mapStateToProps = state => {
-  const { project } = state.projectsReducer.projectInfoReducer;
+  const { project } = state.projects.info;
   return {
     project
   };

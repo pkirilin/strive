@@ -36,7 +36,7 @@ const mapStateToProps = state => {
     failedToFetch
   } = state.tasksReducer.taskInfoReducer;
 
-  const { project } = state.projectsReducer.projectInfoReducer;
+  const { project } = state.projects.info;
 
   const { taskStatuses } = state.taskStatusesReducer.taskStatusListReducer;
 
