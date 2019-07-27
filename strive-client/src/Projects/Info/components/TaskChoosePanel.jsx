@@ -1,6 +1,5 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import {
   UncontrolledDropdown,
   DropdownItem,
@@ -9,41 +8,24 @@ import {
   Row,
   Col
 } from "reactstrap";
-import { tasksActions, taskStatusesActions } from "../../_actions";
 import {
   AppCheckBox,
   AppSpinner,
   AppSectionSeparator
-} from "../../_components";
+} from "../../../_components";
 
-const mapStateToProps = state => {
-  const { tasks } = state.tasksReducer.taskListReducer;
-  const { setStatusSuccess } = state.tasksReducer.taskOperationsReducer;
-  const { taskFilterReducer } = state.tasksReducer;
-  const {
-    loadingStatusList,
-    taskStatuses,
-    failedToFetch: failedToFetchTaskStatuses
-  } = state.taskStatusesReducer.taskStatusListReducer;
-  return {
-    tasks,
-    setStatusSuccess,
-    taskFilterData: taskFilterReducer,
-    loadingStatusList,
-    taskStatuses,
-    failedToFetchTaskStatuses
-  };
-};
-
-class TaskChoosePanel extends React.Component {
+export default class TaskChoosePanel extends Component {
   static propTypes = {
     className: PropTypes.string,
-    projectId: PropTypes.number.isRequired
+    projectId: PropTypes.number.isRequired,
+    changeCheckedStatusForTasks: PropTypes.func.isRequired,
+    getTasks: PropTypes.func.isRequired,
+    getStatusTabs: PropTypes.func.isRequired,
+    setStatusForTasks: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
-
     this.state = {
       chooseAllChecked: false
     };
@@ -55,7 +37,14 @@ class TaskChoosePanel extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { tasks, setStatusSuccess, projectId } = this.props;
+    const {
+      tasks,
+      setStatusSuccess,
+      projectId,
+      changeCheckedStatusForTasks,
+      getTasks,
+      getStatusTabs
+    } = this.props;
 
     // If there's a task collection received
     if (tasks !== nextProps.tasks && tasks.length > 0) {
@@ -82,40 +71,38 @@ class TaskChoosePanel extends React.Component {
           chooseAllChecked: false
         },
         () => {
-          this.props.dispatch(
-            tasksActions.checkAll(this.state.chooseAllChecked)
-          );
+          changeCheckedStatusForTasks(this.state.chooseAllChecked);
         }
       );
       // Refreshing task list to show actual statuses
-      this.props.dispatch(
-        tasksActions.getList({
-          ...this.props.taskFilterData,
-          projectId
-        })
-      );
+      getTasks({
+        ...this.props.taskFilterData,
+        projectId
+      });
       // Refreshing task status tabs info
-      this.props.dispatch(taskStatusesActions.getStatusTabs(projectId));
+      getStatusTabs(projectId);
     }
   }
 
   onChooseAllCheck() {
+    const { changeCheckedStatusForTasks } = this.props;
     this.setState(
       {
         chooseAllChecked: !this.state.chooseAllChecked
       },
       () => {
-        this.props.dispatch(tasksActions.checkAll(this.state.chooseAllChecked));
+        changeCheckedStatusForTasks(this.state.chooseAllChecked);
       }
     );
   }
 
   onStatusDropdownItemClicked(event) {
+    const { setStatusForTasks } = this.props;
     const setStatusData = {
       tasks: this.props.tasks,
       status: event.target.innerText
     };
-    this.props.dispatch(tasksActions.setStatus(setStatusData));
+    setStatusForTasks(setStatusData);
   }
 
   render() {
@@ -178,6 +165,3 @@ class TaskChoosePanel extends React.Component {
     );
   }
 }
-
-const connectedTaskChoosePanel = connect(mapStateToProps)(TaskChoosePanel);
-export { connectedTaskChoosePanel as TaskChoosePanel };

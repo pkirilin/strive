@@ -1,38 +1,19 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { Nav, NavItem, NavLink, Badge } from "reactstrap";
-import { historyHelper } from "../../_helpers";
-import { AppSpinner, AppSectionSeparator } from "../../_components";
-import { tasksActions } from "../../_actions";
+import { historyHelper } from "../../../_helpers";
+import { AppSpinner, AppSectionSeparator } from "../../../_components";
 
-const mapStateToProps = state => {
-  const {
-    loadingStatusTabs,
-    statusTabsData,
-    internalServerError
-  } = state.taskStatusesReducer.taskStatusTabsReducer;
-
-  const { taskFilterReducer } = state.tasksReducer;
-
-  return {
-    loadingStatusTabs,
-    statusTabsData,
-    internalServerError,
-    taskFilterData: taskFilterReducer
-  };
-};
-
-class TaskStatusTabsPanel extends React.Component {
+export default class TaskStatusTabsPanel extends Component {
   static propTypes = {
-    projectId: PropTypes.number.isRequired
+    projectId: PropTypes.number.isRequired,
+    getTasks: PropTypes.func.isRequired,
+    updateTaskFilter: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
-
     this.state = {};
-
     this.createTask = this.createTask.bind(this);
   }
 
@@ -41,12 +22,11 @@ class TaskStatusTabsPanel extends React.Component {
     // If the status was changed, it means that status tab has been clicked
     if (this.props.taskFilterData.status !== nextProps.taskFilterData.status) {
       // Fething new task list with the updated filter
-      this.props.dispatch(
-        tasksActions.getList({
-          ...nextProps.taskFilterData,
-          projectId: this.props.projectId
-        })
-      );
+      const { projectId, getTasks } = this.props;
+      getTasks({
+        ...nextProps.taskFilterData,
+        projectId: projectId
+      });
     }
   }
 
@@ -100,11 +80,10 @@ class TaskStatusTabsPanel extends React.Component {
                       activeTabIndex: statusTab.index
                     },
                     () => {
-                      this.props.dispatch(
-                        tasksActions.updateFilter({
-                          status: statusTab.status
-                        })
-                      );
+                      const { updateTaskFilter } = this.props;
+                      updateTaskFilter({
+                        status: statusTab.status
+                      });
                     }
                   );
                 }}
@@ -127,8 +106,3 @@ class TaskStatusTabsPanel extends React.Component {
     return <div />;
   }
 }
-
-const connectedTaskStatusTabsPanel = connect(mapStateToProps)(
-  TaskStatusTabsPanel
-);
-export { connectedTaskStatusTabsPanel as TaskStatusTabsPanel };
