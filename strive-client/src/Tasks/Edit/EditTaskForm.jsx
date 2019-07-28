@@ -1,10 +1,10 @@
 import React from "react";
-import { TaskForm } from "../TaskForm";
+import { TaskFormContainer } from "../_shared";
 
 export class EditTaskForm extends React.Component {
   render() {
     return (
-      <TaskForm
+      <TaskFormContainer
         purpose="update"
         id="updateTaskForm"
         loadingText="Updating task"

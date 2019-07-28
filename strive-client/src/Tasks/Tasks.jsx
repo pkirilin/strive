@@ -1,11 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
 import { Switch, Route } from "react-router";
 import { CreateTaskPage } from "./Create/CreateTaskPage";
 import { TaskInfoPage } from "./Info/TaskInfoPage";
 import { EditTaskPage } from "./Edit/EditTaskPage";
 import { NotFoundPage } from "../ErrorPages";
 
-export class Tasks extends React.Component {
+export default class Tasks extends Component {
   render() {
     return (
       <Switch>

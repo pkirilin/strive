@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { TaskForm } from "../TaskForm";
+import { TaskFormContainer } from "../_shared";
 
 export class CreateTaskForm extends React.Component {
   static propTypes = {
@@ -9,7 +9,7 @@ export class CreateTaskForm extends React.Component {
 
   render() {
     return (
-      <TaskForm
+      <TaskFormContainer
         purpose="create"
         id="createTaskForm"
         loadingText="Creating task"

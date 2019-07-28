@@ -1,6 +1,5 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import {
   Form,
   FormGroup,
@@ -13,60 +12,23 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
-import { tasksActions, taskStatusesActions } from "../_actions";
-import { AppTextBox, AppTextArea, AppSpinner } from "../_components";
-import { validationStatuses } from "../_constants";
-import { historyHelper } from "../_helpers";
+import { AppTextBox, AppTextArea, AppSpinner } from "../../../_components";
+import { validationStatuses } from "../../../_constants";
+import { historyHelper } from "../../../_helpers";
 import {
   validationUtils,
   validationRulesSetters
-} from "../_helpers/validation";
+} from "../../../_helpers/validation";
 
-const mapStateToProps = state => {
-  const {
-    sendingTaskInfo,
-    badRequestResponseJson,
-    internalServerError
-  } = state.tasksReducer.taskOperationsReducer;
-
-  const {
-    gettingTask,
-    task,
-    notFound,
-    failedToFetch
-  } = state.tasksReducer.taskInfoReducer;
-
-  const { project } = state.projects.info;
-
-  const { taskStatuses } = state.taskStatusesReducer.taskStatusListReducer;
-
-  return {
-    sendingTaskInfo,
-    badRequestResponseJson,
-    internalServerError,
-    gettingTaskForUpdate: gettingTask,
-
-    task,
-    project,
-
-    notFoundTaskForUpdate: notFound,
-    failedToFetchTaskForUpdate: failedToFetch,
-
-    taskStatuses
-  };
-};
-
-class TaskForm extends React.Component {
+export default class TaskForm extends Component {
   static propTypes = {
     purpose: PropTypes.oneOf(["create", "update"]).isRequired,
     id: PropTypes.string,
     loadingText: PropTypes.string,
     submitButtonText: PropTypes.string,
     projectId: PropTypes.number,
-
     sendingTaskInfo: PropTypes.bool,
     internalServerError: PropTypes.string,
-
     gettingTaskForUpdate: PropTypes.bool,
     task: PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -74,7 +36,10 @@ class TaskForm extends React.Component {
       description: PropTypes.string.isRequired
     }),
     notFoundTaskForUpdate: PropTypes.bool,
-    failedToFetchTaskForUpdate: PropTypes.bool
+    failedToFetchTaskForUpdate: PropTypes.bool,
+    loadTaskStatuses: PropTypes.func,
+    createTask: PropTypes.func,
+    updateTask: PropTypes.func
   };
 
   static defaultProps = {
@@ -104,7 +69,7 @@ class TaskForm extends React.Component {
       this
     );
 
-    let initFieldObj = {
+    const initFieldObj = {
       value: "",
       validationState: {
         status: validationStatuses.default,
@@ -124,7 +89,8 @@ class TaskForm extends React.Component {
       taskStatus: ""
     };
 
-    this.props.dispatch(taskStatusesActions.getStatusList());
+    const { loadTaskStatuses } = this.props;
+    loadTaskStatuses();
   }
 
   trackTaskForUpdateFetchedFromServer() {
@@ -229,7 +195,7 @@ class TaskForm extends React.Component {
 
   onSubmitValidationCompleted() {
     if (validationUtils.focusFirstInvalidField(`#${this.props.id}`) === false) {
-      const { purpose } = this.props;
+      const { purpose, createTask, updateTask } = this.props;
 
       let taskData = {
         title: this.state.taskTitle.value,
@@ -241,12 +207,12 @@ class TaskForm extends React.Component {
       switch (purpose) {
         case "create":
           taskData.projectId = this.props.projectId;
-          this.props.dispatch(tasksActions.create(taskData));
+          createTask(taskData);
           break;
         case "update":
           taskData.id = this.props.task.id;
           taskData.projectId = this.props.task.project.id;
-          this.props.dispatch(tasksActions.update(taskData));
+          updateTask(taskData);
           break;
         default:
           break;
@@ -371,6 +337,3 @@ class TaskForm extends React.Component {
     );
   }
 }
-
-const connectedTaskForm = connect(mapStateToProps)(TaskForm);
-export { connectedTaskForm as TaskForm };

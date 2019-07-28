@@ -1,13 +1,13 @@
-import React from "react";
+import React, { Component } from "react";
 import { Router, Switch, Route } from "react-router";
 import { history, config } from "../_helpers";
 import { PrivateRoute } from "../_components";
 import Account from "../Account";
 import Projects from "../Projects";
-import { Tasks } from "../Tasks";
+import Tasks from "../Tasks";
 import { NotFoundPage } from "../ErrorPages";
 
-export class App extends React.Component {
+export class App extends Component {
   componentWillMount() {
     document.title = config.brandName;
   }
