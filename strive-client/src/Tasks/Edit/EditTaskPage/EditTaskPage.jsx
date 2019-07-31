@@ -1,20 +1,23 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import {
   PrivateLayout,
   AppHeader,
   DocumentTitleSetter,
   AppSectionSeparator
-} from "../../_components";
-import { tasksActions } from "../../_actions";
-import { EditTaskForm } from "./EditTaskForm";
+} from "../../../_components";
+import EditTaskForm from "../EditTaskForm";
 
-class EditTaskPage extends React.Component {
+export default class EditTaskPage extends Component {
+  static propTypes = {
+    getTask: PropTypes.func.isRequired
+  };
+
   constructor(props) {
     super(props);
-
     const { taskId } = this.props.match.params;
-    this.props.dispatch(tasksActions.getInfo(taskId));
+    const { getTask } = this.props;
+    getTask(taskId);
   }
 
   render() {
@@ -32,6 +35,3 @@ class EditTaskPage extends React.Component {
     );
   }
 }
-
-const connectedEditTaskPage = connect()(EditTaskPage);
-export { connectedEditTaskPage as EditTaskPage };

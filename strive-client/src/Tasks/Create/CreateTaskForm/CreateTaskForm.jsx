@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { TaskFormContainer } from "../_shared";
+import { TaskFormContainer } from "../../_shared";
 
-export class CreateTaskForm extends React.Component {
+export default class CreateTaskForm extends Component {
   static propTypes = {
     projectId: PropTypes.number
   };

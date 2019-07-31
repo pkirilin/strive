@@ -1,16 +1,19 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import {
   PrivateLayout,
   AppHeader,
   DocumentTitleSetter,
   AppSectionSeparator
-} from "../../_components";
-import { CreateTaskForm } from "./CreateTaskForm";
-import { alertActions } from "../../_actions";
-import { historyHelper } from "../../_helpers";
+} from "../../../_components";
+import CreateTaskForm from "../CreateTaskForm";
+import { historyHelper } from "../../../_helpers";
 
-class CreateTaskPage extends React.Component {
+export default class CreateTaskPage extends Component {
+  static propTypes = {
+    sendRedirectNotification: PropTypes.func.isRequired
+  };
+
   constructor(props) {
     super(props);
 
@@ -21,11 +24,8 @@ class CreateTaskPage extends React.Component {
     this.projectId = Number(projectIdStr);
     if (isNaN(this.projectId)) {
       historyHelper.redirectToProjects();
-      this.props.dispatch(
-        alertActions.error(
-          "Unable to determine project id. Redirected to your project list"
-        )
-      );
+      const { sendRedirectNotification } = this.props;
+      sendRedirectNotification();
     }
   }
 
@@ -44,6 +44,3 @@ class CreateTaskPage extends React.Component {
     );
   }
 }
-
-const connectedCreateTaskPage = connect()(CreateTaskPage);
-export { connectedCreateTaskPage as CreateTaskPage };

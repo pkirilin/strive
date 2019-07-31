@@ -1,7 +1,7 @@
-import React from "react";
-import { TaskFormContainer } from "../_shared";
+import React, { Component } from "react";
+import { TaskFormContainer } from "../../_shared";
 
-export class EditTaskForm extends React.Component {
+export default class EditTaskForm extends Component {
   render() {
     return (
       <TaskFormContainer
