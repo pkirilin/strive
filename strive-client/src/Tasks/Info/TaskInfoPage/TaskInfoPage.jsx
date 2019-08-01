@@ -1,29 +1,16 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import {
   DocumentTitleSetter,
   PrivateLayout,
   AppConfirmationModal,
   AppSpinner
-} from "../../_components";
-import { TaskData } from "./TaskData";
+} from "../../../_components";
+import TaskDataContainer from "../TaskDataContainer";
 
-const mapStateToProps = state => {
-  let { notFound: notFoundTaskData } = state.tasksReducer.taskInfoReducer;
-  let { deletingTask } = state.tasksReducer.taskOperationsReducer;
-  let { deleteTaskModal } = state.modalReducer;
-  return {
-    deletingTask,
-    notFoundTaskData,
-    deleteTaskModal
-  };
-};
-
-class TaskInfoPage extends React.Component {
+export default class TaskInfoPage extends Component {
   static propTypes = {
     notFoundTaskData: PropTypes.bool,
-
     deleteTaskModal: PropTypes.shape({
       title: PropTypes.string,
       message: PropTypes.node,
@@ -34,16 +21,15 @@ class TaskInfoPage extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.taskId = Number(this.props.match.params.taskId);
   }
 
   render() {
-    let { deletingTask, notFoundTaskData, deleteTaskModal } = this.props;
+    const { deletingTask, notFoundTaskData, deleteTaskModal } = this.props;
     let content = (
       <div>
         <AppConfirmationModal {...deleteTaskModal} />
-        <TaskData taskId={this.taskId} />
+        <TaskDataContainer taskId={this.taskId} />
       </div>
     );
 
@@ -67,6 +53,3 @@ class TaskInfoPage extends React.Component {
     );
   }
 }
-
-const connectedTaskInfoPage = connect(mapStateToProps)(TaskInfoPage);
-export { connectedTaskInfoPage as TaskInfoPage };

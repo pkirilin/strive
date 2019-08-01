@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Switch, Route } from "react-router";
 import CreateTaskPageContainer from "./Create";
 import EditTaskPageContainer from "./Edit";
-import { TaskInfoPage } from "./Info/TaskInfoPage";
+import TaskInfoPage from "./Info";
 import { NotFoundPage } from "../ErrorPages";
 
 export default class Tasks extends Component {

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Row, Col } from "reactstrap";
 import {
@@ -8,23 +7,12 @@ import {
   TaskStatusBadge,
   AppHeader,
   AppSectionSeparator
-} from "../../_components";
-import { tasksActions } from "../../_actions";
-import { TaskActionsDropdown } from "./TaskActionsDropdown";
+} from "../../../_components";
+import TaskActionsDropdownContainer from "../TaskActionsDropdownContainer";
 
-const mapStateToProps = state => {
-  let { gettingTask, task, failedToFetch } = state.tasksReducer.taskInfoReducer;
-  return {
-    gettingTask,
-    task,
-    failedToFetch
-  };
-};
-
-class TaskData extends Component {
+export default class TaskData extends Component {
   static propTypes = {
     taskId: PropTypes.number.isRequired,
-
     gettingTask: PropTypes.bool,
     failedToFetch: PropTypes.bool,
     task: PropTypes.shape({
@@ -34,17 +22,18 @@ class TaskData extends Component {
         id: PropTypes.number.isRequired,
         label: PropTypes.string.isRequired
       })
-    })
+    }),
+    getTask: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
-
-    this.props.dispatch(tasksActions.getInfo(this.props.taskId));
+    const { taskId, getTask } = props;
+    getTask(taskId);
   }
 
   render() {
-    let { gettingTask, task, failedToFetch } = this.props;
+    const { gettingTask, task, failedToFetch } = this.props;
 
     // Server is working and some task data was received
     if (task) {
@@ -72,7 +61,7 @@ class TaskData extends Component {
               </Link>
             </Col>
             <Col xs="auto">
-              <TaskActionsDropdown taskId={task.id} />
+              <TaskActionsDropdownContainer taskId={task.id} />
             </Col>
           </Row>
           {task.description !== "" && task.description !== undefined ? (
@@ -102,6 +91,3 @@ class TaskData extends Component {
     return <div>{gettingTask && <AppSpinner text="Getting task data" />}</div>;
   }
 }
-
-const connectedTaskData = connect(mapStateToProps)(TaskData);
-export { connectedTaskData as TaskData };
