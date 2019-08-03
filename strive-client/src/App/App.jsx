@@ -4,7 +4,7 @@ import { history, config } from "../_helpers";
 import { PrivateRoute } from "../_components";
 import Account from "../Account";
 import Projects from "../Projects";
-import Tasks from "../Tasks";
+import Tasks from "../tasks";
 import { NotFoundPage } from "../ErrorPages";
 
 export class App extends Component {
