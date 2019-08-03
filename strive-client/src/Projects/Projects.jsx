@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Switch, Redirect, Route } from "react-router";
 import { NotFoundPage } from "../ErrorPages";
-import ProjectsOverviewPage from "./Overview";
-import CreateProjectPage from "./Create";
-import EditProjectPage from "./Edit";
-import ProjectInfoPage from "./Info";
+import ProjectsOverviewPage from "./overview";
+import CreateProjectPage from "./create";
+import EditProjectPage from "./edit";
+import ProjectInfoPage from "./info";
 
 export default class Projects extends Component {
   render() {
