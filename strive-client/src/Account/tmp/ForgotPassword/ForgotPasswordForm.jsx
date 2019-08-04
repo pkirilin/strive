@@ -1,11 +1,11 @@
 import React from "react";
 import { Form, FormGroup, Button } from "reactstrap";
-import { AppTextBox } from "../../_components";
-import { validationStatuses } from "../../_constants";
+import { AppTextBox } from "../../../_components";
+import { validationStatuses } from "../../../_constants";
 import {
   validationUtils,
   validationRulesSetters
-} from "../../_helpers/validation";
+} from "../../../_helpers/validation";
 
 export class ForgotPasswordForm extends React.Component {
   constructor(props) {

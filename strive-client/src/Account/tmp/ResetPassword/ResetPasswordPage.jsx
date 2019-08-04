@@ -3,7 +3,7 @@ import {
   AppHeader,
   PublicLayout,
   DocumentTitleSetter
-} from "../../_components";
+} from "../../../_components";
 import { ResetPasswordForm } from "./ResetPasswordForm";
 
 export class ResetPasswordPage extends React.Component {

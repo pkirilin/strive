@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import RegisterForm from "../components/RegisterForm";
+import RegisterForm from "../RegisterForm";
 import { alertActions, accountActions } from "../../../_actions";
 
 const RegisterFormContainer = props => <RegisterForm {...props} />;

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../LoginForm";
 import { alertActions, accountActions } from "../../../_actions";
 
 const LoginFormContainer = props => <LoginForm {...props} />;

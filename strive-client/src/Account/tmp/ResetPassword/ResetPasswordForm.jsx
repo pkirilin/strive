@@ -1,7 +1,7 @@
 import React from "react";
 // import { Form, FormGroup, Input } from "reactstrap";
 // import { AppTextBox } from "../../_components";
-import { validationStatuses } from "../../_constants";
+import { validationStatuses } from "../../../_constants";
 // import {
 //   validationUtils,
 //   validationRulesSetters

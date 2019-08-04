@@ -2,7 +2,7 @@ import React from "react";
 // import { Link } from "react-router-dom";
 // import { Form, FormGroup, Input } from "reactstrap";
 // import { AppTextBox } from "../../_components";
-import { validationStatuses } from "../../_constants";
+import { validationStatuses } from "../../../_constants";
 // import {
 //   validationUtils,
 //   validationRulesSetters

@@ -3,7 +3,7 @@ import {
   AppHeader,
   PublicLayout,
   DocumentTitleSetter
-} from "../../_components";
+} from "../../../_components";
 import { SignUpForm } from "./SignUpForm";
 
 export class SignUpPage extends React.Component {
