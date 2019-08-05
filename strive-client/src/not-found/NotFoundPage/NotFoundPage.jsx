@@ -1,16 +1,19 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   PublicLayout,
   AppHeader,
-  DocumentTitleSetter
+  DocumentTitleSetter,
+  AppSectionSeparator
 } from "../../_components";
 
-export class NotFoundPage extends React.Component {
+export default class NotFoundPage extends Component {
   render() {
     return (
       <DocumentTitleSetter values={["Not found"]}>
         <PublicLayout>
-          <AppHeader>Not found</AppHeader>
+          <AppSectionSeparator>
+            <AppHeader>Not found</AppHeader>
+          </AppSectionSeparator>
           <div className="mt-5 mb-5">
             <div className="text-center">Sorry, this page was not found</div>
           </div>

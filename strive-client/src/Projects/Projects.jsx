@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Redirect, Route } from "react-router";
-import { NotFoundPage } from "../ErrorPages";
+import NotFoundPage from "../not-found";
 import ProjectsOverviewPage from "./overview";
 import CreateProjectPage from "./create";
 import EditProjectPage from "./edit";

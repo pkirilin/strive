@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router";
 import CreateTaskPageContainer from "./create";
 import EditTaskPageContainer from "./edit";
 import TaskInfoPage from "./info";
-import { NotFoundPage } from "../ErrorPages";
+import NotFoundPage from "../not-found";
 
 export default class Tasks extends Component {
   render() {

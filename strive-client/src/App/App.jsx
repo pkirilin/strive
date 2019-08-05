@@ -5,7 +5,7 @@ import { PrivateRoute } from "../_components";
 import Account from "../account";
 import Projects from "../projects";
 import Tasks from "../tasks";
-import { NotFoundPage } from "../ErrorPages";
+import NotFoundPage from "../not-found";
 
 export class App extends Component {
   componentWillMount() {
