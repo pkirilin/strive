@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { ListGroupItem, Row, Col } from "reactstrap";
 import { AppCheckBox, TaskStatusBadge } from "../../../_components";
 
-export default class TaskListItem extends React.Component {
+export default class TaskListItem extends Component {
   static propTypes = {
     data: PropTypes.shape({
       id: PropTypes.number.isRequired,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   AppHeader,
   PublicLayout,
@@ -8,7 +8,7 @@ import {
 import { config } from "../../../_helpers";
 import RegisterFormContainer from "../RegisterFormContainer";
 
-export default class RegisterPage extends React.Component {
+export default class RegisterPage extends Component {
   render() {
     return (
       <DocumentTitleSetter values={["Register"]}>
