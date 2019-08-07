@@ -7,15 +7,15 @@ const mapStateToProps = state => {
     loadingStatusTabs,
     statusTabsData,
     internalServerError
-  } = state.taskStatusesReducer.taskStatusTabsReducer;
+  } = state.taskStatuses.tabs;
 
-  const { taskFilterReducer } = state.tasksReducer;
+  const { filter } = state.tasks;
 
   return {
     loadingStatusTabs,
     statusTabsData,
     internalServerError,
-    taskFilterData: taskFilterReducer
+    taskFilterData: filter
   };
 };
 

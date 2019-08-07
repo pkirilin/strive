@@ -3,18 +3,18 @@ import { tasksActions, taskStatusesActions } from "../../../_actions";
 import TaskChoosePanel from "../TaskChoosePanel";
 
 const mapStateToProps = state => {
-  const { tasks } = state.tasksReducer.taskListReducer;
-  const { setStatusSuccess } = state.tasksReducer.taskOperationsReducer;
-  const { taskFilterReducer } = state.tasksReducer;
+  const { tasks } = state.tasks.list;
+  const { setStatusSuccess } = state.tasks.operations;
+  const { filter } = state.tasks;
   const {
     loadingStatusList,
     taskStatuses,
     failedToFetch: failedToFetchTaskStatuses
-  } = state.taskStatusesReducer.taskStatusListReducer;
+  } = state.taskStatuses.list;
   return {
     tasks,
     setStatusSuccess,
-    taskFilterData: taskFilterReducer,
+    taskFilterData: filter,
     loadingStatusList,
     taskStatuses,
     failedToFetchTaskStatuses

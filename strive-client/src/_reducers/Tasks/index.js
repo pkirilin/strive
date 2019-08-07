@@ -5,8 +5,8 @@ import { taskListReducer } from "./taskList.reducer";
 import { taskOperationsReducer } from "./taskOperations.reducer";
 
 export const tasksReducer = combineReducers({
-  taskFilterReducer,
-  taskInfoReducer,
-  taskListReducer,
-  taskOperationsReducer
+  filter: taskFilterReducer,
+  info: taskInfoReducer,
+  list: taskListReducer,
+  operations: taskOperationsReducer
 });

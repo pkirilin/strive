@@ -9,8 +9,8 @@ import { modalReducer } from "./modal.reducer";
 const rootReducer = combineReducers({
   account: accountReducer,
   projects: projectsReducer,
-  tasksReducer,
-  taskStatusesReducer,
+  tasks: tasksReducer,
+  taskStatuses: taskStatusesReducer,
   alertReducer,
   modalReducer
 });

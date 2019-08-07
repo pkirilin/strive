@@ -8,7 +8,7 @@ const mapStateToProps = state => {
     failedToFetch,
     internalServerError,
     tasks
-  } = state.tasksReducer.taskListReducer;
+  } = state.tasks.list;
   return {
     loadingTasks,
     failedToFetch,

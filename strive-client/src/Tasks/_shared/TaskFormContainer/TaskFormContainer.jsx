@@ -7,15 +7,10 @@ const mapStateToProps = state => {
     sendingTaskInfo,
     badRequestResponseJson,
     internalServerError
-  } = state.tasksReducer.taskOperationsReducer;
-  const {
-    gettingTask,
-    task,
-    notFound,
-    failedToFetch
-  } = state.tasksReducer.taskInfoReducer;
+  } = state.tasks.operations;
+  const { gettingTask, task, notFound, failedToFetch } = state.tasks.info;
   const { project } = state.projects.info;
-  const { taskStatuses } = state.taskStatusesReducer.taskStatusListReducer;
+  const { taskStatuses } = state.taskStatuses.list;
   return {
     sendingTaskInfo,
     badRequestResponseJson,

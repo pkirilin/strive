@@ -3,7 +3,7 @@ import TaskData from "../TaskData";
 import { tasksActions } from "../../../_actions";
 
 const mapStateToProps = state => {
-  let { gettingTask, task, failedToFetch } = state.tasksReducer.taskInfoReducer;
+  let { gettingTask, task, failedToFetch } = state.tasks.info;
   return {
     gettingTask,
     task,

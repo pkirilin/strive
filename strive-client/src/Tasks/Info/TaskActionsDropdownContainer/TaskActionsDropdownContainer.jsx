@@ -5,7 +5,7 @@ import { modalConstants } from "../../../_constants";
 import TaskActionsDropdown from "../TaskActionsDropdown";
 
 const mapStateToProps = state => {
-  let { task } = state.tasksReducer.taskInfoReducer;
+  let { task } = state.tasks.info;
   return { task };
 };
 
