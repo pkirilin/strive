@@ -1,6 +1,0 @@
-/** Redux action types related to task statuses */
-export const taskStatusListConstants = {
-  GET_STATUSES_REQUEST: "TASK_STATUSES_GET_STATUSES_REQUEST",
-  GET_STATUSES_SUCCESS: "TASK_STATUSES_GET_STATUSES_SUCCESS",
-  GET_STATUSES_ERROR: "TASK_STATUSES_GET_STATUSES_ERROR"
-};
