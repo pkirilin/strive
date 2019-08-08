@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import { accountReducer } from "./Account";
-import { projectsReducer } from "./Projects";
-import { tasksReducer } from "./Tasks";
-import { taskStatusesReducer } from "./TaskStatuses";
+import { accountReducer } from "./account";
+import { projectsReducer } from "./projects";
+import { tasksReducer } from "./tasks";
+import { taskStatusesReducer } from "./taskStatuses";
 import { alertReducer } from "./alert.reducer";
 import { modalReducer } from "./modal.reducer";
 

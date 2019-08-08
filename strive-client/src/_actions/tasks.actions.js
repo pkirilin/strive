@@ -3,7 +3,7 @@ import { alertActions } from "./alert.actions";
 import { taskListConstants, taskOperationsConstants } from "../_constants";
 import { httpStatuses, actionHelper, historyHelper } from "../_helpers";
 import { tasksService } from "../_services";
-import { taskInfoConstants, taskFilterConstants } from "../_constants/Tasks";
+import { taskInfoConstants, taskFilterConstants } from "../_constants";
 
 /** Contains Redux action creators for actions related to tasks */
 export const tasksActions = {

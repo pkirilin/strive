@@ -1,4 +1,4 @@
-import { taskInfoConstants } from "../../_constants/Tasks";
+import { taskInfoConstants } from "../../_constants";
 
 export const taskInfoReducer = (state = {}, action) => {
   switch (action.type) {

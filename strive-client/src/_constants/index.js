@@ -1,18 +1,19 @@
-export { registerConstants, loginConstants } from "./Account";
+export { registerConstants, loginConstants } from "./account";
 export {
   projectInfoConstants,
   projectListConstants,
   projectOperationsConstants
-} from "./Projects";
+} from "./projects";
 export {
+  taskInfoConstants,
   taskFilterConstants,
   taskListConstants,
   taskOperationsConstants
-} from "./Tasks";
+} from "./tasks";
 export {
   taskStatusListConstants,
   taskStatusTabsConstants
-} from "./TaskStatuses";
+} from "./taskStatuses";
 export { alertConstants } from "./alert.constants";
 export { modalConstants } from "./modal.constants";
 export { validationRegexes, validationStatuses } from "./validation.constants";
