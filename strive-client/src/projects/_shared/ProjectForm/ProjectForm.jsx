@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Form, FormGroup, Button, Row, Col } from "reactstrap";
-import { AppTextBox, AppTextArea, AppSpinner } from "../../../_components";
+import { AppTextBox, AppTextArea, Spinner } from "../../../_components";
 import { validationStatuses } from "../../../_constants";
 import { historyHelper } from "../../../_helpers";
 import {
@@ -213,7 +213,7 @@ export default class ProjectForm extends Component {
 
     // Showing loading project info spinner while data is fetching (for update)
     if (gettingProjectForUpdate) {
-      return <AppSpinner text="Getting project for update" />;
+      return <Spinner text="Getting project for update" />;
     }
 
     // If server is not available, showing error message
@@ -244,7 +244,7 @@ export default class ProjectForm extends Component {
 
     return (
       <Form id={this.props.id} className="col-12">
-        {sendingProjectInfo && <AppSpinner text={this.props.loadingText} />}
+        {sendingProjectInfo && <Spinner text={this.props.loadingText} />}
         <FormGroup>
           <AppTextBox
             {...this.state.projectName}

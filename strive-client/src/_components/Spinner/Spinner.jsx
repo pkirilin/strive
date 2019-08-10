@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-export class AppSpinner extends React.Component {
+export default class Spinner extends Component {
   static propTypes = {
     text: PropTypes.string
   };

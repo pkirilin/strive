@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { AppSpinner, AppSectionSeparator } from "../../../_components";
+import { Spinner, AppSectionSeparator } from "../../../_components";
 import TaskListItemContainer from "../TaskListItemContainer";
 
 export default class TaskList extends Component {
@@ -35,7 +35,7 @@ export default class TaskList extends Component {
 
     // Rendering loading spinner while data is fetching from server
     if (loadingTasks) {
-      return <AppSpinner text="Loading tasks" />;
+      return <Spinner text="Loading tasks" />;
     }
 
     // Server is not working, then showing a message, that data has not been fetched

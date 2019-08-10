@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Form, FormGroup, Button } from "reactstrap";
-import { AppSpinner, AppTextBox } from "../../../_components";
+import { Spinner, AppTextBox } from "../../../_components";
 import { validationStatuses } from "../../../_constants";
 import {
   validationRulesSetters,
@@ -224,7 +224,7 @@ export default class RegisterForm extends Component {
     const { registering } = this.props;
     return (
       <Form id="registerForm">
-        {registering && <AppSpinner />}
+        {registering && <Spinner />}
         <FormGroup>
           <AppTextBox
             {...this.state.email}

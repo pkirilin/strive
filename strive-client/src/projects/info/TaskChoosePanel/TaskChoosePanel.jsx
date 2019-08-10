@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 import {
   AppCheckBox,
-  AppSpinner,
+  Spinner,
   AppSectionSeparator
 } from "../../../_components";
 
@@ -122,7 +122,7 @@ export default class TaskChoosePanel extends Component {
     let statusesDropdownMenuContent = <div />;
 
     if (loadingStatusList) {
-      statusesDropdownMenuContent = <AppSpinner text="Loading task statuses" />;
+      statusesDropdownMenuContent = <Spinner text="Loading task statuses" />;
     }
 
     if (failedToFetchTaskStatuses) {

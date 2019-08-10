@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Row, Col } from "reactstrap";
 import {
-  AppSpinner,
+  Spinner,
   TaskStatusBadge,
   AppHeader,
   AppSectionSeparator
@@ -88,6 +88,6 @@ export default class TaskData extends Component {
     }
 
     // Showing loading spinner while loading task data from server
-    return <div>{gettingTask && <AppSpinner text="Getting task data" />}</div>;
+    return <div>{gettingTask && <Spinner text="Getting task data" />}</div>;
   }
 }

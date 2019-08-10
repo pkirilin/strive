@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { AppConfirmationModal, AppSpinner } from "../../../_components";
+import { AppConfirmationModal, Spinner } from "../../../_components";
 import TaskListContainer from "../TaskListContainer";
 import ProjectDataContainer from "../ProjectDataContainer";
 import TaskChoosePanelContainer from "../TaskChoosePanelContainer";
@@ -45,7 +45,7 @@ export default class ProjectContent extends Component {
     let content = <div />;
 
     if (loadingProjectData) {
-      content = <AppSpinner text="Getting project info from server" />;
+      content = <Spinner text="Getting project info from server" />;
     }
 
     if (projectDataLoaded) {
@@ -64,7 +64,7 @@ export default class ProjectContent extends Component {
 
     // Deleting project modal confirmed, modal closed, deleting in process. Showing loading spinner
     if (deletingProject) {
-      content = <AppSpinner text="Deleting project" />;
+      content = <Spinner text="Deleting project" />;
     }
 
     // Wrong project id

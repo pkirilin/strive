@@ -4,7 +4,7 @@ import {
   DocumentTitleSetter,
   PrivateLayout,
   AppConfirmationModal,
-  AppSpinner
+  Spinner
 } from "../../../_components";
 import TaskDataContainer from "../TaskDataContainer";
 
@@ -35,7 +35,7 @@ export default class TaskInfoPage extends Component {
 
     // Deleting task modal confirmed, modal closed, deleting in process. Showing loading spinner
     if (deletingTask) {
-      content = <AppSpinner text="Deleting task" />;
+      content = <Spinner text="Deleting task" />;
     }
 
     if (notFoundTaskData) {

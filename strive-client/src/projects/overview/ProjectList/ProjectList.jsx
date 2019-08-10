@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { ListGroup } from "reactstrap";
-import { AppSpinner, AppConfirmationModal } from "../../../_components";
+import { Spinner, AppConfirmationModal } from "../../../_components";
 import ProjectListItem from "../ProjectListItem";
 
 export default class ProjectList extends Component {
@@ -44,7 +44,7 @@ export default class ProjectList extends Component {
 
     // Rendering loading spinner while data is fetching from server
     if (loadingProjectList) {
-      return <AppSpinner text="Getting projects" />;
+      return <Spinner text="Getting projects" />;
     }
 
     // Server is not working, then showing a message, that data has not been fetched
@@ -74,7 +74,7 @@ export default class ProjectList extends Component {
     return (
       <ListGroup>
         <AppConfirmationModal {...deleteProjectModal} />
-        {deletingProject && <AppSpinner text="Deleting project" />}
+        {deletingProject && <Spinner text="Deleting project" />}
         {projects.map(project => (
           <ProjectListItem key={project.id} data={project} />
         ))}

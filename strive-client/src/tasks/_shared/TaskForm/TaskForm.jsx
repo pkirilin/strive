@@ -12,7 +12,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
-import { AppTextBox, AppTextArea, AppSpinner } from "../../../_components";
+import { AppTextBox, AppTextArea, Spinner } from "../../../_components";
 import { validationStatuses } from "../../../_constants";
 import { historyHelper } from "../../../_helpers";
 import {
@@ -233,7 +233,7 @@ export default class TaskForm extends Component {
 
     // Showing loading task info spinner while data is fetching (for update)
     if (gettingTaskForUpdate) {
-      return <AppSpinner text="Getting task for update" />;
+      return <Spinner text="Getting task for update" />;
     }
 
     // If server is not available, showing error message
@@ -262,7 +262,7 @@ export default class TaskForm extends Component {
 
     return (
       <Form id={this.props.id}>
-        {sendingTaskInfo && <AppSpinner text={loadingText} />}
+        {sendingTaskInfo && <Spinner text={loadingText} />}
         <FormGroup>
           <AppTextBox
             {...this.state.taskTitle}
@@ -280,7 +280,7 @@ export default class TaskForm extends Component {
         </FormGroup>
 
         {!taskStatuses ? (
-          <AppSpinner text="Loading statuses list" />
+          <Spinner text="Loading statuses list" />
         ) : (
           <FormGroup>
             <Label className="font-weight-bold">Status</Label>

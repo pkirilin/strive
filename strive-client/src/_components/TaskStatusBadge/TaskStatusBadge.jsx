@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Badge } from "reactstrap";
 
-export const TaskStatusBadge = props => {
+const TaskStatusBadge = props => {
   function getColorByStatus(status) {
     switch (status) {
       case "Planned":
@@ -23,3 +23,5 @@ export const TaskStatusBadge = props => {
 TaskStatusBadge.propTypes = {
   children: PropTypes.string.isRequired
 };
+
+export default TaskStatusBadge;

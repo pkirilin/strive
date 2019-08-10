@@ -1,6 +1,9 @@
+import Spinner from "./Spinner";
+import TaskStatusBadge from "./TaskStatusBadge";
+
+export { Spinner, TaskStatusBadge };
+
 export { AppAlert } from "./Alerts";
-export { TaskStatusBadge } from "./Badges";
-export { AppSpinner } from "./Effects";
 export { AppFooter } from "./Footer";
 export { AppTextBox, AppTextArea, AppCheckBox } from "./FormControls";
 export { PublicLayout, PrivateLayout } from "./Layouts";
