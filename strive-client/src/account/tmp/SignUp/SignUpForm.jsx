@@ -1,7 +1,7 @@
 import React from "react";
 // import { Link } from "react-router-dom";
 // import { Form, FormGroup, Input } from "reactstrap";
-// import { AppTextBox } from "../../_components";
+// import { FormTextBox } from "../../_components";
 import { validationStatuses } from "../../../_constants";
 // import {
 //   validationUtils,
@@ -78,7 +78,7 @@ export class SignUpForm extends React.Component {
     // return (
     //   <Form id="signUpForm">
     //     <FormGroup>
-    //       <AppTextBox
+    //       <FormTextBox
     //         {...this.state.email}
     //         type="text"
     //         label={this.state.resources.label.email}

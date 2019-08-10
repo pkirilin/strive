@@ -1,12 +1,25 @@
-import Footer from "./Footer";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
+
+import FormCheckBox from "./FormCheckBox";
+import FormTextArea from "./FormTextArea";
+import FormTextBox from "./FormTextBox";
+
 import Spinner from "./Spinner";
+
 import TaskStatusBadge from "./TaskStatusBadge";
 
-export { Footer, Navbar, Spinner, TaskStatusBadge };
+export {
+  Navbar,
+  Footer,
+  FormCheckBox,
+  FormTextArea,
+  FormTextBox,
+  Spinner,
+  TaskStatusBadge
+};
 
 export { AppAlert } from "./Alerts";
-export { AppTextBox, AppTextArea, AppCheckBox } from "./FormControls";
 export { PublicLayout, PrivateLayout } from "./Layouts";
 export { AppConfirmationModal } from "./Modals";
 export { PrivateRoute } from "./Routes";

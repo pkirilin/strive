@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Label, Input } from "reactstrap";
 import { validationStatuses } from "../../_constants";
 
-export class AppTextArea extends React.Component {
+export default class FormTextBox extends Component {
   static propTypes = {
+    type: PropTypes.string,
     label: PropTypes.string,
     placeholder: PropTypes.string,
     value: PropTypes.string.isRequired,
@@ -16,15 +17,16 @@ export class AppTextArea extends React.Component {
   };
 
   static defaultProps = {
-    type: "textarea",
-    rows: 4,
+    type: "text",
     validationState: {
       status: validationStatuses.default
     }
   };
 
   render() {
-    let inputClasses = ["form-control"];
+    let inputClasses = [
+      this.props.readonly ? "form-control-plaintext" : "form-control"
+    ];
 
     let messageClasses = [];
 

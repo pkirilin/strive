@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-export class AppCheckBox extends React.Component {
+export default class FormCheckBox extends Component {
   static propTypes = {
     id: PropTypes.string,
     label: PropTypes.string,

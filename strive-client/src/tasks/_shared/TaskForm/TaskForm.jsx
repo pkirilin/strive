@@ -12,7 +12,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
-import { AppTextBox, AppTextArea, Spinner } from "../../../_components";
+import { FormTextBox, FormTextArea, Spinner } from "../../../_components";
 import { validationStatuses } from "../../../_constants";
 import { historyHelper } from "../../../_helpers";
 import {
@@ -264,7 +264,7 @@ export default class TaskForm extends Component {
       <Form id={this.props.id}>
         {sendingTaskInfo && <Spinner text={loadingText} />}
         <FormGroup>
-          <AppTextBox
+          <FormTextBox
             {...this.state.taskTitle}
             label="Title"
             placeholder="Enter general task info"
@@ -272,7 +272,7 @@ export default class TaskForm extends Component {
         </FormGroup>
 
         <FormGroup>
-          <AppTextArea
+          <FormTextArea
             {...this.state.taskDescription}
             label="Description"
             placeholder="Enter additional task info"

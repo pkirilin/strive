@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Form, FormGroup, Button } from "reactstrap";
-import { Spinner, AppTextBox } from "../../../_components";
+import { Spinner, FormTextBox } from "../../../_components";
 import { validationStatuses } from "../../../_constants";
 import {
   validationRulesSetters,
@@ -226,7 +226,7 @@ export default class RegisterForm extends Component {
       <Form id="registerForm">
         {registering && <Spinner />}
         <FormGroup>
-          <AppTextBox
+          <FormTextBox
             {...this.state.email}
             type="text"
             label="Email"
@@ -235,7 +235,7 @@ export default class RegisterForm extends Component {
         </FormGroup>
 
         <FormGroup>
-          <AppTextBox
+          <FormTextBox
             {...this.state.username}
             type="text"
             label="Username"
@@ -244,7 +244,7 @@ export default class RegisterForm extends Component {
         </FormGroup>
 
         <FormGroup>
-          <AppTextBox
+          <FormTextBox
             {...this.state.password}
             type="password"
             label="Password"
@@ -253,7 +253,7 @@ export default class RegisterForm extends Component {
         </FormGroup>
 
         <FormGroup>
-          <AppTextBox
+          <FormTextBox
             {...this.state.passwordConfirm}
             type="password"
             label="Password confirm"

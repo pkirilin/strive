@@ -9,7 +9,7 @@ import {
   Col
 } from "reactstrap";
 import {
-  AppCheckBox,
+  FormCheckBox,
   Spinner,
   AppSectionSeparator
 } from "../../../_components";
@@ -143,7 +143,7 @@ export default class TaskChoosePanel extends Component {
       <AppSectionSeparator>
         <Row className="d-flex justify-content-between align-items-baseline">
           <Col xs="auto">
-            <AppCheckBox
+            <FormCheckBox
               id="chkChooseAllTasks"
               label="Choose all"
               checked={this.state.chooseAllChecked}

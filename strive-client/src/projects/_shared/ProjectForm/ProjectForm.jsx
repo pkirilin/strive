@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Form, FormGroup, Button, Row, Col } from "reactstrap";
-import { AppTextBox, AppTextArea, Spinner } from "../../../_components";
+import { FormTextBox, FormTextArea, Spinner } from "../../../_components";
 import { validationStatuses } from "../../../_constants";
 import { historyHelper } from "../../../_helpers";
 import {
@@ -246,7 +246,7 @@ export default class ProjectForm extends Component {
       <Form id={this.props.id} className="col-12">
         {sendingProjectInfo && <Spinner text={this.props.loadingText} />}
         <FormGroup>
-          <AppTextBox
+          <FormTextBox
             {...this.state.projectName}
             type="text"
             label="Project name"
@@ -255,7 +255,7 @@ export default class ProjectForm extends Component {
         </FormGroup>
 
         <FormGroup>
-          <AppTextArea
+          <FormTextArea
             {...this.state.projectDescription}
             label="Project description"
             placeholder="Enter project description"

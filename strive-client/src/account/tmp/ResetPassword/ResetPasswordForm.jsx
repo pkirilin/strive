@@ -1,6 +1,6 @@
 import React from "react";
 // import { Form, FormGroup, Input } from "reactstrap";
-// import { AppTextBox } from "../../_components";
+// import { FormTextBox } from "../../_components";
 import { validationStatuses } from "../../../_constants";
 // import {
 //   validationUtils,
@@ -118,7 +118,7 @@ export class ResetPasswordForm extends React.Component {
     // return (
     //   <Form id="resetPasswordForm">
     //     <FormGroup>
-    //       <AppTextBox
+    //       <FormTextBox
     //         {...this.state.email}
     //         type="text"
     //         label={this.state.resources.label.email}
@@ -127,7 +127,7 @@ export class ResetPasswordForm extends React.Component {
     //     </FormGroup>
 
     //     <FormGroup>
-    //       <AppTextBox
+    //       <FormTextBox
     //         {...this.state.newPassword}
     //         type="password"
     //         label={this.state.resources.label.newPassword}
@@ -136,7 +136,7 @@ export class ResetPasswordForm extends React.Component {
     //     </FormGroup>
 
     //     <FormGroup>
-    //       <AppTextBox
+    //       <FormTextBox
     //         {...this.state.newPasswordConfirm}
     //         type="password"
     //         label={this.state.resources.label.newPasswordConfirm}

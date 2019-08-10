@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Form, FormGroup, Button } from "reactstrap";
-import { Spinner, AppTextBox, AppCheckBox } from "../../../_components";
+import { Spinner, FormTextBox, FormCheckBox } from "../../../_components";
 import { validationStatuses } from "../../../_constants";
 import {
   validationUtils,
@@ -127,7 +127,7 @@ export default class LoginForm extends Component {
       <Form id="loginForm">
         {loggingIn && <Spinner />}
         <FormGroup>
-          <AppTextBox
+          <FormTextBox
             {...this.state.email}
             label="Email"
             placeholder="Enter email"
@@ -135,7 +135,7 @@ export default class LoginForm extends Component {
         </FormGroup>
 
         <FormGroup>
-          <AppTextBox
+          <FormTextBox
             {...this.state.password}
             type="password"
             label="Password"
@@ -143,7 +143,7 @@ export default class LoginForm extends Component {
           />
         </FormGroup>
 
-        <AppCheckBox
+        <FormCheckBox
           {...this.state.rememberMe}
           id="rememberMe"
           label="Remember me"
