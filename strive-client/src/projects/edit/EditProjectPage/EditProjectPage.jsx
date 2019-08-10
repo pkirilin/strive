@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import {
   PrivateLayout,
-  AppHeader,
+  Header,
   DocumentTitleSetter,
-  AppSectionSeparator
+  SectionSeparator
 } from "../../../_components";
 import EditProjectForm from "../EditProjectForm";
 
@@ -14,12 +14,12 @@ export default class EditProjectPage extends Component {
     return (
       <DocumentTitleSetter values={["Edit project"]}>
         <PrivateLayout>
-          <AppSectionSeparator>
-            <AppHeader>Edit project</AppHeader>
-          </AppSectionSeparator>
-          <AppSectionSeparator>
+          <SectionSeparator>
+            <Header>Edit project</Header>
+          </SectionSeparator>
+          <SectionSeparator>
             <EditProjectForm projectId={Number(projectId)} />
-          </AppSectionSeparator>
+          </SectionSeparator>
         </PrivateLayout>
       </DocumentTitleSetter>
     );

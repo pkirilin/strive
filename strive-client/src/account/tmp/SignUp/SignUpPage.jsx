@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  AppHeader,
+  Header,
   PublicLayout,
   DocumentTitleSetter
 } from "../../../_components";
@@ -11,7 +11,7 @@ export class SignUpPage extends React.Component {
     return (
       <DocumentTitleSetter>
         <PublicLayout>
-          <AppHeader>Sign up to Strive</AppHeader>
+          <Header>Sign up to Strive</Header>
           <SignUpForm />
         </PublicLayout>
       </DocumentTitleSetter>

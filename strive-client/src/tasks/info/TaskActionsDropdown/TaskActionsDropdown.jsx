@@ -7,7 +7,7 @@ import {
   DropdownItem
 } from "reactstrap";
 import { historyHelper } from "../../../_helpers";
-import { AppSectionSeparator } from "../../../_components";
+import { SectionSeparator } from "../../../_components";
 
 export default class TaskActionsDropdown extends Component {
   static propTypes = {
@@ -37,7 +37,7 @@ export default class TaskActionsDropdown extends Component {
 
   render() {
     return (
-      <AppSectionSeparator>
+      <SectionSeparator>
         <UncontrolledDropdown>
           <DropdownToggle color="light border" caret>
             Actions
@@ -47,7 +47,7 @@ export default class TaskActionsDropdown extends Component {
             <DropdownItem onClick={this.onDeleteTask}>Delete task</DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
-      </AppSectionSeparator>
+      </SectionSeparator>
     );
   }
 }

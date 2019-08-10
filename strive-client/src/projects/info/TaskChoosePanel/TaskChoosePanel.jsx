@@ -8,11 +8,7 @@ import {
   Row,
   Col
 } from "reactstrap";
-import {
-  FormCheckBox,
-  Spinner,
-  AppSectionSeparator
-} from "../../../_components";
+import { FormCheckBox, Spinner, SectionSeparator } from "../../../_components";
 
 export default class TaskChoosePanel extends Component {
   static propTypes = {
@@ -140,7 +136,7 @@ export default class TaskChoosePanel extends Component {
     }
 
     return (
-      <AppSectionSeparator>
+      <SectionSeparator>
         <Row className="d-flex justify-content-between align-items-baseline">
           <Col xs="auto">
             <FormCheckBox
@@ -161,7 +157,7 @@ export default class TaskChoosePanel extends Component {
             </UncontrolledDropdown>
           </Col>
         </Row>
-      </AppSectionSeparator>
+      </SectionSeparator>
     );
   }
 }

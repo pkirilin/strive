@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { ListGroupItem, Row, Col } from "reactstrap";
-import { AppSectionSeparator } from "../../../_components";
+import { SectionSeparator } from "../../../_components";
 
 export default class ProjectListItem extends Component {
   static propTypes = {
@@ -16,7 +16,7 @@ export default class ProjectListItem extends Component {
   render() {
     const { id, name, description } = this.props.data;
     return (
-      <AppSectionSeparator separatorValue="2">
+      <SectionSeparator separatorValue="2">
         <ListGroupItem action>
           <Row>
             <Col xs="auto">
@@ -29,7 +29,7 @@ export default class ProjectListItem extends Component {
             <Col className="font-weight-light">{description}</Col>
           </Row>
         </ListGroupItem>
-      </AppSectionSeparator>
+      </SectionSeparator>
     );
   }
 }

@@ -10,7 +10,7 @@ import {
   Button
 } from "reactstrap";
 import { historyHelper } from "../../../_helpers";
-import { AppSectionSeparator } from "../../../_components";
+import { SectionSeparator } from "../../../_components";
 
 export default class ProjectActions extends Component {
   static propTypes = {
@@ -54,14 +54,14 @@ export default class ProjectActions extends Component {
     return (
       <Row className="d-flex justify-content-between">
         <Col xs="auto">
-          <AppSectionSeparator>
+          <SectionSeparator>
             <Button color="light border" onClick={this.onNewTask}>
               New task
             </Button>
-          </AppSectionSeparator>
+          </SectionSeparator>
         </Col>
         <Col xs="auto">
-          <AppSectionSeparator>
+          <SectionSeparator>
             <UncontrolledDropdown>
               <DropdownToggle color="light border" caret>
                 Actions
@@ -75,7 +75,7 @@ export default class ProjectActions extends Component {
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
-          </AppSectionSeparator>
+          </SectionSeparator>
         </Col>
       </Row>
     );

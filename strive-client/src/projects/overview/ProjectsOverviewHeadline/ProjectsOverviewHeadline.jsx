@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Row, Col, Button } from "reactstrap";
-import { AppHeader } from "../../../_components";
+import { Header } from "../../../_components";
 import { historyHelper } from "../../../_helpers";
 
 export default class ProjectsOverviewHeadline extends Component {
@@ -17,9 +17,9 @@ export default class ProjectsOverviewHeadline extends Component {
     return (
       <Row className="d-flex justify-content-between align-items-center">
         <Col xs="auto">
-          <AppHeader level="2" centered={false}>
+          <Header level="2" centered={false}>
             Project list
-          </AppHeader>
+          </Header>
         </Col>
         <Col xs="auto">
           <Button color="light border" onClick={this.createProject}>

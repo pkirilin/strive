@@ -5,8 +5,8 @@ import { Row, Col } from "reactstrap";
 import {
   Spinner,
   TaskStatusBadge,
-  AppHeader,
-  AppSectionSeparator
+  Header,
+  SectionSeparator
 } from "../../../_components";
 import TaskActionsDropdownContainer from "../TaskActionsDropdownContainer";
 
@@ -39,11 +39,11 @@ export default class TaskData extends Component {
     if (task) {
       return (
         <div>
-          <AppSectionSeparator>
-            <AppHeader level="2" centered={false}>
+          <SectionSeparator>
+            <Header level="2" centered={false}>
               {task.title}
-            </AppHeader>
-          </AppSectionSeparator>
+            </Header>
+          </SectionSeparator>
           <Row className="d-flex justify-content-between align-items-baseline">
             <Col xs="auto">
               <span className="font-weight-light">Status:</span>
@@ -65,14 +65,14 @@ export default class TaskData extends Component {
             </Col>
           </Row>
           {task.description !== "" && task.description !== undefined ? (
-            <AppSectionSeparator>
+            <SectionSeparator>
               <span className="font-weight-light">Description:</span>
               <span className="ml-1">{task.description}</span>
-            </AppSectionSeparator>
+            </SectionSeparator>
           ) : (
-            <AppSectionSeparator>
+            <SectionSeparator>
               <span className="text-black-50">No description provided</span>
-            </AppSectionSeparator>
+            </SectionSeparator>
           )}
         </div>
       );

@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import { config } from "../../_helpers";
 import Cookies from "js-cookie";
 
-export const PrivateRoute = ({ component: Component, ...rest }) => (
+const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
@@ -20,3 +20,5 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
     }
   />
 );
+
+export default PrivateRoute;

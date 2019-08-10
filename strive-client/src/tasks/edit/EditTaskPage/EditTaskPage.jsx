@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import {
   PrivateLayout,
-  AppHeader,
+  Header,
   DocumentTitleSetter,
-  AppSectionSeparator
+  SectionSeparator
 } from "../../../_components";
 import EditTaskForm from "../EditTaskForm";
 
@@ -24,12 +24,12 @@ export default class EditTaskPage extends Component {
     return (
       <DocumentTitleSetter values={["Edit task"]}>
         <PrivateLayout>
-          <AppSectionSeparator>
-            <AppHeader>Edit task</AppHeader>
-          </AppSectionSeparator>
-          <AppSectionSeparator>
+          <SectionSeparator>
+            <Header>Edit task</Header>
+          </SectionSeparator>
+          <SectionSeparator>
             <EditTaskForm />
-          </AppSectionSeparator>
+          </SectionSeparator>
         </PrivateLayout>
       </DocumentTitleSetter>
     );

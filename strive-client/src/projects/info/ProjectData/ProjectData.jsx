@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { AppHeader, AppSectionSeparator } from "../../../_components";
+import { Header, SectionSeparator } from "../../../_components";
 
 export default class ProjectData extends Component {
   static propTypes = {
@@ -20,12 +20,12 @@ export default class ProjectData extends Component {
 
     // Server is working and some project data was received
     return (
-      <AppSectionSeparator>
-        <AppHeader level="4" centered={false}>
+      <SectionSeparator>
+        <Header level="4" centered={false}>
           {project.name}
-        </AppHeader>
+        </Header>
         <div className="font-weight-light">{project.description}</div>
-      </AppSectionSeparator>
+      </SectionSeparator>
     );
   }
 }

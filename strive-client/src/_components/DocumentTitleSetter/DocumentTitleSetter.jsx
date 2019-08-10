@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { config } from "../../_helpers";
 
-export class DocumentTitleSetter extends React.Component {
+export default class DocumentTitleSetter extends Component {
   static propTypes = {
     displayBrand: PropTypes.bool,
     brand: PropTypes.string,

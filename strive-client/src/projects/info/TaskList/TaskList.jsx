@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Spinner, AppSectionSeparator } from "../../../_components";
+import { Spinner, SectionSeparator } from "../../../_components";
 import TaskListItemContainer from "../TaskListItemContainer";
 
 export default class TaskList extends Component {
@@ -56,9 +56,9 @@ export default class TaskList extends Component {
 
     if (tasks.length === 0) {
       return (
-        <AppSectionSeparator>
+        <SectionSeparator>
           <div className="text-center text-muted">Task list is empty</div>
-        </AppSectionSeparator>
+        </SectionSeparator>
       );
     }
 

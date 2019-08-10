@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Nav, NavItem, NavLink, Badge } from "reactstrap";
 import { historyHelper } from "../../../_helpers";
-import { Spinner, AppSectionSeparator } from "../../../_components";
+import { Spinner, SectionSeparator } from "../../../_components";
 
 export default class TaskStatusTabsPanel extends Component {
   static propTypes = {
@@ -69,7 +69,7 @@ export default class TaskStatusTabsPanel extends Component {
 
     if (statusTabsData) {
       return (
-        <AppSectionSeparator>
+        <SectionSeparator>
           <Nav tabs>
             {statusTabsData.map(statusTab => (
               <NavItem
@@ -99,7 +99,7 @@ export default class TaskStatusTabsPanel extends Component {
               </NavItem>
             ))}
           </Nav>
-        </AppSectionSeparator>
+        </SectionSeparator>
       );
     }
 

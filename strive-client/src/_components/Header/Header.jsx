@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export const AppHeader = props => {
+const Header = props => {
   let HeaderTag = `h${props.level}`;
   let headerClassNames = [];
 
@@ -16,13 +16,15 @@ export const AppHeader = props => {
   );
 };
 
-AppHeader.propTypes = {
+Header.propTypes = {
   centered: PropTypes.bool,
   level: PropTypes.oneOf(["1", "2", "3", "4", "5", "6"]),
   children: PropTypes.any.isRequired
 };
 
-AppHeader.defaultProps = {
+Header.defaultProps = {
   centered: true,
   level: "1"
 };
+
+export default Header;

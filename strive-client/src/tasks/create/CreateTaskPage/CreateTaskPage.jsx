@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import {
   PrivateLayout,
-  AppHeader,
+  Header,
   DocumentTitleSetter,
-  AppSectionSeparator
+  SectionSeparator
 } from "../../../_components";
 import CreateTaskForm from "../CreateTaskForm";
 import { historyHelper } from "../../../_helpers";
@@ -33,12 +33,12 @@ export default class CreateTaskPage extends Component {
     return (
       <DocumentTitleSetter values={["Create task"]}>
         <PrivateLayout>
-          <AppSectionSeparator>
-            <AppHeader>Create task</AppHeader>
-          </AppSectionSeparator>
-          <AppSectionSeparator>
+          <SectionSeparator>
+            <Header>Create task</Header>
+          </SectionSeparator>
+          <SectionSeparator>
             <CreateTaskForm projectId={this.projectId} />
-          </AppSectionSeparator>
+          </SectionSeparator>
         </PrivateLayout>
       </DocumentTitleSetter>
     );
