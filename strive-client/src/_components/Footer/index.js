@@ -1,1 +1,3 @@
-export { AppFooter } from "./AppFooter";
+import Footer from "./Footer";
+
+export default Footer;

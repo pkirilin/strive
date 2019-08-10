@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "reactstrap";
 import { AppAlert } from "../Alerts";
-import { AppFooter } from "../Footer";
+import Footer from "../Footer";
 
 export class PublicLayout extends React.Component {
   render() {
@@ -11,7 +11,7 @@ export class PublicLayout extends React.Component {
           <AppAlert />
           {this.props.children}
         </Container>
-        <AppFooter />
+        <Footer />
       </div>
     );
   }

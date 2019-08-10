@@ -1,1 +1,3 @@
-export { AppNavbar } from "./AppNavbar";
+import Navbar from "./Navbar";
+
+export default Navbar;

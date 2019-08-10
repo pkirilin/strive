@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-  Navbar,
+  Navbar as BootstrapNavbar,
   NavbarBrand,
   NavbarToggler,
   Collapse,
@@ -15,7 +15,7 @@ import Cookies from "js-cookie";
 import { accountActions } from "../../_actions";
 import { config } from "../../_helpers";
 
-class AppNavbar extends React.Component {
+export default class Navbar extends Component {
   constructor(props) {
     super(props);
 
@@ -40,7 +40,7 @@ class AppNavbar extends React.Component {
   render() {
     const userDetails = Cookies.getJSON(config.cookies.user.keyName);
     return (
-      <Navbar color="light" light expand="sm">
+      <BootstrapNavbar color="light" light expand="sm">
         <NavbarBrand href="/">{config.brandName}</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
@@ -55,10 +55,10 @@ class AppNavbar extends React.Component {
             </UncontrolledDropdown>
           </Nav>
         </Collapse>
-      </Navbar>
+      </BootstrapNavbar>
     );
   }
 }
 
-const connectedNavbar = connect()(AppNavbar);
-export { connectedNavbar as AppNavbar };
+const connectedNavbar = connect()(Navbar);
+export { connectedNavbar as Navbar };
