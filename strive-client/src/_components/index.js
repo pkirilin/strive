@@ -3,6 +3,9 @@ import PrivateRoute from "./PrivateRoute";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
+import PrivateLayout from "./PrivateLayout";
+import PublicLayout from "./PublicLayout";
+
 import DocumentTitleSetter from "./DocumentTitleSetter";
 import Header from "./Header";
 import SectionSeparator from "./SectionSeparator";
@@ -19,6 +22,8 @@ export {
   PrivateRoute,
   Navbar,
   Footer,
+  PrivateLayout,
+  PublicLayout,
   DocumentTitleSetter,
   Header,
   SectionSeparator,
@@ -30,5 +35,4 @@ export {
 };
 
 export { AppAlert } from "./Alerts";
-export { PublicLayout, PrivateLayout } from "./Layouts";
 export { AppConfirmationModal } from "./Modals";
