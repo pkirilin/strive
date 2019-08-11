@@ -10,7 +10,7 @@ const mapStateToProps = state => {
     projects
   } = state.projects.list;
   const { deletingProject } = state.projects.operations;
-  const { deleteProjectModal } = state.modalReducer;
+  const { deleteProjectModal } = state.modals;
   return {
     loadingProjectList,
     failedToFetch,

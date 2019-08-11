@@ -11,7 +11,7 @@ const mapStateToProps = state => {
     internalServerError: projectDataInternalServerError
   } = state.projects.info;
 
-  const { deleteProjectModal } = state.modalReducer;
+  const { deleteProjectModal } = state.modals;
   const { deletingProject } = state.projects.operations;
 
   return {

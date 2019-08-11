@@ -6,9 +6,9 @@ import { history, config } from "../../_helpers";
 import { alertActions } from "../../_actions";
 
 const mapStateToProps = state => {
-  const { alertReducer } = state;
+  const { alert } = state;
   return {
-    alertReducer
+    alert
   };
 };
 
@@ -32,8 +32,8 @@ class AppAlert extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (Object.keys(nextProps.alertReducer).length > 0) {
-      // If alertReducer's state object is empty, component received clear action
+    if (Object.keys(nextProps.alert).length > 0) {
+      // If alert's state object is empty, component received clear action
       // Alert will be dismissed automatically in several seconds
       this.dismissTimer = setTimeout(() => {
         this.onDismiss();
@@ -53,7 +53,7 @@ class AppAlert extends React.Component {
   }
 
   render() {
-    const { alertReducer } = this.props;
+    const { alert } = this.props;
 
     return (
       <div
@@ -62,9 +62,9 @@ class AppAlert extends React.Component {
           zIndex: 2000
         }}
       >
-        {alertReducer.message && (
-          <Alert color={alertReducer.type} toggle={this.onDismiss}>
-            {alertReducer.message}
+        {alert.message && (
+          <Alert color={alert.type} toggle={this.onDismiss}>
+            {alert.message}
           </Alert>
         )}
       </div>

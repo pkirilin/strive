@@ -1,6 +1,6 @@
 import { modalConstants } from "../_constants";
 
-export const modalReducer = (state = {}, action) => {
+export const modalsReducer = (state = {}, action) => {
   switch (action.type) {
     case modalConstants.DELETE_PROJECT_OPEN:
       return {
