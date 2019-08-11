@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { AppConfirmationModal, Spinner } from "../../../_components";
+import { ConfirmationModal, Spinner } from "../../../_components";
 import TaskListContainer from "../TaskListContainer";
 import ProjectDataContainer from "../ProjectDataContainer";
 import TaskChoosePanelContainer from "../TaskChoosePanelContainer";
@@ -52,7 +52,7 @@ export default class ProjectContent extends Component {
       const { projectId } = this.props;
       content = (
         <div>
-          <AppConfirmationModal {...deleteProjectModal} />
+          <ConfirmationModal {...deleteProjectModal} />
           <ProjectDataContainer />
           <ProjectActionsContainer />
           <TaskStatusTabsPanelContainer projectId={projectId} />

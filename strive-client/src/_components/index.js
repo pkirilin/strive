@@ -16,6 +16,8 @@ import FormTextBox from "./FormTextBox";
 
 import Spinner from "./Spinner";
 
+import ConfirmationModal from "./ConfirmationModal";
+
 import TaskStatusBadge from "./TaskStatusBadge";
 
 export {
@@ -31,8 +33,8 @@ export {
   FormTextArea,
   FormTextBox,
   Spinner,
+  ConfirmationModal,
   TaskStatusBadge
 };
 
 export { AppAlert } from "./Alerts";
-export { AppConfirmationModal } from "./Modals";

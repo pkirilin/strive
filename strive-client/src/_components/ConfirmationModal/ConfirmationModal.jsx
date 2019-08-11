@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-export class AppConfirmationModal extends React.Component {
+export default class ConfirmationModal extends Component {
   static propTypes = {
     isOpen: PropTypes.bool,
     title: PropTypes.string,
@@ -12,7 +12,7 @@ export class AppConfirmationModal extends React.Component {
   };
 
   render() {
-    let { isOpen, title, message, onClose, onConfirm } = this.props;
+    const { isOpen, title, message, onClose, onConfirm } = this.props;
     return (
       <Modal isOpen={isOpen}>
         <ModalHeader toggle={onClose}>{title}</ModalHeader>

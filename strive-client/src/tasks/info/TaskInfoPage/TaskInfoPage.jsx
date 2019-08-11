@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {
   DocumentTitleSetter,
   PrivateLayout,
-  AppConfirmationModal,
+  ConfirmationModal,
   Spinner
 } from "../../../_components";
 import TaskDataContainer from "../TaskDataContainer";
@@ -28,7 +28,7 @@ export default class TaskInfoPage extends Component {
     const { deletingTask, notFoundTaskData, deleteTaskModal } = this.props;
     let content = (
       <div>
-        <AppConfirmationModal {...deleteTaskModal} />
+        <ConfirmationModal {...deleteTaskModal} />
         <TaskDataContainer taskId={this.taskId} />
       </div>
     );

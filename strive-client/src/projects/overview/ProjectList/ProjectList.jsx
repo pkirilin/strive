@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { ListGroup } from "reactstrap";
-import { Spinner, AppConfirmationModal } from "../../../_components";
+import { Spinner, ConfirmationModal } from "../../../_components";
 import ProjectListItem from "../ProjectListItem";
 
 export default class ProjectList extends Component {
@@ -73,7 +73,7 @@ export default class ProjectList extends Component {
     // Server worked fine and returned project collection
     return (
       <ListGroup>
-        <AppConfirmationModal {...deleteProjectModal} />
+        <ConfirmationModal {...deleteProjectModal} />
         {deletingProject && <Spinner text="Deleting project" />}
         {projects.map(project => (
           <ProjectListItem key={project.id} data={project} />
