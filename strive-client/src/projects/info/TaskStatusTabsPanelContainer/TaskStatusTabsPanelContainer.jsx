@@ -20,16 +20,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  function getTasks(requestParams) {
-    dispatch(tasksActions.getList(requestParams));
-  }
-
   function updateTaskFilter(filterValues) {
     dispatch(tasksActions.updateFilter(filterValues));
   }
 
   return {
-    getTasks,
     updateTaskFilter
   };
 };

@@ -519,8 +519,26 @@ function setStatus(setStatusData) {
  * @param {Object} filterValues Object containing parameters for filtering tasks
  */
 function updateFilter(filterValues) {
-  return {
-    type: taskFilterConstants.UPDATE,
-    filterValues
+  return (dispatch, getState) => {
+    return dispatch(setFilter(filterValues)).then(() => {
+      const filter = getState().tasks.filter;
+      dispatch(getList(filter));
+    });
   };
+
+  function setFilter(filterValues) {
+    return dispatch => {
+      return new Promise(resolve => {
+        dispatch(request(filterValues));
+        resolve();
+      });
+    };
+
+    function request(filterValues) {
+      return {
+        type: taskFilterConstants.UPDATE,
+        filterValues
+      };
+    }
+  }
 }
