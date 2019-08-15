@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { tasksActions, taskStatusesActions } from "../../../_actions";
+import { tasksActions } from "../../../_actions";
 import TaskChoosePanel from "../TaskChoosePanel";
 
 const mapStateToProps = state => {
@@ -26,12 +26,8 @@ const mapDispatchToProps = dispatch => {
     dispatch(tasksActions.checkAll(checked));
   }
 
-  function getTasks(requestParams) {
-    dispatch(tasksActions.getList(requestParams));
-  }
-
-  function getStatusTabs(projectId) {
-    dispatch(taskStatusesActions.getStatusTabs(projectId));
+  function refreshTasksAfterStatusChanged(filterValues) {
+    dispatch(tasksActions.getListWithStatuses(filterValues));
   }
 
   function setStatusForTasks(setStatusData) {
@@ -40,8 +36,7 @@ const mapDispatchToProps = dispatch => {
 
   return {
     changeCheckedStatusForTasks,
-    getTasks,
-    getStatusTabs,
+    refreshTasksAfterStatusChanged,
     setStatusForTasks
   };
 };

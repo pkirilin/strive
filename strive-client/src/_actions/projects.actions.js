@@ -7,6 +7,8 @@ import {
 } from "../_constants";
 import { httpStatuses, actionHelper, historyHelper } from "../_helpers";
 import { projectsService } from "../_services";
+import { taskStatusesActions } from "./taskStatuses.actions";
+import { tasksActions } from "./tasks.actions";
 
 /** Contains Redux action creators for actions related to projects */
 export const projectsActions = {
@@ -23,7 +25,9 @@ export const projectsActions = {
   update,
 
   /** Redux action creator, deletes project */
-  delete: deleteProject
+  delete: deleteProject,
+
+  loadProjectContent
 };
 
 /** Redux action creator, gets projects list for current user from server */
@@ -437,4 +441,14 @@ function deleteProject(projectId) {
       error
     };
   }
+}
+
+function loadProjectContent(projectId) {
+  return dispatch => {
+    dispatch(getInfo(projectId));
+    dispatch(taskStatusesActions.getStatusList());
+    dispatch(taskStatusesActions.getStatusTabs(projectId)).then(() =>
+      dispatch(tasksActions.getList({ projectId }))
+    );
+  };
 }

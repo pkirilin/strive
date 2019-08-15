@@ -15,18 +15,11 @@ export default class TaskList extends Component {
         title: PropTypes.string.isRequired,
         checked: PropTypes.bool
       })
-    ).isRequired,
-    loadTasks: PropTypes.func
+    ).isRequired
   };
 
-  constructor(props) {
-    super(props);
-    const { projectId, loadTasks } = props;
-    loadTasks({ projectId });
-  }
-
   render() {
-    let {
+    const {
       loadingTasks,
       failedToFetch,
       internalServerError,

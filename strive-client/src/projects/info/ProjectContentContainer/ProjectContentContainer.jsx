@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import ProjectContent from "../ProjectContent";
-import { projectsActions, taskStatusesActions } from "../../../_actions";
+import { projectsActions } from "../../../_actions";
 
 const mapStateToProps = state => {
   const {
@@ -27,9 +27,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   function loadProjectContent(projectId) {
-    dispatch(projectsActions.getInfo(projectId));
-    dispatch(taskStatusesActions.getStatusTabs(projectId));
-    dispatch(taskStatusesActions.getStatusList());
+    dispatch(projectsActions.loadProjectContent(projectId));
   }
 
   return {

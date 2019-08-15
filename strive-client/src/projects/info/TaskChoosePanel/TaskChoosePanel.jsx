@@ -15,8 +15,7 @@ export default class TaskChoosePanel extends Component {
     className: PropTypes.string,
     projectId: PropTypes.number.isRequired,
     changeCheckedStatusForTasks: PropTypes.func.isRequired,
-    getTasks: PropTypes.func.isRequired,
-    getStatusTabs: PropTypes.func.isRequired,
+    refreshTasksAfterStatusChanged: PropTypes.func.isRequired,
     setStatusForTasks: PropTypes.func.isRequired
   };
 
@@ -38,8 +37,7 @@ export default class TaskChoosePanel extends Component {
       setStatusSuccess,
       projectId,
       changeCheckedStatusForTasks,
-      getTasks,
-      getStatusTabs
+      refreshTasksAfterStatusChanged
     } = this.props;
 
     // If there's a task collection received
@@ -70,13 +68,12 @@ export default class TaskChoosePanel extends Component {
           changeCheckedStatusForTasks(this.state.chooseAllChecked);
         }
       );
-      // Refreshing task list to show actual statuses
-      getTasks({
+
+      // Refreshing task list and task status tabs info to show actual statuses
+      refreshTasksAfterStatusChanged({
         ...this.props.taskFilterData,
         projectId
       });
-      // Refreshing task status tabs info
-      getStatusTabs(projectId);
     }
   }
 

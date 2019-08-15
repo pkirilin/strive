@@ -21,7 +21,7 @@ export const taskStatusesActions = {
 function getStatusTabs(projectId) {
   return dispatch => {
     dispatch(request(projectId));
-    taskStatusesService.getStatusTabs(projectId).then(
+    return taskStatusesService.getStatusTabs(projectId).then(
       statusTabsResponse => {
         switch (statusTabsResponse.status) {
           case httpStatuses.ok:

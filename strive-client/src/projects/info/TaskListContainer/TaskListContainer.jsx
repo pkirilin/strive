@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { tasksActions } from "../../../_actions";
 import TaskList from "../TaskList";
 
 const mapStateToProps = state => {
@@ -17,19 +16,6 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  function loadTasks(requestParams) {
-    dispatch(tasksActions.getList(requestParams));
-  }
-
-  return {
-    loadTasks
-  };
-};
-
-const TaskListContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TaskList);
+const TaskListContainer = connect(mapStateToProps)(TaskList);
 
 export default TaskListContainer;
