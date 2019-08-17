@@ -15,87 +15,30 @@ export default class TaskChoosePanel extends Component {
     className: PropTypes.string,
     projectId: PropTypes.number.isRequired,
     changeCheckedStatusForTasks: PropTypes.func.isRequired,
-    refreshTasksAfterStatusChanged: PropTypes.func.isRequired,
-    setStatusForTasks: PropTypes.func.isRequired
+    setStatusForTasks: PropTypes.func.isRequired,
+    chooseAllChecked: PropTypes.bool
   };
 
   constructor(props) {
     super(props);
-    this.state = {
-      chooseAllChecked: false
-    };
-
     this.onChooseAllCheck = this.onChooseAllCheck.bind(this);
     this.onStatusDropdownItemClicked = this.onStatusDropdownItemClicked.bind(
       this
     );
   }
 
-  componentWillReceiveProps(nextProps) {
-    const {
-      tasks,
-      setStatusSuccess,
-      projectId,
-      changeCheckedStatusForTasks,
-      refreshTasksAfterStatusChanged
-    } = this.props;
-
-    // If there's a task collection received
-    if (tasks !== nextProps.tasks && tasks.length > 0) {
-      if (tasks.every(task => task.checked === true)) {
-        // Checking "Select all" checkbox, if every task in list was checked
-        this.setState({
-          chooseAllChecked: true
-        });
-      } else {
-        // Unchecking "Select all" checkbox, if any task in list was unchecked
-        if (tasks.some(task => task.checked === false)) {
-          this.setState({
-            chooseAllChecked: false
-          });
-        }
-      }
-    }
-
-    // "Set status" clicked, status successfully changed
-    if (!setStatusSuccess && nextProps.setStatusSuccess === true) {
-      // Clearing all checkboxes
-      this.setState(
-        {
-          chooseAllChecked: false
-        },
-        () => {
-          changeCheckedStatusForTasks(this.state.chooseAllChecked);
-        }
-      );
-
-      // Refreshing task list and task status tabs info to show actual statuses
-      refreshTasksAfterStatusChanged({
-        ...this.props.taskFilterData,
-        projectId
-      });
-    }
-  }
-
   onChooseAllCheck() {
-    const { changeCheckedStatusForTasks } = this.props;
-    this.setState(
-      {
-        chooseAllChecked: !this.state.chooseAllChecked
-      },
-      () => {
-        changeCheckedStatusForTasks(this.state.chooseAllChecked);
-      }
-    );
+    const { changeCheckedStatusForTasks, chooseAllChecked } = this.props;
+    changeCheckedStatusForTasks(!chooseAllChecked);
   }
 
   onStatusDropdownItemClicked(event) {
-    const { setStatusForTasks } = this.props;
+    const { setStatusForTasks, taskFilterData, projectId } = this.props;
     const setStatusData = {
       tasks: this.props.tasks,
       status: event.target.innerText
     };
-    setStatusForTasks(setStatusData);
+    setStatusForTasks(setStatusData, { ...taskFilterData, projectId });
   }
 
   render() {
@@ -109,7 +52,8 @@ export default class TaskChoosePanel extends Component {
     const {
       loadingStatusList,
       taskStatuses,
-      failedToFetchTaskStatuses
+      failedToFetchTaskStatuses,
+      chooseAllChecked
     } = this.props;
 
     let statusesDropdownMenuContent = <div />;
@@ -139,7 +83,7 @@ export default class TaskChoosePanel extends Component {
             <FormCheckBox
               id="chkChooseAllTasks"
               label="Choose all"
-              checked={this.state.chooseAllChecked}
+              checked={chooseAllChecked}
               onChange={this.onChooseAllCheck}
             />
           </Col>

@@ -1,10 +1,9 @@
 import { connect } from "react-redux";
-import { tasksActions } from "../../../_actions";
+import { tasksActions, taskStatusesActions } from "../../../_actions";
 import TaskChoosePanel from "../TaskChoosePanel";
 
 const mapStateToProps = state => {
-  const { tasks } = state.tasks.list;
-  const { setStatusSuccess } = state.tasks.operations;
+  const { tasks, chooseAllChecked } = state.tasks.list;
   const { filter } = state.tasks;
   const {
     loadingStatusList,
@@ -13,11 +12,11 @@ const mapStateToProps = state => {
   } = state.taskStatuses.list;
   return {
     tasks,
-    setStatusSuccess,
     taskFilterData: filter,
     loadingStatusList,
     taskStatuses,
-    failedToFetchTaskStatuses
+    failedToFetchTaskStatuses,
+    chooseAllChecked
   };
 };
 
@@ -26,17 +25,16 @@ const mapDispatchToProps = dispatch => {
     dispatch(tasksActions.checkAll(checked));
   }
 
-  function refreshTasksAfterStatusChanged(filterValues) {
-    dispatch(tasksActions.getListWithStatuses(filterValues));
-  }
-
-  function setStatusForTasks(setStatusData) {
-    dispatch(tasksActions.setStatus(setStatusData));
+  function setStatusForTasks(setStatusData, taskFilterData) {
+    dispatch(tasksActions.setStatus(setStatusData))
+      .then(() => dispatch(tasksActions.getList(taskFilterData)))
+      .then(() =>
+        dispatch(taskStatusesActions.getStatusTabs(taskFilterData.projectId))
+      );
   }
 
   return {
     changeCheckedStatusForTasks,
-    refreshTasksAfterStatusChanged,
     setStatusForTasks
   };
 };

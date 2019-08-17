@@ -451,7 +451,7 @@ function deleteTask(task) {
 function setStatus(setStatusData) {
   return dispatch => {
     dispatch(request());
-    tasksService.setStatus(setStatusData).then(
+    return tasksService.setStatus(setStatusData).then(
       setStatusResponse => {
         switch (setStatusResponse.status) {
           case httpStatuses.ok:
