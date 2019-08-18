@@ -22,7 +22,7 @@ export default class ProjectContent extends Component {
       onConfirm: PropTypes.func
     }),
     deletingProject: PropTypes.bool,
-    loadProjectContent: PropTypes.func
+    loadProjectContent: PropTypes.func.isRequired
   };
 
   constructor(props) {

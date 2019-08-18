@@ -4,7 +4,6 @@ import { taskListConstants, taskOperationsConstants } from "../_constants";
 import { httpStatuses, actionHelper, historyHelper } from "../_helpers";
 import { tasksService } from "../_services";
 import { taskInfoConstants, taskFilterConstants } from "../_constants";
-import { taskStatusesActions } from "./taskStatuses.actions";
 
 /** Contains Redux action creators for actions related to tasks */
 export const tasksActions = {
@@ -33,9 +32,7 @@ export const tasksActions = {
   setStatus,
 
   /** Redux action creator, updates task filter */
-  updateFilter,
-
-  getListWithStatuses
+  updateFilter
 };
 
 /**
@@ -544,12 +541,4 @@ function updateFilter(filterValues) {
       };
     }
   }
-}
-
-function getListWithStatuses(filterValues) {
-  return dispatch => {
-    dispatch(getList(filterValues)).then(() => {
-      dispatch(taskStatusesActions.getStatusTabs(filterValues.projectId));
-    });
-  };
 }

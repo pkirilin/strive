@@ -1,6 +1,10 @@
 import { connect } from "react-redux";
 import ProjectContent from "../ProjectContent";
-import { projectsActions } from "../../../_actions";
+import {
+  projectsActions,
+  taskStatusesActions,
+  tasksActions
+} from "../../../_actions";
 
 const mapStateToProps = state => {
   const {
@@ -27,7 +31,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   function loadProjectContent(projectId) {
-    dispatch(projectsActions.loadProjectContent(projectId));
+    dispatch(projectsActions.getInfo(projectId));
+    dispatch(tasksActions.getList({ projectId })).then(() => {
+      dispatch(taskStatusesActions.getStatusList());
+      dispatch(taskStatusesActions.getStatusTabs(projectId));
+    });
   }
 
   return {
