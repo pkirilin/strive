@@ -62,10 +62,10 @@ export default class TaskForm extends Component {
       this
     );
 
-    this.trackTaskForUpdateFetchedFromServer = this.trackTaskForUpdateFetchedFromServer.bind(
+    this.handleTaskForUpdateFetchedFromServer = this.handleTaskForUpdateFetchedFromServer.bind(
       this
     );
-    this.trackTaskStatusListFetchedFromServer = this.trackTaskStatusListFetchedFromServer.bind(
+    this.handleTaskStatusListFetchedFromServer = this.handleTaskStatusListFetchedFromServer.bind(
       this
     );
 
@@ -93,7 +93,7 @@ export default class TaskForm extends Component {
     loadTaskStatuses();
   }
 
-  trackTaskForUpdateFetchedFromServer() {
+  handleTaskForUpdateFetchedFromServer() {
     const { task } = this.props;
     this.setState({
       taskTitle: {
@@ -110,16 +110,13 @@ export default class TaskForm extends Component {
     });
   }
 
-  trackTaskStatusListFetchedFromServer() {
-    const { purpose } = this.props;
+  handleTaskStatusListFetchedFromServer() {
+    const { purpose, taskStatuses } = this.props;
 
     switch (purpose) {
       case "create":
         this.setState({
-          taskStatus:
-            this.props.taskStatuses.length === 0
-              ? ""
-              : this.props.taskStatuses[0].label
+          taskStatus: taskStatuses.length === 0 ? "" : taskStatuses[0].label
         });
         break;
       default:
@@ -131,7 +128,7 @@ export default class TaskForm extends Component {
     // Tracks if current form state values must be replaced by fetched from server ones
     // This happens when user clicked "Edit task" button and server found task with requested id
     if (prevProps.task === undefined && this.props.task !== undefined) {
-      this.trackTaskForUpdateFetchedFromServer();
+      this.handleTaskForUpdateFetchedFromServer();
       return true;
     }
 
@@ -140,7 +137,7 @@ export default class TaskForm extends Component {
       prevProps.taskStatuses === undefined &&
       this.props.taskStatuses !== undefined
     ) {
-      this.trackTaskStatusListFetchedFromServer();
+      this.handleTaskStatusListFetchedFromServer();
       return true;
     }
   }
