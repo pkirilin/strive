@@ -1,4 +1,4 @@
-import { alertActions } from "../_actions";
+import { toastr } from "react-redux-toastr";
 import { registerConstants, loginConstants } from "../_constants";
 import { config, httpStatuses, actionHelper, historyHelper } from "../_helpers";
 import { accountService } from "../_services";
@@ -28,7 +28,7 @@ function register(user) {
           case httpStatuses.ok:
             dispatch(success(userResponse));
             historyHelper.redirectToLogin();
-            dispatch(alertActions.success("Registration successful"));
+            toastr.success("Account", "Registration successful");
             break;
           case httpStatuses.badRequest:
             userResponse.json().then(
@@ -55,10 +55,9 @@ function register(user) {
       // Server is not available
       errorResponse => {
         dispatch(error(errorResponse));
-        dispatch(
-          alertActions.error(
-            "Registration failed: unable to fetch data from API"
-          )
+        toastr.error(
+          "Account",
+          "Registration failed: unable to fetch data from API"
         );
       }
     );
@@ -157,13 +156,13 @@ function login(userLoginData) {
               } else {
                 // Token not found, authentication failed
                 dispatch(error(unauthorizedErrorMessage));
-                dispatch(alertActions.error(unauthorizedErrorMessage));
+                toastr.error("Account", unauthorizedErrorMessage);
               }
             });
             break;
           case httpStatuses.unauthorized:
             dispatch(error(unauthorizedErrorMessage));
-            dispatch(alertActions.error(unauthorizedErrorMessage));
+            toastr.error("Account", unauthorizedErrorMessage);
             break;
           case httpStatuses.internalServerError:
             actionHelper.handleInternalServerErrorResponse(
@@ -179,7 +178,7 @@ function login(userLoginData) {
       // Server is not available
       errorResponse => {
         dispatch(error(errorResponse));
-        dispatch(alertActions.error(unauthorizedErrorMessage));
+        toastr.error("Account", unauthorizedErrorMessage);
       }
     );
   };

@@ -1,10 +1,10 @@
 import React from "react";
-import { alertActions } from "./alert.actions";
 import {
   projectInfoConstants,
   projectListConstants,
   projectOperationsConstants
 } from "../_constants";
+import { toastr } from "react-redux-toastr";
 import { httpStatuses, actionHelper, historyHelper } from "../_helpers";
 import { projectsService } from "../_services";
 
@@ -172,13 +172,13 @@ function create(project) {
           case httpStatuses.ok:
             dispatch(success(project));
             historyHelper.redirectToProjects();
-            dispatch(
-              alertActions.success(
+            toastr.success("Projects", "", {
+              component: (
                 <div>
                   Project <b>{project.name}</b> has been successfully created
                 </div>
               )
-            );
+            });
             break;
           case httpStatuses.unauthorized:
             historyHelper.redirectToLogin();
@@ -203,10 +203,9 @@ function create(project) {
       },
       errorResponse => {
         dispatch(error(errorResponse));
-        dispatch(
-          alertActions.error(
-            "Failed to create project: server is not available"
-          )
+        toastr.error(
+          "Projects",
+          "Failed to create project: server is not available"
         );
       }
     );
@@ -258,13 +257,13 @@ function update(project) {
           case httpStatuses.ok:
             historyHelper.redirectToProjectInfo(project.id);
             dispatch(success(project));
-            dispatch(
-              alertActions.success(
+            toastr.success("Projects", "", {
+              component: (
                 <div>
                   Project <b>{project.name}</b> has been successfully updated
                 </div>
               )
-            );
+            });
             break;
           case httpStatuses.unauthorized:
             historyHelper.redirectToLogin();
@@ -285,10 +284,9 @@ function update(project) {
                   `Server couldn't find a project with id = ${notFoundProjectId}`
                 )
               );
-              dispatch(
-                alertActions.error(
-                  "Failed to update project: server couldn't find target project"
-                )
+              toastr.error(
+                "Projects",
+                "Failed to update project: server couldn't find target project"
               );
             });
             break;
@@ -305,10 +303,9 @@ function update(project) {
       },
       errorResponse => {
         dispatch(error(errorResponse));
-        dispatch(
-          alertActions.error(
-            "Failed to update project: server is not available"
-          )
+        toastr.error(
+          "Projects",
+          "Failed to update project: server is not available"
         );
       }
     );
@@ -360,11 +357,7 @@ function deleteProject(projectId) {
           case httpStatuses.ok:
             historyHelper.redirectToProjects();
             dispatch(success(projectId));
-            dispatch(
-              alertActions.success(
-                <div>Project has been successfully deleted</div>
-              )
-            );
+            toastr.success("Projects", "Project has been successfully deleted");
             break;
           case httpStatuses.unauthorized:
             historyHelper.redirectToLogin();
@@ -376,10 +369,9 @@ function deleteProject(projectId) {
                   `Server couldn't find a project with id = ${notFoundProjectId}`
                 )
               );
-              dispatch(
-                alertActions.error(
-                  "Failed to delete project: server couldn't find target project"
-                )
+              toastr.error(
+                "Projects",
+                "Failed to delete project: server couldn't find target project"
               );
             });
             break;
@@ -396,10 +388,9 @@ function deleteProject(projectId) {
       },
       errorResponse => {
         dispatch(error(errorResponse));
-        dispatch(
-          alertActions.error(
-            "Failed to delete project: server is not available"
-          )
+        toastr.error(
+          "Projects",
+          "Failed to delete project: server is not available"
         );
       }
     );

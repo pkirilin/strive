@@ -1,5 +1,5 @@
 import React from "react";
-import { alertActions } from "./alert.actions";
+import { toastr } from "react-redux-toastr";
 import { taskListConstants, taskOperationsConstants } from "../_constants";
 import { httpStatuses, actionHelper, historyHelper } from "../_helpers";
 import { tasksService } from "../_services";
@@ -198,13 +198,13 @@ function create(task) {
           case httpStatuses.ok:
             dispatch(success(task));
             historyHelper.redirectToProjectInfo(task.projectId);
-            dispatch(
-              alertActions.success(
+            toastr.success("Tasks", "", {
+              component: (
                 <div>
                   Task <b>{task.title}</b> has been successfully created
                 </div>
               )
-            );
+            });
             break;
           case httpStatuses.unauthorized:
             historyHelper.redirectToLogin();
@@ -229,9 +229,7 @@ function create(task) {
       },
       errorResponse => {
         dispatch(error(errorResponse));
-        dispatch(
-          alertActions.error("Failed to create task: server is not available")
-        );
+        toastr.error("Tasks", "Failed to create task: server is not available");
       }
     );
   };
@@ -282,13 +280,13 @@ function update(task) {
           case httpStatuses.ok:
             historyHelper.redirectToTaskInfo(task.id);
             dispatch(success(task));
-            dispatch(
-              alertActions.success(
+            toastr.success("Tasks", "", {
+              component: (
                 <div>
                   Task <b>{task.title}</b> has been successfully updated
                 </div>
               )
-            );
+            });
             break;
           case httpStatuses.unauthorized:
             historyHelper.redirectToLogin();
@@ -305,10 +303,9 @@ function update(task) {
               dispatch(
                 error(`Server couldn't find a task with id = ${notFoundTaskId}`)
               );
-              dispatch(
-                alertActions.error(
-                  "Failed to update task: server couldn't find target task"
-                )
+              toastr.error(
+                "Tasks",
+                "Failed to update task: server couldn't find target task"
               );
             });
             break;
@@ -325,9 +322,7 @@ function update(task) {
       },
       errorResponse => {
         dispatch(error(errorResponse));
-        dispatch(
-          alertActions.error("Failed to update task: server is not available")
-        );
+        toastr.error("Tasks", "Failed to update task: server is not available");
       }
     );
   };
@@ -378,11 +373,7 @@ function deleteTask(task) {
           case httpStatuses.ok:
             historyHelper.redirectToProjectInfo(task.project.id);
             dispatch(success(task));
-            dispatch(
-              alertActions.success(
-                <div>Task has been successfully deleted</div>
-              )
-            );
+            toastr.success("Tasks", "Task has been successfully deleted");
             break;
           case httpStatuses.unauthorized:
             historyHelper.redirectToLogin();
@@ -392,10 +383,9 @@ function deleteTask(task) {
               dispatch(
                 error(`Server couldn't find a task with id = ${notFoundTaskId}`)
               );
-              dispatch(
-                alertActions.error(
-                  "Failed to delete task: server couldn't find target task"
-                )
+              toastr.error(
+                "Tasks",
+                "Failed to delete task: server couldn't find target task"
               );
             });
             break;
@@ -412,9 +402,7 @@ function deleteTask(task) {
       },
       errorResponse => {
         dispatch(error(errorResponse));
-        dispatch(
-          alertActions.error("Failed to delete task: server is not available")
-        );
+        toastr.error("Tasks", "Failed to delete task: server is not available");
       }
     );
   };
@@ -461,15 +449,15 @@ function setStatus(setStatusData) {
           case httpStatuses.notFound:
             setStatusResponse.json().then(notFoundStatusLabel => {
               dispatch(error());
-              dispatch(
-                alertActions.error(
+              toastr.error("Tasks", "", {
+                component: (
                   <div>
                     Failed to set status: server could not find a status label
                     named
                     <b>{notFoundStatusLabel}</b>
                   </div>
                 )
-              );
+              });
             });
             break;
           case httpStatuses.internalServerError:
@@ -485,9 +473,7 @@ function setStatus(setStatusData) {
       },
       () => {
         dispatch(error());
-        dispatch(
-          alertActions.error("Failed to set status: server is not available")
-        );
+        toastr.error("Tasks", "Failed to set status: server is not available");
       }
     );
   };

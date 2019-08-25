@@ -1,4 +1,4 @@
-import { alertActions } from "../_actions";
+import { toastr } from "react-redux-toastr";
 import { utils } from "./utils.helper";
 
 /** Contains helper functions for using in app actions */
@@ -28,6 +28,6 @@ function handleInternalServerErrorResponse(response, dispatch, error) {
         internalServerError: errorMessage
       })
     );
-    dispatch(alertActions.error(errorMessage));
+    toastr.error("Error", errorMessage);
   });
 }
