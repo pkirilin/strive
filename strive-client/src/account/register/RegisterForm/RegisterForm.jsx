@@ -16,7 +16,6 @@ export default class RegisterForm extends Component {
       emailRemote: PropTypes.arrayOf(PropTypes.string),
       usernameRemote: PropTypes.arrayOf(PropTypes.string)
     }),
-    clearAlert: PropTypes.func,
     performRegister: PropTypes.func
   };
 
@@ -180,15 +179,10 @@ export default class RegisterForm extends Component {
   }
 
   onSubmit(event) {
-    const { clearAlert } = this.props;
-
     event.preventDefault();
-    clearAlert();
-
     let passwordValidationState = validationRulesSetters.validatePassword(
       this.state.password.value
     );
-
     this.setState(
       {
         email: {

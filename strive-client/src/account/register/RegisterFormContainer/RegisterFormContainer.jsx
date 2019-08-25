@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import RegisterForm from "../RegisterForm";
-import { alertActions, accountActions } from "../../../_actions";
+import { accountActions } from "../../../_actions";
 
 const RegisterFormContainer = props => <RegisterForm {...props} />;
 
@@ -12,7 +12,6 @@ RegisterFormContainer.propTypes = {
     emailRemote: PropTypes.arrayOf(PropTypes.string),
     usernameRemote: PropTypes.arrayOf(PropTypes.string)
   }),
-  clearAlert: PropTypes.func,
   performRegister: PropTypes.func
 };
 
@@ -25,16 +24,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  function clearAlert() {
-    dispatch(alertActions.clear());
-  }
-
   function performRegister(formData) {
     dispatch(accountActions.register(formData));
   }
 
   return {
-    clearAlert,
     performRegister
   };
 };

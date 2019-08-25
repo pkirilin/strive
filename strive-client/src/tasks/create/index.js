@@ -1,3 +1,3 @@
-import CreateTaskPageContainer from "./CreateTaskPageContainer";
+import CreateTaskPage from "./CreateTaskPage";
 
-export default CreateTaskPageContainer;
+export default CreateTaskPage;

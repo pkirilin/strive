@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router";
-import CreateTaskPageContainer from "./create";
+import CreateTaskPage from "./create";
 import EditTaskPageContainer from "./edit";
 import TaskInfoPage from "./info";
 import NotFoundPage from "../not-found";
@@ -12,7 +12,7 @@ export default class Tasks extends Component {
         <Route
           exact
           path="/tasks/create/:projectId"
-          component={CreateTaskPageContainer}
+          component={CreateTaskPage}
         />
         <Route exact path="/tasks/info/:taskId" component={TaskInfoPage} />
         <Route

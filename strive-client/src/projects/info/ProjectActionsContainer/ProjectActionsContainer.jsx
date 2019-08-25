@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { alertActions, modalActions, projectsActions } from "../../../_actions";
+import { modalActions, projectsActions } from "../../../_actions";
 import ProjectActions from "../ProjectActions";
 import { modalConstants } from "../../../_constants";
 
@@ -10,10 +10,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  function clearAlert() {
-    dispatch(alertActions.clear());
-  }
-
   function openDeleteProjectConfirmationModal(project) {
     dispatch(
       modalActions.open(modalConstants.DELETE_PROJECT_OPEN, {
@@ -39,7 +35,6 @@ const mapDispatchToProps = dispatch => {
   }
 
   return {
-    clearAlert,
     openDeleteProjectConfirmationModal
   };
 };

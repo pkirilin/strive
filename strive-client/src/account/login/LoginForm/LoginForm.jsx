@@ -12,7 +12,6 @@ import {
 export default class LoginForm extends Component {
   static propTypes = {
     loggingIn: PropTypes.bool,
-    clearAlert: PropTypes.func.isRequired,
     performLogin: PropTypes.func.isRequired
   };
 
@@ -97,11 +96,7 @@ export default class LoginForm extends Component {
   }
 
   onSubmit(event) {
-    const { clearAlert } = this.props;
-
     event.preventDefault();
-    clearAlert();
-
     this.setState(
       {
         email: {

@@ -36,5 +36,3 @@ export {
   ConfirmationModal,
   TaskStatusBadge
 };
-
-export { AppAlert } from "./Alerts";

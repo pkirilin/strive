@@ -18,7 +18,6 @@ export default class ProjectActions extends Component {
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired
     }),
-    clearAlert: PropTypes.func.isRequired,
     openDeleteProjectConfirmationModal: PropTypes.func.isRequired
   };
 
@@ -40,13 +39,7 @@ export default class ProjectActions extends Component {
   }
 
   onDeleteProject() {
-    const {
-      project,
-      clearAlert,
-      openDeleteProjectConfirmationModal
-    } = this.props;
-
-    clearAlert();
+    const { project, openDeleteProjectConfirmationModal } = this.props;
     openDeleteProjectConfirmationModal(project);
   }
 

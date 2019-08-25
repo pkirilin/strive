@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import {
   PrivateLayout,
   Header,
@@ -8,12 +7,9 @@ import {
 } from "../../../_components";
 import CreateTaskForm from "../CreateTaskForm";
 import { historyHelper } from "../../../_helpers";
+import { toastr } from "react-redux-toastr";
 
 export default class CreateTaskPage extends Component {
-  static propTypes = {
-    sendRedirectNotification: PropTypes.func.isRequired
-  };
-
   constructor(props) {
     super(props);
 
@@ -24,8 +20,10 @@ export default class CreateTaskPage extends Component {
     this.projectId = Number(projectIdStr);
     if (isNaN(this.projectId)) {
       historyHelper.redirectToProjects();
-      const { sendRedirectNotification } = this.props;
-      sendRedirectNotification();
+      toastr.error(
+        "Error",
+        "Unable to determine project id. Redirected to your project list"
+      );
     }
   }
 

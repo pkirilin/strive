@@ -34,7 +34,7 @@ export default class Navbar extends Component {
   }
 
   onLogoutClick() {
-    this.props.dispatch(accountActions.logout());
+    accountActions.logout();
   }
 
   render() {
