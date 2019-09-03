@@ -4,13 +4,17 @@ import {
   DocumentTitleSetter,
   PrivateLayout,
   ConfirmationModal,
-  Spinner
+  Spinner,
+  SectionSeparator
 } from "../../../_components";
 import TaskDataContainer from "../TaskDataContainer";
 
 export default class TaskInfoPage extends Component {
   static propTypes = {
-    notFoundTaskData: PropTypes.bool,
+    taskInfoError: PropTypes.shape({
+      message: PropTypes.string.isRequired
+    }),
+    deletingTask: PropTypes.bool,
     deleteTaskModal: PropTypes.shape({
       title: PropTypes.string,
       message: PropTypes.node,
@@ -25,7 +29,7 @@ export default class TaskInfoPage extends Component {
   }
 
   render() {
-    const { deletingTask, notFoundTaskData, deleteTaskModal } = this.props;
+    const { taskInfoError, deletingTask, deleteTaskModal } = this.props;
     let content = (
       <div>
         <ConfirmationModal {...deleteTaskModal} />
@@ -33,17 +37,18 @@ export default class TaskInfoPage extends Component {
       </div>
     );
 
+    // If any error occured, showing error message
+    if (taskInfoError) {
+      content = (
+        <SectionSeparator>
+          <div className="text-danger text-center">{taskInfoError.message}</div>
+        </SectionSeparator>
+      );
+    }
+
     // Deleting task modal confirmed, modal closed, deleting in process. Showing loading spinner
     if (deletingTask) {
       content = <Spinner text="Deleting task" />;
-    }
-
-    if (notFoundTaskData) {
-      content = (
-        <div className="mt-4 mb-4 text-danger text-center">
-          Failed to get task: task was not found
-        </div>
-      );
     }
 
     return (

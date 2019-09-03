@@ -2,12 +2,12 @@ import { connect } from "react-redux";
 import TaskInfoPage from "../TaskInfoPage";
 
 const mapStateToProps = state => {
-  const { notFound: notFoundTaskData } = state.tasks.info;
+  const { taskInfoError } = state.tasks.info;
   const { deletingTask } = state.tasks.operations;
   const { deleteTaskModal } = state.modals;
   return {
+    taskInfoError,
     deletingTask,
-    notFoundTaskData,
     deleteTaskModal
   };
 };

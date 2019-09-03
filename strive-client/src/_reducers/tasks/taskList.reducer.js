@@ -18,8 +18,8 @@ export const taskListReducer = (state = initialState, action) => {
       };
     case taskListConstants.GET_LIST_ERROR:
       return {
-        ...action.errorData,
-        tasks: [...state.tasks]
+        tasks: [...state.tasks],
+        taskListError: action.error
       };
 
     // Task list checks - selects/unselects tasks for making some changes

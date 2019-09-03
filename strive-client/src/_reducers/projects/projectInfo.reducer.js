@@ -13,7 +13,7 @@ export const projectInfoReducer = (state = {}, action) => {
       };
     case projectInfoConstants.GET_PROJECT_ERROR:
       return {
-        ...action.errorData
+        projectInfoError: action.error
       };
     default:
       return state;

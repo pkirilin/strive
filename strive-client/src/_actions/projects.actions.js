@@ -53,7 +53,7 @@ function getList() {
         }
       },
       () => {
-        dispatch(error({ failedToFetch: true }));
+        dispatch(error("Failed to get projects: server is not available"));
       }
     );
   };
@@ -78,12 +78,13 @@ function getList() {
 
   /**
    * Get projects list error action creator
-   * @param {object} errorData Error data indicating which type of error occured
    */
-  function error(errorData) {
+  function error(errorMessage) {
     return {
       type: projectListConstants.GET_LIST_ERROR,
-      errorData
+      error: {
+        message: errorMessage
+      }
     };
   }
 }
@@ -107,11 +108,7 @@ function getInfo(projectId) {
             historyHelper.redirectToProjects();
             break;
           case httpStatuses.notFound:
-            dispatch(
-              error({
-                notFound: true
-              })
-            );
+            dispatch(error("Project was not found"));
             break;
           case httpStatuses.internalServerError:
             actionHelper.handleInternalServerErrorResponse(
@@ -126,9 +123,7 @@ function getInfo(projectId) {
       },
       () => {
         dispatch(
-          error({
-            failedToFetch: true
-          })
+          error("Failed to fetch project data: server is not available")
         );
       }
     );
@@ -151,10 +146,12 @@ function getInfo(projectId) {
   }
 
   /** Get project info error action creator */
-  function error(errorData) {
+  function error(errorMessage) {
     return {
       type: projectInfoConstants.GET_PROJECT_ERROR,
-      errorData
+      error: {
+        message: errorMessage
+      }
     };
   }
 }

@@ -22,12 +22,7 @@ function handleInternalServerErrorResponse(response, dispatch, error) {
     } else {
       errorMessage = `${message}: ${description}`;
     }
-
-    dispatch(
-      error({
-        internalServerError: errorMessage
-      })
-    );
+    dispatch(error(errorMessage));
     toastr.error("Error", errorMessage);
   });
 }

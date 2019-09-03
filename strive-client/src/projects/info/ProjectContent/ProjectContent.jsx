@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { ConfirmationModal, Spinner } from "../../../_components";
+import {
+  ConfirmationModal,
+  Spinner,
+  SectionSeparator
+} from "../../../_components";
 import TaskListContainer from "../TaskListContainer";
 import ProjectDataContainer from "../ProjectDataContainer";
 import TaskChoosePanelContainer from "../TaskChoosePanelContainer";
@@ -12,9 +16,9 @@ export default class ProjectContent extends Component {
     projectId: PropTypes.number.isRequired,
     loadingProjectData: PropTypes.bool,
     projectDataLoaded: PropTypes.bool,
-    notFoundProjectData: PropTypes.bool,
-    failedToFetchProjectData: PropTypes.bool,
-    projectDataInternalServerError: PropTypes.string,
+    projectInfoError: PropTypes.shape({
+      message: PropTypes.string.isRequired
+    }),
     deleteProjectModal: PropTypes.shape({
       title: PropTypes.string,
       message: PropTypes.node,
@@ -35,22 +39,33 @@ export default class ProjectContent extends Component {
     const {
       loadingProjectData,
       projectDataLoaded,
-      notFoundProjectData,
-      failedToFetchProjectData,
-      projectDataInternalServerError,
+      projectInfoError,
       deleteProjectModal,
       deletingProject
     } = this.props;
 
-    let content = <div />;
-
     if (loadingProjectData) {
-      content = <Spinner text="Getting project info from server" />;
+      return <Spinner text="Getting project info from server" />;
+    }
+
+    if (projectInfoError) {
+      return (
+        <SectionSeparator>
+          <div className="text-danger text-center">
+            {projectInfoError.message}
+          </div>
+        </SectionSeparator>
+      );
+    }
+
+    // Deleting project modal confirmed, modal closed, deleting in process. Showing loading spinner
+    if (deletingProject) {
+      return <Spinner text="Deleting project" />;
     }
 
     if (projectDataLoaded) {
       const { projectId } = this.props;
-      content = (
+      return (
         <div>
           <ConfirmationModal {...deleteProjectModal} />
           <ProjectDataContainer />
@@ -62,38 +77,6 @@ export default class ProjectContent extends Component {
       );
     }
 
-    // Deleting project modal confirmed, modal closed, deleting in process. Showing loading spinner
-    if (deletingProject) {
-      content = <Spinner text="Deleting project" />;
-    }
-
-    // Wrong project id
-    if (notFoundProjectData) {
-      content = (
-        <div className="mt-4 mb-4 text-danger text-center">
-          Failed to get project info: project was not found
-        </div>
-      );
-    }
-
-    // Server is not available, showing error message
-    if (failedToFetchProjectData) {
-      content = (
-        <div className="mt-4 mb-4 text-danger text-center">
-          Failed to get project info: server is not available
-        </div>
-      );
-    }
-
-    // Server-side exception/fail
-    if (projectDataInternalServerError) {
-      content = (
-        <div className="mt-4 mb-4 text-danger text-center">
-          Failed to get project info. {projectDataInternalServerError}
-        </div>
-      );
-    }
-
-    return <div>{content}</div>;
+    return <div></div>;
   }
 }

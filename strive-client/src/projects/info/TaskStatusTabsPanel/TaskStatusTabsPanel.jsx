@@ -6,6 +6,17 @@ import { Spinner, SectionSeparator } from "../../../_components";
 export default class TaskStatusTabsPanel extends Component {
   static propTypes = {
     projectId: PropTypes.number.isRequired,
+    loadingStatusTabs: PropTypes.bool,
+    statusTabsData: PropTypes.arrayOf(
+      PropTypes.shape({
+        index: PropTypes.number.isRequired,
+        status: PropTypes.string.isRequired,
+        countTasks: PropTypes.number.isRequired
+      })
+    ),
+    statusTabsError: PropTypes.shape({
+      message: PropTypes.string.isRequired
+    }),
     updateTaskFilter: PropTypes.func.isRequired
   };
 
@@ -26,21 +37,19 @@ export default class TaskStatusTabsPanel extends Component {
   }
 
   render() {
-    const {
-      loadingStatusTabs,
-      statusTabsData,
-      statusTabsInternalServerError
-    } = this.props;
+    const { loadingStatusTabs, statusTabsData, statusTabsError } = this.props;
 
     if (loadingStatusTabs) {
       return <Spinner text="Loading status tabs" />;
     }
 
-    if (statusTabsInternalServerError) {
+    if (statusTabsError) {
       return (
-        <div className="mt-4 mb-4 text-danger text-center">
-          Failed to get status tabs: {statusTabsInternalServerError}
-        </div>
+        <SectionSeparator>
+          <div className="text-danger text-center">
+            {statusTabsError.message}
+          </div>
+        </SectionSeparator>
       );
     }
 

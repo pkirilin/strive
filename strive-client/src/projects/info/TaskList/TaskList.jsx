@@ -6,8 +6,9 @@ import TaskListItemContainer from "../TaskListItemContainer";
 export default class TaskList extends Component {
   static propTypes = {
     loadingTasks: PropTypes.bool,
-    failedToFetch: PropTypes.bool,
-    internalServerError: PropTypes.bool,
+    taskListError: PropTypes.shape({
+      message: PropTypes.string.isRequired
+    }),
     projectId: PropTypes.number.isRequired,
     tasks: PropTypes.arrayOf(
       PropTypes.shape({
@@ -19,31 +20,19 @@ export default class TaskList extends Component {
   };
 
   render() {
-    const {
-      loadingTasks,
-      failedToFetch,
-      internalServerError,
-      tasks
-    } = this.props;
+    const { loadingTasks, taskListError, tasks } = this.props;
 
     // Rendering loading spinner while data is fetching from server
     if (loadingTasks) {
       return <Spinner text="Loading tasks" />;
     }
 
-    // Server is not working, then showing a message, that data has not been fetched
-    if (failedToFetch) {
+    // If any error occured, showing error message
+    if (taskListError) {
       return (
-        <div className="text-center text-danger">
-          Failed to get tasks: server is not available
-        </div>
-      );
-    }
-
-    // Server is working, but some server-side error occured
-    if (internalServerError) {
-      return (
-        <div className="text-center text-danger">{internalServerError}</div>
+        <SectionSeparator>
+          <div className="text-center text-danger">{taskListError.message}</div>
+        </SectionSeparator>
       );
     }
 

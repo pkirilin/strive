@@ -6,16 +6,13 @@ const mapStateToProps = state => {
   const {
     loadingStatusTabs,
     statusTabsData,
-    internalServerError
+    statusTabsError
   } = state.taskStatuses.tabs;
-
-  const { filter } = state.tasks;
 
   return {
     loadingStatusTabs,
     statusTabsData,
-    internalServerError,
-    taskFilterData: filter
+    statusTabsError
   };
 };
 

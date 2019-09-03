@@ -12,7 +12,7 @@ export const taskInfoReducer = (state = {}, action) => {
       };
     case taskInfoConstants.GET_TASK_ERROR:
       return {
-        ...action.errorData
+        taskInfoError: action.error
       };
     default:
       return state;

@@ -65,11 +65,7 @@ function getList(requestParams) {
         }
       },
       () => {
-        dispatch(
-          error({
-            failedToFetch: true
-          })
-        );
+        dispatch(error("Failed to get tasks: server is not available"));
       }
     );
   };
@@ -91,10 +87,12 @@ function getList(requestParams) {
   }
 
   /** Get tasks list error action creator */
-  function error(errorData) {
+  function error(errorMessage) {
     return {
       type: taskListConstants.GET_LIST_ERROR,
-      errorData
+      error: {
+        message: errorMessage
+      }
     };
   }
 }
@@ -118,10 +116,13 @@ function getInfo(taskId) {
             historyHelper.redirectToProjects();
             break;
           case httpStatuses.notFound:
-            dispatch(
-              error({
-                notFound: true
-              })
+            dispatch(error("Failed to get task: task was not found"));
+            break;
+          case httpStatuses.internalServerError:
+            actionHelper.handleInternalServerErrorResponse(
+              taskResponse,
+              dispatch,
+              error
             );
             break;
           default:
@@ -129,11 +130,7 @@ function getInfo(taskId) {
         }
       },
       () => {
-        dispatch(
-          error({
-            failedToFetch: true
-          })
-        );
+        dispatch(error("Failed to get task: server is not available"));
       }
     );
   };
@@ -155,10 +152,12 @@ function getInfo(taskId) {
   }
 
   /** Get task info error action creator */
-  function error(errorData) {
+  function error(errorMessage) {
     return {
       type: taskInfoConstants.GET_TASK_ERROR,
-      errorData
+      error: {
+        message: errorMessage
+      }
     };
   }
 }

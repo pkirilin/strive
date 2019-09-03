@@ -5,16 +5,14 @@ import ProjectList from "../ProjectList";
 const mapStateToProps = state => {
   const {
     loadingProjectList,
-    failedToFetch,
-    internalServerError,
+    projectListError,
     projects
   } = state.projects.list;
   const { deletingProject } = state.projects.operations;
   const { deleteProjectModal } = state.modals;
   return {
     loadingProjectList,
-    failedToFetch,
-    internalServerError,
+    projectListError,
     deletingProject,
     projects,
     deleteProjectModal

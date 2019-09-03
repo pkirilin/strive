@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Form, FormGroup, Button, Row, Col } from "reactstrap";
-import { FormTextBox, FormTextArea, Spinner } from "../../../_components";
+import {
+  FormTextBox,
+  FormTextArea,
+  Spinner,
+  SectionSeparator
+} from "../../../_components";
 import { validationStatuses } from "../../../_constants";
 import { historyHelper } from "../../../_helpers";
 import {
@@ -19,15 +24,15 @@ export default class ProjectForm extends Component {
     badRequestResponse: PropTypes.shape({
       projectNameRemote: PropTypes.arrayOf(PropTypes.string)
     }),
-    internalServerError: PropTypes.string,
     gettingProjectForUpdate: PropTypes.bool,
     project: PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       description: PropTypes.string
     }),
-    notFoundProjectForUpdate: PropTypes.bool,
-    failedToFetchProjectForUpdate: PropTypes.bool,
+    projectInfoError: PropTypes.shape({
+      message: PropTypes.string.isRequired
+    }),
     createProject: PropTypes.func.isRequired,
     updateProject: PropTypes.func.isRequired,
     getProjectInfo: PropTypes.func.isRequired
@@ -206,9 +211,7 @@ export default class ProjectForm extends Component {
     const {
       sendingProjectInfo,
       gettingProjectForUpdate,
-      notFoundProjectForUpdate,
-      failedToFetchProjectForUpdate,
-      internalServerError
+      projectInfoError
     } = this.props;
 
     // Showing loading project info spinner while data is fetching (for update)
@@ -216,29 +219,14 @@ export default class ProjectForm extends Component {
       return <Spinner text="Getting project for update" />;
     }
 
-    // If server is not available, showing error message
-    if (failedToFetchProjectForUpdate) {
+    // If any error occured, showing error message
+    if (projectInfoError) {
       return (
-        <div className="mt-4 text-center text-danger">
-          Failed to fetch project data: server is not available
-        </div>
-      );
-    }
-
-    // If server returned not found for current request, showing error message
-    if (notFoundProjectForUpdate) {
-      return (
-        <div className="mt-4 text-center text-danger">
-          Project was not found
-        </div>
-      );
-    }
-
-    if (internalServerError) {
-      return (
-        <div className="mt-4 text-center text-danger">
-          {internalServerError}
-        </div>
+        <SectionSeparator>
+          <div className="mt-4 text-center text-danger">
+            {projectInfoError.message}
+          </div>
+        </SectionSeparator>
       );
     }
 

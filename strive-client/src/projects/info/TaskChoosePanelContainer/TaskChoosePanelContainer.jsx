@@ -8,14 +8,14 @@ const mapStateToProps = state => {
   const {
     loadingStatusList,
     taskStatuses,
-    failedToFetch: failedToFetchTaskStatuses
+    statusListError
   } = state.taskStatuses.list;
   return {
     tasks,
     taskFilterData: filter,
     loadingStatusList,
     taskStatuses,
-    failedToFetchTaskStatuses,
+    statusListError,
     chooseAllChecked
   };
 };

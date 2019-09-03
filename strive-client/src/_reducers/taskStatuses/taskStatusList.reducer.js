@@ -12,7 +12,7 @@ export const taskStatusListReducer = (state = {}, action) => {
       };
     case taskStatusListConstants.GET_STATUSES_ERROR:
       return {
-        ...action.errorData
+        statusListError: action.error
       };
     default:
       return state;

@@ -10,9 +10,7 @@ const mapStateToProps = state => {
   const {
     loading: loadingProjectData,
     loaded: projectDataLoaded,
-    notFound: notFoundProjectData,
-    failedToFetch: failedToFetchProjectData,
-    internalServerError: projectDataInternalServerError
+    projectInfoError
   } = state.projects.info;
 
   const { deleteProjectModal } = state.modals;
@@ -21,9 +19,7 @@ const mapStateToProps = state => {
   return {
     loadingProjectData,
     projectDataLoaded,
-    notFoundProjectData,
-    failedToFetchProjectData,
-    projectDataInternalServerError,
+    projectInfoError,
     deleteProjectModal,
     deletingProject
   };

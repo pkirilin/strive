@@ -12,7 +12,7 @@ export const taskStatusTabsReducer = (state = {}, action) => {
       };
     case taskStatusTabsConstants.GET_STATUS_TABS_ERROR:
       return {
-        ...action.errorData
+        statusTabsError: action.error
       };
     default:
       return state;

@@ -14,6 +14,21 @@ export default class TaskChoosePanel extends Component {
   static propTypes = {
     className: PropTypes.string,
     projectId: PropTypes.number.isRequired,
+    tasks: PropTypes.array,
+    taskFilterData: PropTypes.shape({
+      projectId: PropTypes.number,
+      status: PropTypes.string
+    }),
+    loadingStatusList: PropTypes.bool,
+    taskStatuses: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        label: PropTypes.string.isRequired
+      })
+    ),
+    statusListError: PropTypes.shape({
+      message: PropTypes.string.isRequired
+    }),
     changeCheckedStatusForTasks: PropTypes.func.isRequired,
     setStatusForTasks: PropTypes.func.isRequired,
     chooseAllChecked: PropTypes.bool
@@ -52,8 +67,8 @@ export default class TaskChoosePanel extends Component {
     const {
       loadingStatusList,
       taskStatuses,
-      failedToFetchTaskStatuses,
-      chooseAllChecked
+      chooseAllChecked,
+      statusListError
     } = this.props;
 
     let statusesDropdownMenuContent = <div />;
@@ -62,11 +77,9 @@ export default class TaskChoosePanel extends Component {
       statusesDropdownMenuContent = <Spinner text="Loading task statuses" />;
     }
 
-    if (failedToFetchTaskStatuses) {
+    if (statusListError) {
       statusesDropdownMenuContent = (
-        <div className="mt-4 mb-4 text-danger text-center">
-          Failed to load statuses
-        </div>
+        <div className="text-danger text-center">{statusListError.message}</div>
       );
     }
 

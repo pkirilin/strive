@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { ListGroup } from "reactstrap";
-import { Spinner, ConfirmationModal } from "../../../_components";
+import {
+  Spinner,
+  ConfirmationModal,
+  SectionSeparator
+} from "../../../_components";
 import ProjectListItem from "../ProjectListItem";
 
 export default class ProjectList extends Component {
   static propTypes = {
     loadingProjectList: PropTypes.bool,
-    failedToFetch: PropTypes.bool,
-    internalServerError: PropTypes.string,
+    projectListError: PropTypes.shape({
+      message: PropTypes.string.isRequired
+    }),
     deletingProject: PropTypes.bool,
     projects: PropTypes.arrayOf(
       PropTypes.shape({
@@ -35,8 +40,7 @@ export default class ProjectList extends Component {
   render() {
     const {
       loadingProjectList,
-      failedToFetch,
-      internalServerError,
+      projectListError,
       deletingProject,
       projects,
       deleteProjectModal
@@ -47,23 +51,18 @@ export default class ProjectList extends Component {
       return <Spinner text="Getting projects" />;
     }
 
-    // Server is not working, then showing a message, that data has not been fetched
-    if (failedToFetch) {
+    // If any error occured, showing error message
+    if (projectListError) {
       return (
-        <div className="text-center text-danger">
-          Failed to get projects: server is not available
-        </div>
+        <SectionSeparator>
+          <div className="text-center text-danger">
+            {projectListError.message}
+          </div>
+        </SectionSeparator>
       );
     }
 
-    // Server is working, but some server-side error occured
-    if (internalServerError) {
-      return (
-        <div className="text-center text-danger">{internalServerError}</div>
-      );
-    }
-
-    // Server is working, but no projects were found for target user
+    // Server is working, but no projects were found
     if (projects.length === 0) {
       return (
         <div className="text-center text-secondary">Project list is empty</div>

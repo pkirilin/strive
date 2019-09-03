@@ -30,7 +30,6 @@ function getStatusTabs(projectId) {
             });
             break;
           case httpStatuses.unauthorized:
-            dispatch(error());
             historyHelper.redirectToLogin();
             break;
           case httpStatuses.internalServerError:
@@ -45,7 +44,7 @@ function getStatusTabs(projectId) {
         }
       },
       () => {
-        dispatch(error({ failedToFetch: true }));
+        dispatch(error("Failed to get status tabs: server is not available"));
       }
     );
   };
@@ -67,10 +66,12 @@ function getStatusTabs(projectId) {
   }
 
   /** Get status tabs error action creator */
-  function error(errorData) {
+  function error(errorMessage) {
     return {
       type: taskStatusTabsConstants.GET_STATUS_TABS_ERROR,
-      errorData
+      error: {
+        message: errorMessage
+      }
     };
   }
 }
@@ -104,7 +105,7 @@ function getStatusList() {
         }
       },
       () => {
-        dispatch(error({ failedToFetch: true }));
+        dispatch(error("Failed to load statuses"));
       }
     );
   };
@@ -122,10 +123,12 @@ function getStatusList() {
     };
   }
 
-  function error(errorData) {
+  function error(errorMessage) {
     return {
-      type: taskStatusListConstants.GET_STATUSES_REQUEST,
-      errorData
+      type: taskStatusListConstants.GET_STATUSES_ERROR,
+      error: {
+        message: errorMessage
+      }
     };
   }
 }

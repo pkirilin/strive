@@ -1,11 +1,10 @@
 import { projectListConstants } from "../../_constants";
 
-let initialState = {
+const initialState = {
   projects: []
 };
 
 export const projectListReducer = (state = initialState, action) => {
-  // Get project list
   switch (action.type) {
     case projectListConstants.GET_LIST_REQUEST:
       return {
@@ -18,10 +17,9 @@ export const projectListReducer = (state = initialState, action) => {
       };
     case projectListConstants.GET_LIST_ERROR:
       return {
-        ...action.errorData,
-        projects: [...state.projects]
+        projects: [...state.projects],
+        projectListError: action.error
       };
-
     default:
       return state;
   }

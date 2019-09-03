@@ -14,7 +14,6 @@ export default class TaskData extends Component {
   static propTypes = {
     taskId: PropTypes.number.isRequired,
     gettingTask: PropTypes.bool,
-    failedToFetch: PropTypes.bool,
     task: PropTypes.shape({
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
@@ -22,6 +21,9 @@ export default class TaskData extends Component {
         id: PropTypes.number.isRequired,
         label: PropTypes.string.isRequired
       })
+    }),
+    taskInfoError: PropTypes.shape({
+      message: PropTypes.string.isRequired
     }),
     getTask: PropTypes.func.isRequired
   };
@@ -33,7 +35,7 @@ export default class TaskData extends Component {
   }
 
   render() {
-    const { gettingTask, task, failedToFetch } = this.props;
+    const { gettingTask, task, taskInfoError } = this.props;
 
     // Server is working and some task data was received
     if (task) {
@@ -78,12 +80,12 @@ export default class TaskData extends Component {
       );
     }
 
-    // Server is not available, showing error message
-    if (failedToFetch) {
+    // If any error occured, showing error message
+    if (taskInfoError) {
       return (
-        <div className="mt-4 mb-4 text-danger text-center">
-          Failed to get task: server is not available
-        </div>
+        <SectionSeparator>
+          <div className="text-danger text-center">{taskInfoError.message}</div>
+        </SectionSeparator>
       );
     }
 
