@@ -53,6 +53,11 @@ function getList(requestParams) {
           case httpStatuses.unauthorized:
             historyHelper.redirectToLogin();
             break;
+          case httpStatuses.badRequest:
+            dispatch(
+              error("Failed to fetch tasks: request parameters are invalid")
+            );
+            break;
           case httpStatuses.internalServerError:
             actionHelper.handleInternalServerErrorResponse(
               taskListResponse,
