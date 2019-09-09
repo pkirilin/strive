@@ -220,6 +220,12 @@ function create(task) {
               }
             });
             break;
+          case httpStatuses.notFound:
+            createTaskResponse.text().then(errorMessage => {
+              dispatch(error());
+              toastr.error("Tasks", errorMessage);
+            });
+            break;
           case httpStatuses.internalServerError:
             actionHelper.handleInternalServerErrorResponse(
               createTaskResponse,
@@ -303,14 +309,9 @@ function update(task) {
             });
             break;
           case httpStatuses.notFound:
-            updateTaskResponse.json().then(notFoundTaskId => {
-              dispatch(
-                error(`Server couldn't find a task with id = ${notFoundTaskId}`)
-              );
-              toastr.error(
-                "Tasks",
-                "Failed to update task: server couldn't find target task"
-              );
+            updateTaskResponse.text().then(errorMessage => {
+              dispatch(error());
+              toastr.error("Tasks", errorMessage);
             });
             break;
           case httpStatuses.internalServerError:

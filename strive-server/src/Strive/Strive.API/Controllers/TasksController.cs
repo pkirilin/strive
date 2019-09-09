@@ -80,7 +80,7 @@ namespace Strive.API.Controllers
 
                 var newTaskStatus = _taskStatusService.GetStatus(taskData.Status);
                 if (newTaskStatus == null)
-                    return NotFound(taskData.Status);
+                    return NotFound($"Failed to create task: status \"{taskData.Status}\" doesn't exist");
 
                 task.Status = newTaskStatus;
                 _taskService.Create(task);
@@ -110,14 +110,14 @@ namespace Strive.API.Controllers
                     {
                         var newTaskStatus = _taskStatusService.GetStatus(updatedTaskData.Status);
                         if (newTaskStatus == null)
-                            return NotFound(updatedTaskData.Status);
+                            return NotFound($"Failed to update task: status \"{updatedTaskData.Status}\" doesn't exist");
                         taskForUpdate.Status = newTaskStatus;
                     }
 
                     _taskService.Update(taskForUpdate);
                     return Ok();
                 }
-                return NotFound(updatedTaskData.Id);
+                return NotFound($"Server couldn't find a task with id = {updatedTaskData.Id}");
             }
 
             return BadRequest(ModelState);
