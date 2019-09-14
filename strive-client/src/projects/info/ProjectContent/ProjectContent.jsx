@@ -57,15 +57,11 @@ export default class ProjectContent extends Component {
       );
     }
 
-    // Deleting project modal confirmed, modal closed, deleting in process. Showing loading spinner
-    if (deletingProject) {
-      return <Spinner text="Deleting project" />;
-    }
-
     if (projectDataLoaded) {
       const { projectId } = this.props;
       return (
         <div>
+          {deletingProject && <Spinner text="Deleting project" />}
           <ConfirmationModal {...deleteProjectModal} />
           <ProjectDataContainer />
           <ProjectActionsContainer />
