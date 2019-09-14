@@ -33,7 +33,7 @@ namespace Strive.Tests.API.Tasks
             _taskServiceMock.Verify(service => service.ChangeStatus(It.IsAny<IEnumerable<Task>>(), It.IsAny<TaskStatus>()), Times.Never);
 
             Assert.IsType<NotFoundObjectResult>(result);
-            Assert.Equal(setStatusData.Status, (result as NotFoundObjectResult)?.Value);
+            Assert.Equal($"Failed to set status: server couldn't find a status named \"{setStatusData.Status}\"", (result as NotFoundObjectResult)?.Value);
         }
 
         [Fact]

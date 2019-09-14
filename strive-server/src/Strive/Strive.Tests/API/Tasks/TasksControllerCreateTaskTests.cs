@@ -22,7 +22,7 @@ namespace Strive.Tests.API.Tasks
             _taskStatusServiceMock.Verify(service => service.GetStatus(It.IsAny<string>()), Times.Once);
 
             Assert.IsType<NotFoundObjectResult>(result);
-            Assert.Equal(taskData.Status, (result as NotFoundObjectResult)?.Value);
+            Assert.Equal($"Failed to create task: status \"{taskData.Status}\" doesn't exist", (result as NotFoundObjectResult)?.Value);
         }
 
         [Fact]
