@@ -113,7 +113,9 @@ function getInfo(projectId) {
             historyHelper.redirectToProjects();
             break;
           case httpStatuses.notFound:
-            dispatch(error("Project was not found"));
+            projectResponse.text().then(errorMessage => {
+              dispatch(error(errorMessage));
+            });
             break;
           case httpStatuses.internalServerError:
             actionHelper.handleInternalServerErrorResponse(
@@ -280,16 +282,9 @@ function update(project) {
               });
             break;
           case httpStatuses.notFound:
-            updateProjectResponse.json().then(notFoundProjectId => {
-              dispatch(
-                error(
-                  `Server couldn't find a project with id = ${notFoundProjectId}`
-                )
-              );
-              toastr.error(
-                "Projects",
-                "Failed to update project: server couldn't find target project"
-              );
+            updateProjectResponse.text().then(errorMessage => {
+              dispatch(error());
+              toastr.error("Projects", errorMessage);
             });
             break;
           case httpStatuses.internalServerError:
@@ -365,16 +360,9 @@ function deleteProject(projectId) {
             historyHelper.redirectToLogin();
             break;
           case httpStatuses.notFound:
-            deleteProjectResponse.json().then(notFoundProjectId => {
-              dispatch(
-                error(
-                  `Server couldn't find a project with id = ${notFoundProjectId}`
-                )
-              );
-              toastr.error(
-                "Projects",
-                "Failed to delete project: server couldn't find target project"
-              );
+            deleteProjectResponse.text().then(errorMessage => {
+              dispatch(error());
+              toastr.error("Projects", errorMessage);
             });
             break;
           case httpStatuses.internalServerError:

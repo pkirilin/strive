@@ -121,7 +121,9 @@ function getInfo(taskId) {
             historyHelper.redirectToProjects();
             break;
           case httpStatuses.notFound:
-            dispatch(error("Failed to get task: task was not found"));
+            taskResponse.text().then(taskNotFoundResponseMessage => {
+              dispatch(error(taskNotFoundResponseMessage));
+            });
             break;
           case httpStatuses.internalServerError:
             actionHelper.handleInternalServerErrorResponse(
@@ -384,14 +386,9 @@ function deleteTask(task) {
             historyHelper.redirectToLogin();
             break;
           case httpStatuses.notFound:
-            deleteTaskResponse.json().then(notFoundTaskId => {
-              dispatch(
-                error(`Server couldn't find a task with id = ${notFoundTaskId}`)
-              );
-              toastr.error(
-                "Tasks",
-                "Failed to delete task: server couldn't find target task"
-              );
+            deleteTaskResponse.text().then(errorMessage => {
+              dispatch(error());
+              toastr.error("Tasks", errorMessage);
             });
             break;
           case httpStatuses.internalServerError:
@@ -452,17 +449,9 @@ function setStatus(setStatusData) {
             historyHelper.redirectToLogin();
             break;
           case httpStatuses.notFound:
-            setStatusResponse.json().then(notFoundStatusLabel => {
+            setStatusResponse.text().then(errorMessage => {
               dispatch(error());
-              toastr.error("Tasks", "", {
-                component: (
-                  <div>
-                    Failed to set status: server could not find a status label
-                    named
-                    <b>{notFoundStatusLabel}</b>
-                  </div>
-                )
-              });
+              toastr.error("Tasks", errorMessage);
             });
             break;
           case httpStatuses.internalServerError:

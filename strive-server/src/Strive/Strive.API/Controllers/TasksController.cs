@@ -60,7 +60,7 @@ namespace Strive.API.Controllers
             var task = _taskService.GetTaskById(request.TaskId.Value);
 
             if (task == null)
-                return NotFound(request.TaskId.Value);
+                return NotFound($"Failed to get task: task with id = {request.TaskId.Value} was not found");
 
             var taskInfo = _mapper.Map<Task, TaskInfoDto>(task);
 
@@ -135,13 +135,11 @@ namespace Strive.API.Controllers
 
             var taskForDelete = _taskService.GetTaskById(request.TaskId.Value);
 
-            if (taskForDelete != null)
-            {
-                _taskService.Delete(taskForDelete);
-                return Ok();
-            }
+            if (taskForDelete == null)
+                return NotFound($"Failed to delete task with id = {request.TaskId.Value}: task was not found");
 
-            return NotFound(request.TaskId.Value);
+            _taskService.Delete(taskForDelete);
+            return Ok();
         }
 
         /// <summary>
@@ -161,7 +159,7 @@ namespace Strive.API.Controllers
             var status = _taskService.GetStatusByLabel(setStatusData.Status);
 
             if (status == null)
-                return NotFound(setStatusData.Status);
+                return NotFound($"Failed to set status: server couldn't find a status named \"{setStatusData.Status}\"");
 
             return Ok(_taskService.ChangeStatus(taskEntitiesForUpdate, status));
         }

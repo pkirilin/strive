@@ -55,7 +55,7 @@ namespace Strive.API.Controllers
             var project = _projectService.GetProjectById(request.ProjectId.Value);
 
             if (project == null)
-                return NotFound(request.ProjectId.Value);
+                return NotFound($"Failed to get project info: project with id = {request.ProjectId.Value} was not found");
 
             if (project.UserId != request.UserId.Value)
                 return Unauthorized();
@@ -98,7 +98,7 @@ namespace Strive.API.Controllers
             var projectForUpdate = _projectService.GetProjectById(updatedProjectData.Id.Value);
 
             if (projectForUpdate == null)
-                return NotFound(updatedProjectData.Id);
+                return NotFound($"Failed to update project: project with id = {updatedProjectData.Id} was not found");
 
             if (ModelState.IsValid)
             {
@@ -134,13 +134,11 @@ namespace Strive.API.Controllers
 
             var projectForDelete = _projectService.GetProjectById(request.ProjectId.Value);
 
-            if (projectForDelete != null)
-            {
-                _projectService.Delete(projectForDelete);
-                return Ok();
-            }
+            if (projectForDelete == null)
+                return NotFound($"Failed to delete project: project with id = {request.ProjectId.Value} was not found");
 
-            return NotFound(request.ProjectId.Value);
+            _projectService.Delete(projectForDelete);
+            return Ok();
         }
     }
 }
