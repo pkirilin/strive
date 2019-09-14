@@ -29,9 +29,8 @@ export default class ProjectContent extends Component {
     loadProjectContent: PropTypes.func.isRequired
   };
 
-  constructor(props) {
-    super(props);
-    const { projectId, loadProjectContent } = props;
+  componentDidMount() {
+    const { projectId, loadProjectContent } = this.props;
     loadProjectContent(projectId);
   }
 

@@ -28,9 +28,8 @@ export default class TaskData extends Component {
     getTask: PropTypes.func.isRequired
   };
 
-  constructor(props) {
-    super(props);
-    const { taskId, getTask } = props;
+  componentDidMount() {
+    const { taskId, getTask } = this.props;
     getTask(taskId);
   }
 

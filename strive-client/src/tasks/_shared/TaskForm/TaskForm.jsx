@@ -88,9 +88,6 @@ export default class TaskForm extends Component {
       },
       taskStatus: ""
     };
-
-    const { loadTaskStatuses } = this.props;
-    loadTaskStatuses();
   }
 
   handleTaskForUpdateFetchedFromServer() {
@@ -122,6 +119,11 @@ export default class TaskForm extends Component {
       default:
         break;
     }
+  }
+
+  componentDidMount() {
+    const { loadTaskStatuses } = this.props;
+    loadTaskStatuses();
   }
 
   componentDidUpdate(prevProps) {

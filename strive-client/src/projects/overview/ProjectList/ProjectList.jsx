@@ -31,8 +31,7 @@ export default class ProjectList extends Component {
     getProjects: PropTypes.func
   };
 
-  constructor(props) {
-    super(props);
+  componentDidMount() {
     const { getProjects } = this.props;
     getProjects();
   }

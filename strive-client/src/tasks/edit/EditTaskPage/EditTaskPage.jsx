@@ -13,8 +13,7 @@ export default class EditTaskPage extends Component {
     getTask: PropTypes.func.isRequired
   };
 
-  constructor(props) {
-    super(props);
+  componentDidMount() {
     const { taskId } = this.props.match.params;
     const { getTask } = this.props;
     getTask(taskId);
