@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {
   DocumentTitleSetter,
   PrivateLayout,
-  ConfirmationModal,
   Spinner,
   SectionSeparator
 } from "../../../_components";
@@ -14,13 +13,7 @@ export default class TaskInfoPage extends Component {
     taskInfoError: PropTypes.shape({
       message: PropTypes.string.isRequired
     }),
-    deletingTask: PropTypes.bool,
-    deleteTaskModal: PropTypes.shape({
-      title: PropTypes.string,
-      message: PropTypes.node,
-      onClose: PropTypes.func,
-      onConfirm: PropTypes.func
-    })
+    deletingTask: PropTypes.bool
   };
 
   constructor(props) {
@@ -29,10 +22,9 @@ export default class TaskInfoPage extends Component {
   }
 
   render() {
-    const { taskInfoError, deletingTask, deleteTaskModal } = this.props;
+    const { taskInfoError, deletingTask } = this.props;
     let content = (
       <div>
-        <ConfirmationModal {...deleteTaskModal} />
         <TaskDataContainer taskId={this.taskId} />
       </div>
     );

@@ -9,13 +9,11 @@ const mapStateToProps = state => {
     projects
   } = state.projects.list;
   const { deletingProject } = state.projects.operations;
-  const { deleteProjectModal } = state.modals;
   return {
     loadingProjectList,
     projectListError,
     deletingProject,
-    projects,
-    deleteProjectModal
+    projects
   };
 };
 

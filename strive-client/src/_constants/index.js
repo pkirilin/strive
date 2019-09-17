@@ -15,5 +15,4 @@ export {
   taskStatusTabsConstants
 } from "./taskStatuses";
 export { alertConstants } from "./alert.constants";
-export { modalConstants } from "./modal.constants";
 export { validationRegexes, validationStatuses } from "./validation.constants";

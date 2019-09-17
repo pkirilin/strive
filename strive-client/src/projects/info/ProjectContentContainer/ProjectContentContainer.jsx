@@ -13,14 +13,12 @@ const mapStateToProps = state => {
     projectInfoError
   } = state.projects.info;
 
-  const { deleteProjectModal } = state.modals;
   const { deletingProject } = state.projects.operations;
 
   return {
     loadingProjectData,
     projectDataLoaded,
     projectInfoError,
-    deleteProjectModal,
     deletingProject
   };
 };

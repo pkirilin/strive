@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { ListGroup } from "reactstrap";
-import {
-  Spinner,
-  ConfirmationModal,
-  SectionSeparator
-} from "../../../_components";
+import { Spinner, SectionSeparator } from "../../../_components";
 import ProjectListItem from "../ProjectListItem";
 
 export default class ProjectList extends Component {
@@ -22,12 +18,6 @@ export default class ProjectList extends Component {
         description: PropTypes.string
       })
     ).isRequired,
-    deleteProjectModal: PropTypes.shape({
-      title: PropTypes.string,
-      message: PropTypes.node,
-      onClose: PropTypes.func,
-      onConfirm: PropTypes.func
-    }),
     getProjects: PropTypes.func
   };
 
@@ -41,8 +31,7 @@ export default class ProjectList extends Component {
       loadingProjectList,
       projectListError,
       deletingProject,
-      projects,
-      deleteProjectModal
+      projects
     } = this.props;
 
     // Rendering loading spinner while data is fetching from server
@@ -71,7 +60,6 @@ export default class ProjectList extends Component {
     // Server worked fine and returned project collection
     return (
       <ListGroup>
-        <ConfirmationModal {...deleteProjectModal} />
         {deletingProject && <Spinner text="Deleting project" />}
         {projects.map(project => (
           <ProjectListItem key={project.id} data={project} />

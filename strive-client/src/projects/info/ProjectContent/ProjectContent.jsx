@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {
-  ConfirmationModal,
-  Spinner,
-  SectionSeparator
-} from "../../../_components";
+import { Spinner, SectionSeparator } from "../../../_components";
 import TaskListContainer from "../TaskListContainer";
 import ProjectDataContainer from "../ProjectDataContainer";
 import TaskChoosePanelContainer from "../TaskChoosePanelContainer";
@@ -18,12 +14,6 @@ export default class ProjectContent extends Component {
     projectDataLoaded: PropTypes.bool,
     projectInfoError: PropTypes.shape({
       message: PropTypes.string.isRequired
-    }),
-    deleteProjectModal: PropTypes.shape({
-      title: PropTypes.string,
-      message: PropTypes.node,
-      onClose: PropTypes.func,
-      onConfirm: PropTypes.func
     }),
     deletingProject: PropTypes.bool,
     loadProjectContent: PropTypes.func.isRequired
@@ -39,7 +29,6 @@ export default class ProjectContent extends Component {
       loadingProjectData,
       projectDataLoaded,
       projectInfoError,
-      deleteProjectModal,
       deletingProject
     } = this.props;
 
@@ -62,7 +51,6 @@ export default class ProjectContent extends Component {
       return (
         <div>
           {deletingProject && <Spinner text="Deleting project" />}
-          <ConfirmationModal {...deleteProjectModal} />
           <ProjectDataContainer />
           <ProjectActionsContainer />
           <TaskStatusTabsPanelContainer projectId={projectId} />
