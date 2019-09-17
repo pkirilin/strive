@@ -6,12 +6,6 @@ export const config = {
   /** Server URL where API controllers are located */
   apiUrl: "http://localhost:10002",
 
-  /** Contains application alerts settings */
-  alerts: {
-    /** Period in milliseconds for any alert to fade away automatically */
-    autoDismissTimeout: 5000
-  },
-
   /** Contains application cookies settings */
   cookies: {
     user: {
