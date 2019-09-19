@@ -343,17 +343,17 @@ function update(project) {
 
 /**
  * Redux action creator, deletes project
- * @param {number} projectId Id of project to be deleted
+ * @param {Object} project Project to be deleted
  */
-function deleteProject(projectId) {
+function deleteProject(project) {
   return dispatch => {
-    dispatch(request(projectId));
-    projectsService.delete(projectId).then(
+    dispatch(request(project));
+    projectsService.delete(project.id).then(
       deleteProjectResponse => {
         switch (deleteProjectResponse.status) {
           case httpStatuses.ok:
             historyHelper.redirectToProjects();
-            dispatch(success(projectId));
+            dispatch(success(project));
             toastr.success("Projects", "Project has been successfully deleted");
             break;
           case httpStatuses.unauthorized:
@@ -388,12 +388,12 @@ function deleteProject(projectId) {
 
   /**
    * Delete project request action creator
-   * @param {number} projectId Id of project to be deleted
+   * @param {Object} project Project to be deleted
    */
-  function request(projectId) {
+  function request(project) {
     return {
       type: projectOperationsConstants.DELETE_REQUEST,
-      projectId
+      project
     };
   }
 

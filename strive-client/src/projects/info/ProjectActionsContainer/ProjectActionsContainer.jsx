@@ -13,7 +13,7 @@ const mapDispatchToProps = dispatch => {
     toastr.confirm(`Delete project "${project.name}"?`, {
       okText: "Yes",
       cancelText: "No",
-      onOk: () => dispatch(projectsActions.delete(project.id))
+      onOk: () => dispatch(projectsActions.delete(project))
     });
   }
 
